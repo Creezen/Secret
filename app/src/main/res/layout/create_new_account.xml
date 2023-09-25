@@ -30,8 +30,8 @@
                     android:textSize="20dp"
                     android:gravity="center"
                     android:text="账户"/>
-                <com.LJW.secret.CustomComponent.MyEditText
-                    android:id="@+id/createAccountName"
+                <EditText
+                    android:id="@+id/name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
@@ -39,7 +39,7 @@
                     android:layout_weight="4"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountNameHintLength"
+                android:id="@+id/nameHintLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -56,7 +56,7 @@
                     android:text="账户名长度为6至18位"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountNameHIntExist"
+                android:id="@+id/nameHIntExist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -84,15 +84,15 @@
                     android:textSize="20dp"
                     android:gravity="center"
                     android:text="昵称"/>
-                <com.LJW.secret.CustomComponent.MyEditText
-                    android:id="@+id/createAccountNickname"
+                <EditText
+                    android:id="@+id/nickname"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:layout_weight="4"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountNicknameHintLength"
+                android:id="@+id/nicknameHintLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -109,7 +109,7 @@
                     android:text="昵称长度最少一位，最长不超过八位！"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountNicknameHintValid"
+                android:id="@+id/nicknameHintValid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -138,8 +138,8 @@
                     android:textSize="20dp"
                     android:gravity="center"
                     android:text="输入密码"/>
-                <com.LJW.secret.CustomComponent.MyEditText
-                    android:id="@+id/createAccountPassword"
+                <EditText
+                    android:id="@+id/password"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -147,7 +147,7 @@
                     android:layout_weight="4"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountPasswordHintLength"
+                android:id="@+id/passwordHintLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -175,8 +175,8 @@
                     android:textSize="20dp"
                     android:gravity="center"
                     android:text="确认密码"/>
-                <com.LJW.secret.CustomComponent.MyEditText
-                    android:id="@+id/createAccountConfirmPassword"
+                <EditText
+                    android:id="@+id/confirmPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -184,7 +184,7 @@
                     android:layout_weight="4"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/createAccountPasswordDismatch"
+                android:id="@+id/passwordDismatch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
@@ -218,17 +218,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4">
                     <Spinner
-                        android:id="@+id/createAccountBirthdayYear"
+                        android:id="@+id/birthdayYear"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
                     <Spinner
-                        android:id="@+id/createAccountBirthdayMonth"
+                        android:id="@+id/birthdayMonth"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
                     <Spinner
-                        android:id="@+id/createAccountBirthdayDay"
+                        android:id="@+id/birthdayDay"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
@@ -248,7 +248,7 @@
                     android:text="性别"
                     android:layout_weight="1"/>
                 <Spinner
-                    android:id="@+id/createAccountSex"
+                    android:id="@+id/sex"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="4"/>
@@ -272,14 +272,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="4">
                     <EditText
-                        android:id="@+id/createAccountEmail"
+                        android:id="@+id/email"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="11"
                         android:textSize="25dp"
                         android:hint="可选填" />
                     <Spinner
-                        android:id="@+id/createAccountEmailPostfix"
+                        android:id="@+id/emailPostfix"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="9"/>
@@ -298,7 +298,7 @@
                     android:gravity="center"
                     android:text="手机号"/>
                 <EditText
-                    android:id="@+id/createAccountPhone"
+                    android:id="@+id/phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -317,7 +317,7 @@
                     android:gravity="center"
                     android:text="地址"/>
                 <EditText
-                    android:id="@+id/createAccountAddress"
+                    android:id="@+id/address"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:hint="可选填"
@@ -337,8 +337,8 @@
                     android:textSize="20dp"
                     android:gravity="top|center"
                     android:text="自我介绍"/>
-                <com.LJW.secret.CustomComponent.MyEditText
-                    android:id="@+id/createAccountSelfIntroduction"
+                <EditText
+                    android:id="@+id/selfIntroduction"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
@@ -349,7 +349,7 @@
                     android:background="@drawable/editview_border"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/createAccountSelfIntoLength"
+                android:id="@+id/selfIntoLength"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="0/200"
@@ -357,7 +357,7 @@
         </LinearLayout>
     </ScrollView>
     <TextView
-        android:id="@+id/createAccountRegisterHint"
+        android:id="@+id/registerHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -366,7 +366,7 @@
         android:layout_gravity="bottom"
         android:text="有关键信息未正确填写，请检查！！！"/>
     <Button
-        android:id="@+id/createAccountRegister"
+        android:id="@+id/register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

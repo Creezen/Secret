@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Secret</string>
+    <string name="prompt">选择城市</string>
+    <string-array name="EmailProfix">
+        <item>\@yahoo.com</item>
+        <item>\@msn.com</item>
+        <item>\@live.com</item>
+        <item>\@163.com</item>
+        <item>\@yeah.net</item>
+        <item>\@googlemail.com</item>
+        <item>\@hotmail.com</item>
+        <item>\@msn.com</item>
+        <item>\@yahoo.com</item>
+        <item>\@gmail.com</item>
+        <item>\@mail.com</item>
+        <item>\@walla.com</item>
+        <item>\@inbox.com</item>
+        <item>\@126.com</item>
+        <item>\@sina.com</item>
+        <item>\@sohu.com</item>
+        <item>\@yahoo.com.cn</item>
+        <item>\@qq.com</item>
+        <item>\@sogou.com</item>
+    </string-array>
 </resources>
