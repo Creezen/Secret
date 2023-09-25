@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout
+        android:id="@+id/TimelineRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/TimelineLeft"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/Carminum"
+            android:orientation="vertical"/>
+        <TextView
+            android:id="@+id/TimelineCenter"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@color/BurlyWood"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+        </TextView>
+        <LinearLayout
+            android:id="@+id/TimelineRight"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/Carminum"
+            android:orientation="vertical"/>
+    </LinearLayout>
+</ScrollView>
