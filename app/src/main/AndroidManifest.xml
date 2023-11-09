@@ -8,15 +8,17 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/tianji"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
-        <activity android:name=".Activities.MultiThread"
+        <activity android:name=".Activities.HomePage"
             android:exported="false"/>
-        <activity android:name=".Activities.PocketBook"
+        <activity android:name=".Activities.SubModule.MultiThread"
+            android:exported="false"/>
+        <activity android:name=".Activities.SubModule.PocketBook"
             android:exported="false"/>
         <activity
             android:name=".Activities.Main"

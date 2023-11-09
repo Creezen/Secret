@@ -1,5 +1,6 @@
 package com.LJW.secret.Activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,15 +9,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import com.LJW.secret.Dialog.SimpleDialog
 import com.LJW.secret.Fragments.ChatBox
 import com.LJW.secret.Fragments.Feedback
 import com.LJW.secret.Fragments.ListPage
 import com.LJW.secret.Fragments.TimeLine
 import com.LJW.secret.Fragments.Widgets
 import com.LJW.secret.Fragments.YQIA
+import com.LJW.secret.OnlineUser
 import com.LJW.secret.R
 import com.LJW.secret.databinding.ActivityMainBinding
 import com.LJW.secret.replaceFragment
+import com.LJW.secret.toast
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class Main : BaseActivity() {
 
@@ -29,6 +36,7 @@ class Main : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        OnlineUser.selfIntroduction.toast(this)
         initPage()
     }
 
@@ -59,22 +67,23 @@ class Main : BaseActivity() {
                         R.id.MainMenuTimeline -> replaceFragment(timeLine)
                     }
                 }
-
                 drawerLayout.closeDrawers()
                 return@setNavigationItemSelectedListener true
+            }
+            navigation.getHeaderView(0).setOnClickListener {
+                startActivity(Intent(this@Main,HomePage::class.java))
             }
         }
         onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
             override fun handleOnBackPressed() {
-                AlertDialog.Builder(this@Main).apply {
+                SimpleDialog(this@Main).apply {
                     setTitle("消息提醒")
                     setMessage("确定退出吗？")
-                    setCancelable(false)
-                    setPositiveButton("退出"){_,_->
-                        finish()
-                    }
-                    setNegativeButton("点错了"){dialog,_->
+                    setLeftButton("点错了"){_,dialog->
                         dialog.dismiss()
+                    }
+                    setRightButton("退出"){_,_->
+                        finish()
                     }
                     show()
                 }

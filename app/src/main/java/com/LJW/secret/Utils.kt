@@ -1,25 +1,59 @@
 package com.LJW.secret
 
 import android.app.Activity
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.LJW.secret.POJO.User
+import com.alibaba.fastjson.JSON
+import com.google.gson.Gson
+import okhttp3.Cookie
+
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.nio.Buffer
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Random
+import java.util.TimeZone
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-fun TextView.message()=this.text.toString()
+fun buildCookie(name:String, value:String) = Cookie.Builder().name(name).value(value).domain("www").build()
+fun getRandomString(length:Int):String{
+    val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    val random= Random()
+    val buffer=StringBuffer()
+    for (i in 0..length-1)
+        buffer.append(BASIC_LETTER[random.nextInt(52)])
+    return buffer.toString()
+}
+
+fun Long.toTime(formater:String=""):String{
+    val simpleDateFormat=SimpleDateFormat(formater)
+    simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")
+    if (formater.length>0) return simpleDateFormat.format(Date(this))
+    return ""
+}
+
+fun <T> T.toast(context: Context)=Toast.makeText(context,"${this}",Toast.LENGTH_LONG).show()
+fun TextView.msg()=this.text.toString()
 
 inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(EditTextBridge().apply (bridge))
 
@@ -49,10 +83,40 @@ class SpinnerBridge: AdapterView.OnItemSelectedListener {
 *网络传输
  */
 object NetworkServerCreator{
-    val retrofit= Retrofit.Builder()
-        .baseUrl("https://2xrnknq21l5m.hk1.xiaomiqiu123.top")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+
+    var retrofit : Retrofit
+    init {
+        Log.e("NetworkServerCreator.()","init")
+        val okHtttp = OkHttpClient.Builder().cookieJar(object : CookieJar {
+            override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
+                COOKIE_LIST.removeIf { it.name() == "JSESSIONID" }
+                COOKIE_LIST.add(cookies.last { it.name() == "JSESSIONID" })
+                cookies.forEach {
+                    if (!it.name().equals("JSESSIONID")) COOKIE_LIST.add(it)
+                }
+            }
+
+            override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
+                if (COOKIE_MAP["firstTime"] == null) {
+                    val currentTime = System.currentTimeMillis()
+                    COOKIE_LIST.add(buildCookie("firstTime","${currentTime}"))
+                    COOKIE_LIST.add(buildCookie("lastTime","${currentTime}"))
+                    COOKIE_MAP["firstTime"] = currentTime
+                    COOKIE_MAP["lastTime"] = currentTime
+                }else{
+                    COOKIE_LIST.removeIf { it.name() == "lastTime" }
+                    COOKIE_LIST.add(buildCookie("lastTime","${System.currentTimeMillis()}"))
+                }
+                COOKIE_LIST.forEach { Log.e("NetworkServerCreator.saveFromResponse", "${it.name()}  ${it.value()}") }
+                return COOKIE_LIST
+            }
+        }).build()
+        retrofit= Retrofit.Builder()
+            .baseUrl("https://2xrnknq21l5m.hk1.xiaomiqiu123.top")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHtttp)
+            .build()
+    }
 
     inline fun <reified T> create():T=retrofit.create(T::class.java)
 }
@@ -85,4 +149,11 @@ object ActivityCollector{
     fun addActivity(activity: Activity){ activities.add(activity) }
     fun removeActivity(activity: Activity){ activities.remove(activity) }
     fun finishAll(){ activities.forEach{if (!it.isFinishing) it.finish()} }
+}
+
+fun <T> T.POJO2Map()= JSON.parseObject(JSON.toJSONString(this),HashMap::class.java) as HashMap<String,String>
+
+inline fun <reified T> Map<String,String>.Map2POJO():T{
+    val gson= Gson()
+    return gson.fromJson(gson.toJson(this), T::class.java)
 }

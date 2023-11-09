@@ -2,23 +2,26 @@ package com.LJW.secret.Activities
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import com.LJW.secret.Dialog.SimpleDialog
 import com.LJW.secret.Network.UserService
 import com.LJW.secret.NetworkServerCreator
 import com.LJW.secret.POJO.User
+import com.LJW.secret.POJO2Map
 import com.LJW.secret.R
 import com.LJW.secret.addTextChangedListener
 import com.LJW.secret.await
 import com.LJW.secret.databinding.CreateNewAccountBinding
-import com.LJW.secret.message
+import com.LJW.secret.getRandomString
+import com.LJW.secret.msg
 import com.LJW.secret.setOnItemSelectedListener
-import com.alibaba.fastjson.JSON
-import com.google.gson.Gson
+import com.LJW.secret.toTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,6 +50,8 @@ class AccountCreation : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=CreateNewAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val accountName= intent.getStringExtra("intentAccount")
+        if(!TextUtils.isEmpty(accountName)) binding.name.setText(accountName)
         EMAIL_PROFIX = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
         pageInit()
     }
@@ -55,11 +60,33 @@ class AccountCreation : BaseActivity() {
         with(binding){
             name.configAfterText {
                 if(it.length in 6..18){
-                    this.setTextColor(Color.parseColor("#000000"))
-                    nameHintLength.visibility= View.GONE
+                    nameHintLength.visibility=View.GONE
+                    var map=HashMap<String,String>()
+                    map["type"] = "0"
+                    map["name"] = name.msg()
+                    GlobalScope.launch(Dispatchers.Main){
+                        try {
+                            var awaitResult = NetworkServerCreator.create<UserService>()
+                                .checkUserName(map)
+                                .await()
+                            if (awaitResult["status"] == 0) {
+                                name.setTextColor(Color.parseColor("#00ff00"))
+                                nameHIntExist.setVisibility(View.GONE)
+                                nameFlag = true
+                            } else {
+                                name.setTextColor(Color.parseColor("#000000"))
+                                nameHIntExist.setVisibility(View.VISIBLE)
+                                nameFlag = false
+                            }
+                            checkInformation(register,registerHint)
+                        } catch (e: Exception) {
+                            e.message?.let { it1 -> Log.e("msg", it1) }
+                        }
+                    }
                 } else {
                     nameHIntExist.visibility=View.GONE
                     nameHintLength.visibility=View.VISIBLE
+                    name.setTextColor(Color.parseColor("#000000"))
                     nameFlag=false
                 }
             }
@@ -82,10 +109,10 @@ class AccountCreation : BaseActivity() {
                     passwordHintLength.visibility=View.VISIBLE
                     passwordFlag=false
                 }
-                checkPassword(it,confirmPassword.message(),passwordDismatch)
+                checkPassword(it,confirmPassword.msg(),passwordDismatch)
             }
             confirmPassword.configAfterText {
-                checkPassword(it,password.message(),passwordDismatch)
+                checkPassword(it,password.msg(),passwordDismatch)
             }
             selfIntroduction.configAfterText {
                 selfIntoLength.setText("${it.length}/200")
@@ -103,29 +130,39 @@ class AccountCreation : BaseActivity() {
             birthdayDay.config(DAY){_->}
             sex.config(SEX){_->}
             register.setOnClickListener {
+                val dialog=SimpleDialog(this@AccountCreation).apply{
+                    setTitle("提示")
+                    setMessage("注册中，请稍后...")
+                }
+                val currentTime=System.currentTimeMillis()
+                val userIdValue="${currentTime}${getRandomString(7)}"
+                val createTimeValue=currentTime.toTime("yyyy-MM-dd HH:mm:ss")
+                val emailValue=if(email.msg().length>0) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
+                val phoneValue=phone.msg()
+                val addressValue=address.msg()
+                val selfIntroductionValue=selfIntroduction.msg()
+                val isEdit=if((emailValue.length>0) and (phoneValue.length>0) and (addressValue.length>0) and (selfIntroductionValue.length>0)) 1 else 0
+                val ageValue=createTimeValue.subSequence(0,4).toString().toInt()-birthdayYear.selectedItem as Int
+                val birthdayValue = "${birthdayYear.selectedItem as Int}-${birthdayMonth.selectedItem as Int}-${birthdayDay.selectedItem as Int}"
                 GlobalScope.launch(Dispatchers.Main) {
                     try {
-                        Log.e("msg","gdrhfgh")
-                        var toJson = JSON.toJSONString(
-                            User("1", "fd", "123456", 26, "1", "2023",
-                                10, 0, 0, "dfg", "th", "112", "ty", "hfg", "png"
-                            )
-                        )
-                        var map1 = JSON.parseObject(toJson, HashMap::class.java) as HashMap<String,String>
+                        var map1=User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
+                            0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
+                        ).POJO2Map()
                         map1["type"]="1"
-
-                        Log.e("AccountCreation.pageInit", "${map1}")
                         var awaitResult = NetworkServerCreator.create<UserService>()
                             .checkUserName(map1)
                             .await()
-                        Log.e("AccountCreation.pageInit", "${awaitResult["status"]}")
+                        if (null != awaitResult["status"]){
+                            if(awaitResult["status"] == 2) finish()
+                        } else dialog.dismiss()
                     } catch (e: Exception) {
                         e.message?.let { it1 -> Log.e("msg", it1) }
                     }
                 }
-
             }
-            checkInformation(register,registerHint)
+            register.isClickable = false
+            Log.e("AccountCreation.pageInit", "${register.isClickable}")
 
         }
     }
@@ -144,7 +181,7 @@ class AccountCreation : BaseActivity() {
             view1.isClickable=true
             view2.visibility=View.GONE
         }else{
-            view1.isClickable=true
+            view1.isClickable=false
             view2.visibility=View.VISIBLE
         }
     }
@@ -153,6 +190,7 @@ class AccountCreation : BaseActivity() {
         this.addTextChangedListener {
             afterTextChanged { msg->
                 afterText(msg.toString())
+                checkInformation(binding.register,binding.registerHint)
             }
         }
     }

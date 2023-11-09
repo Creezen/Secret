@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.LJW.secret.Activities.MultiThread
-import com.LJW.secret.Activities.PocketBook
+import com.LJW.secret.Activities.SubModule.MultiThread
+import com.LJW.secret.Activities.SubModule.PocketBook
 import com.LJW.secret.databinding.WidgetsBinding
 
 class Widgets:BaseFragment() {
