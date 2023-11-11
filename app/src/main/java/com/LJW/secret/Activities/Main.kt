@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.LJW.secret.Dialog.SimpleDialog
 import com.LJW.secret.Fragments.ChatBox
@@ -21,9 +19,6 @@ import com.LJW.secret.R
 import com.LJW.secret.databinding.ActivityMainBinding
 import com.LJW.secret.replaceFragment
 import com.LJW.secret.toast
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 class Main : BaseActivity() {
 
@@ -36,7 +31,7 @@ class Main : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        OnlineUser.selfIntroduction.toast(this)
+        OnlineUser.selfIntroduction.toast()
         initPage()
     }
 

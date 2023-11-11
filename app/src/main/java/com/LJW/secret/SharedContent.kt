@@ -2,7 +2,6 @@ package com.LJW.secret
 
 import com.LJW.secret.POJO.User
 import okhttp3.Cookie
-import retrofit2.Retrofit
 
 lateinit var OnlineUser: User
 

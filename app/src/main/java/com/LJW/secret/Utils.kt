@@ -1,19 +1,16 @@
 package com.LJW.secret
 
 import android.app.Activity
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.LJW.secret.POJO.User
 import com.alibaba.fastjson.JSON
 import com.google.gson.Gson
 import okhttp3.Cookie
@@ -26,7 +23,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.nio.Buffer
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Random
@@ -45,6 +41,13 @@ fun getRandomString(length:Int):String{
     return buffer.toString()
 }
 
+fun <T> T.POJO2Map()= JSON.parseObject(JSON.toJSONString(this),HashMap::class.java) as HashMap<String,String>
+
+inline fun <reified T> Map<String,String>.Map2POJO():T{
+    val gson= Gson()
+    return gson.fromJson(gson.toJson(this), T::class.java)
+}
+
 fun Long.toTime(formater:String=""):String{
     val simpleDateFormat=SimpleDateFormat(formater)
     simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")
@@ -52,7 +55,7 @@ fun Long.toTime(formater:String=""):String{
     return ""
 }
 
-fun <T> T.toast(context: Context)=Toast.makeText(context,"${this}",Toast.LENGTH_LONG).show()
+fun <T> T.toast() =Toast.makeText(Env.applicationContext,"${this}",Toast.LENGTH_LONG).show()
 fun TextView.msg()=this.text.toString()
 
 inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(EditTextBridge().apply (bridge))
@@ -151,9 +154,3 @@ object ActivityCollector{
     fun finishAll(){ activities.forEach{if (!it.isFinishing) it.finish()} }
 }
 
-fun <T> T.POJO2Map()= JSON.parseObject(JSON.toJSONString(this),HashMap::class.java) as HashMap<String,String>
-
-inline fun <reified T> Map<String,String>.Map2POJO():T{
-    val gson= Gson()
-    return gson.fromJson(gson.toJson(this), T::class.java)
-}
