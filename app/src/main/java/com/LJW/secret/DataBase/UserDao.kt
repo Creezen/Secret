@@ -1,9 +1,9 @@
-package com.LJW.secret.DataBase
+package com.ljw.secret.DataBase
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.LJW.secret.POJO.User
+import com.ljw.secret.POJO.User
 
 @Dao
 interface UserDao {

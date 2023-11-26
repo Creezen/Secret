@@ -1,12 +1,12 @@
-package com.LJW.secret.DataBase
+package com.ljw.secret.DataBase
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.LJW.secret.POJO.User
+import com.ljw.secret.POJO.User
 
-@Database(version = 1, entities = [User::class])
+@Database(version = 1, entities = [User::class], exportSchema = false)
 abstract class UserDatabase:RoomDatabase() {
     abstract fun userDao(): UserDao
     companion object {

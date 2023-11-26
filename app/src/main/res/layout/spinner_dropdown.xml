@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:textColor="#00dd00"
-    android:textSize="20dp"
+    android:textColor="#99EE62AD"
+    android:textSize="@dimen/spinner"
     android:gravity="center">
 </TextView>

@@ -1,4 +1,4 @@
-package com.LJW.secret.POJO
+package com.ljw.secret.POJO
 
 import android.os.Parcelable
 import androidx.room.Entity

@@ -1,10 +1,10 @@
-package com.LJW.secret.Activities
+package com.ljw.secret.Activities
 
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.LJW.secret.ActivityCollector
+import com.ljw.secret.ActivityCollector
 
 open class BaseActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

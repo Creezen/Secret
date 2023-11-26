@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="label">16sp</dimen>
+    <dimen name="content">20sp</dimen>
+    <dimen name="labelWidth">75dp</dimen>
+    <dimen name="hint">12sp</dimen>
+    <dimen name="margin">4dp</dimen>
+    <dimen name="viewMargin">16dp</dimen>
+    <dimen name="spinner">14sp</dimen>
+</resources>

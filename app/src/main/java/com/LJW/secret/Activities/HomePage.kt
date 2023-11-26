@@ -1,8 +1,8 @@
-package com.LJW.secret.Activities
+package com.ljw.secret.Activities
 
 import android.os.Bundle
-import com.LJW.secret.Activities.BaseActivity
-import com.LJW.secret.databinding.HomePageBinding
+import com.ljw.secret.Activities.BaseActivity
+import com.ljw.secret.databinding.HomePageBinding
 
 class HomePage: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

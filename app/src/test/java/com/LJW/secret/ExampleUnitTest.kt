@@ -1,4 +1,4 @@
-package com.LJW.secret
+package com.ljw.secret
 
 import org.junit.Test
 

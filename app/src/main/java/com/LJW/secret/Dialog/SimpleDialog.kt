@@ -1,4 +1,4 @@
-package com.LJW.secret.Dialog
+package com.ljw.secret.Dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.LJW.secret.R
-import com.LJW.secret.databinding.DialogLayoutBinding
+import com.ljw.secret.R
+import com.ljw.secret.databinding.DialogLayoutBinding
 
 open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
 

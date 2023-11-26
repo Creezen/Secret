@@ -16,4 +16,8 @@
     <color name="Lawn">#BDCC12</color>
     <color name="Carminum">#FDE6E0</color>
     <color name="BurlyWood">#DEB887</color>
+
+    <color name="hint">#26000000</color>
+    <color name="label">#BF0000FF</color>
+    <color name="hintText">#A6FF0000</color>
 </resources>

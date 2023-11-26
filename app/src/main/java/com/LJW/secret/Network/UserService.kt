@@ -1,6 +1,6 @@
-package com.LJW.secret.Network
+package com.ljw.secret.Network
 
-import com.LJW.secret.POJO.User
+import com.ljw.secret.POJO.User
 import com.google.gson.internal.LinkedTreeMap
 import org.json.JSONObject
 import retrofit2.Call

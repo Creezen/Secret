@@ -1,4 +1,4 @@
-package com.LJW.secret.Fragments
+package com.ljw.secret.Fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,13 +1,15 @@
-package com.LJW.secret
+package com.ljw.secret
 
+import android.app.Application
 import android.content.Context
 
-class Env {
+class Env : Application() {
     companion object{
-        var applicationContext : Context? = null
-            set(value) {
-                field = value
-            }
-            get() = field?:SecretApplication.context.also { field = it }
+        lateinit var context : Context
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        context = applicationContext
     }
 }

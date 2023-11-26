@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.LJW.secret"
+    namespace = "com.ljw.secret"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.LJW.secret"
+        applicationId = "com.ljw.secret"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
@@ -37,6 +37,7 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        dataBinding = true
     }
 }
 

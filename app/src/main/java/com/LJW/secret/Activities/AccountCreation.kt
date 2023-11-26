@@ -1,4 +1,4 @@
-package com.LJW.secret.Activities
+package com.ljw.secret.Activities
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,19 +9,19 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import com.LJW.secret.Dialog.SimpleDialog
-import com.LJW.secret.Network.UserService
-import com.LJW.secret.NetworkServerCreator
-import com.LJW.secret.POJO.User
-import com.LJW.secret.POJO2Map
-import com.LJW.secret.R
-import com.LJW.secret.addTextChangedListener
-import com.LJW.secret.await
-import com.LJW.secret.databinding.CreateNewAccountBinding
-import com.LJW.secret.getRandomString
-import com.LJW.secret.msg
-import com.LJW.secret.setOnItemSelectedListener
-import com.LJW.secret.toTime
+import com.ljw.secret.Dialog.SimpleDialog
+import com.ljw.secret.Network.UserService
+import com.ljw.secret.NetworkServerCreator
+import com.ljw.secret.POJO.User
+import com.ljw.secret.POJO2Map
+import com.ljw.secret.R
+import com.ljw.secret.addTextChangedListener
+import com.ljw.secret.await
+import com.ljw.secret.config
+import com.ljw.secret.databinding.AccountCreationBinding
+import com.ljw.secret.getRandomString
+import com.ljw.secret.msg
+import com.ljw.secret.toTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -45,10 +45,10 @@ class AccountCreation : BaseActivity() {
     private val SEX= arrayOf("男","女","保密").toList() as ArrayList<String>
     private lateinit var EMAIL_PROFIX:ArrayList<String>
 
-    private lateinit var binding:CreateNewAccountBinding
+    private lateinit var binding:AccountCreationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=CreateNewAccountBinding.inflate(layoutInflater)
+        binding=AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName= intent.getStringExtra("intentAccount")
         if(!TextUtils.isEmpty(accountName)) binding.name.setText(accountName)
@@ -130,7 +130,7 @@ class AccountCreation : BaseActivity() {
             birthdayDay.config(DAY){_->}
             sex.config(SEX){_->}
             register.setOnClickListener {
-                val dialog=SimpleDialog(this@AccountCreation).apply{
+                val dialog= SimpleDialog(this@AccountCreation).apply{
                     setTitle("提示")
                     setMessage("注册中，请稍后...")
                 }
@@ -146,7 +146,7 @@ class AccountCreation : BaseActivity() {
                 val birthdayValue = "${birthdayYear.selectedItem as Int}-${birthdayMonth.selectedItem as Int}-${birthdayDay.selectedItem as Int}"
                 GlobalScope.launch(Dispatchers.Main) {
                     try {
-                        var map1=User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
+                        var map1= User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
                             0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
                         ).POJO2Map()
                         map1["type"]="1"
@@ -195,17 +195,7 @@ class AccountCreation : BaseActivity() {
         }
     }
 
-    private fun <T> Spinner.config(list: ArrayList<T>,itemSelect:(T)->Unit){
-        val spinnerAdapter=ArrayAdapter(applicationContext,R.layout.spinner_prompt,list)
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
-        this.adapter=spinnerAdapter
-        this.setSelection(0)
-        this.setOnItemSelectedListener {
-            onItemSelected{_,_,pos,_ ->
-                itemSelect(list[pos])
-            }
-        }
-    }
+
 
     fun isLeapYear(year:Int)=when {
         year%100==0 -> year%400==0

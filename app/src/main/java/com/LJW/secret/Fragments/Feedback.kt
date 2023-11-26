@@ -1,10 +1,10 @@
-package com.LJW.secret.Fragments
+package com.ljw.secret.Fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.LJW.secret.databinding.FeedbackBinding
+import com.ljw.secret.databinding.FeedbackBinding
 
 class Feedback:BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

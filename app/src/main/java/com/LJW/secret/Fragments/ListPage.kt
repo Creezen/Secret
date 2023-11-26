@@ -1,10 +1,10 @@
-package com.LJW.secret.Fragments
+package com.ljw.secret.Fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.LJW.secret.databinding.MainFunctionsBinding
+import com.ljw.secret.databinding.MainFunctionsBinding
 
 class ListPage:BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

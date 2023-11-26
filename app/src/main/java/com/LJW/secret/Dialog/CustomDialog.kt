@@ -1,4 +1,4 @@
-package com.LJW.secret.Dialog
+package com.ljw.secret.Dialog
 
 import android.app.Dialog
 import android.content.Context

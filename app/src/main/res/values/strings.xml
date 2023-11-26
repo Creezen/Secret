@@ -1,6 +1,10 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Secret</string>
     <string name="prompt">选择城市</string>
+    <string name="all_info_check">有关键信息未正确填写，请检查！</string>
+    <string name="choose_fill">选填</string>
+    <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
+    <string name="register">点击注册</string>
     <string-array name="EmailProfix">
         <item>\@yahoo.com</item>
         <item>\@msn.com</item>

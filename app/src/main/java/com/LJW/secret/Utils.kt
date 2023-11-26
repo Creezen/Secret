@@ -1,4 +1,4 @@
-package com.LJW.secret
+package com.ljw.secret
 
 import android.app.Activity
 import android.text.Editable
@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -33,7 +34,6 @@ import kotlin.coroutines.suspendCoroutine
 
 fun buildCookie(name:String, value:String) = Cookie.Builder().name(name).value(value).domain("www").build()
 fun getRandomString(length:Int):String{
-    val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     val random= Random()
     val buffer=StringBuffer()
     for (i in 0..length-1)
@@ -55,8 +55,21 @@ fun Long.toTime(formater:String=""):String{
     return ""
 }
 
-fun <T> T.toast() =Toast.makeText(Env.applicationContext,"${this}",Toast.LENGTH_LONG).show()
+fun <T> T.toast() =Toast.makeText(Env.context,"${this}",Toast.LENGTH_LONG).show()
 fun TextView.msg()=this.text.toString()
+
+fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
+    val dataArrayList = ArrayList(list)
+    val spinnerAdapter= ArrayAdapter(Env.context,R.layout.spinner_prompt,dataArrayList)
+    spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
+    this.adapter=spinnerAdapter
+    this.setOnItemSelectedListener {
+        onItemSelected{_,_,pos,_ ->
+            itemSelect(dataArrayList[pos])
+        }
+    }
+    this.setSelection(0)
+}
 
 inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(EditTextBridge().apply (bridge))
 
@@ -115,7 +128,7 @@ object NetworkServerCreator{
             }
         }).build()
         retrofit= Retrofit.Builder()
-            .baseUrl("https://2xrnknq21l5m.hk1.xiaomiqiu123.top")
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHtttp)
             .build()
