@@ -1,4 +1,4 @@
-package com.ljw.secret.Dialog
+package com.ljw.secret.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -11,20 +11,25 @@ import com.ljw.secret.databinding.DialogLayoutBinding
 
 open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
 
-    var binding:DialogLayoutBinding
-
-    init {
-        binding = DialogLayoutBinding.inflate(layoutInflater)
-        setCanceledOnTouchOutside(false)
+    companion object {
+        const val TITLE_VISIBLE = 0
+        const val TITLE_INVISIBLE = 1
+        const val LEFT_BUTTON_VISIBLE = 2
+        const val LEFT_BUTTON_INVISIBLE = 3
+        const val RIGHT_BUTTON_VISIBLE = 4
+        const val RIGHT_BUTTON_INVISIBLE = 5
     }
+
+    var binding:DialogLayoutBinding = DialogLayoutBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        setCanceledOnTouchOutside(false)
     }
 
     fun setTitle(title:String){
-        binding.title.setText(title)
+        binding.title.text = title
     }
 
     fun setTitleStyle(titleStyle:(TextView) -> Unit){
@@ -32,14 +37,14 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
     }
 
     fun setMessage(message:String){
-        binding.message.setText(message)
+        binding.message.text = message
     }
 
     fun setMessgaeStyle(messageStyle:(TextView) -> Unit){
         messageStyle(binding.message)
     }
 
-    fun setCanel(canCancel:Boolean){
+    fun setCancel(canCancel:Boolean){
         setCanceledOnTouchOutside(canCancel)
     }
 
@@ -53,8 +58,20 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
 
     private fun setButton(button:Button, text:String, onClick: (View, Dialog) -> Unit){
         button.visibility = View.VISIBLE
-        button.setText(text)
+        button.text = text
         button.setOnClickListener { onClick(binding.message,this) }
+    }
+
+    fun setVisible(viewType: Int) {
+        when(viewType) {
+            TITLE_VISIBLE -> binding.title.visibility = View.VISIBLE
+            TITLE_INVISIBLE -> binding.title.visibility = View.GONE
+            LEFT_BUTTON_VISIBLE -> binding.no.visibility = View.VISIBLE
+            LEFT_BUTTON_INVISIBLE -> binding.no.visibility = View.GONE
+            RIGHT_BUTTON_VISIBLE -> binding.yes.visibility = View.VISIBLE
+            RIGHT_BUTTON_INVISIBLE -> binding.yes.visibility = View.GONE
+
+        }
     }
 
 }

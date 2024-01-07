@@ -1,10 +1,10 @@
-package com.ljw.secret.DataBase
+package com.ljw.secret.dataBase
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.ljw.secret.POJO.User
+import com.ljw.secret.pojo.User
 
 @Database(version = 1, entities = [User::class], exportSchema = false)
 abstract class UserDatabase:RoomDatabase() {

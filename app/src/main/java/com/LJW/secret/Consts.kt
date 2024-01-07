@@ -1117,7 +1117,7 @@ object Consts {
 
     fun getPrimarySubjectList() = primaryList
 
-    fun getSecondSubjextList() = secondaryList
+    fun getSecondSubjectList() = secondaryList
 
     fun getTertiarySubjectList() = tertiaryList
     }

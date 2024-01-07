@@ -1,6 +1,6 @@
 package com.ljw.secret
 
-import com.ljw.secret.POJO.User
+import com.ljw.secret.pojo.User
 import okhttp3.Cookie
 import java.lang.NullPointerException
 import java.net.Socket

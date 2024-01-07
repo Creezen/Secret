@@ -1,4 +1,4 @@
-package com.ljw.secret.Activities
+package com.ljw.secret.activities
 
 import android.graphics.Color
 import android.os.Bundle
@@ -9,10 +9,10 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import com.ljw.secret.Dialog.SimpleDialog
-import com.ljw.secret.Network.UserService
+import com.ljw.secret.dialog.SimpleDialog
+import com.ljw.secret.network.UserService
 import com.ljw.secret.NetworkServerCreator
-import com.ljw.secret.POJO.User
+import com.ljw.secret.pojo.User
 import com.ljw.secret.POJO2Map
 import com.ljw.secret.R
 import com.ljw.secret.addTextChangedListener
@@ -22,8 +22,8 @@ import com.ljw.secret.databinding.AccountCreationBinding
 import com.ljw.secret.getRandomString
 import com.ljw.secret.msg
 import com.ljw.secret.toTime
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class AccountCreation : BaseActivity() {
@@ -35,15 +35,17 @@ class AccountCreation : BaseActivity() {
     private var passwordFlag = false
     private var passwordConfirmFlag = false
 
-    private val YEAR= (1920..2050).toList() as ArrayList
-    private val MONTH= (1..12).toList() as ArrayList
-    private val DAY=ArrayList<Int>()
-    private val BIG_DAY= (1..31).toList() as ArrayList
-    private val SMALL_DAY= (1..30).toList() as ArrayList
-    private val LEAP_DAY= (1..29).toList() as ArrayList
-    private val COMMON_DAY= (1..28).toList() as ArrayList
-    private val SEX= arrayOf("男","女","保密").toList() as ArrayList<String>
-    private lateinit var EMAIL_PROFIX:ArrayList<String>
+    companion object {
+        private val YEAR= (1920..2050).toList() as ArrayList
+        private val MONTH= (1..12).toList() as ArrayList
+        private val DAY=ArrayList<Int>()
+        private val BIG_DAY= (1..31).toList() as ArrayList
+        private val SMALL_DAY= (1..30).toList() as ArrayList
+        private val LEAP_DAY= (1..29).toList() as ArrayList
+        private val COMMON_DAY= (1..28).toList() as ArrayList
+        private val SEX= arrayOf("男","女","保密").toList() as ArrayList<String>
+        private lateinit var EMAIL_PROFIX:ArrayList<String>
+    }
 
     private lateinit var binding:AccountCreationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,26 +58,26 @@ class AccountCreation : BaseActivity() {
         pageInit()
     }
 
-    fun pageInit(){
+    private fun pageInit(){
         with(binding){
             name.configAfterText {
                 if(it.length in 6..18){
                     nameHintLength.visibility=View.GONE
-                    var map=HashMap<String,String>()
+                    val map=HashMap<String,String>()
                     map["type"] = "0"
                     map["name"] = name.msg()
-                    GlobalScope.launch(Dispatchers.Main){
+                    CoroutineScope(Dispatchers.Main).launch{
                         try {
-                            var awaitResult = NetworkServerCreator.create<UserService>()
+                            val awaitResult = NetworkServerCreator.create<UserService>()
                                 .checkUserName(map)
                                 .await()
                             if (awaitResult["status"] == 0) {
                                 name.setTextColor(Color.parseColor("#00ff00"))
-                                nameHIntExist.setVisibility(View.GONE)
+                                nameHIntExist.visibility = View.GONE
                                 nameFlag = true
                             } else {
                                 name.setTextColor(Color.parseColor("#000000"))
-                                nameHIntExist.setVisibility(View.VISIBLE)
+                                nameHIntExist.visibility = View.VISIBLE
                                 nameFlag = false
                             }
                             checkInformation(register,registerHint)
@@ -93,12 +95,12 @@ class AccountCreation : BaseActivity() {
             nickname.configAfterText {
                 nicknameHintLength.visibility=if (it.length in 1..8) View.GONE else View.VISIBLE
                 nicknameHintValid.visibility=if (" " in it) View.VISIBLE else View.GONE
-                if (it.length in 1..8){
+                nicknameFlag = if (it.length in 1..8){
                     this.setTextColor(Color.parseColor("#00ff00"))
-                    nicknameFlag=true
+                    true
                 }else{
                     this.setTextColor(Color.parseColor("#000000"))
-                    nicknameFlag=false
+                    false
                 }
             }
             password.configAfterText {
@@ -115,7 +117,8 @@ class AccountCreation : BaseActivity() {
                 checkPassword(it,password.msg(),passwordDismatch)
             }
             selfIntroduction.configAfterText {
-                selfIntoLength.setText("${it.length}/200")
+                val lengthText = "${it.length}${getString(R.string.text_length_postfix)}"
+                selfIntoLength.text = lengthText
             }
             emailPostfix.config(EMAIL_PROFIX){_-> }
             birthdayYear.config(YEAR){selectValue->
@@ -137,20 +140,20 @@ class AccountCreation : BaseActivity() {
                 val currentTime=System.currentTimeMillis()
                 val userIdValue="${currentTime}${getRandomString(7)}"
                 val createTimeValue=currentTime.toTime("yyyy-MM-dd HH:mm:ss")
-                val emailValue=if(email.msg().length>0) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
+                val emailValue=if(email.msg().isNotEmpty()) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
                 val phoneValue=phone.msg()
                 val addressValue=address.msg()
                 val selfIntroductionValue=selfIntroduction.msg()
-                val isEdit=if((emailValue.length>0) and (phoneValue.length>0) and (addressValue.length>0) and (selfIntroductionValue.length>0)) 1 else 0
+                val isEdit=if((emailValue.isNotEmpty()) and (phoneValue.isNotEmpty()) and (addressValue.isNotEmpty()) and (selfIntroductionValue.isNotEmpty())) 1 else 0
                 val ageValue=createTimeValue.subSequence(0,4).toString().toInt()-birthdayYear.selectedItem as Int
                 val birthdayValue = "${birthdayYear.selectedItem as Int}-${birthdayMonth.selectedItem as Int}-${birthdayDay.selectedItem as Int}"
-                GlobalScope.launch(Dispatchers.Main) {
+                CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        var map1= User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
+                        val map1= User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
                             0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
                         ).POJO2Map()
                         map1["type"]="1"
-                        var awaitResult = NetworkServerCreator.create<UserService>()
+                        val awaitResult = NetworkServerCreator.create<UserService>()
                             .checkUserName(map1)
                             .await()
                         if (null != awaitResult["status"]){
@@ -163,16 +166,17 @@ class AccountCreation : BaseActivity() {
             }
             register.isClickable = false
             Log.e("AccountCreation.pageInit", "${register.isClickable}")
-
         }
     }
 
-    fun updateDaySpinner(selectedYear:Int,seletedMonth:Int,spinner: Spinner){
+    private fun updateDaySpinner(selectedYear:Int,seletedMonth:Int,spinner: Spinner){
         val arrayAdapter = spinner.adapter as ArrayAdapter<Int>
         arrayAdapter.clear()
-        if (seletedMonth in intArrayOf(1,3,5,7,8,10,12)) arrayAdapter.addAll(BIG_DAY)
-        else if (seletedMonth==2) arrayAdapter.addAll(if (isLeapYear(selectedYear)) LEAP_DAY else COMMON_DAY)
-        else arrayAdapter.addAll(SMALL_DAY)
+        when (seletedMonth) {
+            in intArrayOf(1,3,5,7,8,10,12) -> arrayAdapter.addAll(BIG_DAY)
+            in intArrayOf(2) -> arrayAdapter.addAll(if (isLeapYear(selectedYear)) LEAP_DAY else COMMON_DAY)
+            else -> arrayAdapter.addAll(SMALL_DAY)
+        }
         arrayAdapter.notifyDataSetChanged()
     }
 
@@ -195,16 +199,14 @@ class AccountCreation : BaseActivity() {
         }
     }
 
-
-
-    fun isLeapYear(year:Int)=when {
+    private fun isLeapYear(year:Int)=when {
         year%100==0 -> year%400==0
         year%4==0 -> true
         else ->false
     }
 
     private fun checkPassword(ps1:String,ps2:String,layout: LinearLayout){
-        if (ps1.equals(ps2)){
+        if (ps1 == ps2){
             layout.visibility=View.GONE
             passwordConfirmFlag=true
         }else{

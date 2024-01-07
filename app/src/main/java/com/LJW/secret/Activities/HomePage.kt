@@ -1,7 +1,6 @@
-package com.ljw.secret.Activities
+package com.ljw.secret.activities
 
 import android.os.Bundle
-import com.ljw.secret.Activities.BaseActivity
 import com.ljw.secret.databinding.HomePageBinding
 
 class HomePage: BaseActivity() {

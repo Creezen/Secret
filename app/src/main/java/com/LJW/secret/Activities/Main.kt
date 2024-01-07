@@ -1,31 +1,25 @@
-package com.ljw.secret.Activities
+package com.ljw.secret.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.ljw.secret.BASE_SOCKET_PATH
-import com.ljw.secret.Dialog.SimpleDialog
-import com.ljw.secret.Fragments.ChatBox
-import com.ljw.secret.Fragments.Feedback
-import com.ljw.secret.Fragments.ListPage
-import com.ljw.secret.Fragments.TimeLine
-import com.ljw.secret.Fragments.Widgets
-import com.ljw.secret.Fragments.YQIA
-import com.ljw.secret.LOCAL_SOCKET_PORT
+import com.ljw.secret.ActivityCollector
+import com.ljw.secret.dialog.SimpleDialog
+import com.ljw.secret.fragments.ChatBox
+import com.ljw.secret.fragments.Feedback
+import com.ljw.secret.fragments.ListPage
+import com.ljw.secret.fragments.TimeLine
+import com.ljw.secret.fragments.Widgets
+import com.ljw.secret.fragments.YQIA
 import com.ljw.secret.OnlineUser
 import com.ljw.secret.R
-import com.ljw.secret.UserSocket
 import com.ljw.secret.databinding.ActivityMainBinding
 import com.ljw.secret.replaceFragment
 import com.ljw.secret.toast
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.net.Socket
 
 class Main : BaseActivity() {
 
@@ -42,7 +36,7 @@ class Main : BaseActivity() {
         initPage()
     }
 
-    fun initPage(){
+    private fun initPage(){
         with(binding){
             if (null==viewHolder){
                 viewHolder=ViewHolder(Feedback(),YQIA(), Widgets(), ListPage(), ChatBox(),
@@ -55,10 +49,10 @@ class Main : BaseActivity() {
                 setDisplayHomeAsUpEnabled(true)
                 setHomeAsUpIndicator(R.drawable.open_drawer)
             }
-            toolBarText.setText(navigation.menu.getItem(0).title)
+            toolBarText.text = navigation.menu.getItem(0).title
             replaceFragment(viewHolder!!.yqia)
             navigation.setNavigationItemSelectedListener { item->
-                toolBarText.setText(item.title)
+                toolBarText.text = item.title
                 viewHolder?.apply {
                     when(item.itemId){
                         R.id.MainMenuFeedback -> replaceFragment(feedback)
@@ -101,7 +95,7 @@ class Main : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.MainLogout -> {
-
+                ActivityCollector.finishAll()
             }
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }
@@ -109,6 +103,6 @@ class Main : BaseActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment){
-        replaceFragment(supportFragmentManager,R.id.frame,fragment,false)
+        replaceFragment(supportFragmentManager,R.id.frame,fragment)
     }
 }

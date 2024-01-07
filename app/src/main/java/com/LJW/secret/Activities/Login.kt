@@ -1,14 +1,16 @@
-package com.ljw.secret.Activities
+package com.ljw.secret.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.ljw.secret.BASE_SOCKET_PATH
 import com.ljw.secret.LOCAL_SOCKET_PORT
 import com.ljw.secret.Map2POJO
-import com.ljw.secret.Network.UserService
+import com.ljw.secret.network.UserService
 import com.ljw.secret.NetworkServerCreator
 import com.ljw.secret.OnlineUser
+import com.ljw.secret.R
 import com.ljw.secret.UserSocket
 import com.ljw.secret.addTextChangedListener
 import com.ljw.secret.await
@@ -16,7 +18,6 @@ import com.ljw.secret.databinding.ActivityLoginBinding
 import com.ljw.secret.msg
 import com.ljw.secret.toast
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.net.ProtocolException
@@ -33,12 +34,12 @@ class Login : AppCompatActivity() {
         initView()
     }
 
-    fun initView(){
+    private fun initView(){
         with(binding){
             name.addTextChangedListener {
                 afterTextChanged {
                     it?.apply {
-                         login.isClickable = if (this.length>18||it.length<6) false else true
+                         login.isClickable = !(this.length>18||it.length<6)
                     }
                 }
             }
@@ -51,9 +52,9 @@ class Login : AppCompatActivity() {
                 startActivity(intent)
             }
             login.setOnClickListener {
-                GlobalScope.launch(Dispatchers.Main) {
+                lifecycleScope.launch(Dispatchers.Main) {
                     try {
-                        var loginResult = NetworkServerCreator.create<UserService>()
+                        val loginResult = NetworkServerCreator.create<UserService>()
                             .LoginSystem(name.msg(), password.msg())
                             .await()
                         if (!loginResult.containsKey("status")) {
@@ -74,8 +75,8 @@ class Login : AppCompatActivity() {
                     }
                 }
             }
-            name.setText("123456")
-            password.setText("123456")
+            name.setText(getString(R.string.login_name))
+            password.setText(R.string.login_password)
         }
     }
 }

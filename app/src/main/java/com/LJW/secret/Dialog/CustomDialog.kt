@@ -1,4 +1,4 @@
-package com.ljw.secret.Dialog
+package com.ljw.secret.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.viewbinding.ViewBinding
 
-class CustomDialog<T : ViewBinding>(mContext:Context,var viewBinding: T) : SimpleDialog(mContext) {
+class CustomDialog<T : ViewBinding>(mContext:Context, var viewBinding: T) : SimpleDialog(mContext) {
 
     init {
         super.binding.apply {

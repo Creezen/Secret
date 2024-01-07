@@ -15,20 +15,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
-        <activity android:name=".Activities.HomePage"
-            android:exported="false"/>
-        <activity android:name=".Activities.SubModule.MultiThread"
-            android:exported="false"/>
-        <activity android:name=".Activities.SubModule.PocketBook"
-            android:exported="false"/>
         <activity
-            android:name=".Activities.Main"
-            android:exported="false"/>
-        <activity
-            android:name=".Activities.AccountCreation"
+            android:name=".activities.pocket.NewRecord"
             android:exported="false" />
         <activity
-            android:name=".Activities.Login"
+            android:name=".activities.HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".activities.MultiThread"
+            android:exported="false" />
+        <activity
+            android:name=".activities.PocketBook"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Main"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AccountCreation"
+            android:exported="false" />
+        <activity
+            android:name=".activities.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

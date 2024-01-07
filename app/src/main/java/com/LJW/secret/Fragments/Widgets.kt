@@ -1,12 +1,12 @@
-package com.ljw.secret.Fragments
+package com.ljw.secret.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ljw.secret.Activities.SubModule.MultiThread
-import com.ljw.secret.Activities.SubModule.PocketBook
+import com.ljw.secret.activities.MultiThread
+import com.ljw.secret.activities.PocketBook
 import com.ljw.secret.databinding.WidgetsBinding
 
 class Widgets:BaseFragment() {

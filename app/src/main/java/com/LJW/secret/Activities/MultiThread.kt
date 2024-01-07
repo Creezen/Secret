@@ -1,7 +1,7 @@
-package com.ljw.secret.Activities.SubModule
+package com.ljw.secret.activities
 
 import android.os.Bundle
-import com.ljw.secret.Activities.BaseActivity
+import com.ljw.secret.activities.BaseActivity
 import com.ljw.secret.databinding.MtMainBinding
 
 class MultiThread: BaseActivity() {

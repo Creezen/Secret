@@ -26,6 +26,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 import java.util.Random
 import java.util.TimeZone
 import kotlin.coroutines.resume
@@ -49,14 +50,14 @@ inline fun <reified T> Map<String,String>.Map2POJO():T{
 }
 
 fun Long.toTime(formater:String=""):String{
-    val simpleDateFormat=SimpleDateFormat(formater)
+    val simpleDateFormat=SimpleDateFormat(formater, Locale.CHINA)
     simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")
-    if (formater.length>0) return simpleDateFormat.format(Date(this))
+    if (formater.isNotEmpty()) return simpleDateFormat.format(Date(this))
     return ""
 }
 
 fun <T> T.toast() =Toast.makeText(Env.context,"${this}",Toast.LENGTH_LONG).show()
-fun TextView.msg()=this.text.toString()
+fun TextView.msg()=this.text.toString().trim()
 
 fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
     val dataArrayList = ArrayList(list)
@@ -103,7 +104,7 @@ object NetworkServerCreator{
     var retrofit : Retrofit
     init {
         Log.e("NetworkServerCreator.()","init")
-        val okHtttp = OkHttpClient.Builder().cookieJar(object : CookieJar {
+        val okHttp = OkHttpClient.Builder().cookieJar(object : CookieJar {
             override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
                 COOKIE_LIST.removeIf { it.name() == "JSESSIONID" }
                 COOKIE_LIST.add(cookies.last { it.name() == "JSESSIONID" })
@@ -130,7 +131,7 @@ object NetworkServerCreator{
         retrofit= Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(okHtttp)
+            .client(okHttp)
             .build()
     }
 
@@ -153,8 +154,13 @@ suspend fun <T : Any> Call<T>.await():T{
     }
 }
 
-fun replaceFragment(fragmentManager: FragmentManager,resourceID:Int,fragment:Fragment,isAddToStack:Boolean){
-    var beginTransaction = fragmentManager.beginTransaction()
+fun replaceFragment(
+    fragmentManager: FragmentManager,
+    resourceID:Int,
+    fragment:Fragment,
+    isAddToStack:Boolean = false
+){
+    val beginTransaction = fragmentManager.beginTransaction()
     beginTransaction.replace(resourceID,fragment)
     if (isAddToStack) beginTransaction.addToBackStack(null)
     beginTransaction.commit()

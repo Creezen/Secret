@@ -5,6 +5,7 @@
     <string name="choose_fill">选填</string>
     <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
     <string name="register">点击注册</string>
+    <string name="text_length_postfix">/200</string>
     <string-array name="EmailProfix">
         <item>\@yahoo.com</item>
         <item>\@msn.com</item>
@@ -26,4 +27,11 @@
         <item>\@qq.com</item>
         <item>\@sogou.com</item>
     </string-array>
+
+    <string name="login_name"> </string>
+    <string name="login_password"> </string>
+    <string name="show_history">查看历史</string>
+    <string name="load_history">加载已有记录</string>
+    <string name="new_record">新建记录</string>
+    <string name="pocket_book">记账本</string>
 </resources>
