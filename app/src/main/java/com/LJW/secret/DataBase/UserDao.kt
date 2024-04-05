@@ -3,7 +3,7 @@ package com.ljw.secret.dataBase
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.ljw.secret.pojo.User
+import com.ljw.secret.bean.User
 
 @Dao
 interface UserDao {

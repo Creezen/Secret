@@ -4,7 +4,7 @@
         <item android:id="@+id/MainMenuYouQIA"
             android:title="讨论"/>
         <item android:id="@+id/MainMenuTimeline"
-            android:title="时间轴"/>
+            android:title="历史事件"/>
         <item android:id="@+id/MainMenuWidget"
             android:title="本地应用"/>
         <item android:id="@+id/MainMenuFunction"

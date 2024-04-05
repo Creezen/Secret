@@ -1,17 +1,19 @@
 package com.ljw.secret.activities.pocket
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ljw.secret.R
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import com.ljw.secret.databinding.NewPocketRecordBinding
 
 class NewRecord : AppCompatActivity() {
 
+    private lateinit var binding: NewPocketRecordBinding
     private val userList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.new_pocket_record)
+        binding = NewPocketRecordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initData()
         initView()
         Log.e("NewRecord.onCreate","$userList")
@@ -29,6 +31,6 @@ class NewRecord : AppCompatActivity() {
     }
 
     private fun initView() {
-
+        binding.titleTv.setText(intent.getStringExtra("title"))
     }
 }

@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.ljw.secret.Consts
-import com.ljw.secret.config
+import com.ljw.secret.Constant
+import com.ljw.secret.util.config
 import com.ljw.secret.databinding.YouqIaBinding
 
 class YQIA:BaseFragment() {
 
-    private val primaryList = Consts.getPrimarySubjectList()
-    private val secondaryList = Consts.getSecondSubjectList()
-    private val tertiaryList = Consts.getTertiarySubjectList()
+    private val primaryList = Constant.getPrimarySubjectList()
+    private val secondaryList = Constant.getSecondSubjectList()
+    private val tertiaryList = Constant.getTertiarySubjectList()
 
     private lateinit var binding: YouqIaBinding
 

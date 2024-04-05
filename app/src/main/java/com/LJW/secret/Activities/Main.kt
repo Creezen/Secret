@@ -1,13 +1,19 @@
 package com.ljw.secret.activities
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.ljw.secret.ActivityCollector
+import com.ljw.secret.util.ActivityCollector
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.fragments.ChatBox
 import com.ljw.secret.fragments.Feedback
@@ -18,8 +24,8 @@ import com.ljw.secret.fragments.YQIA
 import com.ljw.secret.OnlineUser
 import com.ljw.secret.R
 import com.ljw.secret.databinding.ActivityMainBinding
-import com.ljw.secret.replaceFragment
-import com.ljw.secret.toast
+import com.ljw.secret.util.replaceFragment
+import com.ljw.secret.util.toast
 
 class Main : BaseActivity() {
 

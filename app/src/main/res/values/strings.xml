@@ -34,4 +34,9 @@
     <string name="load_history">加载已有记录</string>
     <string name="new_record">新建记录</string>
     <string name="pocket_book">记账本</string>
+    <string name="pocket">记账本</string>
+    <string name="remove_mountain">愚公移山精简版</string>
+    <string name="add_user">添加玩家</string>
+    <string name="round_record">小局结算</string>
+    <string name="upload_file">上传文件</string>
 </resources>

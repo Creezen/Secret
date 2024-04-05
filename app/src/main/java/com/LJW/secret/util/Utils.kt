@@ -1,4 +1,4 @@
-package com.ljw.secret
+package com.ljw.secret.util
 
 import android.app.Activity
 import android.text.Editable
@@ -14,21 +14,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.alibaba.fastjson.JSON
 import com.google.gson.Gson
+import com.ljw.secret.COOKIE_LIST
+import com.ljw.secret.COOKIE_MAP
+import com.ljw.secret.Constant.BASE_URL
+import com.ljw.secret.Constant.BASIC_LETTER
+import com.ljw.secret.Env
+import com.ljw.secret.R
 import okhttp3.Cookie
 
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.KeyStore.TrustedCertificateEntry
 import java.text.SimpleDateFormat
+import java.util.Arrays
 import java.util.Date
 import java.util.Locale
 import java.util.Random
 import java.util.TimeZone
+import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLSocketFactory
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -56,12 +67,12 @@ fun Long.toTime(formater:String=""):String{
     return ""
 }
 
-fun <T> T.toast() =Toast.makeText(Env.context,"${this}",Toast.LENGTH_LONG).show()
+fun <T> T.toast() = Toast.makeText(Env.context,"${this}",Toast.LENGTH_LONG).show()
 fun TextView.msg()=this.text.toString().trim()
 
 fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
     val dataArrayList = ArrayList(list)
-    val spinnerAdapter= ArrayAdapter(Env.context,R.layout.spinner_prompt,dataArrayList)
+    val spinnerAdapter= ArrayAdapter(Env.context, R.layout.spinner_prompt,dataArrayList)
     spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
     this.adapter=spinnerAdapter
     this.setOnItemSelectedListener {
@@ -72,7 +83,8 @@ fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
     this.setSelection(0)
 }
 
-inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(EditTextBridge().apply (bridge))
+inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(
+    EditTextBridge().apply (bridge))
 
 class EditTextBridge: TextWatcher {
     private var beforeTextChanged: ((CharSequence?, Int, Int, Int) ->  Unit)? = null
@@ -85,7 +97,8 @@ class EditTextBridge: TextWatcher {
     fun onTextChanged(listener: (CharSequence?, Int, Int, Int) ->  Unit) { onTextChanged = listener }
     fun afterTextChanged(listener: (Editable?) ->  Unit) { afterTextChanged = listener }
 }
-inline fun Spinner.setOnItemSelectedListener(bridge:SpinnerBridge.()->Unit) = setOnItemSelectedListener(SpinnerBridge().apply(bridge))
+inline fun Spinner.setOnItemSelectedListener(bridge: SpinnerBridge.()->Unit) = setOnItemSelectedListener(
+    SpinnerBridge().apply(bridge))
 
 class SpinnerBridge: AdapterView.OnItemSelectedListener {
     private var onItemSelected:((AdapterView<*>?,View?,Int,Long) -> Unit)?=null
@@ -127,21 +140,24 @@ object NetworkServerCreator{
                 COOKIE_LIST.forEach { Log.e("NetworkServerCreator.saveFromResponse", "${it.name()}  ${it.value()}") }
                 return COOKIE_LIST
             }
-        }).build()
-        retrofit= Retrofit.Builder()
+        }).protocols(Arrays.asList(Protocol.HTTP_1_1))
+            .readTimeout(60000, TimeUnit.SECONDS)
+            .build()
+        retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttp)
             .build()
     }
 
-    inline fun <reified T> create():T=retrofit.create(T::class.java)
+    inline fun <reified T> create():T= retrofit.create(T::class.java)
 }
 suspend fun <T : Any> Call<T>.await():T{
     return suspendCoroutine { continuation ->
         enqueue(object : Callback<T> {
             override fun onResponse(p0: Call<T>, p1: Response<T>) {
                 val body=p1.body()
+                Log.e("await.onResponse","$body")
                 if(body!=null)
                     continuation.resume(body)
                 else continuation.resumeWithException(RuntimeException("return empty"))
@@ -172,4 +188,3 @@ object ActivityCollector{
     fun removeActivity(activity: Activity){ activities.remove(activity) }
     fun finishAll(){ activities.forEach{if (!it.isFinishing) it.finish()} }
 }
-

@@ -3,10 +3,9 @@ package com.ljw.secret.activities
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.ljw.secret.R
-import com.ljw.secret.activities.BaseActivity
 import com.ljw.secret.databinding.PocketBookBinding
 import com.ljw.secret.fragments.pocket.MainMenu
-import com.ljw.secret.replaceFragment
+import com.ljw.secret.util.replaceFragment
 
 class PocketBook: BaseActivity() {
 

@@ -13,7 +13,7 @@ import com.ljw.secret.databinding.PocketMainBinding
 import com.ljw.secret.dialog.CustomDialog
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.fragments.BaseFragment
-import com.ljw.secret.msg
+import com.ljw.secret.util.msg
 
 class MainMenu: BaseFragment() {
 
@@ -49,6 +49,7 @@ class MainMenu: BaseFragment() {
                         startActivity(
                             Intent(activity, NewRecord::class.java).also {
                                 it.putExtra("userData", userList)
+                                it.putExtra("title", userBinding.titleEdt.text.toString())
                             }
                         )
                     }

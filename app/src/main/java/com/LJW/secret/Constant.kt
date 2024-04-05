@@ -1,6 +1,11 @@
 package com.ljw.secret
 
-object Consts {
+object Constant {
+
+    const val LOCAL_SOCKET_PORT = 10156
+    const val BASE_URL = "https://2xrnknq21l5m.hk1.xiaomiqiu123.top"
+    const val BASE_SOCKET_PATH = "hk1.xiaomiqiu123.top"
+    const val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
     private val primaryList = listOf(
         "哲学",
@@ -1120,4 +1125,4 @@ object Consts {
     fun getSecondSubjectList() = secondaryList
 
     fun getTertiarySubjectList() = tertiaryList
-    }
+}

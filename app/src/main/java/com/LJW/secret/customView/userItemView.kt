@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.ljw.secret.R
-import com.ljw.secret.addTextChangedListener
+import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.databinding.PocketUsernameItemLayoutBinding
 import com.ljw.secret.fragments.pocket.MainMenu.Companion.INIT_USER_COUNT
 

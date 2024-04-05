@@ -1,3 +1,7 @@
-package com.ljw.secret.pojo
+package com.ljw.secret.bean
 
-class Record(val round: String, val score: ArrayList<Int>)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class Record(val round: String, val score: ArrayList<Int>) : Parcelable
