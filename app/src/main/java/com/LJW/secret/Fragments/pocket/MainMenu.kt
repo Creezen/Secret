@@ -13,7 +13,7 @@ import com.ljw.secret.databinding.PocketMainBinding
 import com.ljw.secret.dialog.CustomDialog
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.fragments.BaseFragment
-import com.ljw.secret.util.msg
+import com.ljw.secret.util.DataUtil.msg
 
 class MainMenu: BaseFragment() {
 

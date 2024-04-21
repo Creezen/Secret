@@ -1,11 +1,13 @@
 package com.ljw.secret.util
 
+import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import com.ljw.secret.Env
+import java.io.File
 
 object FileUtil {
     fun getFilePathByUri(uri: Uri): String? {
@@ -92,4 +94,39 @@ object FileUtil {
     enum class DocumentType{
         EXTERNAL, DOWNLOAD, MEDIA, UNKNOWN
     }
+
+    private fun guide(context: Context) {
+        //   /data
+        e(Environment.getDataDirectory())
+        //   /data/cache
+        e(Environment.getDownloadCacheDirectory())
+        //   /system
+        e(Environment.getRootDirectory())
+
+        //   /data/user/0/com.example.tianji/cache
+        e(context.getCacheDir())
+        //   /data/user/0/com.example.tianji/files
+        e(context.getFilesDir())
+        //   /data/user/0/com.example.tianji/app_LJW
+        e(context.getDir("LJW", Context.MODE_PRIVATE))
+
+        //   /storage/emulated/0
+        e(Environment.getExternalStorageDirectory())
+        //   /storage/emulated/0/Pictures
+        e(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))
+        //   /storage/emulated/0/Download
+        e(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
+
+        //   /storage/emulated/0/Android/data/com.example.tianji/files
+        e(context.getExternalFilesDir(null))
+        //   /storage/emulated/0/Android/data/com.example.tianji/cache
+        e(context.getExternalCacheDir())
+        //   /storage/emulated/0/Android/data/com.example.tianji/files/TianJi
+        e(context.getExternalFilesDir("TianJi"))
+    }
+
+    private fun e(file: File?) {
+        Log.e("file", "$file")
+    }
+
 }

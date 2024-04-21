@@ -1,6 +1,7 @@
 package com.ljw.secret.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,17 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ljw.secret.Constant.BASE_SOCKET_PATH
 import com.ljw.secret.Constant.LOCAL_SOCKET_PORT
-import com.ljw.secret.OnlineUser
+import com.ljw.secret.OnlineUserItem
 import com.ljw.secret.R
 import com.ljw.secret.UserSocket
 import com.ljw.secret.databinding.ActivityLoginBinding
 import com.ljw.secret.network.UserService
+import com.ljw.secret.util.DataUtil.msg
+import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.Map2POJO
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.util.await
-import com.ljw.secret.util.msg
-import com.ljw.secret.util.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -28,13 +29,17 @@ import java.net.Socket
 class Login : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
+    private var isLogin: Boolean = false
 
-    @RequiresApi(Build.VERSION_CODES.S)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
+        val packageInfo =
+            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
+        "${packageInfo.versionName}  ${packageInfo.longVersionCode}".toast()
     }
 
     private fun initView(){
@@ -61,16 +66,24 @@ class Login : AppCompatActivity() {
                             .LoginSystem(name.msg(), password.msg())
                             .await()
                         if (!loginResult.containsKey("status")) {
-                            OnlineUser =loginResult.Map2POJO()
+                            OnlineUserItem =loginResult.Map2POJO()
                             UserSocket = async(Dispatchers.IO) {
-                                Log.e("Login.initView","socket")
                                 Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                             }.await()
-                            startActivity(Intent(this@Login, Main::class.java))
+                            synchronized(this@Login) {
+                                if (isLogin) {
+                                    return@launch
+                                }
+                                startActivity(Intent(this@Login, Main::class.java))
+                                isLogin = true
+                            }
                         }else{
                             val status = loginResult["status"]?.toInt()
-                            if (status == 0)  "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
-                            else "账号或密码错误，请检查后再次尝试！".toast()
+                            if (status == 0) {
+                                "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
+                            } else  {
+                                "账号或密码错误，请检查后再次尝试！".toast()
+                            }
                         }
                     }
                 }.onFailure {

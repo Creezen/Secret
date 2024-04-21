@@ -1,11 +1,11 @@
 package com.ljw.secret
 
-import com.ljw.secret.bean.User
+import com.ljw.secret.bean.UserItem
 import okhttp3.Cookie
 import java.lang.NullPointerException
 import java.net.Socket
 
-lateinit var OnlineUser: User
+lateinit var OnlineUserItem: UserItem
 
 var UserSocket : Socket? = null
     set(value) {

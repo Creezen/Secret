@@ -11,60 +11,93 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
-import com.ljw.secret.databinding.MainFunctionsBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ljw.secret.activities.FileUploadActivity
+import com.ljw.secret.adapter.ResItemAdapter
+import com.ljw.secret.bean.ResourceItem
+import com.ljw.secret.databinding.FileShareBinding
 import com.ljw.secret.network.FileService
+import com.ljw.secret.util.DataUtil.toTime
+import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.FileUtil
+import com.ljw.secret.util.NetUtil
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.await
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
+import kotlinx.coroutines.withContext
 
 class ListPage : BaseFragment() {
 
-    private var fileLaunch: ActivityResultLauncher<Array<String>>? = null
+    private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
+    private val resItemList = ArrayList<ResourceItem>()
+    private val adapter: ResItemAdapter by lazy {
+        ResItemAdapter(resItemList)
+    }
+    private var tag: Any? = null
 
     override fun registerLauncher() {
-        fileLaunch = getLauncher(openFile()) {
-            it?.let { uri ->
-                lifecycleScope.launch {
-                    val filePath = FileUtil.getFilePathByUri(uri)
-                    if (filePath.isNullOrEmpty()) {
-                        Log.e("ListPage.registerLauncher","file not exist")
-                        return@launch
-                    }
-                    val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), File(filePath))
-                    val body = MultipartBody.Part.createFormData("file", filePath, requestFile)
-                    val result = NetworkServerCreator.create<FileService>()
-                        .uploadFile(body)
-                        .await()
-                    Log.e("ListPage.registerLauncher","filepath: $result")
-                }
-            }
-        }
         readExternalLaunch = getLauncher(startActivity()) {
             Log.e("ListPage.registerLauncher","$it")
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding=MainFunctionsBinding.inflate(inflater)
-        binding.toFileUpLoad.setOnClickListener {
-            if (Environment.isExternalStorageManager()) {
-                selectFile()
-            } else {
-                readExternalLaunch?.launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                    it.data = Uri.parse("package:" + activity?.packageName)
-                })
-            }
+        if (tag != null) {
+            initData()
+            return tag as View
         }
+        binding = FileShareBinding.inflate(inflater)
+        initPage()
+        initData()
+        tag = binding.root
         return binding.root
     }
 
-    private fun selectFile() {
-        fileLaunch?.launch(arrayOf("*/*"))
+    override fun onResume() {
+        super.onResume()
+        initData()
+    }
+
+    private fun initData() {
+        kotlin.runCatching {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val result = NetworkServerCreator.create<FileService>()
+                    .fetchFile()
+                    .await()
+                val list = result["items"]
+                if (list.isNullOrEmpty()) {
+                    return@launch
+                }
+                resItemList.clear()
+                resItemList.addAll(list)
+                withContext(Dispatchers.Main) {
+                    adapter.notifyDataSetChanged()
+                }
+            }
+        }.onFailure {
+            Log.e("ListPage.initData","$it")
+        }
+    }
+
+    private fun initPage() {
+        with(binding) {
+            uploadFile.setOnClickListener {
+                if (Environment.isExternalStorageManager()) {
+                    startActivity(Intent(this@ListPage.activity, FileUploadActivity::class.java))
+                } else {
+                    readExternalLaunch?.    launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
+                        it.data = Uri.parse("package:" + activity?.packageName)
+                    })
+                }
+            }
+            refresh.setOnClickListener {
+                initData()
+            }
+            recycle.layoutManager = LinearLayoutManager(context)
+            recycle.adapter = adapter
+        }
     }
 }

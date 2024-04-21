@@ -1,9 +1,9 @@
 package com.ljw.secret.activities
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ljw.secret.Common
-import com.ljw.secret.util.ActivityCollector
 
 open class BaseActivity : AppCompatActivity(), Common {
 
@@ -19,4 +19,24 @@ open class BaseActivity : AppCompatActivity(), Common {
     }
 
     open fun registerLauncher() {}
+
+    object ActivityCollector {
+        private val activities = ArrayList<Activity>()
+
+        fun addActivity(activity: Activity) {
+            activities.add(activity)
+        }
+
+        fun removeActivity(activity: Activity) {
+            activities.remove(activity)
+        }
+
+        fun finishAll() {
+            activities.forEach {
+                if (!it.isFinishing) {
+                    it.finish()
+                }
+            }
+        }
+    }
 }

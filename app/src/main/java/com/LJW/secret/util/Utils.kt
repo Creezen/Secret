@@ -1,6 +1,5 @@
 package com.ljw.secret.util
 
-import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -9,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.alibaba.fastjson.JSON
@@ -17,11 +15,9 @@ import com.google.gson.Gson
 import com.ljw.secret.COOKIE_LIST
 import com.ljw.secret.COOKIE_MAP
 import com.ljw.secret.Constant.BASE_URL
-import com.ljw.secret.Constant.BASIC_LETTER
 import com.ljw.secret.Env
 import com.ljw.secret.R
 import okhttp3.Cookie
-
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -31,50 +27,27 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.security.KeyStore.TrustedCertificateEntry
-import java.text.SimpleDateFormat
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.Arrays
-import java.util.Date
-import java.util.Locale
-import java.util.Random
-import java.util.TimeZone
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLSocketFactory
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun buildCookie(name:String, value:String) = Cookie.Builder().name(name).value(value).domain("www").build()
-fun getRandomString(length:Int):String{
-    val random= Random()
-    val buffer=StringBuffer()
-    for (i in 0..length-1)
-        buffer.append(BASIC_LETTER[random.nextInt(52)])
-    return buffer.toString()
-}
 
-fun <T> T.POJO2Map()= JSON.parseObject(JSON.toJSONString(this),HashMap::class.java) as HashMap<String,String>
+fun <T> T.POJO2Map()= JSON.parseObject(JSON.toJSONString(this), HashMap::class.java) as HashMap<String,String>
 
 inline fun <reified T> Map<String,String>.Map2POJO():T{
-    val gson= Gson()
+    val gson = Gson()
     return gson.fromJson(gson.toJson(this), T::class.java)
 }
 
-fun Long.toTime(formater:String=""):String{
-    val simpleDateFormat=SimpleDateFormat(formater, Locale.CHINA)
-    simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")
-    if (formater.isNotEmpty()) return simpleDateFormat.format(Date(this))
-    return ""
-}
-
-fun <T> T.toast() = Toast.makeText(Env.context,"${this}",Toast.LENGTH_LONG).show()
-fun TextView.msg()=this.text.toString().trim()
-
 fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
     val dataArrayList = ArrayList(list)
-    val spinnerAdapter= ArrayAdapter(Env.context, R.layout.spinner_prompt,dataArrayList)
+    val spinnerAdapter = ArrayAdapter(Env.context, R.layout.spinner_prompt,dataArrayList)
     spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
-    this.adapter=spinnerAdapter
+    this.adapter = spinnerAdapter
     this.setOnItemSelectedListener {
         onItemSelected{_,_,pos,_ ->
             itemSelect(dataArrayList[pos])
@@ -116,7 +89,6 @@ object NetworkServerCreator{
 
     var retrofit : Retrofit
     init {
-        Log.e("NetworkServerCreator.()","init")
         val okHttp = OkHttpClient.Builder().cookieJar(object : CookieJar {
             override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
                 COOKIE_LIST.removeIf { it.name() == "JSESSIONID" }
@@ -133,11 +105,10 @@ object NetworkServerCreator{
                     COOKIE_LIST.add(buildCookie("lastTime","${currentTime}"))
                     COOKIE_MAP["firstTime"] = currentTime
                     COOKIE_MAP["lastTime"] = currentTime
-                }else{
+                } else {
                     COOKIE_LIST.removeIf { it.name() == "lastTime" }
                     COOKIE_LIST.add(buildCookie("lastTime","${System.currentTimeMillis()}"))
                 }
-                COOKIE_LIST.forEach { Log.e("NetworkServerCreator.saveFromResponse", "${it.name()}  ${it.value()}") }
                 return COOKIE_LIST
             }
         }).protocols(Arrays.asList(Protocol.HTTP_1_1))
@@ -145,6 +116,7 @@ object NetworkServerCreator{
             .build()
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttp)
             .build()
@@ -157,7 +129,6 @@ suspend fun <T : Any> Call<T>.await():T{
         enqueue(object : Callback<T> {
             override fun onResponse(p0: Call<T>, p1: Response<T>) {
                 val body=p1.body()
-                Log.e("await.onResponse","$body")
                 if(body!=null)
                     continuation.resume(body)
                 else continuation.resumeWithException(RuntimeException("return empty"))
@@ -180,11 +151,4 @@ fun replaceFragment(
     beginTransaction.replace(resourceID,fragment)
     if (isAddToStack) beginTransaction.addToBackStack(null)
     beginTransaction.commit()
-}
-
-object ActivityCollector{
-    private val activities=ArrayList<Activity>()
-    fun addActivity(activity: Activity){ activities.add(activity) }
-    fun removeActivity(activity: Activity){ activities.remove(activity) }
-    fun finishAll(){ activities.forEach{if (!it.isFinishing) it.finish()} }
 }

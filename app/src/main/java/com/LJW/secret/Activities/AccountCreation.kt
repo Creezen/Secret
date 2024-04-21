@@ -9,21 +9,19 @@ import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
+import com.ljw.secret.R
+import com.ljw.secret.bean.UserItem
+import com.ljw.secret.databinding.AccountCreationBinding
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.network.UserService
+import com.ljw.secret.util.DataUtil.getRandomString
+import com.ljw.secret.util.DataUtil.toTime
 import com.ljw.secret.util.NetworkServerCreator
-import com.ljw.secret.bean.User
 import com.ljw.secret.util.POJO2Map
-import com.ljw.secret.R
 import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.util.await
 import com.ljw.secret.util.config
-import com.ljw.secret.databinding.AccountCreationBinding
-import com.ljw.secret.util.getRandomString
-import com.ljw.secret.util.msg
-import com.ljw.secret.util.toTime
-import com.ljw.secret.util.toast
+import com.ljw.secret.util.DataUtil.msg
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,15 +50,15 @@ class AccountCreation : BaseActivity() {
     private lateinit var binding:AccountCreationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=AccountCreationBinding.inflate(layoutInflater)
+        binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName= intent.getStringExtra("intentAccount")
         if(!TextUtils.isEmpty(accountName)) binding.name.setText(accountName)
         EMAIL_PROFIX = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
-        pageInit()
+        initView()
     }
 
-    private fun pageInit(){
+    private fun initView(){
         with(binding){
             name.configAfterText {
                 if(it.length in 6..18){
@@ -139,19 +137,19 @@ class AccountCreation : BaseActivity() {
                     setTitle("提示")
                     setMessage("注册中，请稍后...")
                 }
-                val currentTime=System.currentTimeMillis()
-                val userIdValue="${currentTime}${getRandomString(7)}"
-                val createTimeValue=currentTime.toTime("yyyy-MM-dd HH:mm:ss")
-                val emailValue=if(email.msg().isNotEmpty()) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
-                val phoneValue=phone.msg()
-                val addressValue=address.msg()
-                val selfIntroductionValue=selfIntroduction.msg()
-                val isEdit=if((emailValue.isNotEmpty()) and (phoneValue.isNotEmpty()) and (addressValue.isNotEmpty()) and (selfIntroductionValue.isNotEmpty())) 1 else 0
+                val currentTime = System.currentTimeMillis()
+                val userIdValue = "${currentTime}${getRandomString(7)}"
+                val createTimeValue = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
+                val emailValue = if(email.msg().isNotEmpty()) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
+                val phoneValue = phone.msg()
+                val addressValue = address.msg()
+                val selfIntroductionValue = selfIntroduction.msg()
+                val isEdit = if((emailValue.isNotEmpty()) and (phoneValue.isNotEmpty()) and (addressValue.isNotEmpty()) and (selfIntroductionValue.isNotEmpty())) 1 else 0
                 val ageValue=createTimeValue.subSequence(0,4).toString().toInt()-birthdayYear.selectedItem as Int
                 val birthdayValue = "${birthdayYear.selectedItem as Int}-${birthdayMonth.selectedItem as Int}-${birthdayDay.selectedItem as Int}"
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
-                        val map1= User(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
+                        val map1= UserItem(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
                             0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
                         ).POJO2Map()
                         map1["type"]="1"
@@ -184,8 +182,8 @@ class AccountCreation : BaseActivity() {
 
     private fun checkInformation(view1:View,view2:View){
         if (nameFlag and nicknameFlag and passwordFlag and passwordConfirmFlag){
-            view1.isClickable=true
-            view2.visibility=View.GONE
+            view1.isClickable = true
+            view2.visibility = View.GONE
         }else{
             view1.isClickable=false
             view2.visibility=View.VISIBLE
@@ -202,18 +200,18 @@ class AccountCreation : BaseActivity() {
     }
 
     private fun isLeapYear(year:Int)=when {
-        year%100==0 -> year%400==0
-        year%4==0 -> true
-        else ->false
+        year%100 == 0 -> year%400==0
+        year%4 == 0 -> true
+        else -> false
     }
 
     private fun checkPassword(ps1:String,ps2:String,layout: LinearLayout){
         if (ps1 == ps2){
-            layout.visibility=View.GONE
-            passwordConfirmFlag=true
+            layout.visibility = View.GONE
+            passwordConfirmFlag = true
         }else{
-            layout.visibility= View.VISIBLE
-            passwordConfirmFlag=false
+            layout.visibility = View.VISIBLE
+            passwordConfirmFlag = false
         }
     }
 }

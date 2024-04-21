@@ -39,4 +39,14 @@
     <string name="add_user">添加玩家</string>
     <string name="round_record">小局结算</string>
     <string name="upload_file">上传文件</string>
+    <string name="select_file">选择文件</string>
+    <string name="please_select_file">请选择需要上传的文件…</string>
+    <string name="resource_descript">资源描述</string>
+    <string name="not_null">必填</string>
+    <string name="find_password">找回密码</string>
+    <string name="create_account">创建账号</string>
+    <string name="login">点击登录</string>
+    <string name="password">密码</string>
+    <string name="account">账号</string>
+    <string name="download">下载</string>
 </resources>

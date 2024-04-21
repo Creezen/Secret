@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item android:id="@+id/MainMenuYouQIA"
-            android:title="讨论"/>
+            android:title="学习交流"/>
+        <item android:id="@+id/MainMenuFunction"
+            android:title="资源共享"/>
         <item android:id="@+id/MainMenuTimeline"
             android:title="历史事件"/>
-        <item android:id="@+id/MainMenuWidget"
-            android:title="本地应用"/>
-        <item android:id="@+id/MainMenuFunction"
-            android:title="资源分享"/>
         <item android:id="@+id/MainMenuShare"
             android:title="聊天室"/>
+        <item android:id="@+id/MainMenuWidget"
+            android:title="本地工具箱"/>
         <item android:id="@+id/MainMenuFeedback"
-            android:title="反馈通道"/>
+            android:title="意见反馈"/>
     </group>
 </menu>

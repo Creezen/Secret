@@ -1,19 +1,16 @@
 package com.ljw.secret.activities
 
-import android.Manifest
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import com.ljw.secret.util.ActivityCollector
+import androidx.lifecycle.lifecycleScope
+import com.ljw.secret.OnlineUserItem
+import com.ljw.secret.R
+import com.ljw.secret.databinding.ActivityMainBinding
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.fragments.ChatBox
 import com.ljw.secret.fragments.Feedback
@@ -21,11 +18,9 @@ import com.ljw.secret.fragments.ListPage
 import com.ljw.secret.fragments.TimeLine
 import com.ljw.secret.fragments.Widgets
 import com.ljw.secret.fragments.YQIA
-import com.ljw.secret.OnlineUser
-import com.ljw.secret.R
-import com.ljw.secret.databinding.ActivityMainBinding
+import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.replaceFragment
-import com.ljw.secret.util.toast
+import kotlinx.coroutines.launch
 
 class Main : BaseActivity() {
 
@@ -38,7 +33,7 @@ class Main : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        OnlineUser.selfIntroduction.toast()
+        OnlineUserItem.selfIntroduction.toast()
         initPage()
     }
 
@@ -59,6 +54,7 @@ class Main : BaseActivity() {
             replaceFragment(viewHolder!!.yqia)
             navigation.setNavigationItemSelectedListener { item->
                 toolBarText.text = item.title
+                drawerLayout.closeDrawers()
                 viewHolder?.apply {
                     when(item.itemId){
                         R.id.MainMenuFeedback -> replaceFragment(feedback)
@@ -69,7 +65,6 @@ class Main : BaseActivity() {
                         R.id.MainMenuTimeline -> replaceFragment(timeLine)
                     }
                 }
-                drawerLayout.closeDrawers()
                 return@setNavigationItemSelectedListener true
             }
             navigation.getHeaderView(0).setOnClickListener {

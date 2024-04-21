@@ -14,7 +14,7 @@ class PocketBook: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding=PocketBookBinding.inflate(layoutInflater)
+        binding = PocketBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
         replaceFragment(mainMenu)

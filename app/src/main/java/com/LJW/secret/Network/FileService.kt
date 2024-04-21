@@ -1,6 +1,7 @@
 package com.ljw.secret.network
 
 import com.google.gson.internal.LinkedTreeMap
+import com.ljw.secret.bean.ResourceItem
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
@@ -15,5 +16,17 @@ interface FileService {
 
     @POST("/fileUpload")
     @Multipart
-    fun uploadFile(@Part file: MultipartBody.Part): Call<LinkedHashMap<String, Boolean>>
+    fun uploadFile(
+        @Part("fileName") fileName: String,
+        @Part("fileID") fileID: String,
+        @Part("fileSuffix") fileSuffix: String,
+        @Part("description") description: String,
+        @Part("illustrate") illustrate: String,
+        @Part("fileSize") fileSize: Long,
+        @Part("uploadTime") uploadTime: String,
+        @Part file: MultipartBody.Part
+    ): Call<LinkedHashMap<String, Boolean>>
+
+    @POST("/fileFetch")
+    fun fetchFile(): Call<LinkedHashMap<String, List<ResourceItem>>>
 }
