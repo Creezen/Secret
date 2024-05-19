@@ -25,11 +25,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.net.Socket
+import java.util.concurrent.locks.ReentrantLock
 
 class Login : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
-    private var isLogin: Boolean = false
+
+    companion object {
+        var isLogin: Boolean = false
+        var loginLock: ReentrantLock = ReentrantLock(true)
+
+        fun setLoginStatus(status: Boolean) {
+            loginLock.lock()
+            isLogin = status
+            loginLock.unlock()
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,38 +66,41 @@ class Login : AppCompatActivity() {
                 "功能还未完善".toast()
             }
             createAccount.setOnClickListener {
-                val intent= Intent(this@Login, AccountCreation::class.java)
+                val intent = Intent(this@Login, AccountCreation::class.java)
                 intent.putExtra("intentAccount",name.msg())
                 startActivity(intent)
             }
             login.setOnClickListener {
                 kotlin.runCatching {
                     lifecycleScope.launch(Dispatchers.Main) {
+                        Log.e("Login.initView","click1")
+                        loginLock.lock()
+                        if (isLogin) {
+                            return@launch
+                        }
+                        isLogin = true
+                        loginLock.unlock()
                         val loginResult = NetworkServerCreator.create<UserService>()
                             .LoginSystem(name.msg(), password.msg())
                             .await()
                         if (!loginResult.containsKey("status")) {
-                            OnlineUserItem =loginResult.Map2POJO()
+                            OnlineUserItem = loginResult.Map2POJO()
                             UserSocket = async(Dispatchers.IO) {
                                 Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                             }.await()
-                            synchronized(this@Login) {
-                                if (isLogin) {
-                                    return@launch
-                                }
-                                startActivity(Intent(this@Login, Main::class.java))
-                                isLogin = true
-                            }
-                        }else{
+                            startActivity(Intent(this@Login, Main::class.java))
+                        } else {
+                            isLogin = false
                             val status = loginResult["status"]?.toInt()
                             if (status == 0) {
                                 "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
-                            } else  {
+                            } else {
                                 "账号或密码错误，请检查后再次尝试！".toast()
                             }
                         }
                     }
                 }.onFailure {
+                    isLogin = false
                     Log.e("Login.initView","login error: $it")
                 }
             }

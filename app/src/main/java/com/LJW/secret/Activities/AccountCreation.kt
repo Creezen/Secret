@@ -1,28 +1,29 @@
 package com.ljw.secret.activities
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.ljw.secret.R
 import com.ljw.secret.bean.UserItem
 import com.ljw.secret.databinding.AccountCreationBinding
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.network.UserService
 import com.ljw.secret.util.DataUtil.getRandomString
+import com.ljw.secret.util.DataUtil.msg
 import com.ljw.secret.util.DataUtil.toTime
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.POJO2Map
 import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.util.await
-import com.ljw.secret.util.config
-import com.ljw.secret.util.DataUtil.msg
-import kotlinx.coroutines.CoroutineScope
+import com.ljw.secret.util.init
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -35,16 +36,22 @@ class AccountCreation : BaseActivity() {
     private var passwordFlag = false
     private var passwordConfirmFlag = false
 
+    val accountLiveData = MutableLiveData<String>()
+    val nicknameLiveData = MutableLiveData<String>()
+    val passwordLiveData = MutableLiveData<String>()
+    val passwordConfirmLiveData = MutableLiveData<String>()
+    val introductionLiveData = MutableLiveData<String>()
+
     companion object {
-        private val YEAR= (1920..2050).toList() as ArrayList
-        private val MONTH= (1..12).toList() as ArrayList
-        private val DAY=ArrayList<Int>()
-        private val BIG_DAY= (1..31).toList() as ArrayList
-        private val SMALL_DAY= (1..30).toList() as ArrayList
-        private val LEAP_DAY= (1..29).toList() as ArrayList
-        private val COMMON_DAY= (1..28).toList() as ArrayList
-        private val SEX= arrayOf("男","女","保密").toList() as ArrayList<String>
-        private lateinit var EMAIL_PROFIX:ArrayList<String>
+        private val YEAR_DATA = (1920..2050).toList() as ArrayList
+        private val MONTH_DATA = (1..12).toList() as ArrayList
+        private val DAY_DATA = ArrayList<Int>()
+        private val BIG_DAY = (1..31).toList() as ArrayList
+        private val SMALL_DAY = (1..30).toList() as ArrayList
+        private val LEAP_DAY = (1..29).toList() as ArrayList
+        private val COMMON_DAY = (1..28).toList() as ArrayList
+        private val SEX = arrayOf("男","女","保密").toList() as ArrayList<String>
+        private lateinit var EMAIL_PROFIX : ArrayList<String>
     }
 
     private lateinit var binding:AccountCreationBinding
@@ -52,88 +59,77 @@ class AccountCreation : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val accountName= intent.getStringExtra("intentAccount")
-        if(!TextUtils.isEmpty(accountName)) binding.name.setText(accountName)
+        val accountName = intent.getStringExtra("intentAccount")
+        if(!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)
         EMAIL_PROFIX = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
         initView()
     }
 
     private fun initView(){
         with(binding){
-            name.configAfterText {
-                if(it.length in 6..18){
-                    nameHintLength.visibility=View.GONE
-                    val map=HashMap<String,String>()
-                    map["type"] = "0"
-                    map["name"] = name.msg()
-                    CoroutineScope(Dispatchers.Main).launch{
-                        try {
-                            val awaitResult = NetworkServerCreator.create<UserService>()
-                                .checkUserName(map)
-                                .await()
-                            if (awaitResult["status"] == 0) {
-                                name.setTextColor(Color.parseColor("#00ff00"))
-                                nameHIntExist.visibility = View.GONE
-                                nameFlag = true
-                            } else {
-                                name.setTextColor(Color.parseColor("#000000"))
-                                nameHIntExist.visibility = View.VISIBLE
-                                nameFlag = false
-                            }
-                            checkInformation(register,registerHint)
-                        } catch (e: Exception) {
-                            e.message?.let { it1 -> Log.e("msg", it1) }
-                        }
+            val contextEnv = this@AccountCreation
+            lifecycleOwner = contextEnv
+            activity = contextEnv
+            accountCode = 1
+            nickNameCode = 1
+            passwordCode = 1
+            passwordConfirmCode = 1
+            introductionLength = "0/200"
+            yearSelect = 0
+            monthSelected = 0
+            daySelected = 0
+
+            accountLiveData.observe(contextEnv) {
+                if (it.length !in 6 .. 18) {
+                    accountCode = 1
+                    return@observe
+                }
+                accountCode = 4
+                val map = HashMap<String, String>().also { hashmap ->
+                    hashmap["type"] = "0"
+                    hashmap["name"] = it
+                }
+                lifecycleScope.launch(Dispatchers.Main) {
+                    val result = NetworkServerCreator.create<UserService>()
+                        .checkUserName(map)
+                        .await()
+                    if (result["status"] == 0) {
+                        accountCode = 0
+                        return@launch
                     }
+                    accountCode = 2
+                }
+                checkLoginCondition()
+            }
+            nicknameLiveData.observe(contextEnv) {
+                nickNameCode = 1
+                if (it.length !in 1 .. 8) {
+                    nickNameCode = 1
+                } else if (it.contains(" ")) {
+                    nickNameCode = 2
                 } else {
-                    nameHIntExist.visibility=View.GONE
-                    nameHintLength.visibility=View.VISIBLE
-                    name.setTextColor(Color.parseColor("#000000"))
-                    nameFlag=false
+                    nickNameCode = 0
                 }
+                checkLoginCondition()
             }
-            nickname.configAfterText {
-                nicknameHintLength.visibility=if (it.length in 1..8) View.GONE else View.VISIBLE
-                nicknameHintValid.visibility=if (" " in it) View.VISIBLE else View.GONE
-                nicknameFlag = if (it.length in 1..8){
-                    this.setTextColor(Color.parseColor("#00ff00"))
-                    true
-                }else{
-                    this.setTextColor(Color.parseColor("#000000"))
-                    false
-                }
+            passwordLiveData.observe(contextEnv) {
+                passwordCode = if (it.length !in 6 .. 18) 1 else 0
+                checkLoginCondition()
             }
-            password.configAfterText {
-                if (it.length in 6..18){
-                    passwordHintLength.visibility=View.GONE
-                    passwordFlag=true
-                }else{
-                    passwordHintLength.visibility=View.VISIBLE
-                    passwordFlag=false
-                }
-                checkPassword(it,confirmPassword.msg(),passwordDismatch)
+            passwordConfirmLiveData.observe(contextEnv) {
+                passwordConfirmCode = if (it.equals(passwordLiveData.value)) 0 else 1
+                checkLoginCondition()
             }
-            confirmPassword.configAfterText {
-                checkPassword(it,password.msg(),passwordDismatch)
+            introductionLiveData.observe(contextEnv) {
+                introductionLength = "${it.length}/200"
             }
-            selfIntroduction.configAfterText {
-                val lengthText = "${it.length}${getString(R.string.text_length_postfix)}"
-                selfIntoLength.text = lengthText
-            }
-            emailPostfix.config(EMAIL_PROFIX){_-> }
-            birthdayYear.config(YEAR){selectValue->
-                if (selectedMonth==2) updateDaySpinner(selectValue,2,birthdayDay)
-                birthdayDay.setSelection(0)
-            }
-            birthdayMonth.config(MONTH){selectValue->
-                selectedMonth=selectValue
-                updateDaySpinner(birthdayYear.selectedItem as Int,selectValue,birthdayDay)
-                birthdayDay.setSelection(0)
-            }
-            birthdayDay.config(DAY){_->}
-            sex.config(SEX){_->}
+            yearSpinner.init(YEAR_DATA)
+            monthSpinner.init(MONTH_DATA)
+            daySpinner.init(DAY_DATA)
+            sex.init(SEX)
+            emailPostfix.init(EMAIL_PROFIX)
             register.setOnClickListener {
-                val dialog= SimpleDialog(this@AccountCreation).apply{
+                val dialog = SimpleDialog(this@AccountCreation).apply{
                     setTitle("提示")
                     setMessage("注册中，请稍后...")
                 }
@@ -145,11 +141,11 @@ class AccountCreation : BaseActivity() {
                 val addressValue = address.msg()
                 val selfIntroductionValue = selfIntroduction.msg()
                 val isEdit = if((emailValue.isNotEmpty()) and (phoneValue.isNotEmpty()) and (addressValue.isNotEmpty()) and (selfIntroductionValue.isNotEmpty())) 1 else 0
-                val ageValue=createTimeValue.subSequence(0,4).toString().toInt()-birthdayYear.selectedItem as Int
-                val birthdayValue = "${birthdayYear.selectedItem as Int}-${birthdayMonth.selectedItem as Int}-${birthdayDay.selectedItem as Int}"
-                CoroutineScope(Dispatchers.Main).launch {
+                val ageValue = createTimeValue.subSequence(0,4).toString().toInt()- YEAR_DATA[yearSelect]
+                val birthdayValue = "${YEAR_DATA[yearSelect]}-${MONTH_DATA[monthSelected]}-${BIG_DAY[daySelected]}"
+                lifecycleScope.launch(Dispatchers.Main) {
                     try {
-                        val map1= UserItem(userIdValue, nickname.msg(), name.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
+                        val map1= UserItem(userIdValue, nickname.msg(), account.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
                             0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
                         ).POJO2Map()
                         map1["type"]="1"
@@ -169,49 +165,49 @@ class AccountCreation : BaseActivity() {
         }
     }
 
-    private fun updateDaySpinner(selectedYear:Int,seletedMonth:Int,spinner: Spinner){
-        val arrayAdapter = spinner.adapter as ArrayAdapter<Int>
-        arrayAdapter.clear()
-        when (seletedMonth) {
-            in intArrayOf(1,3,5,7,8,10,12) -> arrayAdapter.addAll(BIG_DAY)
-            in intArrayOf(2) -> arrayAdapter.addAll(if (isLeapYear(selectedYear)) LEAP_DAY else COMMON_DAY)
-            else -> arrayAdapter.addAll(SMALL_DAY)
+    fun onYearSpinnerSelect(pos: Int) {
+        if (MONTH_DATA[binding.monthSelected] != 2) {
+            return
         }
-        arrayAdapter.notifyDataSetChanged()
-    }
-
-    private fun checkInformation(view1:View,view2:View){
-        if (nameFlag and nicknameFlag and passwordFlag and passwordConfirmFlag){
-            view1.isClickable = true
-            view2.visibility = View.GONE
-        }else{
-            view1.isClickable=false
-            view2.visibility=View.VISIBLE
+        if (isLeapYear(YEAR_DATA[pos])) {
+            refreshDaySpinner(LEAP_DAY)
+        } else {
+            refreshDaySpinner(COMMON_DAY)
         }
     }
 
-    private fun TextView.configAfterText(afterText:TextView.(String)->Unit){
-        this.addTextChangedListener {
-            afterTextChanged { msg->
-                afterText(msg.toString())
-                checkInformation(binding.register,binding.registerHint)
+    fun onMonthSpinnerSelect(pos: Int) {
+        val monthValue = MONTH_DATA[pos]
+        when(monthValue) {
+            1, 3, 5, 7, 8, 10, 12 -> refreshDaySpinner(BIG_DAY)
+            4, 6, 9, 11 -> refreshDaySpinner(SMALL_DAY)
+            else -> {
+                if (isLeapYear(YEAR_DATA[binding.yearSelect])) {
+                    refreshDaySpinner(LEAP_DAY)
+                } else {
+                    refreshDaySpinner(COMMON_DAY)
+                }
             }
         }
     }
 
-    private fun isLeapYear(year:Int)=when {
-        year%100 == 0 -> year%400==0
-        year%4 == 0 -> true
-        else -> false
+    private fun refreshDaySpinner(list: List<Int>){
+        val adapter = binding.daySpinner.adapter as ArrayAdapter<Int>
+        adapter.clear()
+        adapter.addAll(list)
+        adapter.notifyDataSetChanged()
+        binding.daySelected = 0
     }
 
-    private fun checkPassword(ps1:String,ps2:String,layout: LinearLayout){
-        if (ps1 == ps2){
-            layout.visibility = View.GONE
-            passwordConfirmFlag = true
-        }else{
-            layout.visibility = View.VISIBLE
-            passwordConfirmFlag = false
+    private fun checkLoginCondition(){
+        with(binding) {
+            isLoginOK = (accountCode + nickNameCode + passwordCode + passwordConfirmCode) == 0
         }
+    }
+
+    private fun isLeapYear(year: Int) = when {
+        year % 100 == 0 -> year%400 == 0
+        year % 4 == 0 -> true
+        else -> false
     }
 }

@@ -7,9 +7,10 @@ import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.ljw.secret.OnlineUserItem
 import com.ljw.secret.R
+import com.ljw.secret.activities.BaseActivity.ActivityCollector.finishAll
+import com.ljw.secret.activities.Login.Companion.setLoginStatus
 import com.ljw.secret.databinding.ActivityMainBinding
 import com.ljw.secret.dialog.SimpleDialog
 import com.ljw.secret.fragments.ChatBox
@@ -20,7 +21,6 @@ import com.ljw.secret.fragments.Widgets
 import com.ljw.secret.fragments.YQIA
 import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.replaceFragment
-import kotlinx.coroutines.launch
 
 class Main : BaseActivity() {
 
@@ -39,12 +39,12 @@ class Main : BaseActivity() {
 
     private fun initPage(){
         with(binding){
-            if (null==viewHolder){
-                viewHolder=ViewHolder(Feedback(),YQIA(), Widgets(), ListPage(), ChatBox(),
+            if (null == viewHolder){
+                viewHolder = ViewHolder(Feedback(),YQIA(), Widgets(), ListPage(), ChatBox(),
                     TimeLine()
                 )
-                root.tag=viewHolder
-            }else viewHolder=root.tag as ViewHolder
+                root.tag = viewHolder
+            }else viewHolder = root.tag as ViewHolder
             setSupportActionBar(toolBar)
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
@@ -80,7 +80,8 @@ class Main : BaseActivity() {
                         dialog.dismiss()
                     }
                     setRightButton("退出"){_,_->
-                        finish()
+                        finishAll()
+                        setLoginStatus(false)
                     }
                     show()
                 }
@@ -96,7 +97,8 @@ class Main : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.MainLogout -> {
-                ActivityCollector.finishAll()
+                finishAll()
+                setLoginStatus(false)
             }
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }

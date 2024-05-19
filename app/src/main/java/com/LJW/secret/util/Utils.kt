@@ -17,6 +17,7 @@ import com.ljw.secret.COOKIE_MAP
 import com.ljw.secret.Constant.BASE_URL
 import com.ljw.secret.Env
 import com.ljw.secret.R
+import com.ljw.secret.util.DataUtil.toast
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -31,7 +32,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.Arrays
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 fun buildCookie(name:String, value:String) = Cookie.Builder().name(name).value(value).domain("www").build()
@@ -43,14 +43,14 @@ inline fun <reified T> Map<String,String>.Map2POJO():T{
     return gson.fromJson(gson.toJson(this), T::class.java)
 }
 
-fun <T> Spinner.config(list: List<T>,itemSelect:(T)->Unit){
+fun <T> Spinner.init(list: List<T>, itemSelect : ((T)->Unit)? = null){
     val dataArrayList = ArrayList(list)
     val spinnerAdapter = ArrayAdapter(Env.context, R.layout.spinner_prompt,dataArrayList)
     spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
     this.adapter = spinnerAdapter
     this.setOnItemSelectedListener {
         onItemSelected{_,_,pos,_ ->
-            itemSelect(dataArrayList[pos])
+            itemSelect?.invoke(dataArrayList[pos])
         }
     }
     this.setSelection(0)
@@ -124,18 +124,20 @@ object NetworkServerCreator{
 
     inline fun <reified T> create():T= retrofit.create(T::class.java)
 }
-suspend fun <T : Any> Call<T>.await():T{
+suspend fun <T : Any> Call<T>.await():T {
     return suspendCoroutine { continuation ->
         enqueue(object : Callback<T> {
             override fun onResponse(p0: Call<T>, p1: Response<T>) {
-                val body=p1.body()
-                if(body!=null)
+                val body = p1.body()
+                if(body != null) {
                     continuation.resume(body)
-                else continuation.resumeWithException(RuntimeException("return empty"))
+                } else {
+                    "服务当前离线".toast()
+                }
             }
 
             override fun onFailure(p0: Call<T>, p1: Throwable) {
-                continuation.resumeWithException(p1)
+                "网络请求失败".toast()
             }
         })
     }

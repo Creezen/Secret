@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.ljw.secret.Constant
-import com.ljw.secret.util.config
+import com.ljw.secret.util.init
 import com.ljw.secret.databinding.YouqIaBinding
 
 class YQIA:BaseFragment() {
@@ -26,7 +26,7 @@ class YQIA:BaseFragment() {
 
     private fun initView(){
         with(binding){
-            primary.config(primaryList){
+            primary.init(primaryList){
                 secondary.refreshSpinner {
                    secondaryList[primary.selectedItemPosition]
                 }
@@ -36,14 +36,14 @@ class YQIA:BaseFragment() {
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }
-            secondary.config(secondaryList[0]){
+            secondary.init(secondaryList[0]){
                 tertiary.refreshSpinner {
                     tertiaryList[primary.selectedItemPosition][secondary.selectedItemPosition]
                 }
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }
-            tertiary.config(tertiaryList[0][0]){
+            tertiary.init(tertiaryList[0][0]){
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }

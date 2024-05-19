@@ -49,4 +49,5 @@
     <string name="password">密码</string>
     <string name="account">账号</string>
     <string name="download">下载</string>
+    <string name="from_6_to_18">账户名长度为6至18位</string>
 </resources>
