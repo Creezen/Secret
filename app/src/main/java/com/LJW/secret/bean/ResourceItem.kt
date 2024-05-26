@@ -1,5 +1,9 @@
 package com.ljw.secret.bean
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class ResourceItem(
     val fileName: String,
     val fileID: String,
@@ -8,4 +12,4 @@ data class ResourceItem(
     val illustrate: String,
     val fileSize: Long,
     val uploadTime: String,
-)
+) : Parcelable

@@ -2,10 +2,11 @@ package com.ljw.secret
 
 object Constant {
 
-    const val LOCAL_SOCKET_PORT = 10156
-    const val BASE_URL = "https://2xrnknq21l5m.hk1.xiaomiqiu123.top"
-    const val BASE_SOCKET_PATH = "hk1.xiaomiqiu123.top"
+    const val LOCAL_SOCKET_PORT = 60038
+    const val BASE_URL = "https://ecd8sqicep5p.xiaomiqiu.com"
+    const val BASE_SOCKET_PATH = "vipvip.xiaomiqiu.com"
     const val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    const val BASE_FILE_PATH = "$BASE_URL/FileSystem/"
 
     private val primaryList = listOf(
         "哲学",

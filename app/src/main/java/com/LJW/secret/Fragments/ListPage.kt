@@ -17,14 +17,9 @@ import com.ljw.secret.adapter.ResItemAdapter
 import com.ljw.secret.bean.ResourceItem
 import com.ljw.secret.databinding.FileShareBinding
 import com.ljw.secret.network.FileService
-import com.ljw.secret.util.DataUtil.toTime
-import com.ljw.secret.util.DataUtil.toast
-import com.ljw.secret.util.FileUtil
-import com.ljw.secret.util.NetUtil
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.await
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -34,7 +29,7 @@ class ListPage : BaseFragment() {
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
     private val resItemList = ArrayList<ResourceItem>()
     private val adapter: ResItemAdapter by lazy {
-        ResItemAdapter(resItemList)
+        ResItemAdapter(requireActivity(), requireActivity(), resItemList)
     }
     private var tag: Any? = null
 
@@ -52,8 +47,9 @@ class ListPage : BaseFragment() {
         binding = FileShareBinding.inflate(inflater)
         initPage()
         initData()
-        tag = binding.root
-        return binding.root
+        return binding.root.also {
+            tag = it
+        }
     }
 
     override fun onResume() {
@@ -88,7 +84,7 @@ class ListPage : BaseFragment() {
                 if (Environment.isExternalStorageManager()) {
                     startActivity(Intent(this@ListPage.activity, FileUploadActivity::class.java))
                 } else {
-                    readExternalLaunch?.    launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
+                    readExternalLaunch?.launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
                         it.data = Uri.parse("package:" + activity?.packageName)
                     })
                 }
@@ -97,6 +93,7 @@ class ListPage : BaseFragment() {
                 initData()
             }
             recycle.layoutManager = LinearLayoutManager(context)
+            adapter.setProgressBar(progress)
             recycle.adapter = adapter
         }
     }

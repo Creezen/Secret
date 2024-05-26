@@ -3,12 +3,7 @@ package com.ljw.secret.activities
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.ljw.secret.R
@@ -21,20 +16,12 @@ import com.ljw.secret.util.DataUtil.msg
 import com.ljw.secret.util.DataUtil.toTime
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.POJO2Map
-import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.util.await
 import com.ljw.secret.util.init
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AccountCreation : BaseActivity() {
-
-    private var selectedMonth=1
-
-    private var nameFlag = false
-    private var nicknameFlag = false
-    private var passwordFlag = false
-    private var passwordConfirmFlag = false
 
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
@@ -54,7 +41,7 @@ class AccountCreation : BaseActivity() {
         private lateinit var EMAIL_PROFIX : ArrayList<String>
     }
 
-    private lateinit var binding:AccountCreationBinding
+    private lateinit var binding : AccountCreationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AccountCreationBinding.inflate(layoutInflater)
@@ -161,7 +148,6 @@ class AccountCreation : BaseActivity() {
                 }
             }
             register.isClickable = false
-            Log.e("AccountCreation.pageInit", "${register.isClickable}")
         }
     }
 

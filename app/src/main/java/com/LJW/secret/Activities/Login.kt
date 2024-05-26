@@ -73,7 +73,6 @@ class Login : AppCompatActivity() {
             login.setOnClickListener {
                 kotlin.runCatching {
                     lifecycleScope.launch(Dispatchers.Main) {
-                        Log.e("Login.initView","click1")
                         loginLock.lock()
                         if (isLogin) {
                             return@launch
