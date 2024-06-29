@@ -8,11 +8,15 @@
     android:gravity="center"
     tools:context=".activities.Login"
     android:background="#F5F5F5">
-
+    <ImageView
+        android:id="@+id/iv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp">
@@ -86,5 +90,8 @@
                 android:background="@color/Button"/>
         </LinearLayout>
     </LinearLayout>
-
+    <ImageView
+        android:id="@+id/iv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

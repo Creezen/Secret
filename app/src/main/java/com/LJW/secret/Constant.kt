@@ -7,8 +7,11 @@ object Constant {
     const val BASE_SOCKET_PATH = "vipvip.xiaomiqiu.com"
     const val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     const val BASE_FILE_PATH = "$BASE_URL/FileSystem/"
+    const val API_BASE_URL = "https://www.mxnzp.com/api/convert/"
+    const val DICTIONARY_API_APPID = "ckp9k9hlvylykswh"
+    const val DICTIONARY_API_APPSECRET = "f1pJSDJ6qIDZGPeL5Q1EUqkZXfHgQ9qA"
 
-    private val primaryList = listOf(
+        private val primaryList = listOf(
         "哲学",
         "经济学",
         "法学",

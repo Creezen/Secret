@@ -19,12 +19,12 @@ import com.ljw.secret.fragments.ListPage
 import com.ljw.secret.fragments.TimeLine
 import com.ljw.secret.fragments.Widgets
 import com.ljw.secret.fragments.YQIA
-import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.replaceFragment
+import com.ljw.util.TUtil.toast
 
 class Main : BaseActivity() {
 
-    private lateinit var binding:ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
     private var viewHolder: ViewHolder?=null
     inner class ViewHolder(val feedback: Feedback,val yqia: YQIA,val widgets: Widgets,
                            val listPage: ListPage,val chatBox: ChatBox,val timeLine: TimeLine)
@@ -68,18 +68,18 @@ class Main : BaseActivity() {
                 return@setNavigationItemSelectedListener true
             }
             navigation.getHeaderView(0).setOnClickListener {
-                startActivity(Intent(this@Main,HomePage::class.java))
+                startActivity(Intent(this@Main, HomePage::class.java))
             }
         }
-        onBackPressedDispatcher.addCallback(this,object:OnBackPressedCallback(true){
+        onBackPressedDispatcher.addCallback(this, object:OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 SimpleDialog(this@Main).apply {
                     setTitle("消息提醒")
                     setMessage("确定退出吗？")
-                    setLeftButton("点错了"){_,dialog->
+                    setLeftButton("点错了"){ _, dialog ->
                         dialog.dismiss()
                     }
-                    setRightButton("退出"){_,_->
+                    setRightButton("退出"){ _, _ ->
                         finishAll()
                         setLoginStatus(false)
                     }
@@ -90,7 +90,7 @@ class Main : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_tool_bar,menu)
+        menuInflater.inflate(R.menu.main_tool_bar, menu)
         return true
     }
 

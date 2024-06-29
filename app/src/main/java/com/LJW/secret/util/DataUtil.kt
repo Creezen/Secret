@@ -20,10 +20,6 @@ object DataUtil {
         return buffer.toString()
     }
 
-    fun <T> T.toast() {
-        Toast.makeText(Env.context,"$this", Toast.LENGTH_LONG).show()
-    }
-
     fun Long.toTime(formater: String = "yyyy-MM-dd HH:mm:ss"):String{
         val simpleDateFormat= SimpleDateFormat(formater, Locale.CHINA)
         simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")

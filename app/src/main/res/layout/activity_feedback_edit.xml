@@ -5,17 +5,80 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.FeedbackEditActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
+        android:layout_height="wrap_content"
+        android:text="@string/feedback"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textColor="#00FF00"/>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/feedback_type"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="反馈标题"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/corner_8"
+            android:layout_marginStart="8dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/feedback_content"
+            android:gravity="top|center"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:hint="请输入反馈的内容..."
+            android:paddingStart="3dp"
+            android:paddingTop="3dp"
+            android:gravity="start|top"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/corner_8"
+            android:textColorHint="#55000000"/>
+    </LinearLayout>
     <Button
+        android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="提交"/>

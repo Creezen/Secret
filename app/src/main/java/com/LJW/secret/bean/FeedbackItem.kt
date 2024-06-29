@@ -1,11 +1,12 @@
 package com.ljw.secret.bean
 
 data class FeedbackItem(
+    val feedbackID: String,
     val userID: String,
-    val nickname: String,
-    val time: String,
+    val type: String,
     val title: String,
     val content: String,
+    val createTime: Long,
     val support: Long,
     val against: Long
 )

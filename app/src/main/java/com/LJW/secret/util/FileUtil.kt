@@ -7,7 +7,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import com.ljw.secret.Env
-import com.ljw.secret.util.DataUtil.toast
+import com.ljw.util.TUtil.getTJEnv
 import java.io.File
 import java.io.InputStream
 import java.io.RandomAccessFile
@@ -79,7 +79,7 @@ object FileUtil {
         val column = "_data"
         val projection = arrayOf(column)
         kotlin.runCatching {
-            val cursor = Env.context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            val cursor = getTJEnv().contentResolver.query(uri, projection, selection, selectionArgs, null)
             Log.e("FileUtil.getDataColumn","cursor: ${cursor?.count}   uri： $uri")
             cursor?.use {
                 if (it.moveToFirst()) {

@@ -16,11 +16,11 @@ import com.ljw.secret.activities.FileDetailActivity
 import com.ljw.secret.bean.ResourceItem
 import com.ljw.secret.databinding.ResItemBinding
 import com.ljw.secret.network.FileService
-import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.FileUtil.downloadFileByNet
 import com.ljw.secret.util.FileUtil.isFileDownload
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.await
+import com.ljw.util.TUtil.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

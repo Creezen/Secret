@@ -8,22 +8,26 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.ljw.secret.Constant.BASE_SOCKET_PATH
+import com.ljw.secret.Constant.BASE_URL
 import com.ljw.secret.Constant.LOCAL_SOCKET_PORT
 import com.ljw.secret.OnlineUserItem
 import com.ljw.secret.R
 import com.ljw.secret.UserSocket
 import com.ljw.secret.databinding.ActivityLoginBinding
+import com.ljw.secret.network.ApiService
 import com.ljw.secret.network.UserService
 import com.ljw.secret.util.DataUtil.msg
-import com.ljw.secret.util.DataUtil.toast
 import com.ljw.secret.util.Map2POJO
 import com.ljw.secret.util.NetworkServerCreator
 import com.ljw.secret.util.addTextChangedListener
 import com.ljw.secret.util.await
+import com.ljw.util.TUtil.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import java.net.Socket
 import java.util.concurrent.locks.ReentrantLock
 
@@ -55,6 +59,8 @@ class Login : AppCompatActivity() {
 
     private fun initView(){
         with(binding){
+            Glide.with(this@Login).load("$BASE_URL/FileSystem/njduhB1716695687532.jpg").into(iv1)
+            Glide.with(this@Login).load("$BASE_URL/FileSystem/EHVubX1716696947911.jpg").into(iv2)
             name.addTextChangedListener {
                 afterTextChanged {
                     it?.apply {
@@ -63,7 +69,19 @@ class Login : AppCompatActivity() {
                 }
             }
             findPassword.setOnClickListener {
-                "功能还未完善".toast()
+                lifecycleScope.launch {
+                    val res = NetworkServerCreator.createApi<ApiService>()
+                        .getDictionary(name.msg())
+                        .await()
+                    val jsonObj = JSONObject(res)
+                    val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
+                    val realVal = data.optString("pinyin")
+                    launch(Dispatchers.Main) {
+                        realVal.toast()
+                    }
+                }
+
+//                "功能还未完善".toast()
             }
             createAccount.setOnClickListener {
                 val intent = Intent(this@Login, AccountCreation::class.java)

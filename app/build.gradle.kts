@@ -3,16 +3,23 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
+    id("maven-publish")
+}
+
+repositories {
+    google()
+    mavenCentral()
+    mavenLocal()
 }
 
 android {
     namespace = "com.ljw.secret"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.ljw.secret"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 10000001
         versionName = "1.0.1"
 
@@ -36,11 +43,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures{
         viewBinding = true
@@ -62,8 +69,11 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
 
     implementation ("com.alibaba:fastjson:2.0.40")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation ("com.ljw.util:utils:1.0.0")
 }

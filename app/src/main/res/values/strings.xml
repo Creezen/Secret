@@ -43,11 +43,14 @@
     <string name="please_select_file">请选择需要上传的文件…</string>
     <string name="resource_descript">资源描述</string>
     <string name="not_null">必填</string>
-    <string name="find_password">找回密码</string>
+    <string name="find_password">找回密码（暂获取拼音）</string>
     <string name="create_account">创建账号</string>
     <string name="login">点击登录</string>
     <string name="password">密码</string>
     <string name="account">账号</string>
     <string name="download">下载</string>
     <string name="from_6_to_18">账户名长度为6至18位</string>
+    <string name="feedback">意见反馈</string>
+    <string name="feedback_type">反馈类型</string>
+    <string name="feedback_content">详细内容</string>
 </resources>

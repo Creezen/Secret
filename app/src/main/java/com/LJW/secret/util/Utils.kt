@@ -12,12 +12,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.alibaba.fastjson.JSON
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.ljw.secret.COOKIE_LIST
 import com.ljw.secret.COOKIE_MAP
+import com.ljw.secret.Constant.API_BASE_URL
 import com.ljw.secret.Constant.BASE_URL
 import com.ljw.secret.Env
 import com.ljw.secret.R
-import com.ljw.secret.util.DataUtil.toast
+import com.ljw.util.TUtil.getTJEnv
+import com.ljw.util.TUtil.toast
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -47,7 +50,7 @@ inline fun <reified T> Map<String,String>.Map2POJO():T{
 
 fun <T> Spinner.init(list: List<T>, itemSelect : ((T)->Unit)? = null){
     val dataArrayList = ArrayList(list)
-    val spinnerAdapter = ArrayAdapter(Env.context, R.layout.spinner_prompt,dataArrayList)
+    val spinnerAdapter = ArrayAdapter(getTJEnv(), R.layout.spinner_prompt,dataArrayList)
     spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown)
     this.adapter = spinnerAdapter
     this.setOnItemSelectedListener {
@@ -90,6 +93,7 @@ class SpinnerBridge: AdapterView.OnItemSelectedListener {
 object NetworkServerCreator{
 
     var retrofit : Retrofit
+    var apiRetrofit: Retrofit
     init {
         val okHttp = OkHttpClient.Builder().cookieJar(object : CookieJar {
             override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
@@ -119,12 +123,20 @@ object NetworkServerCreator{
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(okHttp)
+            .build()
+
+        apiRetrofit = Retrofit.Builder()
+            .baseUrl(API_BASE_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     inline fun <reified T> create():T= retrofit.create(T::class.java)
+
+    inline fun <reified T> createApi():T= apiRetrofit.create(T::class.java)
 }
 suspend fun <T : Any> Call<T>.await():T {
     return suspendCoroutine { continuation ->
@@ -139,6 +151,7 @@ suspend fun <T : Any> Call<T>.await():T {
             }
 
             override fun onFailure(p0: Call<T>, p1: Throwable) {
+                Log.e(".onFailure","$p1")
                 "网络请求失败".toast()
             }
         })
