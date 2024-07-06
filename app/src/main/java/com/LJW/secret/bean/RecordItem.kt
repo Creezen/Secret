@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class RecordItem(val round: String, val score: ArrayList<Int>) : Parcelable
+class RecordItem(val time: String, val scores: ArrayList<Int>) : Parcelable

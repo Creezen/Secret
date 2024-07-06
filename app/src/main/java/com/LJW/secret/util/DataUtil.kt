@@ -1,9 +1,7 @@
 package com.ljw.secret.util
 
 import android.widget.TextView
-import android.widget.Toast
 import com.ljw.secret.Constant.BASIC_LETTER
-import com.ljw.secret.Env
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -34,6 +32,10 @@ object DataUtil {
         } else {
             value
         }
+    }
+
+    fun TextView.intMsg(): Int {
+        return this.msg().toInt()
     }
 
 }

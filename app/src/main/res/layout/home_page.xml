@@ -39,22 +39,22 @@
                     android:layout_height="match_parent"
                     android:text="ID"
                     android:gravity="center"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textColor="#CDBC54"
-                    android:layout_marginRight="3dp"/>
+                    android:layout_marginEnd="3dp"/>
                 <TextView
                     android:id="@+id/id"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:textSize="20dp"
+                    android:gravity="start|center"
+                    android:textSize="20sp"
                     android:textColor="#00ff00"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <Button
-        android:id="@+id/HomePageAdministrator"
+        android:id="@+id/administrator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
@@ -93,16 +93,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textColor="#BE5FD8"
             android:text="基本信息" />
         <TextView
-            android:id="@+id/post"
+            android:id="@+id/live"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textColor="#BE5FD8"
             android:text="创作动态"/>
     </LinearLayout>

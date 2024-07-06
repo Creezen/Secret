@@ -1,9 +1,12 @@
 package com.ljw.secret.activities
 
 import android.content.Intent
+import android.content.pm.ConfigurationInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity

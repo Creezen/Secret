@@ -158,7 +158,7 @@ object FileUtil {
      * @param context 应用私有目录必须传入context
      * @param userDir 带有USER的表示目录路径可以自定义，必须给userDir设参数
      */
-    private fun getDir(dirType: Dir, context: Context? = null, userDir: String? = null) = when(dirType) {
+    fun getDir(dirType: Dir, context: Context? = null, userDir: String? = null) = when(dirType) {
         Dir.LOC_PUBLIC_DATA -> Environment.getDataDirectory()
         Dir.LOC_PUBLIC_DATACACHE -> Environment.getDownloadCacheDirectory()
         Dir.LOC_PUBLIC_SYS -> Environment.getRootDirectory()

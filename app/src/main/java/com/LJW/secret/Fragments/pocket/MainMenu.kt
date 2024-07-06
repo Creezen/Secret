@@ -37,7 +37,7 @@ class MainMenu: BaseFragment() {
                 CustomDialog(
                     requireActivity(),
                     AddPocketRecordLayoutBinding.inflate(layoutInflater)
-                ).apply{
+                ).apply {
                     setVisible(SimpleDialog.TITLE_INVISIBLE)
                     userBinding = this.viewBinding
                     dialogInit()
@@ -69,7 +69,7 @@ class MainMenu: BaseFragment() {
     }
 
     private fun addView(position: Int){
-        if (position > userList.size-1) userList.add("")
+        if (position > userList.size - 1) userList.add("")
         userBinding.itemLayout.addView(UserItemView(requireActivity()).also {
             it.edit.hint = "请输入第${position+1}个Player"
             it.edit.setText(userList[position])

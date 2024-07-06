@@ -20,43 +20,86 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="15dp"/>
-    <HorizontalScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:text="@string/record"/>
+        <HorizontalScrollView
+            android:id="@+id/playerNameSV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <LinearLayout
-                android:id="@+id/userNameLayout"
+                android:id="@+id/playerName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <ScrollView
+            android:id="@+id/roundNumRV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+            <LinearLayout
+                android:id="@+id/roundNum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:background="@color/LeafGreen" />
+                android:orientation="vertical"/>
+        </ScrollView>
+        <HorizontalScrollView
+            android:id="@+id/rvSC"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recordRv"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:id="@+id/rv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/BurlyWood"/>
-        </LinearLayout>
-    </HorizontalScrollView>
+        </HorizontalScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="@string/total"/>
+        <HorizontalScrollView
+            android:id="@+id/totalScoreSV"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:id="@+id/totalScore"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+        </HorizontalScrollView>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/addUserBtn"
+            android:id="@+id/addUser"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/add_user"/>
         <Button
-            android:id="@+id/addRecordBtn"
+            android:id="@+id/addRecord"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

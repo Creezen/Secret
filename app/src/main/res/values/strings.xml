@@ -53,4 +53,7 @@
     <string name="feedback">意见反馈</string>
     <string name="feedback_type">反馈类型</string>
     <string name="feedback_content">详细内容</string>
+    <string name="total">总计</string>
+    <string name="record">记录</string>
+    <string name="input_add_player">输入要添加的玩家...</string>
 </resources>

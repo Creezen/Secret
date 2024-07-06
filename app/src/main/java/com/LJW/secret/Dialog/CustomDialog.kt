@@ -26,6 +26,6 @@ class CustomDialog<T : ViewBinding>(mContext:Context, var viewBinding: T) : Simp
     private fun setButton(button: Button, text:String, onClick: (T, Dialog) -> Unit){
         button.visibility = View.VISIBLE
         button.setText(text)
-        button.setOnClickListener { onClick(viewBinding,this) }
+        button.setOnClickListener { onClick(viewBinding, this) }
     }
 }

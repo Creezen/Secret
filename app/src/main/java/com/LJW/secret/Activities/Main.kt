@@ -44,7 +44,7 @@ class Main : BaseActivity() {
                     TimeLine()
                 )
                 root.tag = viewHolder
-            }else viewHolder = root.tag as ViewHolder
+            } else viewHolder = root.tag as ViewHolder
             setSupportActionBar(toolBar)
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
