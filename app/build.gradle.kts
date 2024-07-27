@@ -13,11 +13,11 @@ repositories {
 }
 
 android {
-    namespace = "com.ljw.secret"
+    namespace = "com.jayce.vexis"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ljw.secret"
+        applicationId = "com.jayce.vexis"
         minSdk = 30
         targetSdk = 34
         versionCode = 10000001
@@ -68,6 +68,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
 
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
     implementation ("com.alibaba:fastjson:2.0.40")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
@@ -75,5 +77,5 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation ("com.ljw.util:utils:1.0.0")
+    implementation ("com.creezen.tool:tools:1.0.0")
 }

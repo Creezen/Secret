@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.Login"
+    tools:context="com.jayce.vexis.login.Login"
     android:background="#F5F5F5">
-    <ImageView
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/iv1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="200dp"
+        android:orientation="horizontal"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="400dp"
         android:gravity="center"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp">
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/account"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -34,12 +34,14 @@
             <EditText
                 android:id="@+id/name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:textSize="30sp"
                 android:background="@drawable/editview_border"
                 android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"/>
+                android:layout_marginBottom="2dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,22 +49,24 @@
             android:layout_marginBottom="6dp">
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/password"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textSize="20sp"
-                android:textColor="@color/InformationLabel"/>
+                android:textColor="@color/InformationLabel" />
             <EditText
                 android:id="@+id/password"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:textSize="30sp"
                 android:inputType="textPassword"
                 android:background="@drawable/editview_border"
                 android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"/>
+                android:layout_marginBottom="2dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
         <Button
             android:id="@+id/login"
@@ -90,8 +94,9 @@
                 android:background="@color/Button"/>
         </LinearLayout>
     </LinearLayout>
-    <ImageView
+    <com.jayce.vexis.stylized.animator.LoginCanvas
         android:id="@+id/iv2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 </LinearLayout>

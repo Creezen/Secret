@@ -28,7 +28,7 @@
                 android:gravity="center"
                 android:textColor="#0000ff"
                 android:textSize="60sp"
-                android:text="未知用户"/>
+                android:text="@string/unknow_user"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

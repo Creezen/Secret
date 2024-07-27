@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/MainChat"
+        android:icon="@drawable/chat"
+        android:title="@string/chat_room"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/hub"
+        android:icon="@drawable/hub"
+        android:title="@string/hub"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/MainLogout"
         android:icon="@drawable/exist_vector"
-        android:title="退出"
-        app:showAsAction="always"/>
+        android:title="@string/exist"
+        app:showAsAction="withText"/>
 </menu>

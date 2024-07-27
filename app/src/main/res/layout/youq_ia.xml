@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ljw="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -40,15 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="50dp"
+        android:textSize="50sp"
         android:gravity="center"
-        android:text="什么东西也没有..."/>
+        android:text="@string/nothing_to_show"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/YouQIaFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:elevation="5dp"
+        android:contentDescription="@"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginEnd="16dp"/>
 </LinearLayout>

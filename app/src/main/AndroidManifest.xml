@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jayce.vexis">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -8,6 +9,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -21,7 +23,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name=".Env"
+        android:name="com.jayce.vexis.Env"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -33,37 +35,43 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
-            android:name=".activities.FeedbackEditActivity"
+            android:name=".hub.HubActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FeedbackActivity"
+            android:name=".member.manage.ActiveDataActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FileDetailActivity"
+            android:name="com.jayce.vexis.member.manage.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FileUploadActivity"
+            android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.pocket.NewRecord"
+            android:name=".feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.HomePage"
+            android:name=".hub.resource.FileDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MultiThread"
+            android:name=".hub.resource.FileUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PocketBook"
+            android:name=".utility.ledger.NewRecord"
             android:exported="false" />
         <activity
-            android:name=".activities.Main"
+            android:name=".member.dashboard.HomePage"
             android:exported="false" />
         <activity
-            android:name=".activities.AccountCreation"
+            android:name=".utility.ledger.PocketBook"
             android:exported="false" />
         <activity
-            android:name=".activities.Login"
+            android:name=".Main"
+            android:exported="false" />
+        <activity
+            android:name=".member.register.AccountCreation"
+            android:exported="false" />
+        <activity
+            android:name=".login.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

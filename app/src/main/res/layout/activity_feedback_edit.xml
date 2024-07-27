@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.FeedbackEditActivity"
+    tools:context="com.jayce.vexis.feedback.FeedbackEditActivity"
     android:orientation="vertical"
     android:background="#F5F5F5"
     android:layout_marginStart="16dp"

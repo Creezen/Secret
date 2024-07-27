@@ -8,7 +8,7 @@
 
         <variable
             name="activity"
-            type="com.ljw.secret.activities.AccountCreation"/>
+            type="com.jayce.vexis.member.register.AccountCreation"/>
         <variable
             name="accountCode"
             type="int"/>

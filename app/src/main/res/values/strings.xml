@@ -1,11 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Secret</string>
-    <string name="prompt">选择城市</string>
-    <string name="all_info_check">有关键信息未正确填写，请检查！</string>
-    <string name="choose_fill">选填</string>
-    <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
-    <string name="register">点击注册</string>
-    <string name="text_length_postfix">/200</string>
+
     <string-array name="EmailProfix">
         <item>\@yahoo.com</item>
         <item>\@msn.com</item>
@@ -28,6 +22,13 @@
         <item>\@sogou.com</item>
     </string-array>
 
+    <string name="app_name">CreeZen</string>
+    <string name="prompt">选择城市</string>
+    <string name="all_info_check">有关键信息未正确填写，请检查！</string>
+    <string name="choose_fill">选填</string>
+    <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
+    <string name="register">点击注册</string>
+    <string name="text_length_postfix">/200</string>
     <string name="login_name"> </string>
     <string name="login_password"> </string>
     <string name="show_history">查看历史</string>
@@ -35,7 +36,6 @@
     <string name="new_record">新建记录</string>
     <string name="pocket_book">记账本</string>
     <string name="pocket">记账本</string>
-    <string name="remove_mountain">愚公移山精简版</string>
     <string name="add_user">添加玩家</string>
     <string name="round_record">小局结算</string>
     <string name="upload_file">上传文件</string>
@@ -55,5 +55,20 @@
     <string name="feedback_content">详细内容</string>
     <string name="total">总计</string>
     <string name="record">记录</string>
-    <string name="input_add_player">输入要添加的玩家...</string>
+    <string name="input_add_player">输入要添加的玩家…</string>
+    <string name="exist">退出</string>
+    <string name="chat_room">聊天室</string>
+    <string name="history_timeline">历史事件</string>
+    <string name="local_tool">本地工具箱</string>
+    <string name="knowledge_share">学习交流</string>
+    <string name="resource_share">资源共享</string>
+    <string name="send_message">发送消息</string>
+    <string name="unknow_user">未知用户</string>
+    <string name="user_manage_sys">用户管理系统</string>
+    <string name="register_time">注册时间</string>
+    <string name="user_id">用户ID</string>
+    <string name="delete_user">删除该用户</string>
+    <string name="fans">粉丝数</string>
+    <string name="nothing_to_show">什么东西也没有…</string>
+    <string name="hub">论坛</string>
 </resources>
