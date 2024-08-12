@@ -3,6 +3,8 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/MainMenuTimeline"
             android:title="@string/history_timeline"/>
+        <item android:id="@+id/MainMenuSynergy"
+            android:title="@string/synergy"/>
         <item android:id="@+id/MainMenuWidget"
             android:title="@string/local_tool"/>
         <item android:id="@+id/MainMenuFeedback"

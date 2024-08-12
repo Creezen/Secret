@@ -6,7 +6,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
-import com.creezen.tool.BaseTool.getTJEnv
+import com.creezen.tool.BaseTool.env
 import java.io.File
 import java.io.InputStream
 import java.io.RandomAccessFile
@@ -69,7 +69,7 @@ object FileTool {
         val column = "_data"
         val projection = arrayOf(column)
         kotlin.runCatching {
-            val cursor = getTJEnv().contentResolver.query(uri, projection, selection, selectionArgs, null)
+            val cursor = env().contentResolver.query(uri, projection, selection, selectionArgs, null)
             cursor?.use {
                 if (it.moveToFirst()) {
                     val path = it.getString(it.getColumnIndexOrThrow(column))

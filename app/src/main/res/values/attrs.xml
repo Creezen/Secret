@@ -3,4 +3,8 @@
     <declare-styleable name="LongTextView">
         <attr name="longText" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="MultiLineSingleCheckbox">
+        <attr name="itemOneLine" format="integer"/>
+    </declare-styleable>
 </resources>

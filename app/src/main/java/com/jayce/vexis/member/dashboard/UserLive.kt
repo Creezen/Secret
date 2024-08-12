@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jayce.vexis.BaseFragment
+import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.UserLiveBinding
 
 class UserLive: BaseFragment() {

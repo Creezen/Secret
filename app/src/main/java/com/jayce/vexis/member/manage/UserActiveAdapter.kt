@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jayce.vexis.member.ActiveItem
+import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.R
 import com.jayce.vexis.databinding.UserActiveItemBinding
+import com.jayce.vexis.member.ActiveItem
+import com.jayce.vexis.stylized.TrackPopupMenu
 
 class UserActiveAdapter(private val context: Context, private val userList: List<ActiveItem>): RecyclerView.Adapter<UserActiveAdapter.ViewHolder>()  {
 
@@ -26,6 +29,17 @@ class UserActiveAdapter(private val context: Context, private val userList: List
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = userList[position]
+        val menu by lazy {
+            TrackPopupMenu(context, holder.view)
+        }
+        menu.setOnMenuItemClickListener {
+            when(it.itemId) {
+                R.id.delete -> "删除${item.nickname}".toast()
+                R.id.setAdministrator -> "${item.nickname}已成为管理员".toast()
+            }
+            true
+        }
+        menu.menuInflater.inflate(R.menu.popup_member_manage, menu.menu)
         holder.nickname.text = item.nickname
         holder.admin.visibility = if (item.administrator == 0) View.GONE else View.VISIBLE
         holder.id.text = item.userID
@@ -34,6 +48,10 @@ class UserActiveAdapter(private val context: Context, private val userList: List
             context.startActivity(Intent(context, ActiveDataActivity::class.java).also {
                 it.putExtra("activeItem", item)
             })
+        }
+        holder.view.setOnLongClickListener {
+            menu.show()
+            true
         }
     }
 

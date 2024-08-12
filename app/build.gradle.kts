@@ -20,8 +20,8 @@ android {
         applicationId = "com.jayce.vexis"
         minSdk = 30
         targetSdk = 34
-        versionCode = 10000001
-        versionName = "1.0.1"
+        versionCode = 1000000
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

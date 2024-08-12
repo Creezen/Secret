@@ -2,13 +2,14 @@ package com.jayce.vexis.member.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.Constant.BASE_FILE_PATH
-import com.jayce.vexis.BaseActivity
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.R
 import com.jayce.vexis.member.UserService
 import com.jayce.vexis.member.manage.AdminActivity
@@ -79,9 +80,10 @@ class HomePage: BaseActivity() {
                 }
             }
             image.setOnClickListener {
+                Log.e("HomePage.initPage","click image")
                 imageLauncher?.launch(arrayOf("image/*"))
             }
-            val cursorTime = readPrefs(this@HomePage) {
+            val cursorTime = readPrefs {
                 it.getLong("cursorTime", 0)
             }
             val cacheKey = "key:$cursorTime"
@@ -107,7 +109,7 @@ class HomePage: BaseActivity() {
                 old,
                 key = AvatarSignnature("key:$cursorTime"),
             )
-            writePrefs(this@HomePage){
+            writePrefs {
                 it.putLong("cursorTime", cursorTime)
             }
         }

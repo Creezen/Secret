@@ -4,7 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.jayce.vexis.BaseActivity
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)

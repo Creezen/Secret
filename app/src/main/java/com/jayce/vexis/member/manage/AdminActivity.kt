@@ -6,7 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-import com.jayce.vexis.BaseActivity
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.member.UserService

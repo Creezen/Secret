@@ -71,4 +71,12 @@
     <string name="fans">粉丝数</string>
     <string name="nothing_to_show">什么东西也没有…</string>
     <string name="hub">论坛</string>
+    <string name="set_as_admin">设置为管理员</string>
+    <string name="delete">删除</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="synergy">内容共创</string>
+    <string name="search">搜索</string>
+    <string name="hint_synergy">输入想查找的标题、内容、作者…</string>
+    <string name="toolbar">ToolBar</string>
 </resources>

@@ -85,7 +85,7 @@ object NetTool {
             .build()
     }
 
-    inline fun <reified T> create():T = retrofit.create(T::class.java)
+    inline fun <reified T> create(): T = retrofit.create(T::class.java)
 
     inline fun <reified T> createApi(): T = apiRetrofit.create(T::class.java)
 
@@ -94,7 +94,8 @@ object NetTool {
         image: ImageView,
         url: String,
         placeHolder: Drawable? = null,
-        key: Key?
+        key: Key?,
+        isCircle: Boolean = false
     ) {
         val load = Glide.with(context).load(url)
         var holderBuilder = load
@@ -105,12 +106,15 @@ object NetTool {
             holderBuilder.into(image)
             return
         }
-        holderBuilder.apply(getRequestOptions(key)).into(image)
+        holderBuilder.apply(getRequestOptions(key, isCircle)).into(image)
     }
 
-    private fun getRequestOptions(key: Key): RequestOptions {
-        return RequestOptions()
-            .signature(key)
+    private fun getRequestOptions(key: Key, isCircle: Boolean = false): RequestOptions {
+        return if (isCircle) {
+            RequestOptions().signature(key).circleCrop()
+        } else {
+            RequestOptions().signature(key)
+        }
     }
 
     private fun buildCookie(name:String, value:String, domain: String = "www"): Cookie {

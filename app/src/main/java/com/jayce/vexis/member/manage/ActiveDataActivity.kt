@@ -6,7 +6,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-import com.jayce.vexis.BaseActivity
+import com.creezen.tool.NetTool.create
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.member.UserService
@@ -60,7 +61,7 @@ class ActiveDataActivity: BaseActivity() {
     private suspend fun manageUser(operation: Int, userId: String) {
         activeItem?.let {
             lifecycleScope.launch {
-                val awaitMap = NetTool.create<UserService>()
+                val awaitMap = create<UserService>()
                     .manageUser(operation, userId).await()
                 val result = awaitMap["operationResult"]
                 if (result == true) {

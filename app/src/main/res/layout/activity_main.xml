@@ -16,29 +16,29 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             app:title=" "
-            android:background="#BDBDE8" >
+            android:background="@drawable/toolbar" >
             <TextView
                 android:id="@+id/toolBarText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="ToolBar"
-                android:textSize="25dp"/>
+                android:text="@string/toolbar"
+                android:textSize="25sp"/>
         </androidx.appcompat.widget.Toolbar>
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="5dp">
+            android:layout_weight="1">
         </FrameLayout>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         app:headerLayout="@layout/main_head"
-        app:menu="@menu/main"/>
+        app:menu="@menu/main"
+        android:background="@drawable/main_background"/>
 </androidx.drawerlayout.widget.DrawerLayout>

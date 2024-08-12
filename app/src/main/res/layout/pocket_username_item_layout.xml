@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <EditText
-        android:id="@+id/nameEdt"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    <ImageButton
-        android:id="@+id/delBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/delete"/>
-</LinearLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="baseRoot"
+            type="com.jayce.vexis.utility.ledger.ScoreInsertEntryView" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/nameEdt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:afterTextChanged="@{() -> baseRoot.afterChange(nameEdt)}"/>
+        <ImageButton
+            android:id="@+id/delBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/delete"
+            android:contentDescription="TODO" />
+    </LinearLayout>
+</layout>

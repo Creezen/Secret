@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.Constant.BROADCAST_LOGOUT
 
 class GlobalReceiver : BroadcastReceiver() {
@@ -13,7 +14,7 @@ class GlobalReceiver : BroadcastReceiver() {
             return
         }
         when(intent.action) {
-            BROADCAST_LOGOUT -> Log.e("GlobalReceiver.onReceive","登出")
+            BROADCAST_LOGOUT -> "登出".toast()
         }
     }
 }

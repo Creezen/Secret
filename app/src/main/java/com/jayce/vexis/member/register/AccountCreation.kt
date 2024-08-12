@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.init
 import com.jayce.vexis.R
-import com.jayce.vexis.BaseActivity
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.member.UserItem
 import com.jayce.vexis.databinding.AccountCreationBinding
 import com.jayce.vexis.stylized.SimpleDialog

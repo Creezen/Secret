@@ -11,6 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:typeface">monospace</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -26,4 +27,21 @@
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="adminActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="dropDownListViewStyle">@style/popupDivider</item>
+        <item name="textAppearanceSmallPopupMenu">@style/popupText</item>
+        <item name="textAppearanceLargePopupMenu">@style/popupText</item>
+    </style>
+
+    <style name="popupText">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/SeaSkyBlue</item>
+    </style>
+
+    <style name="popupDivider">
+        <item name="android:divider">@color/material_dynamic_primary60</item>
+        <item name="android:dividerHeight">2dp</item>
+    </style>
+
 </resources>

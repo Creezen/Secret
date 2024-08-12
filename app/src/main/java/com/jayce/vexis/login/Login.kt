@@ -3,26 +3,25 @@ package com.jayce.vexis.login
 import android.animation.AnimatorInflater
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.AudioAttributes
-import android.media.AudioManager
-import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.creezen.tool.AndroidTool.addTextChangedListener
+import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.BaseTool.restartApp
 import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.Constant.BASE_SOCKET_PATH
-import com.creezen.tool.Constant.BROADCAST_LOGOUT
 import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
 import com.creezen.tool.DataTool.map2pojo
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
+import com.creezen.tool.SoundTool.playShortSound
 import com.jayce.vexis.Main
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ActivityLoginBinding
@@ -45,6 +44,7 @@ class Login : AppCompatActivity() {
     private val picAdapter by lazy {
         HomePagePicAdapter(this, list)
     }
+    val liveData = MutableLiveData<String>()
 
     companion object {
         var isLogin: Boolean = false
@@ -61,15 +61,14 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        sendBroadcast(Intent(BROADCAST_LOGOUT).apply {
-            `package` = packageName
-        })
         initView()
         setAnimation()
         val packageInfo =
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
         "${packageInfo.versionName}  ${packageInfo.longVersionCode}".toast()
+//        sendBroadcast(Intent(BROADCAST_LOGOUT).apply {
+//            `package` = packageName
+//        })
     }
 
     private fun setAnimation() {
@@ -82,37 +81,26 @@ class Login : AppCompatActivity() {
 
     private fun initView(){
         with(binding){
-            name.addTextChangedListener {
-                afterTextChanged {
-                    it?.apply {
-                         login.isClickable = !(this.length>18||it.length<6)
-                    }
-                }
+            lifecycleOwner = this@Login
+            env = this@Login
+            liveData.observe(this@Login) {
+                login.isClickable = it.length in 6..18
             }
             findPassword.setOnClickListener {
-                lifecycleScope.launch {
-                    kotlin.runCatching {
-                        val res = createApi<ApiService>()
-                            .getDictionary(name.msg())
-                            .await()
-                        val jsonObj = JSONObject(res)
-                        val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
-                        val realVal = data.optString("pinyin")
-                        launch(Dispatchers.Main) {
-                            realVal.toast()
-                        }
-                    }.onFailure {
-                        "错误，请将账号换成单个汉字再试".toast()
-                    }
+                AndroidTool.writePrefs {
+                    it.putString("font", "方正粗圆")
                 }
+                restartApp()
+                getPinyinForChinese(liveData.value)
             }
             createAccount.setOnClickListener {
+                playShortSound(R.raw.delete)
                 val intent = Intent(this@Login, AccountCreation::class.java)
                 intent.putExtra("intentAccount",name.msg())
                 startActivity(intent)
             }
             login.setOnClickListener {
-                playSound()
+                playShortSound(R.raw.click)
                 kotlin.runCatching {
                     lifecycleScope.launch(Dispatchers.Main) {
                         loginLock.lock()
@@ -145,7 +133,7 @@ class Login : AppCompatActivity() {
                     Log.e("Login.initView","login error: $it")
                 }
             }
-            name.setText(getString(R.string.login_name))
+            liveData.value = getString(R.string.login_name)
             password.setText(R.string.login_password)
 
             initPicture()
@@ -158,8 +146,7 @@ class Login : AppCompatActivity() {
             offscreenPageLimit = 3
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             val childAt = getChildAt(0)
-            val pix = 0
-            childAt.setPadding(pix, 0, pix, 0)
+            childAt.setPadding(0, 0, 0, 0)
             clipToPadding = false
             list.add("${BASE_FILE_PATH}bEOVqK1713667655864.jpg")
             list.add("${BASE_FILE_PATH}cBfyRz1716695543925.jpg")
@@ -171,17 +158,24 @@ class Login : AppCompatActivity() {
         }
     }
 
-    private fun playSound() {
-        val attribute = AudioAttributes.Builder()
-            .setLegacyStreamType(AudioManager.STREAM_MUSIC)
-            .build()
-        val soundPool = SoundPool.Builder()
-            .setMaxStreams(1)
-            .setAudioAttributes(attribute)
-            .build()
-        soundPool.setOnLoadCompleteListener { _, i, i2 ->
-            soundPool.play(i, 1F, 1F, 1, 0, 1F)
+    private fun getPinyinForChinese(chineseChar: String?) {
+        if(chineseChar == null) {
+            return
         }
-        soundPool.load(this, R.raw.click, 2)
+        lifecycleScope.launch {
+            kotlin.runCatching {
+                val res = createApi<ApiService>()
+                    .getDictionary(chineseChar)
+                    .await()
+                val jsonObj = JSONObject(res)
+                val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
+                val realVal = data.optString("pinyin")
+                launch(Dispatchers.Main) {
+                    realVal.toast()
+                }
+            }.onFailure {
+                "错误，请将账号换成单个汉字再试".toast()
+            }
+        }
     }
 }

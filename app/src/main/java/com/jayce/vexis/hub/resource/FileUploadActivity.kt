@@ -5,17 +5,20 @@ import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import com.jayce.vexis.BaseActivity
+import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.creezen.tool.DataTool.getRandomString
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.DataTool.toTime
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withTimeoutOrNull
 import java.io.File
 
 class FileUploadActivity : BaseActivity() {
@@ -67,13 +70,16 @@ class FileUploadActivity : BaseActivity() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                lifecycleScope.launch {
+                workInDispatch(this@FileUploadActivity, 5000L) {
                     val filePart = buildFileMultipart(filePath, "file")
                     val result = NetTool.create<FileService>().uploadFile(
                         fileName, fileID, fileSuffix, description,
                         illustrate, fileSize, uploadTime, filePart
                     ).await()
-                    Log.e("ListPage.registerLauncher","filepath: $result")
+                    if(result["loadResult"] == true) {
+                        finish()
+                    }
+                    return@workInDispatch
                 }
             }
         }

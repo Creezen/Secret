@@ -1,10 +1,9 @@
 package com.creezen.tool
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -18,34 +17,32 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import com.creezen.tool.BaseTool.env
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.time.withTimeoutOrNull
+import kotlinx.coroutines.withTimeoutOrNull
 
 object AndroidTool {
 
-    private val prefsMap = HashMap<Context, SharedPreferences>()
+    private val prefs by lazy {
+        env().getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
+    }
 
-    private fun getPrefs(
-        context: Context,
-    ): SharedPreferences {
-        return prefsMap[context] ?: context.getSharedPreferences("TianJiData", Context.MODE_PRIVATE).also {
-            prefsMap[context] = it
+    @SuppressLint("ApplySharedPref")
+    fun writePrefs(
+        func: (Editor)->Unit
+    ) {
+        prefs.edit().apply {
+            func(this)
+            commit()
         }
     }
 
-    fun writePrefs(
-        context: Context,
-        func: (Editor)->Unit
-    ) {
-        val prefs = getPrefs(context)
-        prefs.edit().apply {
-            func(this)
-        }.apply()
-    }
-
     fun <T> readPrefs(
-        context: Context,
         func: (SharedPreferences) -> T?
     ): T? {
-        val prefs = getPrefs(context)
         prefs.apply {
             return func(this)
         }
@@ -59,7 +56,7 @@ object AndroidTool {
         beInCenter: Boolean = true
     ) {
         val orientation = this.orientation
-        val textView = TextView(BaseTool.getTJEnv()).also {
+        val textView = TextView(env()).also {
             it.text = text
             if (orientation == LinearLayout.HORIZONTAL) {
                 it.layoutParams = ViewGroup.LayoutParams(
@@ -100,7 +97,7 @@ object AndroidTool {
         itemSelect: ((T)->Unit)? = null
     ){
         val dataArrayList = ArrayList(list)
-        val spinnerAdapter = ArrayAdapter(BaseTool.getTJEnv(), promptResId, dataArrayList)
+        val spinnerAdapter = ArrayAdapter(env(), promptResId, dataArrayList)
         spinnerAdapter.setDropDownViewResource(dropdownResId)
         this.adapter = spinnerAdapter
         this.setOnItemSelectedListener {
@@ -125,32 +122,39 @@ object AndroidTool {
 
     fun replaceFragment(
         fragmentManager: FragmentManager,
-        resourceID:Int,
+        resourceID: Int,
         fragment: Fragment,
-        isAddToStack:Boolean = false
+        isAddToStack: Boolean = false
     ){
         val beginTransaction = fragmentManager.beginTransaction()
         beginTransaction.replace(resourceID,fragment)
-        if (isAddToStack) beginTransaction.addToBackStack(null)
+        if (isAddToStack) {
+            beginTransaction.addToBackStack(null)
+        }
         beginTransaction.commit()
     }
 
-    inline fun TextView.addTextChangedListener(bridge: EditTextBridge.()->Unit)=addTextChangedListener(
-        EditTextBridge().apply (bridge))
-
-    class EditTextBridge: TextWatcher {
-        private var beforeTextChanged: ((CharSequence?, Int, Int, Int) ->  Unit)? = null
-        private var onTextChanged: ((CharSequence?, Int, Int, Int) -> Unit)? = null
-        private var afterTextChanged: ((Editable?) ->  Unit)? = null
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { beforeTextChanged?.invoke(s, start, count, after) }
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { onTextChanged?.invoke(s, start, before, count) }
-        override fun afterTextChanged(s: Editable?) { afterTextChanged?.invoke(s) }
-        fun beforeTextChanged(listener: (CharSequence?, Int, Int, Int) ->  Unit) { beforeTextChanged = listener }
-        fun onTextChanged(listener: (CharSequence?, Int, Int, Int) ->  Unit) { onTextChanged = listener }
-        fun afterTextChanged(listener: (Editable?) ->  Unit) { afterTextChanged = listener }
+    fun <T> T.toast() {
+        Toast.makeText(env(),"$this", Toast.LENGTH_LONG).show()
     }
 
-    fun <T> T.toast() {
-        Toast.makeText(BaseTool.getTJEnv(),"$this", Toast.LENGTH_LONG).show()
+    fun workInDispatch(
+        owner: LifecycleOwner,
+        delayMillis: Long = 0,
+        timeoutMessage: String? = null,
+        func: suspend () -> Unit
+    ) {
+        owner.lifecycleScope.launch {
+            if(delayMillis <= 0) {
+                func.invoke()
+                return@launch
+            }
+            val result = withTimeoutOrNull(delayMillis) {
+                func.invoke()
+            }
+            if(result == null) {
+                timeoutMessage?.toast() ?: "任务执行超时".toast()
+            }
+        }
     }
 }

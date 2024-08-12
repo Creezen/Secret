@@ -1,7 +1,6 @@
 package com.jayce.vexis.member
 
 import com.google.gson.internal.LinkedTreeMap
-import com.jayce.vexis.member.ActiveItem
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
@@ -15,14 +14,14 @@ interface UserService {
 
     @POST("register")
     @FormUrlEncoded
-    fun checkUserName(@FieldMap requestUser: Map<String,String>):Call<LinkedTreeMap<String,Int>>
+    fun checkUserName(@FieldMap requestUser: Map<String,String>) : Call<LinkedTreeMap<String,Int>>
 
     @POST("/login")
     @FormUrlEncoded
     fun loginSystem(
-        @Field("unique") unique:String,
-        @Field("password") password:String
-    ):Call<LinkedTreeMap<String,String>>
+        @Field("unique") unique: String,
+        @Field("password") password: String
+    ) : Call<LinkedTreeMap<String,String>>
 
     @POST("/postAvatar")
     @Multipart

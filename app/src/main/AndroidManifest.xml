@@ -23,7 +23,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
-        android:name="com.jayce.vexis.Env"
+        android:name=".base.Env"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -35,19 +35,26 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
+            android:name=".synergy.paragraph.ParagraphActivity"
+            android:exported="false" />
+        <activity
+            android:name=".synergy.SynergyEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".hub.HubActivity"
             android:exported="false" />
         <activity
             android:name=".member.manage.ActiveDataActivity"
             android:exported="false" />
         <activity
-            android:name="com.jayce.vexis.member.manage.AdminActivity"
-            android:exported="false" />
+            android:name=".member.manage.AdminActivity"
+            android:exported="false"
+            android:theme="@style/adminActivityTheme" />
         <activity
             android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".feedback.FeedbackEditActivity"
+            android:name=".critique.FeedbackEditActivity"
             android:exported="false" />
         <activity
             android:name=".hub.resource.FileDetailActivity"
@@ -56,13 +63,13 @@
             android:name=".hub.resource.FileUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".utility.ledger.NewRecord"
+            android:name=".utility.ledger.ScoreBoard"
             android:exported="false" />
         <activity
             android:name=".member.dashboard.HomePage"
             android:exported="false" />
         <activity
-            android:name=".utility.ledger.PocketBook"
+            android:name=".utility.ledger.Ledger"
             android:exported="false" />
         <activity
             android:name=".Main"
