@@ -3,26 +3,25 @@ package com.jayce.vexis.member.register
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import com.creezen.tool.AndroidTool.init
-import com.jayce.vexis.R
-import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.member.UserItem
-import com.jayce.vexis.databinding.AccountCreationBinding
-import com.jayce.vexis.stylized.SimpleDialog
-import com.jayce.vexis.member.UserService
-import com.creezen.tool.DataTool.getRandomString
 import com.creezen.tool.AndroidTool.msg
+import com.creezen.tool.DataTool.getRandomString
+import com.creezen.tool.DataTool.isLeapYear
 import com.creezen.tool.DataTool.pojo2Map
 import com.creezen.tool.DataTool.toTime
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
+import com.jayce.vexis.R
+import com.jayce.vexis.base.BaseActivity
+import com.jayce.vexis.databinding.AccountCreationBinding
+import com.jayce.vexis.member.UserItem
+import com.jayce.vexis.member.UserService
+import com.jayce.vexis.stylized.SimpleDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AccountCreation : BaseActivity() {
+class RegisterActivity : BaseActivity() {
 
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
@@ -55,7 +54,7 @@ class AccountCreation : BaseActivity() {
 
     private fun initView(){
         with(binding){
-            val contextEnv = this@AccountCreation
+            val contextEnv = this@RegisterActivity
             lifecycleOwner = contextEnv
             activity = contextEnv
             accountCode = 1
@@ -111,33 +110,41 @@ class AccountCreation : BaseActivity() {
             introductionLiveData.observe(contextEnv) {
                 introductionLength = "${it.length}/200"
             }
-            yearSpinner.init(
-                YEAR_DATA,
-                R.layout.spinner_prompt,
-                R.layout.spinner_dropdown
-            )
-            monthSpinner.init(
-                MONTH_DATA,
-                R.layout.spinner_prompt,
-                R.layout.spinner_dropdown
-            )
-            daySpinner.init(
-                DAY_DATA,
-                R.layout.spinner_prompt,
-                R.layout.spinner_dropdown
-            )
-            sex.init(
-                SEX,
-                R.layout.spinner_prompt,
-                R.layout.spinner_dropdown
-            )
-            emailPostfix.init(
-                EMAIL_PROFIX,
-                R.layout.spinner_prompt,
-                R.layout.spinner_dropdown
-            )
+            yearSpinner.configuration(YEAR_DATA) {
+                val item = MONTH_DATA[monthSelected]
+                val source = if(item == 2) {
+                    if(isLeapYear(YEAR_DATA[it]))
+                        LEAP_DAY
+                    else
+                        COMMON_DAY
+                } else {
+                    if(item in listOf(4, 6, 9, 11))
+                        SMALL_DAY
+                    else
+                        BIG_DAY
+                }
+                daySpinner.refreshData(source)
+            }
+            monthSpinner.configuration(MONTH_DATA) {
+                when(MONTH_DATA[it]) {
+                    2 -> {
+                        if (isLeapYear(YEAR_DATA[yearSelect])) {
+                            daySpinner.refreshData(LEAP_DAY)
+                        } else {
+                            daySpinner.refreshData(COMMON_DAY)
+                        }
+                    }
+                    4, 6, 9, 11 -> daySpinner.refreshData(SMALL_DAY)
+                    else -> daySpinner.refreshData(BIG_DAY)
+                }
+            }
+            DAY_DATA.clear()
+            DAY_DATA.addAll(BIG_DAY)
+            daySpinner.configuration(DAY_DATA)
+            sex.configuration(SEX)
+            emailPostfix.configuration(EMAIL_PROFIX)
             register.setOnClickListener {
-                val dialog = SimpleDialog(this@AccountCreation).apply{
+                val dialog = SimpleDialog(this@RegisterActivity).apply{
                     setTitle("提示")
                     setMessage("注册中，请稍后...")
                 }
@@ -172,49 +179,9 @@ class AccountCreation : BaseActivity() {
         }
     }
 
-    fun onYearSpinnerSelect(pos: Int) {
-        if (MONTH_DATA[binding.monthSelected] != 2) {
-            return
-        }
-        if (isLeapYear(YEAR_DATA[pos])) {
-            refreshDaySpinner(LEAP_DAY)
-        } else {
-            refreshDaySpinner(COMMON_DAY)
-        }
-    }
-
-    fun onMonthSpinnerSelect(pos: Int) {
-        val monthValue = MONTH_DATA[pos]
-        when(monthValue) {
-            1, 3, 5, 7, 8, 10, 12 -> refreshDaySpinner(BIG_DAY)
-            4, 6, 9, 11 -> refreshDaySpinner(SMALL_DAY)
-            else -> {
-                if (isLeapYear(YEAR_DATA[binding.yearSelect])) {
-                    refreshDaySpinner(LEAP_DAY)
-                } else {
-                    refreshDaySpinner(COMMON_DAY)
-                }
-            }
-        }
-    }
-
-    private fun refreshDaySpinner(list: List<Int>){
-        val adapter = binding.daySpinner.adapter as ArrayAdapter<Int>
-        adapter.clear()
-        adapter.addAll(list)
-        adapter.notifyDataSetChanged()
-        binding.daySelected = 0
-    }
-
     private fun checkLoginCondition(){
         with(binding) {
             isLoginOK = (accountCode + nickNameCode + passwordCode + passwordConfirmCode) == 0
         }
-    }
-
-    private fun isLeapYear(year: Int) = when {
-        year % 100 == 0 -> year%400 == 0
-        year % 4 == 0 -> true
-        else -> false
     }
 }

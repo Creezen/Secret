@@ -14,23 +14,22 @@ import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
-import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
-import com.jayce.vexis.chat.ChatActivity
-import com.jayce.vexis.chronicle.Chronicle
-import com.jayce.vexis.member.dashboard.HomePage
-import com.jayce.vexis.databinding.ActivityMainBinding
-import com.jayce.vexis.critique.Feedback
-import com.jayce.vexis.hub.HubActivity
-import com.jayce.vexis.stylized.SimpleDialog
-import com.jayce.vexis.utility.Utility
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.BaseTool.env
 import com.creezen.tool.Constant
 import com.creezen.tool.NetTool
 import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.login.Login.Companion.setLoginStatus
+import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
+import com.jayce.vexis.chat.ChatActivity
+import com.jayce.vexis.chronicle.Chronicle
+import com.jayce.vexis.critique.Feedback
+import com.jayce.vexis.databinding.ActivityMainBinding
+import com.jayce.vexis.hub.HubActivity
 import com.jayce.vexis.member.dashboard.AvatarSignnature
+import com.jayce.vexis.member.dashboard.HomePage
+import com.jayce.vexis.stylized.SimpleDialog
 import com.jayce.vexis.synergy.Synergy
+import com.jayce.vexis.utility.Utility
 
 class Main : BaseActivity() {
 
@@ -111,7 +110,6 @@ class Main : BaseActivity() {
                     setRightButton("退出"){ _, _ ->
                         dismiss()
                         finishAll()
-                        setLoginStatus(false)
                     }
                     show()
                 }
@@ -129,7 +127,6 @@ class Main : BaseActivity() {
         when(item.itemId){
             R.id.logout -> {
                 finishAll()
-                setLoginStatus(false)
             }
             R.id.chat -> {
                 startActivity(Intent(this, ChatActivity::class.java))
@@ -145,4 +142,38 @@ class Main : BaseActivity() {
     private fun replaceFragment(fragment: Fragment){
         replaceFragment(supportFragmentManager,R.id.frame,fragment)
     }
+
+    //    private fun test() {
+//        val a = binding.longText
+//        binding.button.setOnClickListener {
+//            val textValue = binding.edit.text.toString()
+//            val list = textValue.split("\n")
+//                .asSequence()
+//                .filterNot {
+//                    it.isEmpty()
+//                }.map {
+//                    it.trim()
+//                }.take(10)
+//            list.forEach{
+//                Log.e("test", "the value: $it")
+//            }
+//            RandomAccessFile("filepath", "r").use {
+//                it.seek(it.filePointer)
+//                Channels.newInputStream(it.channel).bufferedReader().useLines {
+//
+//                }
+//            }
+//            val file = File("ddd")
+//
+//            file.useLines {
+//                it.filterNot {
+//                    it.isEmpty()
+//                }.map {
+//                    it.trim()
+//                }
+//            }
+//            a.longText = textValue
+//            binding.tv.text = "${list.count()}"
+//        }
+//    }
 }

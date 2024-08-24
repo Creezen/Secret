@@ -20,11 +20,6 @@
             android:layout_height="wrap_content"
             android:text="@string/new_record"/>
         <Button
-            android:id="@+id/load"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/load_history"/>
-        <Button
             android:id="@+id/history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

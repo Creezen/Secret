@@ -14,7 +14,7 @@ object Constant {
 
     const val BROADCAST_LOGOUT = "com.jayce.vexis.logout.broadcast"
 
-    private val primaryList = listOf(
+    private val primaryList = arrayListOf(
         "哲学",
         "经济学",
         "法学",
@@ -29,17 +29,17 @@ object Constant {
         "艺术学"
     )
 
-    private val secondaryList = listOf(
-        listOf(
+    private val secondaryList = arrayListOf(
+        arrayListOf(
             "哲学类"
         ),
-        listOf(
+        arrayListOf(
             "经济学类",
             "财政学类",
             "金融学类",
             "经济与贸易类"
         ),
-        listOf(
+        arrayListOf(
             "法学类",
             "政治学类",
             "社会学类",
@@ -47,20 +47,20 @@ object Constant {
             "马克思主义理论类",
             "公安学类"
         ),
-        listOf(
+        arrayListOf(
             "教育学类",
             "体育学类"
         ),
-        listOf(
+        arrayListOf(
             "中国语言文学类",
             "外国语言文学类",
             "新闻传播学类",
             "新闻传播学类（交叉专业）"
         ),
-        listOf(
+        arrayListOf(
             "历史学类"
         ),
-        listOf(
+        arrayListOf(
             "数学类",
             "物理学类",
             "化学类",
@@ -74,7 +74,7 @@ object Constant {
             "心理学类",
             "统计学类"
         ),
-        listOf(
+        arrayListOf(
             "力学类",
             "机械类",
             "仪器类",
@@ -107,7 +107,7 @@ object Constant {
             "生物工程类",
             "公安技术类"
         ),
-        listOf(
+        arrayListOf(
             "植物生产类",
             "自然保护与环境生态类",
             "动物生产类",
@@ -116,7 +116,7 @@ object Constant {
             "水产类",
             "草学类"
         ),
-        listOf(
+        arrayListOf(
             "基础医学类",
             "临床医学类",
             "口腔医学类",
@@ -129,7 +129,7 @@ object Constant {
             "医学技术类",
             "护理学类"
         ),
-        listOf(
+        arrayListOf(
             "管理科学与工程类",
             "工商管理类",
             "农业经济管理类",
@@ -140,7 +140,7 @@ object Constant {
             "电子商务类",
             "旅游管理类"
         ),
-        listOf(
+        arrayListOf(
             "艺术学理论类",
             "音乐与舞蹈学类",
             "戏剧与影视学类",
@@ -149,17 +149,17 @@ object Constant {
         )
     )
 
-    private val tertiaryList = listOf(
-        listOf(
-            listOf(
+    private val tertiaryList = arrayListOf(
+        arrayListOf(
+            arrayListOf(
                 "哲学",
                 "逻辑学",
                 "宗教学",
                 "伦理学"
             )
         ),
-        listOf(
-            listOf(
+        arrayListOf(
+            arrayListOf(
                 "经济学",
                 "经济统计学",
                 "国民经济管理",
@@ -170,12 +170,12 @@ object Constant {
                 "经济工程",
                 "数字经济"
             ),
-            listOf(
+            arrayListOf(
                 "财政学",
                 "税收学",
                 "国际税收"
             ),
-            listOf(
+            arrayListOf(
                 "金融学",
                 "金融工程",
                 "保险学",
@@ -187,14 +187,14 @@ object Constant {
                 "互联网金融",
                 "金融科技"
             ),
-            listOf(
+            arrayListOf(
                 "国际经济与贸易",
                 "贸易经济",
                 "国际经济发展合作"
             )
         ),
-        listOf(
-            listOf(
+        arrayListOf(
+            arrayListOf(
                 "法学",
                 "知识产权",
                 "监狱学",
@@ -204,7 +204,7 @@ object Constant {
                 "社区矫正",
                 "纪检监察"
             ),
-            listOf(
+            arrayListOf(
                 "政治学与行政学",
                 "国际政治",
                 "外交学",
@@ -212,7 +212,7 @@ object Constant {
                 "政治学、经济学与哲学",
                 "国际组织与全球治理"
             ),
-            listOf("社会学",
+            arrayListOf("社会学",
                 "社会工作",
                 "人类学",
                 "女性学",
@@ -220,15 +220,15 @@ object Constant {
                 "老年学",
                 "社会政策"
             ),
-            listOf(
+           arrayListOf(
                 "民族学"
             ),
-            listOf("科学社会主义",
+           arrayListOf("科学社会主义",
                 "中国共产党历史",
                 "思想政治教育",
                 "马克思主义理论"
             ),
-            listOf(
+           arrayListOf(
                 "治安学",
                 "侦查学",
                 "边防管理",
@@ -254,8 +254,8 @@ object Constant {
                 "铁路警务"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "教育学",
                 "科学教育",
                 "人文教育",
@@ -271,7 +271,7 @@ object Constant {
                 "融合教育",
                 "劳动教育"
             ),
-            listOf(
+           arrayListOf(
                 "体育教育",
                 "运动训练",
                 "社会体育指导与管理",
@@ -287,8 +287,8 @@ object Constant {
                 "运动能力开发"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "汉语言文学",
                 "汉语言",
                 "汉语国际教育",
@@ -299,7 +299,7 @@ object Constant {
                 "中国语言与文化",
                 "手语翻译"
             ),
-            listOf("桑戈语",
+           arrayListOf("桑戈语",
                 "英语",
                 "俄语",
                 "德语",
@@ -404,7 +404,7 @@ object Constant {
                 "切瓦语",
                 "塞苏陀语"
             ),
-            listOf(
+           arrayListOf(
                 "新闻学",
                 "广播电视学",
                 "广告学",
@@ -415,12 +415,12 @@ object Constant {
                 "时尚传播",
                 "国际新闻与传播"
             ),
-            listOf(
+           arrayListOf(
                 "会展"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "历史学",
                 "世界史",
                 "考古学",
@@ -432,14 +432,14 @@ object Constant {
                 "科学史"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "数学与应用数学",
                 "信息与计算科学",
                 "数理基础科学",
                 "数据计算及应用"
             ),
-            listOf(
+           arrayListOf(
                 "物理学",
                 "应用物理学",
                 "核物理",
@@ -447,7 +447,7 @@ object Constant {
                 "系统科学与工程",
                 "量子信息科学"
             ),
-            listOf(
+           arrayListOf(
                 "化学",
                 "应用化学",
                 "化学生物学",
@@ -455,39 +455,39 @@ object Constant {
                 "能源化学",
                 "化学测量学与技术"
             ),
-            listOf(
+           arrayListOf(
                 "天文学"
             ),
-            listOf(
+           arrayListOf(
                 "地理科学",
                 "自然地理与资源环境",
                 "人文地理与城乡规划",
                 "地理信息科学"
             ),
-            listOf(
+           arrayListOf(
                 "大气科学",
                 "应用气象学",
                 "气象技术与工程"
             ),
-            listOf(
+           arrayListOf(
                 "海洋科学",
                 "海洋技术",
                 "海洋资源与环境",
                 "军事海洋学"
             ),
-            listOf(
+           arrayListOf(
                 "地球物理学",
                 "空间科学与技术",
                 "防灾减灾科学与工程",
                 "行星科学"
             ),
-            listOf(
+           arrayListOf(
                 "地质学",
                 "地球化学",
                 "地球信息科学与技术",
                 "古生物学"
             ),
-            listOf(
+           arrayListOf(
                 "生物科学",
                 "生物技术",
                 "生物信息学",
@@ -495,21 +495,21 @@ object Constant {
                 "整合科学",
                 "神经科学"
             ),
-            listOf(
+           arrayListOf(
                 "心理学",
                 "应用心理学"
             ),
-            listOf(
+           arrayListOf(
                 "统计学",
                 "应用统计学"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "理论与应用力学",
                 "工程力学"
             ),
-            listOf(
+           arrayListOf(
                 "机械工程",
                 "机械设计制造及其自动化",
                 "材料成型及控制工程",
@@ -530,12 +530,12 @@ object Constant {
                 "智能交互设计",
                 "应急装备技术与工程"
             ),
-            listOf(
+           arrayListOf(
                 "测控技术与仪器",
                 "精密仪器",
                 "智能感知工程"
             ),
-            listOf(
+           arrayListOf(
                 "材料科学与工程",
                 "材料物理",
                 "材料化学",
@@ -555,7 +555,7 @@ object Constant {
                 "智能材料与结构",
                 "光电信息材料与器件"
             ),
-            listOf(
+           arrayListOf(
                 "能源与动力工程",
                 "能源与环境系统工程",
                 "新能源科学与工程",
@@ -564,7 +564,7 @@ object Constant {
                 "氢能科学与工程",
                 "可持续能源"
             ),
-            listOf(
+           arrayListOf(
                 "电气工程及其自动化",
                 "智能电网信息工程",
                 "光源与照明",
@@ -574,7 +574,7 @@ object Constant {
                 "能源互联网工程",
                 "智慧能源工程"
             ),
-            listOf(
+           arrayListOf(
                 "电子信息工程",
                 "电子科学与技术",
                 "通信工程",
@@ -594,7 +594,7 @@ object Constant {
                 "柔性电子学",
                 "智能测控工程"
             ),
-            listOf(
+           arrayListOf(
                 "自动化",
                 "轨道交通信号与控制",
                 "机器人工程",
@@ -604,7 +604,7 @@ object Constant {
                 "工业智能",
                 "智能工程与创意设计"
             ),
-            listOf(
+           arrayListOf(
                 "计算机科学与技术",
                 "软件工程",
                 "网络工程",
@@ -624,7 +624,7 @@ object Constant {
                 "区块链工程",
                 "密码科学与技术"
             ),
-            listOf(
+           arrayListOf(
                 "土木工程",
                 "建筑环境与能源应用工程",
                 "给排水科学与工程",
@@ -638,7 +638,7 @@ object Constant {
                 "城市水系统工程",
                 "智能建造与智慧交通"
             ),
-            listOf(
+           arrayListOf(
                 "水利水电工程",
                 "水文与水资源工程",
                 "港口航道与海岸工程",
@@ -646,14 +646,14 @@ object Constant {
                 "水利科学与工程",
                 "智慧水利"
             ),
-            listOf(
+           arrayListOf(
                 "测绘工程",
                 "遥感科学与技术",
                 "导航工程",
                 "地理国情监测",
                 "地理空间信息工程"
             ),
-            listOf(
+           arrayListOf(
                 "化学工程与工艺",
                 "制药工程",
                 "资源循环科学与工程",
@@ -663,7 +663,7 @@ object Constant {
                 "涂料工程",
                 "精细化工"
             ),
-            listOf(
+           arrayListOf(
                 "地质工程",
                 "勘查技术与工程",
                 "资源勘查工程",
@@ -672,7 +672,7 @@ object Constant {
                 "智能地球探测",
                 "资源环境大数据工程"
             ),
-            listOf(
+           arrayListOf(
                 "采矿工程",
                 "石油工程",
                 "矿物加工工程",
@@ -682,14 +682,14 @@ object Constant {
                 "智能采矿工程",
                 "碳储科学与工程"
             ),
-            listOf(
+           arrayListOf(
                 "纺织工程",
                 "服装设计与工程",
                 "非织造材料与工程",
                 "服装设计与工艺教育",
                 "丝绸设计与工程"
             ),
-            listOf(
+           arrayListOf(
                 "轻化工程",
                 "包装工程",
                 "印刷工程",
@@ -697,7 +697,7 @@ object Constant {
                 "化妆品技术与工程",
                 "生物质能源与材料"
             ),
-            listOf(
+           arrayListOf(
                 "交通运输",
                 "交通工程",
                 "航海技术",
@@ -711,14 +711,14 @@ object Constant {
                 "智慧交通",
                 "智能运输工程"
             ),
-            listOf(
+           arrayListOf(
                 "船舶与海洋工程",
                 "海洋工程与技术",
                 "海洋资源开发技术",
                 "海洋机器人",
                 "智慧海洋技术"
             ),
-            listOf(
+           arrayListOf(
                 "航空航天工程",
                 "飞行器设计与工程",
                 "飞行器制造工程",
@@ -731,7 +731,7 @@ object Constant {
                 "智能飞行器技术",
                 "空天智能电推进技术"
             ),
-            listOf(
+           arrayListOf(
                 "武器系统与工程",
                 "武器发射工程",
                 "探测制导与控制技术",
@@ -741,13 +741,13 @@ object Constant {
                 "信息对抗技术",
                 "智能无人系统技术"
             ),
-            listOf(
+           arrayListOf(
                 "核工程与核技术",
                 "辐射防护与核安全",
                 "工程物理",
                 "核化工与核燃料工程"
             ),
-            listOf(
+           arrayListOf(
                 "农业工程",
                 "农业机械化及其自动化",
                 "农业电气化",
@@ -756,14 +756,14 @@ object Constant {
                 "土地整治工程",
                 "农业智能装备工程"
             ),
-            listOf(
+           arrayListOf(
                 "森林工程",
                 "木材科学与工程",
                 "林产化工",
                 "家具设计与工程",
                 "木结构建筑与材料"
             ),
-            listOf(
+           arrayListOf(
                 "环境科学与工程",
                 "环境工程",
                 "环境科学",
@@ -772,13 +772,13 @@ object Constant {
                 "资源环境科学",
                 "水质科学与技术"
             ),
-            listOf(
+           arrayListOf(
                 "生物医学工程",
                 "假肢矫形工程",
                 "临床工程技术",
                 "康复工程"
             ),
-            listOf(
+           arrayListOf(
                 "食品科学与工程",
                 "食品质量与安全",
                 "粮食工程",
@@ -792,7 +792,7 @@ object Constant {
                 "食用菌科学与工程",
                 "白酒酿造工程"
             ),
-            listOf(
+           arrayListOf(
                 "建筑学",
                 "城乡规划",
                 "风景园林",
@@ -801,17 +801,17 @@ object Constant {
                 "城市设计",
                 "智慧建筑与建造"
             ),
-            listOf(
+           arrayListOf(
                 "安全工程",
                 "应急技术与管理",
                 "职业卫生工程"
             ),
-            listOf(
+           arrayListOf(
                 "生物工程",
                 "生物制药",
                 "合成生物学"
             ),
-            listOf(
+           arrayListOf(
                 "刑事科学技术",
                 "消防工程",
                 "交通管理工程",
@@ -826,8 +826,8 @@ object Constant {
                 "食品药品环境犯罪侦查技术"
             )
         ),
-        listOf(
-            listOf("农学",
+       arrayListOf(
+           arrayListOf("农学",
                 "园艺",
                 "植物保护",
                 "植物科学与技术",
@@ -844,7 +844,7 @@ object Constant {
                 "生物农药科学与工程",
                 "生物育种科学"
             ),
-            listOf(
+           arrayListOf(
                 "农业资源与环境",
                 "野生动物与自然保护区管理",
                 "水土保持与荒漠化防治",
@@ -852,7 +852,7 @@ object Constant {
                 "土地科学与技术",
                 "湿地保护与恢复"
             ),
-            listOf(
+           arrayListOf(
                 "动物科学",
                 "蚕学",
                 "蜂学",
@@ -861,7 +861,7 @@ object Constant {
                 "饲料工程",
                 "智慧牧业科学与工程"
             ),
-            listOf(
+           arrayListOf(
                 "动物医学",
                 "动物药学",
                 "动植物检疫",
@@ -869,31 +869,31 @@ object Constant {
                 "中兽医学",
                 "兽医公共卫生"
             ),
-            listOf(
+           arrayListOf(
                 "林学",
                 "园林",
                 "森林保护",
                 "经济林",
                 "智慧林业"
             ),
-            listOf(
+           arrayListOf(
                 "水产养殖学",
                 "海洋渔业科学与技术",
                 "水族科学与技术",
                 "水生动物医学"
             ),
-            listOf(
+           arrayListOf(
                 "草业科学",
                 "草坪科学与工程"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "基础医学",
                 "生物医学",
                 "生物医学科学"
             ),
-            listOf(
+           arrayListOf(
                 "临床医学",
                 "麻醉学",
                 "医学影像学",
@@ -902,10 +902,10 @@ object Constant {
                 "放射医学",
                 "儿科学"
             ),
-            listOf(
+           arrayListOf(
                 "口腔医学"
             ),
-            listOf(
+           arrayListOf(
                 "预防医学",
                 "食品卫生与营养学",
                 "妇幼保健医学",
@@ -913,7 +913,7 @@ object Constant {
                 "全球健康学",
                 "运动与公共健康"
             ),
-            listOf(
+           arrayListOf(
                 "中医学",
                 "针灸推拿学",
                 "藏医学",
@@ -928,10 +928,10 @@ object Constant {
                 "中医儿科学",
                 "中医骨伤科学"
             ),
-            listOf(
+           arrayListOf(
                 "中西医临床医学"
             ),
-            listOf(
+           arrayListOf(
                 "药学",
                 "药物制剂",
                 "临床药学",
@@ -941,7 +941,7 @@ object Constant {
                 "海洋药学",
                 "化妆品科学与技术"
             ),
-            listOf(
+           arrayListOf(
                 "中药学",
                 "中药资源与开发",
                 "藏药学",
@@ -949,10 +949,10 @@ object Constant {
                 "中药制药",
                 "中草药栽培与鉴定"
             ),
-            listOf(
+           arrayListOf(
                 "法医学"
             ),
-            listOf(
+           arrayListOf(
                 "医学检验技术",
                 "医学实验技术",
                 "医学影像技术",
@@ -967,13 +967,13 @@ object Constant {
                 "生物医药数据科学",
                 "智能影像工程"
             ),
-            listOf(
+           arrayListOf(
                 "护理学",
                 "助产学"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "管理科学",
                 "信息管理与信息系统",
                 "工程管理",
@@ -986,7 +986,7 @@ object Constant {
                 "计算金融",
                 "应急管理"
             ),
-            listOf(
+           arrayListOf(
                 "工商管理",
                 "市场营销",
                 "会计学",
@@ -1005,11 +1005,11 @@ object Constant {
                 "创业管理",
                 "海关稽查"
             ),
-            listOf(
+           arrayListOf(
                 "农林经济管理",
                 "农村区域发展"
             ),
-            listOf(
+           arrayListOf(
                 "公共事业管理",
                 "行政管理",
                 "劳动与社会保障",
@@ -1029,41 +1029,41 @@ object Constant {
                 "自然资源登记与管理",
                 "慈善管理"
             ),
-            listOf(
+           arrayListOf(
                 "图书馆学",
                 "档案学",
                 "信息资源管理"
             ),
-            listOf(
+           arrayListOf(
                 "物流管理",
                 "物流工程",
                 "釆购管理",
                 "供应链管理"
             ),
-            listOf(
+           arrayListOf(
                 "工业工程",
                 "标准化工程",
                 "质量管理工程"
             ),
-            listOf(
+           arrayListOf(
                 "电子商务",
                 "电子商务及法律",
                 "跨境电子商务"
             ),
-            listOf(
+           arrayListOf(
                 "旅游管理",
                 "酒店管理",
                 "会展经济与管理",
                 "旅游管理与服务教育"
             )
         ),
-        listOf(
-            listOf(
+       arrayListOf(
+           arrayListOf(
                 "艺术史论",
                 "艺术管理",
                 "非物质文化遗产保护"
             ),
-            listOf(
+           arrayListOf(
                 "音乐表演",
                 "音乐学",
                 "作曲与作曲技术理论",
@@ -1077,7 +1077,7 @@ object Constant {
                 "流行舞蹈",
                 "音乐教育"
             ),
-            listOf(
+           arrayListOf(
                 "表演",
                 "戏剧学",
                 "电影学",
@@ -1094,7 +1094,7 @@ object Constant {
                 "曲艺",
                 "音乐剧"
             ),
-            listOf(
+           arrayListOf(
                 "美术学",
                 "绘画",
                 "雕塑",
@@ -1109,7 +1109,7 @@ object Constant {
                 "科技艺术",
                 "美术教育"
             ),
-            listOf(
+           arrayListOf(
                 "艺术设计学",
                 "视觉传达设计",
                 "环境设计",

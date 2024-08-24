@@ -4,7 +4,6 @@ import android.animation.AnimatorInflater
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.BaseTool.restartApp
 import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.Constant.BASE_SOCKET_PATH
@@ -22,11 +22,12 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
 import com.creezen.tool.SoundTool.playShortSound
+import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.Main
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.member.UserService
-import com.jayce.vexis.member.register.AccountCreation
+import com.jayce.vexis.member.register.RegisterActivity
 import com.jayce.vexis.onlineSocket
 import com.jayce.vexis.onlineUser
 import com.jayce.vexis.stylized.animator.MyCustomTransformer
@@ -35,7 +36,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.net.Socket
-import java.util.concurrent.locks.ReentrantLock
 
 class Login : AppCompatActivity() {
 
@@ -45,17 +45,6 @@ class Login : AppCompatActivity() {
         HomePagePicAdapter(this, list)
     }
     val liveData = MutableLiveData<String>()
-
-    companion object {
-        var isLogin: Boolean = false
-        var loginLock: ReentrantLock = ReentrantLock(true)
-
-        fun setLoginStatus(status: Boolean) {
-            loginLock.lock()
-            isLogin = status
-            loginLock.unlock()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,35 +80,29 @@ class Login : AppCompatActivity() {
                     it.putString("font", "方正粗圆")
                 }
                 restartApp()
-                getPinyinForChinese(liveData.value)
+//                getPinyinForChinese(liveData.value)
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
-                val intent = Intent(this@Login, AccountCreation::class.java)
+                val intent = Intent(this@Login, RegisterActivity::class.java)
                 intent.putExtra("intentAccount",name.msg())
                 startActivity(intent)
             }
             login.setOnClickListener {
+                login.isClickable = false
                 playShortSound(R.raw.click)
-                kotlin.runCatching {
-                    lifecycleScope.launch(Dispatchers.Main) {
-                        loginLock.lock()
-                        if (isLogin) {
-                            return@launch
-                        }
-                        isLogin = true
-                        loginLock.unlock()
+                workInDispatch(this@Login,  2000L, Dispatchers.Main, object : LifecycleJob{
+                    override suspend fun onDispatch() {
                         val loginResult = NetTool.create<UserService>()
                             .loginSystem(name.msg(), password.msg())
                             .await()
                         if (!loginResult.containsKey("status")) {
                             onlineUser = loginResult.map2pojo()
-                            onlineSocket = async(Dispatchers.IO) {
+                            onlineSocket = lifecycleScope.async(Dispatchers.IO) {
                                 Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                             }.await()
                             startActivity(Intent(this@Login, Main::class.java))
                         } else {
-                            isLogin = false
                             val status = loginResult["status"]?.toInt()
                             if (status == 0) {
                                 "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
@@ -128,10 +111,11 @@ class Login : AppCompatActivity() {
                             }
                         }
                     }
-                }.onFailure {
-                    isLogin = false
-                    Log.e("Login.initView","login error: $it")
-                }
+
+                    override fun onTimeoutFinish(isWorkFinished: Boolean) {
+                        login.isClickable = true
+                    }
+                })
             }
             liveData.value = getString(R.string.login_name)
             password.setText(R.string.login_password)

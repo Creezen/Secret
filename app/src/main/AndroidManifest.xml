@@ -35,6 +35,12 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
+            android:name=".utility.gomoku.GomokuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".utility.maze.MazeActivity"
+            android:exported="false" />
+        <activity
             android:name=".synergy.paragraph.ParagraphActivity"
             android:exported="false" />
         <activity
@@ -75,7 +81,7 @@
             android:name=".Main"
             android:exported="false" />
         <activity
-            android:name=".member.register.AccountCreation"
+            android:name=".member.register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".login.Login"

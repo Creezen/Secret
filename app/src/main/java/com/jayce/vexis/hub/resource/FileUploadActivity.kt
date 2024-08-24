@@ -16,6 +16,8 @@ import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
+import com.creezen.tool.contract.LifecycleJob
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
@@ -70,17 +72,18 @@ class FileUploadActivity : BaseActivity() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(this@FileUploadActivity, 5000L) {
-                    val filePart = buildFileMultipart(filePath, "file")
-                    val result = NetTool.create<FileService>().uploadFile(
-                        fileName, fileID, fileSuffix, description,
-                        illustrate, fileSize, uploadTime, filePart
-                    ).await()
-                    if(result["loadResult"] == true) {
-                        finish()
+                workInDispatch(this@FileUploadActivity, delayMillis = 5000L, lifecycleJob = object : LifecycleJob{
+                    override suspend fun onDispatch() {
+                        val filePart = buildFileMultipart(filePath, "file")
+                        val result = NetTool.create<FileService>().uploadFile(
+                            fileName, fileID, fileSuffix, description,
+                            illustrate, fileSize, uploadTime, filePart
+                        ).await()
+                        if(result["loadResult"] == true) {
+                            finish()
+                        }
                     }
-                    return@workInDispatch
-                }
+                })
             }
         }
     }

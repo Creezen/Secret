@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +21,16 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.BaseTool.env
+import com.creezen.tool.contract.LifecycleJob
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.withTimeoutOrNull
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.coroutines.CoroutineContext
 
 object AndroidTool {
 
@@ -90,36 +98,6 @@ object AndroidTool {
         return this.msg().toInt()
     }
 
-    fun <T> Spinner.init(
-        list: List<T>,
-        promptResId: Int,
-        dropdownResId: Int,
-        itemSelect: ((T)->Unit)? = null
-    ){
-        val dataArrayList = ArrayList(list)
-        val spinnerAdapter = ArrayAdapter(env(), promptResId, dataArrayList)
-        spinnerAdapter.setDropDownViewResource(dropdownResId)
-        this.adapter = spinnerAdapter
-        this.setOnItemSelectedListener {
-            onItemSelected{ _, _, pos, _ ->
-                itemSelect?.invoke(dataArrayList[pos])
-            }
-        }
-        this.setSelection(0)
-    }
-
-    inline fun Spinner.setOnItemSelectedListener(bridge: SpinnerBridge.()->Unit) = setOnItemSelectedListener(
-        SpinnerBridge().apply(bridge))
-
-    class SpinnerBridge: AdapterView.OnItemSelectedListener {
-        private var onItemSelected:((AdapterView<*>?, View?, Int, Long) -> Unit)? = null
-        private var onNothingSelected:((AdapterView<*>?) -> Unit)? = null
-        override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) { onItemSelected?.invoke(p0, p1, p2, p3) }
-        override fun onNothingSelected(p0: AdapterView<*>?) { onNothingSelected?.invoke(p0) }
-        fun onItemSelected(listener:(AdapterView<*>?, View?, Int, Long) -> Unit) { onItemSelected = listener }
-        fun onNothingSelected(listener:(AdapterView<*>?) -> Unit){ onNothingSelected = listener }
-    }
-
     fun replaceFragment(
         fragmentManager: FragmentManager,
         resourceID: Int,
@@ -141,20 +119,19 @@ object AndroidTool {
     fun workInDispatch(
         owner: LifecycleOwner,
         delayMillis: Long = 0,
-        timeoutMessage: String? = null,
-        func: suspend () -> Unit
+        coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
+        lifecycleJob: LifecycleJob
     ) {
-        owner.lifecycleScope.launch {
+        var result: Any?
+        owner.lifecycleScope.launch(coroutineDispatcher) {
             if(delayMillis <= 0) {
-                func.invoke()
+                lifecycleJob.onDispatch()
                 return@launch
             }
-            val result = withTimeoutOrNull(delayMillis) {
-                func.invoke()
+            result = withTimeoutOrNull(delayMillis) {
+                lifecycleJob.onDispatch()
             }
-            if(result == null) {
-                timeoutMessage?.toast() ?: "任务执行超时".toast()
-            }
+            lifecycleJob.onTimeoutFinish(result != null)
         }
     }
 }

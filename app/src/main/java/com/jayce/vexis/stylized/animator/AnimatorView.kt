@@ -39,18 +39,13 @@ class AnimatorView(context: Context, attrs: AttributeSet): View(context, attrs) 
     }
 
     private fun setBallAnimator(): ValueAnimator {
-        val ballStart = AnimatorBall(radius, height/2f)
-        val ballOne = AnimatorBall(width/2f, height - radius)
-        val ballTwo = AnimatorBall(width - radius, height/2f)
-        val ballThree = AnimatorBall(width/2f, radius)
-        val ballEnd = AnimatorBall(radius, height/2f)
         val valueAnimator = ValueAnimator.ofObject(
             BallEvaluator(),
-            ballStart,
-            ballOne,
-            ballTwo,
-            ballThree,
-            ballEnd
+            AnimatorBall(radius, height/2f),
+            AnimatorBall(width/2f, height - radius),
+            AnimatorBall(width - radius, height/2f),
+            AnimatorBall(width/2f, radius),
+            AnimatorBall(radius, height/2f)
         )
         valueAnimator.addUpdateListener {
             ball = it.animatedValue as AnimatorBall

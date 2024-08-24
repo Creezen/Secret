@@ -2,14 +2,14 @@ package com.jayce.vexis.critique
 
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
-import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.onlineUser
-import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.NetTool
+import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.NetTool.await
-import kotlinx.coroutines.launch
+import com.creezen.tool.NetTool.create
+import com.creezen.tool.contract.LifecycleJob
+import com.jayce.vexis.base.BaseActivity
+import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
+import com.jayce.vexis.onlineUser
 
 class FeedbackEditActivity: BaseActivity() {
 
@@ -27,13 +27,16 @@ class FeedbackEditActivity: BaseActivity() {
             submit.setOnClickListener {
                 val titleMsg = title.msg()
                 val contentMsg = content.msg()
-                lifecycleScope.launch {
-                    val result = NetTool
-                        .create<FeedbackService>()
-                        .sendFeedback(onlineUser.userId, titleMsg, contentMsg)
-                        .await()
-                    Log.e("FeedbackEditActivity.initView","$result")
-                }
+                workInDispatch(this@FeedbackEditActivity, 3000, lifecycleJob = object: LifecycleJob{
+                    override suspend fun onDispatch() {
+                        val result = create<FeedbackService>()
+                            .sendFeedback(onlineUser.userId, titleMsg, contentMsg)
+                            .await()
+                        if(result) {
+                            finish()
+                        }
+                    }
+                })
             }
             Log.e("FeedbackEditActivity.initView","click")
         }

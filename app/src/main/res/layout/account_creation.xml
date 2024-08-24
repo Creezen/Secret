@@ -7,8 +7,11 @@
         <import type="android.view.View"/>
 
         <variable
+            name="defaultSpinner"
+            type="com.jayce.vexis.stylized.DefaultSpinner" />
+        <variable
             name="activity"
-            type="com.jayce.vexis.member.register.AccountCreation"/>
+            type="com.jayce.vexis.member.register.RegisterActivity"/>
         <variable
             name="accountCode"
             type="int"/>
@@ -283,7 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <Spinner
+                        <com.jayce.vexis.stylized.DefaultSpinner
                             android:id="@+id/yearSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -291,8 +294,8 @@
                             android:background="@drawable/corner_16"
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={yearSelect}"
-                            android:onItemSelected="@{(parent, view, pos, id) -> activity.onYearSpinnerSelect(pos)}"/>
-                        <Spinner
+                            android:onItemSelected="@{() -> yearSpinner.onItemSelect()}"/>
+                        <com.jayce.vexis.stylized.DefaultSpinner
                             android:id="@+id/monthSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -302,8 +305,8 @@
                             android:layout_marginEnd="@dimen/margin"
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={monthSelected}"
-                            android:onItemSelected="@{(parent, view, pos, id) -> activity.onMonthSpinnerSelect(pos)}"/>
-                        <Spinner
+                            android:onItemSelected="@{() -> monthSpinner.onItemSelect()}"/>
+                        <com.jayce.vexis.stylized.DefaultSpinner
                             android:id="@+id/daySpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -324,7 +327,7 @@
                         android:textSize="@dimen/label"
                         android:gravity="center"
                         android:text="性别"/>
-                    <Spinner
+                    <com.jayce.vexis.stylized.DefaultSpinner
                         android:id="@+id/sex"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -361,7 +364,7 @@
                             android:paddingStart="@dimen/margin"
                             android:layout_marginEnd="@dimen/margin"
                             android:textColorHint="@color/hint"/>
-                        <Spinner
+                        <com.jayce.vexis.stylized.DefaultSpinner
                             android:id="@+id/emailPostfix"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

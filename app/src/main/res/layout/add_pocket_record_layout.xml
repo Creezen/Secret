@@ -7,19 +7,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="账本标题"
+            android:text="@string/pocket_title"
             android:textSize="20sp"
             android:textColor="#ff0000"/>
         <EditText
             android:id="@+id/titleEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="长度不超过15..."
-            android:text="title"/>
+            android:hint="@string/max_length_15"
+            android:text="@string/title"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="参与用户"
+            android:text="@string/join_player"
             android:textSize="20sp"
             android:textColor="#73FF0000"/>
         <LinearLayout
@@ -31,7 +31,8 @@
             android:id="@+id/addBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/default_head"
-            android:scaleType="fitCenter"/>
+            android:src="@drawable/add_player"
+            android:scaleType="fitCenter"
+            android:background="#F5F5F5"/>
     </LinearLayout>
 </layout>

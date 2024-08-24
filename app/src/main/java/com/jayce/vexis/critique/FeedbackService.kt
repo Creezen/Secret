@@ -13,7 +13,7 @@ interface FeedbackService {
     fun sendFeedback(@Field("userID") userID: String,
                      @Field("title") title: String,
                      @Field("content") content: String
-    ): Call<LinkedHashMap<String, Boolean>>
+    ): Call<Boolean>
 
     @GET("/getFeedback")
     fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackItem>>>

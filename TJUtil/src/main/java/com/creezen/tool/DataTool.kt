@@ -34,4 +34,10 @@ object DataTool {
         return gson.fromJson(gson.toJson(this), T::class.java)
     }
 
+    fun isLeapYear(year: Int) = when {
+        year % 100 == 0 -> year%400 == 0
+        year % 4 == 0 -> true
+        else -> false
+    }
+
 }

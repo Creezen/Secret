@@ -22,7 +22,7 @@ class Chronicle : BaseFragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         with(binding) {
-            base.setOnTouchListener { view, event ->
+            base.setOnTouchListener { _, event ->
                 MotionEvent.ACTION_MASK
                 val param = center.layoutParams
                 param.height = event.y.toInt()

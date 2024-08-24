@@ -10,13 +10,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <Button
-                android:id="@+id/pocketBook"
-                android:layout_width="0dp"
+                android:id="@+id/ledger"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/pocket"/>
+            <Button
+                android:id="@+id/maze"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/maze"/>
+            <Button
+                android:id="@+id/gomoku"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gomoku"/>
         </LinearLayout>
     </LinearLayout>
     <com.jayce.vexis.stylized.animator.AnimatorView

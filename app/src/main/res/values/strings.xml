@@ -79,4 +79,11 @@
     <string name="search">搜索</string>
     <string name="hint_synergy">输入想查找的标题、内容、作者…</string>
     <string name="toolbar">ToolBar</string>
+    <string name="maze">迷宫</string>
+    <string name="gomoku">五子棋</string>
+    <string name="pocket_title">账本标题</string>
+    <string name="max_length_15">长度不超过15...</string>
+    <string name="title">title</string>
+    <string name="join_player">参与用户</string>
+    <string name="todo">TODO</string>
 </resources>
