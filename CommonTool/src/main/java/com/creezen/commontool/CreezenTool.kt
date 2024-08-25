@@ -1,8 +1,7 @@
-package com.creezen.tool
+package com.creezen.commontool
 
-import android.widget.TextView
-import com.alibaba.fastjson.JSON
-import com.creezen.tool.Constant.BASIC_LETTER
+import com.alibaba.fastjson2.JSON
+import com.creezen.commontool.CreezenParam.BASIC_LETTER
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -10,9 +9,9 @@ import java.util.Locale
 import java.util.Random
 import java.util.TimeZone
 
-object DataTool {
+object CreezenTool {
 
-    fun getRandomString(length:Int):String{
+    fun getRandomString(length: Int) : String {
         val random = Random()
         val buffer = StringBuffer()
         for (i in 0 until length)
@@ -35,7 +34,7 @@ object DataTool {
     }
 
     fun isLeapYear(year: Int) = when {
-        year % 100 == 0 -> year%400 == 0
+        year % 100 == 0 -> year % 400 == 0
         year % 4 == 0 -> true
         else -> false
     }

@@ -1,26 +1,20 @@
 package com.jayce.vexis.hub.resource
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
-import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.databinding.FileUploadBinding
-import com.creezen.tool.DataTool.getRandomString
+import com.creezen.commontool.CreezenTool.getRandomString
+import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
-import com.creezen.tool.DataTool.toTime
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.contract.LifecycleJob
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
-import kotlinx.coroutines.withTimeoutOrNull
+import com.jayce.vexis.base.BaseActivity
+import com.jayce.vexis.databinding.FileUploadBinding
 import java.io.File
 
 class FileUploadActivity : BaseActivity() {

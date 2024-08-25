@@ -1,12 +1,9 @@
 package com.creezen.tool
 
 import android.annotation.SuppressLint
-import android.app.ActivityManager
 import android.content.Context
-import android.content.Context.ACTIVITY_SERVICE
 import android.content.Intent
 import android.graphics.Typeface
-import android.widget.Toast
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {

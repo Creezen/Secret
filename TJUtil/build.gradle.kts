@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
     id("kotlin-kapt")
+    id("com.kezong.fat-aar")
 }
 
 repositories {
@@ -72,5 +73,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
-    implementation ("com.alibaba:fastjson:2.0.40")
+
+
+    embed("com.creezen.tool.commontool:tools:1.0.0")
 }

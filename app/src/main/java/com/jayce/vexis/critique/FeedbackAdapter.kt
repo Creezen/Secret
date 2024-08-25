@@ -3,8 +3,8 @@ package com.jayce.vexis.critique
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.CreezenTool.toTime
 import com.jayce.vexis.databinding.FeedbackItemBinding
-import com.creezen.tool.DataTool.toTime
 
 class FeedbackAdapter(val feedbackItemList: List<FeedbackItem>): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
 

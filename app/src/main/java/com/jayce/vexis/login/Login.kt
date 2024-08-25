@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.creezen.commontool.CreezenTool.map2pojo
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
@@ -17,10 +18,10 @@ import com.creezen.tool.BaseTool.restartApp
 import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.Constant.BASE_SOCKET_PATH
 import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
-import com.creezen.tool.DataTool.map2pojo
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
+import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.Main
@@ -28,7 +29,6 @@ import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.member.UserService
 import com.jayce.vexis.member.register.RegisterActivity
-import com.jayce.vexis.onlineSocket
 import com.jayce.vexis.onlineUser
 import com.jayce.vexis.stylized.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
@@ -98,9 +98,10 @@ class Login : AppCompatActivity() {
                             .await()
                         if (!loginResult.containsKey("status")) {
                             onlineUser = loginResult.map2pojo()
-                            onlineSocket = lifecycleScope.async(Dispatchers.IO) {
+                            val socket = lifecycleScope.async(Dispatchers.IO) {
                                 Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                             }.await()
+                            setOnlineSocket(socket)
                             startActivity(Intent(this@Login, Main::class.java))
                         } else {
                             val status = loginResult["status"]?.toInt()

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.AddRecordDialogBinding
 import com.jayce.vexis.databinding.AddRecordUserBinding
@@ -12,7 +13,6 @@ import com.jayce.vexis.databinding.NewPocketRecordBinding
 import com.jayce.vexis.stylized.CustomDialog
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.DataTool.toTime
 
 class ScoreBoard : AppCompatActivity() {
 

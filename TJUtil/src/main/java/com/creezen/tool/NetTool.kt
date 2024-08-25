@@ -2,14 +2,20 @@ package com.creezen.tool
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.widget.ImageView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.request.RequestOptions
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.Constant.BASE_URL
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -24,16 +30,32 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.File
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.Socket
 import java.util.Arrays
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.resume
 
 object NetTool {
 
     private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
-
     private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
+
+    private lateinit var onlineSocket : Socket
+    private val socketFlag = AtomicBoolean(true)
+
+    val socketReader: BufferedReader by lazy {
+        BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
+    }
+
+    private val socketWriter: BufferedWriter by lazy {
+        BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+    }
 
     private val cookieJar = object : CookieJar {
         override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
@@ -150,6 +172,68 @@ object NetTool {
     ) : MultipartBody.Part {
         val fileBody = RequestBody.create(MediaType.parse(mediaTypeString), File(filePath))
         return MultipartBody.Part.createFormData(paramName, filePath, fileBody)
+    }
+
+    fun sendMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+        if(onlineSocket.isOutputShutdown || onlineSocket.isClosed || socketFlag.get().not()) {
+            socketFlag.set(false)
+            "与服务器连接失败，请检查网络".toast()
+            return
+        }
+        lifecycleOwner.lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                kotlin.runCatching {
+                    if(msg.isEmpty()) {
+                        return@runCatching
+                    }
+                    socketWriter.write("$msg\n")
+                    socketWriter.flush()
+                }.onFailure {
+                    destroySocket()
+                    Log.e("NetTool.sendMessage","send sockeMessage error: $it")
+                }
+            }
+        }
+    }
+
+    fun sendAckMessage(
+        lifecycleOwner: LifecycleOwner,
+        msg: String,
+        onReceiveMessage: (String) -> Boolean
+    ) {
+        sendMessage(lifecycleOwner, msg)
+        openMessageReceiver(lifecycleOwner, onReceiveMessage)
+    }
+
+    private fun openMessageReceiver(
+        lifecycleOwner: LifecycleOwner,
+        onReceiveMessage: (String) -> Boolean
+    ) {
+        lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            while(true) {
+                val line = socketReader.readLine()
+                if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
+                    socketFlag.set(false)
+                    Log.e("ChatActivity.initSocket","服务器错误")
+                    break
+                }
+                if(onReceiveMessage(line).not()) {
+                    socketFlag.set(false)
+                    destroySocket()
+                    break
+                }
+            }
+        }
+    }
+
+    fun setOnlineSocket(socket: Socket) {
+        onlineSocket = socket
+    }
+
+    fun destroySocket() {
+        onlineSocket.shutdownOutput()
+        onlineSocket.shutdownInput()
+        onlineSocket.close()
     }
 
 }

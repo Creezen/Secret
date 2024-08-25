@@ -5,13 +5,11 @@ object Constant {
     const val LOCAL_SOCKET_PORT = 60038
     const val BASE_URL = "https://ecd8sqicep5p.xiaomiqiu.com"
     const val BASE_SOCKET_PATH = "vipvip.xiaomiqiu.com"
-    const val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     const val BASE_FILE_PATH = "$BASE_URL/FileSystem/"
     const val API_BASE_URL = "https://www.mxnzp.com/api/convert/"
     const val DICTIONARY_API_APPID = "ckp9k9hlvylykswh"
     const val DICTIONARY_API_APPSECRET = "f1pJSDJ6qIDZGPeL5Q1EUqkZXfHgQ9qA"
     const val PARAGRAPH_HEAD = "\t\t\t\t"
-
     const val BROADCAST_LOGOUT = "com.jayce.vexis.logout.broadcast"
 
     private val primaryList = arrayListOf(
