@@ -55,9 +55,6 @@ class Login : AppCompatActivity() {
         val packageInfo =
             packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
         "${packageInfo.versionName}  ${packageInfo.longVersionCode}".toast()
-//        sendBroadcast(Intent(BROADCAST_LOGOUT).apply {
-//            `package` = packageName
-//        })
     }
 
     private fun setAnimation() {

@@ -7,7 +7,8 @@ import android.util.Log
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
-import com.creezen.tool.Constant.BROADCAST_LOGOUT
+import com.creezen.tool.Constant.BROAD_LOGOUT
+import com.creezen.tool.Constant.BROAD_NOTIFY
 import com.jayce.vexis.GlobalReceiver
 
 class Env: Application() {
@@ -15,7 +16,8 @@ class Env: Application() {
     private val globalReceiver = GlobalReceiver()
 
     private val filter = IntentFilter().apply {
-        addAction(BROADCAST_LOGOUT)
+        addAction(BROAD_LOGOUT)
+        addAction(BROAD_NOTIFY)
     }
 
     override fun onCreate() {

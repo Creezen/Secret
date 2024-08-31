@@ -1,12 +1,22 @@
 package com.jayce.vexis.critique
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.CreezenTool.toTime
+import com.creezen.tool.AndroidTool
+import com.creezen.tool.Constant
+import com.creezen.tool.NetTool
 import com.jayce.vexis.databinding.FeedbackItemBinding
+import com.jayce.vexis.member.dashboard.AvatarSignnature
+import com.jayce.vexis.onlineUser
 
-class FeedbackAdapter(val feedbackItemList: List<FeedbackItem>): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
+class FeedbackAdapter(
+    val context: Context,
+    val feedbackItemList: List<FeedbackItem>
+): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: FeedbackItemBinding): RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
@@ -28,12 +38,23 @@ class FeedbackAdapter(val feedbackItemList: List<FeedbackItem>): RecyclerView.Ad
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = feedbackItemList[position]
-        holder.nickname.text = item.userID
+        holder.nickname.text = item.userName
         holder.time.text = item.createTime.toTime()
         holder.title.text = item.title
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
         holder.againstCount.text = "${item.against}"
+
+        val avatarTimestamp = AndroidTool.readPrefs {
+            it.getLong("cursorTime", 0)
+        }
+        NetTool.setImage(
+            context,
+            holder.head,
+            "${Constant.BASE_FILE_PATH}head/${onlineUser.userId}.png",
+            key = AvatarSignnature("key:$avatarTimestamp"),
+            isCircle = true
+        )
     }
 
     override fun getItemCount() = feedbackItemList.size

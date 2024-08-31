@@ -10,7 +10,8 @@ object Constant {
     const val DICTIONARY_API_APPID = "ckp9k9hlvylykswh"
     const val DICTIONARY_API_APPSECRET = "f1pJSDJ6qIDZGPeL5Q1EUqkZXfHgQ9qA"
     const val PARAGRAPH_HEAD = "\t\t\t\t"
-    const val BROADCAST_LOGOUT = "com.jayce.vexis.logout.broadcast"
+    const val BROAD_LOGOUT = "com.jayce.vexis.logout.broadcast"
+    const val BROAD_NOTIFY = "com.jayce.vexis.notify.broadcast"
 
     private val primaryList = arrayListOf(
         "哲学",

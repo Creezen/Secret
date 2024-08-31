@@ -2,6 +2,7 @@ package com.creezen.tool
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.util.Log
@@ -133,5 +134,12 @@ object AndroidTool {
             }
             lifecycleJob.onTimeoutFinish(result != null)
         }
+    }
+
+    fun broadcastByAction(context: Context, action: String, func: ((Intent) -> Unit)? = null) {
+        context.sendBroadcast(Intent(action).also {
+            it.`package` = env().packageName
+            func?.invoke(it)
+        })
     }
 }

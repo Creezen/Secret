@@ -6,6 +6,7 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
+import com.creezen.tool.NetTool.sendNotifyMessage
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
@@ -32,8 +33,12 @@ class FeedbackEditActivity: BaseActivity() {
                         val result = create<FeedbackService>()
                             .sendFeedback(onlineUser.userId, titleMsg, contentMsg)
                             .await()
-                        if(result) {
-                            finish()
+                        if(result) { finish() }
+                    }
+
+                    override fun onTimeoutFinish(isWorkFinished: Boolean) {
+                        if(isWorkFinished) {
+                            sendNotifyMessage(this@FeedbackEditActivity, contentMsg)
                         }
                     }
                 })

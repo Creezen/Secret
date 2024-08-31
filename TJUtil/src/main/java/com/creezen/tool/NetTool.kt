@@ -9,6 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.request.RequestOptions
+import com.creezen.commontool.CreezenParam.EVENT_TYPE_DEFAULT
+import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
+import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
+import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.Constant.BASE_URL
 import com.google.gson.GsonBuilder
@@ -196,12 +200,28 @@ object NetTool {
         }
     }
 
+    fun sendDefaultMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+        sendMessage(lifecycleOwner, "$EVENT_TYPE_DEFAULT#$msg")
+    }
+
+    fun sendChatMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+        sendMessage(lifecycleOwner, "$EVENT_TYPE_MESSAGE#$msg")
+    }
+
+    fun sendNotifyMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+        sendMessage(lifecycleOwner, "$EVENT_TYPE_NOTIFY#$msg")
+    }
+
+    fun sendGameMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+        sendMessage(lifecycleOwner, "$EVENT_TYPE_GAME#$msg")
+    }
+
     fun sendAckMessage(
         lifecycleOwner: LifecycleOwner,
         msg: String,
         onReceiveMessage: (String) -> Boolean
     ) {
-        sendMessage(lifecycleOwner, msg)
+        sendDefaultMessage(lifecycleOwner, msg)
         openMessageReceiver(lifecycleOwner, onReceiveMessage)
     }
 

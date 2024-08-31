@@ -74,6 +74,5 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
-
     embed("com.creezen.tool.commontool:tools:1.0.0")
 }

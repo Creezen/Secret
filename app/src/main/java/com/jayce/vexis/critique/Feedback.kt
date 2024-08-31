@@ -18,7 +18,7 @@ class Feedback: BaseFragment() {
     private lateinit var binding: ActivityFeedbackBinding
     private val feedbackItemList = arrayListOf<FeedbackItem>()
     private val feedbackAdapter by lazy {
-        FeedbackAdapter(feedbackItemList)
+        FeedbackAdapter(requireActivity(), feedbackItemList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

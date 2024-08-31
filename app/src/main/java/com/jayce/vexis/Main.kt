@@ -57,7 +57,7 @@ class Main : BaseActivity() {
 
     private fun notifySocket() {
         sendAckMessage(this, onlineUser.userId) {
-            dispatchEvent(it)
+            dispatchEvent(it, this)
             return@sendAckMessage true
         }
     }
