@@ -16,7 +16,9 @@ import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.Constant.BASE_URL
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -222,26 +224,30 @@ object NetTool {
         onReceiveMessage: (String) -> Boolean
     ) {
         sendDefaultMessage(lifecycleOwner, msg)
-        openMessageReceiver(lifecycleOwner, onReceiveMessage)
+        openMessageReceiver(onReceiveMessage)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun openMessageReceiver(
-        lifecycleOwner: LifecycleOwner,
         onReceiveMessage: (String) -> Boolean
     ) {
-        lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            while(true) {
-                val line = socketReader.readLine()
-                if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
-                    socketFlag.set(false)
-                    Log.e("ChatActivity.initSocket","服务器错误")
-                    break
+        GlobalScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                while(true) {
+                    val line = socketReader.readLine()
+                    if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
+                        socketFlag.set(false)
+                        Log.e("ChatActivity.initSocket","服务器错误")
+                        break
+                    }
+                    if(onReceiveMessage(line).not()) {
+                        socketFlag.set(false)
+                        destroySocket()
+                        break
+                    }
                 }
-                if(onReceiveMessage(line).not()) {
-                    socketFlag.set(false)
-                    destroySocket()
-                    break
-                }
+            }.onFailure {
+                "Socket已因意外断开".toast()
             }
         }
     }

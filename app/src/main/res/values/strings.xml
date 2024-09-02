@@ -86,4 +86,5 @@
     <string name="title">title</string>
     <string name="join_player">参与用户</string>
     <string name="todo">TODO</string>
+    <string name="default_string">默认</string>
 </resources>

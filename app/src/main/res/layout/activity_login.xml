@@ -19,11 +19,12 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/iv1"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
             <LinearLayout
@@ -105,10 +106,17 @@
                     android:background="@color/Button"/>
             </LinearLayout>
         </LinearLayout>
-        <com.jayce.vexis.stylized.animator.LoginCanvas
-            android:id="@+id/iv2"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/versionMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:textSize="11sp"/>
+        </RelativeLayout>
     </LinearLayout>
 </layout>

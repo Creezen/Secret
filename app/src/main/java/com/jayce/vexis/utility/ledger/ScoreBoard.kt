@@ -22,6 +22,8 @@ class ScoreBoard : AppCompatActivity() {
     }
 
     private lateinit var binding: NewPocketRecordBinding
+    private lateinit var title: String
+    private lateinit var createTime: String
     private val userList = ArrayList<String>()
     private val scoreList = ArrayList<RecordBean>()
     private val totalScoreList = ArrayList<Int>()
@@ -54,8 +56,10 @@ class ScoreBoard : AppCompatActivity() {
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         with(binding) {
-            titleTv.text = intent.getStringExtra("title")
-            timeTv.text = intent.getLongExtra("time", 0).toTime()
+            title = intent.getStringExtra("title") ?: "默认标题"
+            titleTv.text = title
+            createTime = intent.getLongExtra("time", 0).toTime()
+            timeTv.text = createTime
             userList.forEach{ name ->
                 playerName.addSimpleView(name, WIDTH)
                 totalScore.addSimpleView("0", WIDTH)
@@ -116,6 +120,9 @@ class ScoreBoard : AppCompatActivity() {
                     show()
                 }
             }
+            save.setOnClickListener {
+                "保存成功".toast()
+            }
             rv.layoutManager = LinearLayoutManager(this@ScoreBoard)
             rv.adapter = adapter
             rvSC.setOnScrollChangeListener { _, i, i2, _, _ ->
@@ -125,7 +132,7 @@ class ScoreBoard : AppCompatActivity() {
             rv.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 val scX = roundNumRV.scrollX
                 val scY = roundNumRV.scrollY
-                roundNumRV.scrollTo(scX-oldScrollX, scY-oldScrollY)
+                roundNumRV.scrollTo(scX - oldScrollX, scY - oldScrollY)
             }
             playerNameSV.setOnTouchListener { _, _ -> true }
             totalScoreSV.setOnTouchListener { _, _ -> true }

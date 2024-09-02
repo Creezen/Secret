@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.creezen.commontool.CreezenTool.map2pojo
+import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
@@ -50,19 +51,25 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        getNewestVersion()
         initView()
         setAnimation()
-        val packageInfo =
-            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
-        "${packageInfo.versionName}  ${packageInfo.longVersionCode}".toast()
+    }
+
+    private fun getNewestVersion() {
+        lifecycleScope.launch {
+            val versionInfo = NetTool.create<PackageService>()
+                .getVersion()
+                .await()
+            versionInfo.apply {
+               "${modifyTime.toTime()}  $versionName".toast()
+            }
+        }
     }
 
     private fun setAnimation() {
         val animation = AnimationUtils.loadAnimation(this, R.anim.login_button_anim)
         binding.login.startAnimation(animation)
-        val animatorSet = AnimatorInflater.loadAnimator(this, R.animator.login_canvas_animator)
-        animatorSet.setTarget(binding.iv2)
-        animatorSet.start()
     }
 
     private fun initView(){
@@ -115,6 +122,12 @@ class Login : AppCompatActivity() {
                     }
                 })
             }
+            val packageInfo = packageManager.getPackageInfo(
+                packageName,
+                PackageManager.PackageInfoFlags.of(0)
+            )
+            val verMsg = "APP : v${packageInfo.versionName}  ${packageInfo.lastUpdateTime.toTime()}"
+            versionMsg.text = verMsg
             liveData.value = getString(R.string.login_name)
             password.setText(R.string.login_password)
 

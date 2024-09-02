@@ -6,10 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(version = 1, entities = [UserItem::class], exportSchema = false)
-abstract class UserDatabase:RoomDatabase() {
+abstract class UserDatabase : RoomDatabase() {
+
     abstract fun userDao(): UserDao
+
     companion object {
         private var userDatabase: UserDatabase? = null
+
         @Synchronized
         fun getDatabase(context: Context): UserDatabase {
             userDatabase?.let {
