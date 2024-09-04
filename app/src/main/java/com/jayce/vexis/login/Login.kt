@@ -84,7 +84,7 @@ class Login : AppCompatActivity() {
                     it.putString("font", "方正粗圆")
                 }
                 restartApp()
-//                getPinyinForChinese(liveData.value)
+//              getPinyinForChinese(liveData.value)
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
