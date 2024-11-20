@@ -26,7 +26,7 @@ import com.jayce.vexis.history.HistoricalAxis
 import com.jayce.vexis.issue.Feedback
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.event.EventHandler.dispatchEvent
-import com.jayce.vexis.exchange.HubActivity
+import com.jayce.vexis.exchange.ExchangeActivity
 import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.member.dashboard.HomePage
 import com.jayce.vexis.widgets.SimpleDialog
@@ -142,7 +142,7 @@ class Main : BaseActivity() {
                 startActivity(Intent(this, ChatActivity::class.java))
             }
             R.id.hub -> {
-                startActivity(Intent(this, HubActivity::class.java))
+                startActivity(Intent(this, ExchangeActivity::class.java))
             }
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }

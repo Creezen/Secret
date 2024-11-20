@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger
+package com.jayce.vexis.gadgets.sheet
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
-import com.jayce.vexis.gadgets.ledger.Ledger.Companion.INIT_USER_COUNT
+import com.jayce.vexis.gadgets.sheet.PokerSheet.Companion.INIT_USER_COUNT
 
 class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(context, attr) {
 

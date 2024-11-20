@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class HubAdapter(
+class ExchangeAdapter(
     fragmentManager: FragmentManager,
     val lifecycle: Lifecycle,
     private val fragmentList: List<Fragment>

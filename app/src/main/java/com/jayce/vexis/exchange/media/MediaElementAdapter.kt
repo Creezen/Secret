@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.resource
+package com.jayce.vexis.exchange.media
 
 import android.content.Context
 import android.content.Intent
@@ -24,7 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class ResourceElementAdapter(private val context: Context, private val parent: LifecycleOwner, val list: List<ResourceItem>): RecyclerView.Adapter<ResourceElementAdapter.ViewHodler>() {
+class MediaElementAdapter(private val context: Context, private val parent: LifecycleOwner, val list: List<MediaItem>): RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
 
     private var progressBar: ProgressBar? = null
 
@@ -61,7 +61,7 @@ class ResourceElementAdapter(private val context: Context, private val parent: L
             parent.lifecycleScope.launch(Dispatchers.IO) {
                 val fileName = "${item.fileID}${item.fileSuffix}"
                 val responseStream = NetTool
-                    .create<FileService>()
+                    .create<MediaService>()
                     .downloadFile(fileName)
                     .await()
                     .byteStream()
@@ -72,7 +72,7 @@ class ResourceElementAdapter(private val context: Context, private val parent: L
             }
         }
         holder.view.setOnClickListener {
-            context.startActivity(Intent(context, FileDetailActivity::class.java).also {
+            context.startActivity(Intent(context, MediaDetailActivity::class.java).also {
                 it.putExtra("fileInfo", item)
             })
         }

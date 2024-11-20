@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gadgets.ledger.RecordHistoryActivity">
+    tools:context=".gadgets.sheet.PokerHistoryActivity">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyListRv"
         android:layout_width="match_parent"

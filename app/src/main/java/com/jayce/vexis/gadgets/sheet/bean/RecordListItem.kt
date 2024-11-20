@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger.bean
+package com.jayce.vexis.gadgets.sheet.bean
 
 data class RecordListItem(
     val title: String = "",

@@ -1,13 +1,13 @@
-package com.jayce.vexis.gadgets.ledger.adapter
+package com.jayce.vexis.gadgets.sheet.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.RecordItemLayoutBinding
-import com.jayce.vexis.gadgets.ledger.bean.RecordBean
-import com.jayce.vexis.gadgets.ledger.ScoreBoard.Companion.HEIGHT
-import com.jayce.vexis.gadgets.ledger.ScoreBoard.Companion.WIDTH
+import com.jayce.vexis.gadgets.sheet.bean.RecordBean
+import com.jayce.vexis.gadgets.sheet.ScoreBoard.Companion.HEIGHT
+import com.jayce.vexis.gadgets.sheet.ScoreBoard.Companion.WIDTH
 
 class RecordAdapter(private val recordList: List<RecordBean>): RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 

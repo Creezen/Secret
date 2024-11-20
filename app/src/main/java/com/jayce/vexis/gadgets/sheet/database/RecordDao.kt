@@ -1,10 +1,10 @@
-package com.jayce.vexis.gadgets.ledger.database
+package com.jayce.vexis.gadgets.sheet.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.jayce.vexis.gadgets.ledger.bean.RecordItemBean
-import com.jayce.vexis.gadgets.ledger.bean.ScoreBean
+import com.jayce.vexis.gadgets.sheet.bean.RecordItemBean
+import com.jayce.vexis.gadgets.sheet.bean.ScoreBean
 
 @Dao
 interface RecordDao {

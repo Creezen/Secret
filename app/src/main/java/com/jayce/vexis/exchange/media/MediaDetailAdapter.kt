@@ -1,7 +1,6 @@
-package com.jayce.vexis.exchange.resource
+package com.jayce.vexis.exchange.media
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.BaseExpandableListAdapter
 import com.jayce.vexis.databinding.ChildNodeLayoutBinding
 import com.jayce.vexis.databinding.ParentNodeLayoutBinding
 
-class FileDetailAdapter(
+class MediaDetailAdapter(
     private val context: Context,
     private val parentList: List<String>,
     private val childList: List<List<String>>

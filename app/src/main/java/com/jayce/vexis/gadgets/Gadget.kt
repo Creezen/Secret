@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
 import com.jayce.vexis.gadgets.gomoku.GomokuActivity
-import com.jayce.vexis.gadgets.ledger.Ledger
+import com.jayce.vexis.gadgets.sheet.PokerSheet
 import com.jayce.vexis.gadgets.maze.MazeActivity
 
 class Gadget: BaseFragment() {
@@ -16,7 +16,7 @@ class Gadget: BaseFragment() {
         val binding = WidgetsBinding.inflate(inflater)
         with(binding){
             ledger.setOnClickListener {
-                startActivity(Intent(context, Ledger::class.java))
+                startActivity(Intent(context, PokerSheet::class.java))
             }
             maze.setOnClickListener {
                 startActivity(Intent(context, MazeActivity::class.java))

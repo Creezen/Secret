@@ -1,10 +1,10 @@
-package com.jayce.vexis.exchange.resource
+package com.jayce.vexis.exchange.media
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ResourceItem(
+data class MediaItem(
     val fileName: String,
     val fileID: String,
     val fileSuffix: String,

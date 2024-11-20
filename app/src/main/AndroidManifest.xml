@@ -35,7 +35,7 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
-            android:name=".gadgets.ledger.RecordHistoryActivity"
+            android:name=".gadgets.sheet.PokerHistoryActivity"
             android:exported="false" />
 
         <service
@@ -56,7 +56,7 @@
             android:name=".writing.ArticleEditActivity"
             android:exported="false" />
         <activity
-            android:name=".exchange.HubActivity"
+            android:name=".exchange.ExchangeActivity"
             android:exported="false" />
         <activity
             android:name=".member.manage.ActiveDataActivity"
@@ -72,19 +72,19 @@
             android:name=".issue.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".exchange.resource.FileDetailActivity"
+            android:name=".exchange.media.MediaDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".exchange.resource.FileUploadActivity"
+            android:name=".exchange.media.MediaUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".gadgets.ledger.ScoreBoard"
+            android:name=".gadgets.sheet.ScoreBoard"
             android:exported="false" />
         <activity
             android:name=".member.dashboard.HomePage"
             android:exported="false" />
         <activity
-            android:name=".gadgets.ledger.Ledger"
+            android:name=".gadgets.sheet.PokerSheet"
             android:exported="false" />
         <activity
             android:name=".Main"

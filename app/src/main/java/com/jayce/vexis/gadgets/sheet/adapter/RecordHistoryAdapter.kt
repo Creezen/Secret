@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger.adapter
+package com.jayce.vexis.gadgets.sheet.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -9,9 +9,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.RecordListLayoutBinding
-import com.jayce.vexis.gadgets.ledger.ScoreBoard
-import com.jayce.vexis.gadgets.ledger.bean.RecordListItem
-import com.jayce.vexis.gadgets.ledger.database.ScoreDatabase
+import com.jayce.vexis.gadgets.sheet.ScoreBoard
+import com.jayce.vexis.gadgets.sheet.bean.RecordListItem
+import com.jayce.vexis.gadgets.sheet.database.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

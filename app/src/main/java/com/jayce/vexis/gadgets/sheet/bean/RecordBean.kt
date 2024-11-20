@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger.bean
+package com.jayce.vexis.gadgets.sheet.bean
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -9,16 +9,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityHubBinding
-import com.jayce.vexis.exchange.resource.ResourceLibraryActivity
-import com.jayce.vexis.exchange.share.Sage
+import com.jayce.vexis.exchange.Senior.Senior
+import com.jayce.vexis.exchange.media.MediaLibraryActivity
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class HubActivity : BaseActivity() {
+class ExchangeActivity : BaseActivity() {
 
     private lateinit var binding: ActivityHubBinding
     private val fragmentList = arrayListOf<Fragment>()
-    private val hubAdapter by lazy {
-        HubAdapter(supportFragmentManager, lifecycle, fragmentList)
+    private val exchangeAdapter by lazy {
+        ExchangeAdapter(supportFragmentManager, lifecycle, fragmentList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +31,9 @@ class HubActivity : BaseActivity() {
 
     private fun initPage() {
         with(binding) {
-            page.adapter = hubAdapter
+            page.adapter = exchangeAdapter
             TabLayoutMediator(tab, page){ tab, pos ->
-                val textView = TextView(this@HubActivity)
+                val textView = TextView(this@ExchangeActivity)
                 textView.text = when(pos) {
                     0 -> getString(R.string.knowledge_share)
                     1 -> getString(R.string.resource_share)
@@ -45,8 +45,8 @@ class HubActivity : BaseActivity() {
     }
 
     private fun initData() {
-        fragmentList.add(Sage())
-        fragmentList.add(ResourceLibraryActivity())
+        fragmentList.add(Senior())
+        fragmentList.add(MediaLibraryActivity())
     }
 
 }

@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger
+package com.jayce.vexis.gadgets.sheet
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +9,14 @@ import com.jayce.vexis.databinding.PocketMainBinding
 import com.jayce.vexis.widgets.CustomDialog
 import com.jayce.vexis.widgets.SimpleDialog
 
-class Ledger: BaseActivity() {
+class PokerSheet: BaseActivity() {
 
     private lateinit var binding: PocketMainBinding
     private lateinit var userBinding: AddPocketRecordLayoutBinding
     private val userList = ArrayList<String>()
 
     companion object {
-        const val TAG = "Ledger"
+        const val TAG = "PokerSheet"
         const val INIT_USER_COUNT = 2
     }
 
@@ -31,7 +31,7 @@ class Ledger: BaseActivity() {
         with(binding) {
             create.setOnClickListener {
                 CustomDialog(
-                    this@Ledger,
+                    this@PokerSheet,
                     AddPocketRecordLayoutBinding.inflate(layoutInflater)
                 ).apply {
                     setVisible(SimpleDialog.TITLE_INVISIBLE)
@@ -43,7 +43,7 @@ class Ledger: BaseActivity() {
                     setCustomRightButton("确定") { _, dialog ->
                         dialog.dismiss()
                         startActivity(
-                            Intent(this@Ledger, ScoreBoard::class.java).also {
+                            Intent(this@PokerSheet, ScoreBoard::class.java).also {
                                 it.putExtra("userData", userList)
                                 it.putExtra("title", userBinding.titleEdt.text.toString())
                                 it.putExtra("time", System.currentTimeMillis())
@@ -57,7 +57,7 @@ class Ledger: BaseActivity() {
                 }
             }
             history.setOnClickListener {
-                startActivity(Intent(this@Ledger, RecordHistoryActivity::class.java))
+                startActivity(Intent(this@PokerSheet, PokerHistoryActivity::class.java))
 
             }
         }

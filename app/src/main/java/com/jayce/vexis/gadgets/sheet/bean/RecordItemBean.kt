@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger.bean
+package com.jayce.vexis.gadgets.sheet.bean
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

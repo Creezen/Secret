@@ -1,11 +1,11 @@
-package com.jayce.vexis.gadgets.ledger.database
+package com.jayce.vexis.gadgets.sheet.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jayce.vexis.gadgets.ledger.bean.RecordItemBean
-import com.jayce.vexis.gadgets.ledger.bean.ScoreBean
+import com.jayce.vexis.gadgets.sheet.bean.RecordItemBean
+import com.jayce.vexis.gadgets.sheet.bean.ScoreBean
 
 @Database(version = 1, entities = [RecordItemBean::class, ScoreBean::class], exportSchema = false)
 abstract class ScoreDatabase : RoomDatabase() {

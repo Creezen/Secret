@@ -1,20 +1,20 @@
-package com.jayce.vexis.gadgets.ledger
+package com.jayce.vexis.gadgets.sheet
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
-import com.jayce.vexis.gadgets.ledger.adapter.RecordHistoryAdapter
-import com.jayce.vexis.gadgets.ledger.bean.RecordListItem
-import com.jayce.vexis.gadgets.ledger.database.ScoreDatabase
+import com.jayce.vexis.gadgets.sheet.adapter.RecordHistoryAdapter
+import com.jayce.vexis.gadgets.sheet.bean.RecordListItem
+import com.jayce.vexis.gadgets.sheet.database.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RecordHistoryActivity : BaseActivity() {
+class PokerHistoryActivity : BaseActivity() {
 
     companion object {
-        const val TAG = "RecordHistoryActivity"
+        const val TAG = "PokerHistoryActivity"
     }
 
     private lateinit var binding: ActivityRecordHistoryBinding
@@ -36,7 +36,7 @@ class RecordHistoryActivity : BaseActivity() {
     
     private fun initPage() {
         with(binding) {
-            historyListRv.layoutManager = LinearLayoutManager(this@RecordHistoryActivity)
+            historyListRv.layoutManager = LinearLayoutManager(this@PokerHistoryActivity)
             historyListRv.adapter = adapter
         }
     }

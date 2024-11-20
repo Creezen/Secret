@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.resource
+package com.jayce.vexis.exchange.media
 
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
@@ -17,7 +17,7 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import java.io.File
 
-class FileUploadActivity : BaseActivity() {
+class MediaUploadActivity : BaseActivity() {
 
     companion object{
         const val SPLIT = "/"
@@ -37,11 +37,11 @@ class FileUploadActivity : BaseActivity() {
 
     private fun initView() {
         with(binding) {
-            activity = this@FileUploadActivity
-            lifecycleOwner = this@FileUploadActivity
+            activity = this@MediaUploadActivity
+            lifecycleOwner = this@MediaUploadActivity
             descTextLivedata.value = ""
             textSize = "0/100"
-            descTextLivedata.observe(this@FileUploadActivity) { text ->
+            descTextLivedata.observe(this@MediaUploadActivity) { text ->
                 if (text.length > 100) {
                     descTextLivedata.value = text.substring(0, 100)
                     textSize = "100/100"
@@ -66,10 +66,10 @@ class FileUploadActivity : BaseActivity() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(this@FileUploadActivity, delayMillis = 5000L, lifecycleJob = object : LifecycleJob{
+                workInDispatch(this@MediaUploadActivity, delayMillis = 5000L, lifecycleJob = object : LifecycleJob{
                     override suspend fun onDispatch() {
                         val filePart = buildFileMultipart(filePath, "file")
-                        val result = NetTool.create<FileService>().uploadFile(
+                        val result = NetTool.create<MediaService>().uploadFile(
                             fileName, fileID, fileSuffix, description,
                             illustrate, fileSize, uploadTime, filePart
                         ).await()

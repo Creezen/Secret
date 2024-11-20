@@ -1,4 +1,4 @@
-package com.jayce.vexis.gadgets.ledger
+package com.jayce.vexis.gadgets.sheet
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,12 +15,12 @@ import com.jayce.vexis.databinding.NewPocketRecordBinding
 import com.jayce.vexis.widgets.CustomDialog
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.jayce.vexis.gadgets.ledger.adapter.RecordAdapter
-import com.jayce.vexis.gadgets.ledger.adapter.ScoreInsertAdapter
-import com.jayce.vexis.gadgets.ledger.bean.RecordBean
-import com.jayce.vexis.gadgets.ledger.bean.RecordItemBean
-import com.jayce.vexis.gadgets.ledger.bean.ScoreBean
-import com.jayce.vexis.gadgets.ledger.database.ScoreDatabase
+import com.jayce.vexis.gadgets.sheet.adapter.RecordAdapter
+import com.jayce.vexis.gadgets.sheet.adapter.ScoreInsertAdapter
+import com.jayce.vexis.gadgets.sheet.bean.RecordBean
+import com.jayce.vexis.gadgets.sheet.bean.RecordItemBean
+import com.jayce.vexis.gadgets.sheet.bean.ScoreBean
+import com.jayce.vexis.gadgets.sheet.database.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.StringBuilder

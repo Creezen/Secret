@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.resource
+package com.jayce.vexis.exchange.media
 
 import android.content.Intent
 import android.net.Uri
@@ -23,19 +23,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class ResourceLibraryActivity : BaseFragment() {
+class MediaLibraryActivity : BaseFragment() {
 
     private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
-    private val resItemList = ArrayList<ResourceItem>()
-    private val adapter: ResourceElementAdapter by lazy {
-        ResourceElementAdapter(requireActivity(), requireActivity(), resItemList)
+    private val resItemList = ArrayList<MediaItem>()
+    private val adapter: MediaElementAdapter by lazy {
+        MediaElementAdapter(requireActivity(), requireActivity(), resItemList)
     }
     private var tag: Any? = null
 
     override fun registerLauncher() {
         readExternalLaunch = getLauncher(startActivity()) {
-            Log.e("ResourceLibraryActivity.registerLauncher","$it")
+            Log.e("MediaLibraryActivity.registerLauncher","$it")
         }
     }
 
@@ -60,7 +60,7 @@ class ResourceLibraryActivity : BaseFragment() {
     private fun initData() {
         kotlin.runCatching {
             lifecycleScope.launch(Dispatchers.IO) {
-                val result = NetTool.create<FileService>()
+                val result = NetTool.create<MediaService>()
                     .fetchFile()
                     .await()
                 val list = result["items"]
@@ -74,7 +74,7 @@ class ResourceLibraryActivity : BaseFragment() {
                 }
             }
         }.onFailure {
-            Log.e("ResourceLibraryActivity.initData","$it")
+            Log.e("MediaLibraryActivity.initData","$it")
         }
     }
 
@@ -82,7 +82,7 @@ class ResourceLibraryActivity : BaseFragment() {
         with(binding) {
             uploadFile.setOnClickListener {
                 if (Environment.isExternalStorageManager()) {
-                    startActivity(Intent(this@ResourceLibraryActivity.activity, FileUploadActivity::class.java))
+                    startActivity(Intent(this@MediaLibraryActivity.activity, MediaUploadActivity::class.java))
                 } else {
                     readExternalLaunch?.launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
                         it.data = Uri.parse("package:" + activity?.packageName)

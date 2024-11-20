@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.share
+package com.jayce.vexis.exchange.Senior
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.creezen.tool.Constant.getTertiarySubjectList
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 
-class Sage: BaseFragment() {
+class Senior: BaseFragment() {
 
     private val primaryList = getPrimarySubjectList()
     private val secondaryList = getSecondSubjectList()
