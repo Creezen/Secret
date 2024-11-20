@@ -2,7 +2,14 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        maven { url = uri("https://maven.aliyun.com/repository/releases")}
+        maven { url = uri("https://maven.aliyun.com/repository/public")}
+        maven { url = uri("https://maven.aliyun.com/repository/google")}
+        maven { url = uri("https://maven.aliyun.com/repository/central")}
+        maven { url = uri("https://maven.aliyun.com/repository/jcenter")}
+        maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin")}
+        maven { url = uri("https://maven.aliyun.com/repository/apache-snapshots")}
+        maven { url = uri("https://maven.aliyun.com/repository/grails-core")}
     }
     dependencies {
         classpath("com.github.aasitnikov:fat-aar-android:b2a038763c")

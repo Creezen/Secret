@@ -11,6 +11,8 @@ import com.creezen.tool.AndroidTool.broadcastByAction
 import com.creezen.tool.Constant.BROAD_NOTIFY
 
 object EventHandler {
+    
+    private const val TAG = "EventHandler"
 
     fun dispatchEvent(message: String, context: Context) {
         val index = message.indexOfFirst { it == '#' }
@@ -18,7 +20,7 @@ object EventHandler {
         val content = message.substring(index + 1, message.length)
         when(type) {
             EVENT_TYPE_DEFAULT -> {
-                Log.e("EventHandler.dispatchEvent","default: $content")
+                Log.e(TAG,"default: $content")
             }
             EVENT_TYPE_MESSAGE -> {
                 Log.e("EventHandler.dispatchEvent","chat: $content")

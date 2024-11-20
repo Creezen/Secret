@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock
 class ChatEventService : Service() {
 
     companion object {
+
         private var isActivityBind: Boolean = false
         private val queue = LinkedBlockingQueue<String>()
         private var getMessageImmediate: ((String) -> Unit)? = null
@@ -53,9 +54,6 @@ class ChatEventService : Service() {
         }
         messageLock.unlock()
         return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onDestroy() {
     }
 
     class ServiceBinder: Binder(){

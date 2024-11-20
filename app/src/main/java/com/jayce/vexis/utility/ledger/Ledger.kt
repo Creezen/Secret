@@ -16,6 +16,7 @@ class Ledger: BaseActivity() {
     private val userList = ArrayList<String>()
 
     companion object {
+        const val TAG = "Ledger"
         const val INIT_USER_COUNT = 2
     }
 
@@ -54,6 +55,10 @@ class Ledger: BaseActivity() {
                     }
                     show()
                 }
+            }
+            history.setOnClickListener {
+                startActivity(Intent(this@Ledger, RecordHistoryActivity::class.java))
+
             }
         }
     }

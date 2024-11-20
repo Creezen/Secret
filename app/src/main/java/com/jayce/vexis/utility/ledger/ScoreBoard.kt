@@ -2,8 +2,10 @@ package com.jayce.vexis.utility.ledger
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
@@ -13,6 +15,15 @@ import com.jayce.vexis.databinding.NewPocketRecordBinding
 import com.jayce.vexis.stylized.CustomDialog
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.utility.ledger.adapter.RecordAdapter
+import com.jayce.vexis.utility.ledger.adapter.ScoreInsertAdapter
+import com.jayce.vexis.utility.ledger.bean.RecordBean
+import com.jayce.vexis.utility.ledger.bean.RecordItemBean
+import com.jayce.vexis.utility.ledger.bean.ScoreBean
+import com.jayce.vexis.utility.ledger.database.ScoreDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.StringBuilder
 
 class ScoreBoard : AppCompatActivity() {
 
@@ -30,6 +41,9 @@ class ScoreBoard : AppCompatActivity() {
     private val adapter by lazy{
         RecordAdapter(scoreList)
     }
+    private val scoreDao by lazy {
+        ScoreDatabase.getDatabase(this).recordDao()
+    }
     private lateinit var scoreInsertAdapter: ScoreInsertAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +56,14 @@ class ScoreBoard : AppCompatActivity() {
 
     private fun initData() {
         userList.clear()
+        val list = intent.getStringArrayListExtra("userData")
+        Log.e("TAG","get data: $list")
         intent.getStringArrayListExtra("userData")?.let { userNames ->
             userList.addAll(
                 userNames.filter { it.isNotEmpty() }.toSet()
             )
         }
+        Log.e("TAG","$userList")
         repeat(userList.size) {
             totalScoreList.add(0)
         }
@@ -121,7 +138,7 @@ class ScoreBoard : AppCompatActivity() {
                 }
             }
             save.setOnClickListener {
-                "保存成功".toast()
+                saveRecord()
             }
             rv.layoutManager = LinearLayoutManager(this@ScoreBoard)
             rv.adapter = adapter
@@ -138,6 +155,43 @@ class ScoreBoard : AppCompatActivity() {
             totalScoreSV.setOnTouchListener { _, _ -> true }
             roundNumRV.setOnTouchListener { _, _ -> true }
         }
+    }
+
+    private fun saveRecord() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val recordItemBean = RecordItemBean(title, createTime)
+            val recordId = scoreDao.insertRecord(recordItemBean)
+            val userStr = StringBuilder()
+            val scoreStr = StringBuilder()
+            val totalStr = StringBuilder()
+            userList.forEachIndexed { i, v ->
+                userStr.append(v)
+                if(i != userList.size - 1) {
+                    userStr.append("$")
+                }
+            }
+            totalScoreList.forEachIndexed { i, v ->
+                totalStr.append(v)
+                if(i != totalScoreList.size - 1) {
+                    totalStr.append("$")
+                }
+            }
+            scoreList.forEachIndexed { idx, value ->
+                val roundScore = value.scores
+                roundScore.forEachIndexed { i, v ->
+                    scoreStr.append(v)
+                    if(i != roundScore.size - 1) {
+                        scoreStr.append("$")
+                    }
+                }
+                if (idx != scoreList.size - 1) {
+                    scoreStr.append("&")
+                }
+            }
+            val scoreBean = ScoreBean(recordId, userStr.toString(), scoreStr.toString(), totalStr.toString())
+            scoreDao.insertScore(scoreBean)
+        }
+        "保存成功".toast()
     }
 
     private fun addRecord(list: ArrayList<Int>) {

@@ -23,7 +23,6 @@ class Chronicle : BaseFragment() {
     private fun initView() {
         with(binding) {
             base.setOnTouchListener { _, event ->
-                MotionEvent.ACTION_MASK
                 val param = center.layoutParams
                 param.height = event.y.toInt()
                 center.layoutParams = param

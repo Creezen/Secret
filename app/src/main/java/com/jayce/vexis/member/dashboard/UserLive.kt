@@ -17,8 +17,6 @@ class UserLive: BaseFragment() {
         return binding.root
     }
 
-    private fun initView() {
-
-    }
+    private fun initView() {}
 
 }

@@ -105,6 +105,11 @@
                     android:text="@string/find_password"
                     android:background="@color/Button"/>
             </LinearLayout>
+            <Button
+                android:id="@+id/quickStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="快捷跳转"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

@@ -34,10 +34,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
+        <activity
+            android:name=".utility.ledger.RecordHistoryActivity"
+            android:exported="false" />
+
         <service
             android:name=".event.ChatEventService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <activity
             android:name=".utility.gomoku.GomokuActivity"

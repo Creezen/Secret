@@ -1,6 +1,6 @@
 package com.jayce.vexis.login
 
-import android.animation.AnimatorInflater
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -121,6 +121,12 @@ class Login : AppCompatActivity() {
                         login.isClickable = true
                     }
                 })
+            }
+            quickStart.setOnClickListener {
+                val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
+                val intent = Intent()
+                intent.component = component
+                startActivity(intent)
             }
             val packageInfo = packageManager.getPackageInfo(
                 packageName,

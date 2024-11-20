@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -14,14 +13,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.BaseTool.env
 import com.creezen.tool.Constant
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.sendAckMessage
-import com.creezen.tool.NetTool.sendMessage
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.chat.ChatActivity
@@ -35,9 +32,6 @@ import com.jayce.vexis.member.dashboard.HomePage
 import com.jayce.vexis.stylized.SimpleDialog
 import com.jayce.vexis.synergy.Synergy
 import com.jayce.vexis.utility.Utility
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class Main : BaseActivity() {
 

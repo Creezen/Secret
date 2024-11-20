@@ -43,7 +43,7 @@
     <string name="please_select_file">请选择需要上传的文件…</string>
     <string name="resource_descript">资源描述</string>
     <string name="not_null">必填</string>
-    <string name="find_password">找回密码（暂获取拼音）</string>
+    <string name="find_password">找回密码（暂切换字体）</string>
     <string name="create_account">创建账号</string>
     <string name="login">点击登录</string>
     <string name="password">密码</string>

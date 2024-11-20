@@ -1,10 +1,11 @@
-package com.jayce.vexis.utility.ledger
+package com.jayce.vexis.utility.ledger.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.RecordItemLayoutBinding
+import com.jayce.vexis.utility.ledger.bean.RecordBean
 import com.jayce.vexis.utility.ledger.ScoreBoard.Companion.HEIGHT
 import com.jayce.vexis.utility.ledger.ScoreBoard.Companion.WIDTH
 
