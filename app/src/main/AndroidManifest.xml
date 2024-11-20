@@ -35,7 +35,7 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
-            android:name=".utility.ledger.RecordHistoryActivity"
+            android:name=".gadgets.ledger.RecordHistoryActivity"
             android:exported="false" />
 
         <service
@@ -44,19 +44,19 @@
             android:exported="true" />
 
         <activity
-            android:name=".utility.gomoku.GomokuActivity"
+            android:name=".gadgets.gomoku.GomokuActivity"
             android:exported="false" />
         <activity
-            android:name=".utility.maze.MazeActivity"
+            android:name=".gadgets.maze.MazeActivity"
             android:exported="false" />
         <activity
-            android:name=".synergy.paragraph.ParagraphActivity"
+            android:name=".writing.paragraph.ParagraphActivity"
             android:exported="false" />
         <activity
-            android:name=".synergy.SynergyEditActivity"
+            android:name=".writing.ArticleEditActivity"
             android:exported="false" />
         <activity
-            android:name=".hub.HubActivity"
+            android:name=".exchange.HubActivity"
             android:exported="false" />
         <activity
             android:name=".member.manage.ActiveDataActivity"
@@ -69,22 +69,22 @@
             android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".critique.FeedbackEditActivity"
+            android:name=".issue.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".hub.resource.FileDetailActivity"
+            android:name=".exchange.resource.FileDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".hub.resource.FileUploadActivity"
+            android:name=".exchange.resource.FileUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".utility.ledger.ScoreBoard"
+            android:name=".gadgets.ledger.ScoreBoard"
             android:exported="false" />
         <activity
             android:name=".member.dashboard.HomePage"
             android:exported="false" />
         <activity
-            android:name=".utility.ledger.Ledger"
+            android:name=".gadgets.ledger.Ledger"
             android:exported="false" />
         <activity
             android:name=".Main"

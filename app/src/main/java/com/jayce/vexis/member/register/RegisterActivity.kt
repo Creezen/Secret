@@ -17,7 +17,7 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.AccountCreationBinding
 import com.jayce.vexis.member.UserItem
 import com.jayce.vexis.member.UserService
-import com.jayce.vexis.stylized.SimpleDialog
+import com.jayce.vexis.widgets.SimpleDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -8,7 +8,7 @@
 
         <variable
             name="defaultSpinner"
-            type="com.jayce.vexis.stylized.DefaultSpinner" />
+            type="com.jayce.vexis.widgets.DefaultSpinner" />
         <variable
             name="activity"
             type="com.jayce.vexis.member.register.RegisterActivity"/>
@@ -286,7 +286,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <com.jayce.vexis.stylized.DefaultSpinner
+                        <com.jayce.vexis.widgets.DefaultSpinner
                             android:id="@+id/yearSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -295,7 +295,7 @@
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={yearSelect}"
                             android:onItemSelected="@{() -> yearSpinner.onItemSelect()}"/>
-                        <com.jayce.vexis.stylized.DefaultSpinner
+                        <com.jayce.vexis.widgets.DefaultSpinner
                             android:id="@+id/monthSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -306,7 +306,7 @@
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={monthSelected}"
                             android:onItemSelected="@{() -> monthSpinner.onItemSelect()}"/>
-                        <com.jayce.vexis.stylized.DefaultSpinner
+                        <com.jayce.vexis.widgets.DefaultSpinner
                             android:id="@+id/daySpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -327,7 +327,7 @@
                         android:textSize="@dimen/label"
                         android:gravity="center"
                         android:text="性别"/>
-                    <com.jayce.vexis.stylized.DefaultSpinner
+                    <com.jayce.vexis.widgets.DefaultSpinner
                         android:id="@+id/sex"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -364,7 +364,7 @@
                             android:paddingStart="@dimen/margin"
                             android:layout_marginEnd="@dimen/margin"
                             android:textColorHint="@color/hint"/>
-                        <com.jayce.vexis.stylized.DefaultSpinner
+                        <com.jayce.vexis.widgets.DefaultSpinner
                             android:id="@+id/emailPostfix"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

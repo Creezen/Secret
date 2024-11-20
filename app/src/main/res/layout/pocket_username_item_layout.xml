@@ -4,7 +4,7 @@
     <data>
         <variable
             name="baseRoot"
-            type="com.jayce.vexis.utility.ledger.ScoreInsertEntryView" />
+            type="com.jayce.vexis.gadgets.ledger.ScoreInsertEntryView" />
     </data>
 
     <LinearLayout

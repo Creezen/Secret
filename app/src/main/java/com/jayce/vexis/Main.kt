@@ -22,23 +22,23 @@ import com.creezen.tool.NetTool.sendAckMessage
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.chat.ChatActivity
-import com.jayce.vexis.chronicle.Chronicle
-import com.jayce.vexis.critique.Feedback
+import com.jayce.vexis.history.HistoricalAxis
+import com.jayce.vexis.issue.Feedback
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.event.EventHandler.dispatchEvent
-import com.jayce.vexis.hub.HubActivity
+import com.jayce.vexis.exchange.HubActivity
 import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.member.dashboard.HomePage
-import com.jayce.vexis.stylized.SimpleDialog
-import com.jayce.vexis.synergy.Synergy
-import com.jayce.vexis.utility.Utility
+import com.jayce.vexis.widgets.SimpleDialog
+import com.jayce.vexis.writing.Article
+import com.jayce.vexis.gadgets.Gadget
 
 class Main : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var viewHolder: ViewHolder? = null
-    inner class ViewHolder(val feedback: Feedback, val utility: Utility,
-                           val chronicle: Chronicle, val synergy: Synergy)
+    inner class ViewHolder(val feedback: Feedback, val gadget: Gadget,
+                           val historicalAxis: HistoricalAxis, val article: Article)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +71,7 @@ class Main : BaseActivity() {
     private fun initPage(){
         with(binding){
             if (null == viewHolder){
-                viewHolder = ViewHolder(Feedback(), Utility(), Chronicle(), Synergy())
+                viewHolder = ViewHolder(Feedback(), Gadget(), HistoricalAxis(), Article())
                 root.tag = viewHolder
             } else viewHolder = root.tag as ViewHolder
             setSupportActionBar(toolBar)
@@ -80,16 +80,16 @@ class Main : BaseActivity() {
                 setHomeAsUpIndicator(R.drawable.open_drawer)
             }
             toolBarText.text = navigation.menu.getItem(0).title
-            replaceFragment(viewHolder!!.chronicle)
+            replaceFragment(viewHolder!!.historicalAxis)
             navigation.setNavigationItemSelectedListener { item->
                 toolBarText.text = item.title
                 drawerLayout.closeDrawers()
                 viewHolder?.apply {
                     when(item.itemId){
                         R.id.MainMenuFeedback -> replaceFragment(feedback)
-                        R.id.MainMenuWidget -> replaceFragment(utility)
-                        R.id.MainMenuTimeline -> replaceFragment(chronicle)
-                        R.id.MainMenuSynergy -> replaceFragment(synergy)
+                        R.id.MainMenuWidget -> replaceFragment(gadget)
+                        R.id.MainMenuTimeline -> replaceFragment(historicalAxis)
+                        R.id.MainMenuSynergy -> replaceFragment(article)
                     }
                 }
                 return@setNavigationItemSelectedListener true

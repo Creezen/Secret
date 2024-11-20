@@ -31,7 +31,7 @@ import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.member.UserService
 import com.jayce.vexis.member.register.RegisterActivity
 import com.jayce.vexis.onlineUser
-import com.jayce.vexis.stylized.animator.MyCustomTransformer
+import com.jayce.vexis.widgets.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

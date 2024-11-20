@@ -10,7 +10,7 @@ import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.member.ActiveItem
-import com.jayce.vexis.stylized.TrackPopupMenu
+import com.jayce.vexis.widgets.TrackPopupMenu
 
 class UserActiveAdapter(private val context: Context, private val userList: List<ActiveItem>): RecyclerView.Adapter<UserActiveAdapter.ViewHolder>()  {
 
