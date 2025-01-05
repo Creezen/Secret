@@ -3,6 +3,7 @@ package com.jayce.vexis.history
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.jayce.vexis.base.BaseFragment
@@ -21,13 +22,17 @@ class HistoricalAxis : BaseFragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun initView() {
         with(binding) {
-            base.setOnTouchListener { _, event ->
-                val param = center.layoutParams
-                param.height = event.y.toInt()
-                center.layoutParams = param
-                return@setOnTouchListener true
-            }
+//            base.setOnTouchListener { _, event ->
+//                return@setOnTouchListener handleClickEvent(event)
+//            }
         }
+    }
+
+    private fun handleClickEvent(event: MotionEvent): Boolean{
+        val param = binding.center.layoutParams
+        param.height = event.y.toInt()
+        binding.center.layoutParams = param
+        return true
     }
 
 }

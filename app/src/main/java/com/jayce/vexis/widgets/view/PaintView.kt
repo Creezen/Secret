@@ -1,4 +1,4 @@
-package com.jayce.vexis.widgets
+package com.jayce.vexis.widgets.view
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.creezen.tool.DataTool.calculateMultiPointDistance
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
@@ -55,7 +56,7 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
             MotionEvent.ACTION_POINTER_DOWN -> {
                 pointCount ++
                 if(pointCount >= 2) {
-                    previewDistinct = calculateMultiPointDistanct(event)
+                    previewDistinct = calculateMultiPointDistance(event)
                 }
                 previewAction = event.actionMasked
             }
@@ -68,7 +69,7 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
                 if(pointCount <= 1) {
                     return true
                 }
-                val distanceNow = calculateMultiPointDistanct(event)
+                val distanceNow = calculateMultiPointDistance(event)
                 if(abs(previewDistinct - distanceNow) < 50) {
                     return true
                 }
@@ -80,20 +81,6 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
             }
         }
         return true
-    }
-
-    private fun calculateMultiPointDistanct(event: MotionEvent): Float {
-        return calculateDistance(
-            event.getX(0),
-            event.getY(0),
-            event.getX(1),
-            event.getY(1))
-    }
-
-    private fun calculateDistance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
-        val distX = Math.pow((x1 - x2).toDouble(), 2.0).toFloat()
-        val distY = Math.pow((y1 - y2).toDouble(), 2.0).toFloat()
-        return sqrt(distX + distY)
     }
 
     private fun handleClickPoint(x: Float, y: Float) {

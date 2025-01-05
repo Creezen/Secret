@@ -1,4 +1,4 @@
-package com.jayce.vexis.widgets
+package com.jayce.vexis.widgets.view
 
 import android.content.Context
 import android.graphics.Canvas
