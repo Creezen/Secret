@@ -22,6 +22,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.BaseTool.env
+import com.creezen.tool.ability.click.ClickHandle
+import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.contract.LifecycleJob
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -141,5 +143,9 @@ object AndroidTool {
             it.`package` = env().packageName
             func?.invoke(it)
         })
+    }
+
+    fun View.registerSwipeEvent(viewId: String, handle: ClickHandle, callback: SwipeCallback) {
+        handle.registerSwipeEvent(viewId, this, callback)
     }
 }

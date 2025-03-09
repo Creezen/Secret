@@ -1,4 +1,4 @@
-package com.jayce.vexis.event
+package com.jayce.vexis.ability.event
 
 import android.app.Service
 import android.content.Intent

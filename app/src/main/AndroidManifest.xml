@@ -39,7 +39,7 @@
             android:exported="false" />
 
         <service
-            android:name=".event.ChatEventService"
+            android:name=".ability.event.ChatEventService"
             android:enabled="true"
             android:exported="true" />
 

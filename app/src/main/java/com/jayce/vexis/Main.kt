@@ -25,7 +25,7 @@ import com.jayce.vexis.chat.ChatActivity
 import com.jayce.vexis.history.HistoricalAxis
 import com.jayce.vexis.issue.Feedback
 import com.jayce.vexis.databinding.ActivityMainBinding
-import com.jayce.vexis.event.EventHandler.dispatchEvent
+import com.jayce.vexis.ability.event.EventHandler.dispatchEvent
 import com.jayce.vexis.exchange.ExchangeActivity
 import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.member.dashboard.HomePage

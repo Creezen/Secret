@@ -12,9 +12,9 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
-import com.jayce.vexis.event.ChatEventService
-import com.jayce.vexis.event.ChatEventService.Companion.bindActivity
-import com.jayce.vexis.event.ChatEventService.Companion.messageLock
+import com.jayce.vexis.ability.event.ChatEventService
+import com.jayce.vexis.ability.event.ChatEventService.Companion.bindActivity
+import com.jayce.vexis.ability.event.ChatEventService.Companion.messageLock
 import com.jayce.vexis.onlineUser
 
 class ChatActivity: BaseActivity() {
