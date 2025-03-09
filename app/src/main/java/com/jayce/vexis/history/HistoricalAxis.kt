@@ -23,7 +23,7 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
 
     private var ratio: Float = -1f
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = TimeLineBinding.inflate(inflater)
         initView()
         return binding.root
