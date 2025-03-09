@@ -14,7 +14,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:gravity="center"
             android:textColor="#00ff00"/>
         <TextView
@@ -23,7 +23,7 @@
             android:id="@+id/fileID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#5B5B95"/>
         <TextView
             android:paddingTop="5dp"
@@ -31,7 +31,7 @@
             android:id="@+id/date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#5B5B95"/>
         <TextView
             android:paddingTop="5dp"
@@ -39,7 +39,7 @@
             android:id="@+id/size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#5B5B95"/>
     </LinearLayout>
     <TextView
