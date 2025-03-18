@@ -10,6 +10,7 @@ buildscript {
         maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin")}
         maven { url = uri("https://maven.aliyun.com/repository/apache-snapshots")}
         maven { url = uri("https://maven.aliyun.com/repository/grails-core")}
+        maven { url = uri("https://jitpack.io") }
     }
     dependencies {
         classpath("com.github.aasitnikov:fat-aar-android:b2a038763c")
@@ -21,4 +22,5 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
     id("com.android.library") version "8.1.0" apply false
     id("org.jetbrains.kotlin.jvm") version "1.8.0" apply false
+    id("org.jetbrains.dokka") version "1.9.20" apply false
 }

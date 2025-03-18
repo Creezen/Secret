@@ -13,6 +13,9 @@ import java.io.RandomAccessFile
 
 object FileTool {
 
+    /**
+     * 通过Uri获取文件路径
+     */
     fun getFilePathByUri(uri: Uri): String? {
         val documentID = DocumentsContract.getDocumentId(uri)
         val splitInfo = documentID.split(":")
