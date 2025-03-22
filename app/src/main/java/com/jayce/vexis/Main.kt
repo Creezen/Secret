@@ -45,27 +45,7 @@ class Main : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initPage()
-        notifySocket()
-        showNotify()
-    }
-
-    private fun notifySocket() {
-        sendAckMessage(this, onlineUser.userId) {
-            dispatchEvent(it, this)
-            return@sendAckMessage true
-        }
-    }
-
-    private fun showNotify() {
-        val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-        val builder = NotificationCompat.Builder(env(), "1")
-            .setSmallIcon(R.drawable.tianji)
-            .setContentTitle("登录成功通知")
-            .setContentText("欢迎您，${onlineUser.nickname}")
-            .build()
-        val manager = getSystemService(NotificationManager::class.java)
-        manager.createNotificationChannel(notifyChannel)
-        manager.notify(1, builder)
+        startService(Intent(this, CreezenService::class.java))
     }
 
     private fun initPage(){
@@ -94,6 +74,7 @@ class Main : BaseActivity() {
                 }
                 return@setNavigationItemSelectedListener true
             }
+            navigation.setCheckedItem(R.id.MainMenuTimeline)
             navigation.getHeaderView(0).setOnClickListener {
                 startActivity(Intent(this@Main, HomePage::class.java))
             }

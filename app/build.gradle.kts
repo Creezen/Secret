@@ -76,6 +76,8 @@ dependencies {
     implementation ("com.alibaba:fastjson:2.0.40")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
+    implementation ("com.github.stuxuhai:jpinyin:1.1.7")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

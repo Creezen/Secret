@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.request.RequestOptions
@@ -14,8 +13,11 @@ import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.Constant.BASE_SOCKET_PATH
 import com.creezen.tool.Constant.BASE_URL
+import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -43,11 +45,16 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.Socket
 import java.util.Arrays
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Future
+import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.resume
 
 object NetTool {
+
+    private const val TAG = "NetTool"
 
     private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
     private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
@@ -55,12 +62,32 @@ object NetTool {
     private lateinit var onlineSocket : Socket
     private val socketFlag = AtomicBoolean(true)
 
-    val socketReader: BufferedReader by lazy {
-        BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
-    }
+    private var socketReader: BufferedReader? = null
 
-    private val socketWriter: BufferedWriter by lazy {
-        BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+    private var socketWriter: BufferedWriter? = null
+
+    private fun reConnect(msg: String? = null) {
+        val future = CompletableFuture<Unit>()
+        CoroutineScope(Dispatchers.IO).launch {
+            kotlin.runCatching {
+                socketReader = null
+                socketWriter = null
+                onlineSocket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
+                socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+                Log.d(TAG,"connection OK!")
+                msg?.let {
+                    socketWriter?.write("$msg\n")
+                    socketWriter?.flush()
+                }
+                future.complete(Unit)
+            }.onFailure {
+                Log.d(TAG,"reConnect error,try again!")
+                future.complete(Unit)
+                reConnect()
+            }
+        }
+        future.get()
     }
 
     private val cookieJar = object : CookieJar {
@@ -180,61 +207,62 @@ object NetTool {
         return MultipartBody.Part.createFormData(paramName, filePath, fileBody)
     }
 
-    fun sendMessage(lifecycleOwner: LifecycleOwner, msg: String) {
+    fun sendMessage(scope: CoroutineScope, msg: String) {
         if(onlineSocket.isOutputShutdown || onlineSocket.isClosed || socketFlag.get().not()) {
             socketFlag.set(false)
             "与服务器连接失败，请检查网络".toast()
             return
         }
-        lifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                kotlin.runCatching {
-                    if(msg.isEmpty()) {
-                        return@runCatching
-                    }
-                    socketWriter.write("$msg\n")
-                    socketWriter.flush()
-                }.onFailure {
-                    destroySocket()
-                    Log.e("NetTool.sendMessage","send sockeMessage error: $it")
+        scope.launch {
+            kotlin.runCatching {
+                if(msg.isEmpty()) {
+                    return@runCatching
                 }
+                Log.d(TAG,"write message:  $msg")
+                socketWriter?.write("$msg\n")
+                socketWriter?.flush()
+            }.onFailure {
+                it.printStackTrace()
+                destroySocket()
+                reConnect(msg)
             }
         }
     }
 
-    fun sendDefaultMessage(lifecycleOwner: LifecycleOwner, msg: String) {
-        sendMessage(lifecycleOwner, "$EVENT_TYPE_DEFAULT#$msg")
+    fun sendDefaultMessage(scope: CoroutineScope, msg: String) {
+        sendMessage(scope,"$EVENT_TYPE_DEFAULT#$msg")
     }
 
-    fun sendChatMessage(lifecycleOwner: LifecycleOwner, msg: String) {
-        sendMessage(lifecycleOwner, "$EVENT_TYPE_MESSAGE#$msg")
+    fun sendChatMessage(scope: CoroutineScope, msg: String) {
+        sendMessage(scope, "$EVENT_TYPE_MESSAGE#$msg")
     }
 
-    fun sendNotifyMessage(lifecycleOwner: LifecycleOwner, msg: String) {
-        sendMessage(lifecycleOwner, "$EVENT_TYPE_NOTIFY#$msg")
+    fun sendNotifyMessage(scope: CoroutineScope, msg: String) {
+        sendMessage(scope, "$EVENT_TYPE_NOTIFY#$msg")
     }
 
-    fun sendGameMessage(lifecycleOwner: LifecycleOwner, msg: String) {
-        sendMessage(lifecycleOwner, "$EVENT_TYPE_GAME#$msg")
+    fun sendGameMessage(scope: CoroutineScope, msg: String) {
+        sendMessage(scope, "$EVENT_TYPE_GAME#$msg")
     }
 
     fun sendAckMessage(
-        lifecycleOwner: LifecycleOwner,
+        scope: CoroutineScope,
         msg: String,
         onReceiveMessage: (String) -> Boolean
     ) {
-        sendDefaultMessage(lifecycleOwner, msg)
-        openMessageReceiver(onReceiveMessage)
+        sendDefaultMessage(scope, msg)
+        openMessageReceiver(scope, onReceiveMessage)
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun openMessageReceiver(
+        scope: CoroutineScope,
         onReceiveMessage: (String) -> Boolean
     ) {
-        GlobalScope.launch(Dispatchers.IO) {
+        scope.launch {
             kotlin.runCatching {
                 while(true) {
-                    val line = socketReader.readLine()
+                    val line = socketReader?.readLine()
+                    Log.d(TAG,"receiveMessage:  $line")
                     if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
                         socketFlag.set(false)
                         Log.e("ChatActivity.initSocket","服务器错误")
@@ -247,19 +275,27 @@ object NetTool {
                     }
                 }
             }.onFailure {
-                "Socket已因意外断开".toast()
+                it.printStackTrace()
+                reConnect()
+                openMessageReceiver(scope, onReceiveMessage)
             }
         }
     }
 
     fun setOnlineSocket(socket: Socket) {
         onlineSocket = socket
+        if(socketReader == null) {
+            socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
+        }
+        if(socketWriter == null) {
+            socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+        }
     }
 
     fun destroySocket() {
-        onlineSocket.shutdownOutput()
-        onlineSocket.shutdownInput()
-        onlineSocket.close()
+        if(onlineSocket.isClosed.not()) {
+            onlineSocket.close()
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.creezen.tool.NetTool.sendNotifyMessage
 import com.creezen.tool.contract.LifecycleJob
+import com.jayce.vexis.CreezenService
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.onlineUser
@@ -38,7 +39,7 @@ class FeedbackEditActivity: BaseActivity() {
 
                     override fun onTimeoutFinish(isWorkFinished: Boolean) {
                         if(isWorkFinished) {
-                            sendNotifyMessage(this@FeedbackEditActivity, contentMsg)
+                            sendNotifyMessage(CreezenService.scope, contentMsg)
                         }
                     }
                 })

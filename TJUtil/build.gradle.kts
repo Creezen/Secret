@@ -158,7 +158,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
-    implementation ("org.jetbrains.kotlin:kotlin-compiler-embeddable:1.9.20")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
 
     embed("com.creezen.tool.commontool:tools:1.0.0")

@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
+import com.jayce.vexis.CreezenService
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.ability.event.ChatEventService
@@ -21,6 +23,7 @@ class ChatActivity: BaseActivity() {
 
     companion object {
         private val itemList = arrayListOf<ChatItem>()
+        const val TAG = "ChatActivity"
     }
 
     private lateinit var binding: ActivityChatBinding
@@ -58,7 +61,7 @@ class ChatActivity: BaseActivity() {
         itemList.add(ChatItem(onlineUser.nickname, System.currentTimeMillis().toTime(), msg))
         adapter.notifyItemRangeInserted(itemList.size, 1)
         binding.edit.setText("")
-        binding.message.scrollToPosition(adapter.itemCount-1)
+        binding.message.scrollToPosition(adapter.itemCount - 1)
     }
 
     private fun initView() {
@@ -70,7 +73,7 @@ class ChatActivity: BaseActivity() {
                 if(content.isEmpty()) {
                     return@setOnClickListener
                 }
-                sendChatMessage(this@ChatActivity, edit.msg(true))
+                sendChatMessage(CreezenService.scope, edit.msg(true))
             }
         }
     }
