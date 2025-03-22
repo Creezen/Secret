@@ -12,6 +12,7 @@ import java.util.concurrent.locks.ReentrantLock
 class ChatEventService : Service() {
 
     companion object {
+        const val TAG = "ChatEventService"
 
         private var isActivityBind: Boolean = false
         private val queue = LinkedBlockingQueue<String>()

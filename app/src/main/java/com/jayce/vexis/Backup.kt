@@ -1,5 +1,7 @@
 package com.jayce.vexis
 
+import q.rorbin.badgeview.QBadgeView
+
 //val singleThread = Executors.newSingleThreadExecutor { Thread(it, "threadX") }
 //    .asCoroutineDispatcher()  + CoroutineName("fff")
 //val multiThread = Executors.newFixedThreadPool(3) { Thread(it, "hhh") }.asCoroutineDispatcher() + CoroutineName("ddd")
@@ -42,3 +44,37 @@ package com.jayce.vexis
 //private val runnable = Runnable {
 //    Log.d(CreezenService.TAG,"dgfdgff")
 //}
+
+//    private fun test() {
+//        val a = binding.longText
+//        binding.button.setOnClickListener {
+//            val textValue = binding.edit.text.toString()
+//            val list = textValue.split("\n")
+//                .asSequence()
+//                .filterNot {
+//                    it.isEmpty()
+//                }.map {
+//                    it.trim()
+//                }.take(10)
+//            list.forEach{
+//                Log.e("test", "the value: $it")
+//            }
+//            RandomAccessFile("filepath", "r").use {
+//                it.seek(it.filePointer)
+//                Channels.newInputStream(it.channel).bufferedReader().useLines {
+//
+//                }
+//            }
+//            val file = File("ddd")
+//
+//            file.useLines {
+//                it.filterNot {
+//                    it.isEmpty()
+//                }.map {
+//                    it.trim()
+//                }
+//            }
+//            a.longText = textValue
+//            binding.tv.text = "${list.count()}"
+//        }
+//    }

@@ -23,7 +23,7 @@ object EventHandler {
                 Log.e(TAG,"default: $content")
             }
             EVENT_TYPE_MESSAGE -> {
-                Log.e("EventHandler.dispatchEvent","chat: $content")
+                Log.e(TAG,"chat: $content")
                 context.apply {
                     startService(Intent(this, ChatEventService::class.java).also {
                         it.putExtra("messageContent", content)
@@ -34,13 +34,13 @@ object EventHandler {
                 broadcastByAction(context, BROAD_NOTIFY) {
                     it.putExtra("broadcastNotify", content)
                 }
-                Log.e("EventHandler.dispatchEvent","EVENT_TYPE_NOTIFY")
+                Log.e(TAG,"EVENT_TYPE_NOTIFY")
             }
             EVENT_TYPE_GAME -> {
-                Log.e("EventHandler.dispatchEvent","EVENT_TYPE_GAME")
+                Log.e(TAG,"EVENT_TYPE_GAME")
             }
             else -> {
-                Log.e("EventHandler.dispatchEvent","unknown message type")
+                Log.e(TAG,"unknown message type")
             }
         }
     }

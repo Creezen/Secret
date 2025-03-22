@@ -218,7 +218,6 @@ object NetTool {
                 if(msg.isEmpty()) {
                     return@runCatching
                 }
-                Log.d(TAG,"write message:  $msg")
                 socketWriter?.write("$msg\n")
                 socketWriter?.flush()
             }.onFailure {
@@ -262,7 +261,6 @@ object NetTool {
             kotlin.runCatching {
                 while(true) {
                     val line = socketReader?.readLine()
-                    Log.d(TAG,"receiveMessage:  $line")
                     if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
                         socketFlag.set(false)
                         Log.e("ChatActivity.initSocket","服务器错误")

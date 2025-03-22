@@ -6,17 +6,16 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.jayce.vexis.CreezenService
-import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.ability.event.ChatEventService
 import com.jayce.vexis.ability.event.ChatEventService.Companion.bindActivity
 import com.jayce.vexis.ability.event.ChatEventService.Companion.messageLock
+import com.jayce.vexis.base.BaseActivity
+import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.onlineUser
 
 class ChatActivity: BaseActivity() {
