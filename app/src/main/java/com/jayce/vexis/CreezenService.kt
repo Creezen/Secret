@@ -4,15 +4,18 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.media.metrics.Event
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.creezen.tool.BaseTool
 import com.creezen.tool.NetTool
 import com.jayce.vexis.ability.event.EventHandler
+import com.jayce.vexis.chat.ChatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class CreezenService : Service() {
 
@@ -45,5 +48,9 @@ class CreezenService : Service() {
             EventHandler.dispatchEvent(it, this)
             return@sendAckMessage true
         }
+//        scope.launch {
+//            EventHandler.chatFlow.collect {
+//            }
+//        }
     }
 }

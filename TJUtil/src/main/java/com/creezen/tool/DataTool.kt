@@ -1,10 +1,15 @@
 package com.creezen.tool
 
+import android.util.Log
 import android.view.MotionEvent
+import com.google.gson.Gson
+import java.lang.reflect.Type
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 object DataTool {
+
+    const val TAG = "DataTool"
 
     fun calculateMultiPointDistance(event: MotionEvent): Float {
         return calculateDistance(
@@ -19,5 +24,27 @@ object DataTool {
         val distY = (y1 - y2).toDouble().pow(2.0).toFloat()
         return sqrt(distX + distY)
     }
-    
+
+    @Deprecated("use toData instead!")
+    private fun <T> jsonToData(jsonStr: String, type: Type): T? {
+        kotlin.runCatching {
+            return Gson().fromJson(jsonStr, type) as T
+        }.onFailure {
+            Log.e(TAG, "jsonToData error: $it")
+        }
+        return null
+    }
+
+    private fun dataToJson(any: Any): String? {
+        kotlin.runCatching {
+            return Gson().toJson(any)
+        }.onFailure {
+            Log.e(TAG,"dataToJson error: $it")
+        }
+        return null
+    }
+
+    fun Any.toJson() = dataToJson(this)
+
+    fun <T> String.toData(type: Type) = jsonToData<T>(this, type)
 }

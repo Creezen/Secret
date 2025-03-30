@@ -46,11 +46,6 @@
             android:name=".gadgets.sheet.PokerHistoryActivity"
             android:exported="false" />
 
-        <service
-            android:name=".ability.event.ChatEventService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".gadgets.gomoku.GomokuActivity"
             android:exported="false" />

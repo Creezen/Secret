@@ -2,21 +2,7 @@ package com.jayce.vexis
 
 import q.rorbin.badgeview.QBadgeView
 
-//val singleThread = Executors.newSingleThreadExecutor { Thread(it, "threadX") }
-//    .asCoroutineDispatcher()  + CoroutineName("fff")
-//val multiThread = Executors.newFixedThreadPool(3) { Thread(it, "hhh") }.asCoroutineDispatcher() + CoroutineName("ddd")
-//CoroutineScope(singleThread).launch {
-//    while(true) {
-//        Log.d(CreezenService.TAG,"thread1:  ${Thread.currentThread().name}  ${coroutineContext[CoroutineName.Key]?.name }")
-//        delay(1000)
-//    }
-//}
-//CoroutineScope(multiThread).launch {
-//    while(true) {
-//        Log.d(CreezenService.TAG,"thread2:  ${Thread.currentThread().name}  ${coroutineContext[CoroutineName.Key]?.name }")
-//        delay(1000)
-//    }
-//}
+
 //
 //private fun threatFunction() {
 //    val handleThread = HandlerThread("gfh")

@@ -9,10 +9,19 @@ import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.broadcastByAction
 import com.creezen.tool.Constant.BROAD_NOTIFY
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.launch
 
 object EventHandler {
     
     private const val TAG = "EventHandler"
+
+    val chatFlow = MutableSharedFlow<String>(0, 0, BufferOverflow.SUSPEND)
 
     fun dispatchEvent(message: String, context: Context) {
         val index = message.indexOfFirst { it == '#' }
@@ -24,10 +33,9 @@ object EventHandler {
             }
             EVENT_TYPE_MESSAGE -> {
                 Log.e(TAG,"chat: $content")
-                context.apply {
-                    startService(Intent(this, ChatEventService::class.java).also {
-                        it.putExtra("messageContent", content)
-                    })
+                CoroutineScope(Dispatchers.IO).launch {
+                    Log.d(TAG,"emit it")
+                    chatFlow.emit(content)
                 }
             }
             EVENT_TYPE_NOTIFY -> {
