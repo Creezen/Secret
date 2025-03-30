@@ -4,28 +4,62 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
-import android.media.metrics.Event
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.creezen.commontool.CreezenTool.toTime
+import com.creezen.tool.AndroidTool.readPrefs
+import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.BaseTool
+import com.creezen.tool.DataTool.toData
+import com.creezen.tool.DataTool.toJson
 import com.creezen.tool.NetTool
+import com.creezen.tool.ThreadTool
+import com.google.gson.reflect.TypeToken
 import com.jayce.vexis.ability.event.EventHandler
 import com.jayce.vexis.chat.ChatActivity
+import com.jayce.vexis.chat.ChatItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import org.json.JSONArray
+import java.util.concurrent.LinkedBlockingQueue
 
 class CreezenService : Service() {
 
    companion object {
        const val TAG = "CreezenService"
+       const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
+       const val CACHE_MESSAGE = "CACHE_MESSAGE"
        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+       private val chatQueue = LinkedBlockingQueue<ChatItem>()
+
+       fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
+           block.invoke(chatQueue)
+       }
    }
 
     override fun onCreate() {
         Log.d(TAG,"onCreate")
+        ThreadTool.registerScope(NAME_MESSAGE_SCOPE, scope)
+        initData()
+        sendNotification()
+        notifySocket()
+    }
+
+    private fun initData()  {
+        val data = readPrefs {
+            it.getString(CACHE_MESSAGE, JSONArray().toJson())
+        }
+        chatQueue.clear()
+        data?.toData<ArrayList<ChatItem>>(object : TypeToken<ArrayList<ChatItem>>() {}.type).let {
+            it?.forEach {
+                chatQueue.put(it)
+            }
+        }
+    }
+
+    private fun sendNotification() {
         val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
         val builder = NotificationCompat.Builder(BaseTool.env(), "1")
             .setSmallIcon(R.drawable.tianji)
@@ -35,7 +69,6 @@ class CreezenService : Service() {
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(notifyChannel)
         startForeground(1, builder)
-        notifySocket()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -48,9 +81,25 @@ class CreezenService : Service() {
             EventHandler.dispatchEvent(it, this)
             return@sendAckMessage true
         }
-//        scope.launch {
-//            EventHandler.chatFlow.collect {
-//            }
-//        }
+        ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
+            EventHandler.chatFlow.collect {
+                chatQueue.put(ChatItem(onlineUser.nickname, System.currentTimeMillis().toTime(), it))
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        ThreadTool.unregisterScope(NAME_MESSAGE_SCOPE)
+        writePrefs {
+            ChatActivity.getChatList().toJson()?.let { str ->
+                it.putString(CACHE_MESSAGE, str)
+            }
+        }
+        writePrefs {
+            chatQueue.toList().toJson()?.let { str ->
+                it.putString(CACHE_MESSAGE, str)
+            }
+        }
+        super.onDestroy()
     }
 }

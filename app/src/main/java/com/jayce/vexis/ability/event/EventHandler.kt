@@ -15,6 +15,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 object EventHandler {

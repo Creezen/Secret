@@ -3,6 +3,7 @@ package com.creezen.tool
 import android.util.Log
 import android.view.MotionEvent
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import kotlin.math.pow
 import kotlin.math.sqrt
