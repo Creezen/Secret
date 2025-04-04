@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import com.tencent.mmkv.MMKV
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
@@ -12,6 +13,7 @@ object BaseTool {
 
     fun register(context: Context) {
         envContext = context
+        MMKV.initialize(context)
     }
 
     fun env(): Context {

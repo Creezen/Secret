@@ -1,0 +1,9 @@
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:packageNames="com.jayce.vexis"
+    android:accessibilityFlags="flagRequestFilterKeyEvents|flagDefault|flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
+    android:notificationTimeout="100"
+    android:canPerformGestures="true"
+    android:canRetrieveWindowContent="true"
+    android:canRequestFilterKeyEvents="true"/>

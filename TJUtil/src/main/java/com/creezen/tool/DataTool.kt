@@ -27,11 +27,13 @@ object DataTool {
     }
 
     @Deprecated("use toData instead!")
-    private fun <T> jsonToData(jsonStr: String, type: Type): T? {
+    inline fun <reified T> jsonToData(jsonStr: String): T? {
         kotlin.runCatching {
+            val type = object : TypeToken<T>() {}.type
             return Gson().fromJson(jsonStr, type) as T
         }.onFailure {
             Log.e(TAG, "jsonToData error: $it")
+            it.printStackTrace()
         }
         return null
     }
@@ -47,5 +49,5 @@ object DataTool {
 
     fun Any.toJson() = dataToJson(this)
 
-    fun <T> String.toData(type: Type) = jsonToData<T>(this, type)
+    inline fun <reified T> String.toData() = jsonToData<T>(this)
 }

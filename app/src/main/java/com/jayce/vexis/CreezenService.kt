@@ -1,5 +1,6 @@
 package com.jayce.vexis
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
@@ -23,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.json.JSONArray
+import org.json.JSONObject
 import java.util.concurrent.LinkedBlockingQueue
 
 class CreezenService : Service() {
@@ -37,6 +39,10 @@ class CreezenService : Service() {
        fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
            block.invoke(chatQueue)
        }
+
+       fun getQueueMessage(): List<ChatItem> {
+           return chatQueue.toList()
+       }
    }
 
     override fun onCreate() {
@@ -49,10 +55,11 @@ class CreezenService : Service() {
 
     private fun initData()  {
         val data = readPrefs {
-            it.getString(CACHE_MESSAGE, JSONArray().toJson())
+            it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
         }
+        Log.d(TAG,"data: $data")
         chatQueue.clear()
-        data?.toData<ArrayList<ChatItem>>(object : TypeToken<ArrayList<ChatItem>>() {}.type).let {
+        data?.toData<ArrayList<ChatItem>>().let {
             it?.forEach {
                 chatQueue.put(it)
             }
@@ -65,6 +72,9 @@ class CreezenService : Service() {
             .setSmallIcon(R.drawable.tianji)
             .setContentTitle("登录成功通知")
             .setContentText("欢迎您，${onlineUser.nickname}")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setOngoing(true)
             .build()
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(notifyChannel)
@@ -90,16 +100,6 @@ class CreezenService : Service() {
 
     override fun onDestroy() {
         ThreadTool.unregisterScope(NAME_MESSAGE_SCOPE)
-        writePrefs {
-            ChatActivity.getChatList().toJson()?.let { str ->
-                it.putString(CACHE_MESSAGE, str)
-            }
-        }
-        writePrefs {
-            chatQueue.toList().toJson()?.let { str ->
-                it.putString(CACHE_MESSAGE, str)
-            }
-        }
         super.onDestroy()
     }
 }

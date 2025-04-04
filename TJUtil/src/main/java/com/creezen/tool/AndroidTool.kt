@@ -25,6 +25,7 @@ import com.creezen.tool.BaseTool.env
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.contract.LifecycleJob
+import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

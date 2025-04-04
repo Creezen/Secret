@@ -64,3 +64,26 @@ import q.rorbin.badgeview.QBadgeView
 //            binding.tv.text = "${list.count()}"
 //        }
 //    }
+
+//        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        })
+//        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks{
+//            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+//            override fun onActivityResumed(activity: Activity) {}
+//            override fun onActivityPaused(activity: Activity) {}
+//            override fun onActivityStarted(activity: Activity) {
+//                count ++
+//                if (count > 0) {
+//                    Log.d(TAG,"forground")
+//                }
+//            }
+//            override fun onActivityStopped(activity: Activity) {
+//                count --
+//                if (count <= 0) {
+//                    Log.d(TAG,"back ground")
+//                }
+//            }
+//            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+//            override fun onActivityDestroyed(activity: Activity) {}
+//        })
