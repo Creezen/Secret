@@ -9,6 +9,7 @@ import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.broadcastByAction
 import com.creezen.tool.Constant.BROAD_NOTIFY
+import com.creezen.tool.ThreadTool
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
@@ -24,7 +25,7 @@ object EventHandler {
 
     val chatFlow = MutableSharedFlow<String>(0, 0, BufferOverflow.SUSPEND)
 
-    fun dispatchEvent(message: String, context: Context) {
+    suspend fun dispatchEvent(message: String, context: Context) {
         val index = message.indexOfFirst { it == '#' }
         val type = message.substring(0, index).toInt()
         val content = message.substring(index + 1, message.length)
@@ -33,11 +34,8 @@ object EventHandler {
                 Log.e(TAG,"default: $content")
             }
             EVENT_TYPE_MESSAGE -> {
-                Log.e(TAG,"chat: $content")
-                CoroutineScope(Dispatchers.IO).launch {
-                    Log.d(TAG,"emit it")
-                    chatFlow.emit(content)
-                }
+                Log.e(TAG,"emit chat: $content")
+                chatFlow.emit(content)
             }
             EVENT_TYPE_NOTIFY -> {
                 broadcastByAction(context, BROAD_NOTIFY) {

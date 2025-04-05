@@ -1,7 +1,6 @@
 package com.jayce.vexis.chat
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
@@ -18,10 +17,6 @@ class ChatActivity: BaseActivity() {
     companion object {
         const val TAG = "ChatActivity"
         private val itemList = arrayListOf<ChatItem>()
-
-        fun getChatList(): List<ChatItem> {
-            return itemList
-        }
     }
 
     private lateinit var binding: ActivityChatBinding
@@ -37,11 +32,21 @@ class ChatActivity: BaseActivity() {
     }
 
     private fun initData() {
-        Log.d(TAG,"open collect")
         CreezenService.getChatMessage {
+            val localList = arrayListOf<ChatItem>()
+            while (it.isNotEmpty()) {
+                localList.add(it.take())
+            }
+            itemList.addAll(localList)
+            val dataSize = localList.size
+            val afterSize = itemList.size
+            adapter.notifyItemRangeInserted(afterSize - dataSize, dataSize)
+            binding.message.scrollToPosition(afterSize - 1)
             scope.launch {
                 while(true) {
-                    itemList.add(it.take())
+                    val msg = it.take()
+                    if (msg.msg.isEmpty()) break
+                    itemList.add(msg)
                     withContext(Dispatchers.Main) {
                         adapter.notifyItemRangeInserted(itemList.size, 1)
                         binding.edit.setText("")
@@ -64,5 +69,10 @@ class ChatActivity: BaseActivity() {
                 sendChatMessage(CreezenService.scope, edit.msg(true))
             }
         }
+    }
+
+    override fun onDestroy() {
+        CreezenService.sendFinish()
+        super.onDestroy()
     }
 }

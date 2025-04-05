@@ -29,12 +29,8 @@ class GlobalReceiver : BroadcastReceiver() {
             }
             Intent.ACTION_CLOSE_SYSTEM_DIALOGS -> {
                 Log.d(TAG,"write message")
-                val list = arrayListOf<ChatItem>()
-                list.addAll(ChatActivity.getChatList())
-                list.addAll(CreezenService.getQueueMessage())
                 writePrefs {
-                    list.toJson()?.let { str ->
-                        Log.d(TAG,"str1: $str")
+                    CreezenService.getBackupContent().toJson()?.let { str ->
                         it.putString(CreezenService.CACHE_MESSAGE, str)
                     }
                 }

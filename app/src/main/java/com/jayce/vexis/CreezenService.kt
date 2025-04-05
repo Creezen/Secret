@@ -10,21 +10,16 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.readPrefs
-import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.BaseTool
 import com.creezen.tool.DataTool.toData
 import com.creezen.tool.DataTool.toJson
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
-import com.google.gson.reflect.TypeToken
 import com.jayce.vexis.ability.event.EventHandler
-import com.jayce.vexis.chat.ChatActivity
 import com.jayce.vexis.chat.ChatItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import org.json.JSONArray
-import org.json.JSONObject
 import java.util.concurrent.LinkedBlockingQueue
 
 class CreezenService : Service() {
@@ -35,14 +30,17 @@ class CreezenService : Service() {
        const val CACHE_MESSAGE = "CACHE_MESSAGE"
        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
        private val chatQueue = LinkedBlockingQueue<ChatItem>()
+       private val backupList = ArrayList<ChatItem>()
 
        fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
            block.invoke(chatQueue)
        }
 
-       fun getQueueMessage(): List<ChatItem> {
-           return chatQueue.toList()
+       fun sendFinish() {
+           chatQueue.put(ChatItem("", "", ""))
        }
+
+       fun getBackupContent() = backupList
    }
 
     override fun onCreate() {
@@ -57,11 +55,11 @@ class CreezenService : Service() {
         val data = readPrefs {
             it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
         }
-        Log.d(TAG,"data: $data")
         chatQueue.clear()
         data?.toData<ArrayList<ChatItem>>().let {
             it?.forEach {
                 chatQueue.put(it)
+                backupList.add(it)
             }
         }
     }
@@ -93,7 +91,9 @@ class CreezenService : Service() {
         }
         ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
             EventHandler.chatFlow.collect {
-                chatQueue.put(ChatItem(onlineUser.nickname, System.currentTimeMillis().toTime(), it))
+                val item = ChatItem(onlineUser.nickname, System.currentTimeMillis().toTime(), it)
+                backupList.add(item)
+                chatQueue.put(item)
             }
         }
     }

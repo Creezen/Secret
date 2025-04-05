@@ -247,7 +247,7 @@ object NetTool {
     fun sendAckMessage(
         scope: CoroutineScope,
         msg: String,
-        onReceiveMessage: (String) -> Boolean
+        onReceiveMessage: suspend (String) -> Boolean
     ) {
         sendDefaultMessage(scope, msg)
         openMessageReceiver(scope, onReceiveMessage)
@@ -255,7 +255,7 @@ object NetTool {
 
     private fun openMessageReceiver(
         scope: CoroutineScope,
-        onReceiveMessage: (String) -> Boolean
+        onReceiveMessage: suspend (String) -> Boolean
     ) {
         scope.launch {
             kotlin.runCatching {

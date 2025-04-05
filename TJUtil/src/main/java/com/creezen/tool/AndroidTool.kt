@@ -5,16 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -25,16 +21,10 @@ import com.creezen.tool.BaseTool.env
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.contract.LifecycleJob
-import com.tencent.mmkv.MMKV
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.time.withTimeoutOrNull
 import kotlinx.coroutines.withTimeoutOrNull
-import kotlin.coroutines.CoroutineContext
 
 object AndroidTool {
 
