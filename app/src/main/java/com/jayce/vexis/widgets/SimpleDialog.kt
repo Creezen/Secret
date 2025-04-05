@@ -20,7 +20,7 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
         const val RIGHT_BUTTON_INVISIBLE = 5
     }
 
-    var binding:DialogLayoutBinding = DialogLayoutBinding.inflate(layoutInflater)
+    var binding: DialogLayoutBinding = DialogLayoutBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

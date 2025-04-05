@@ -40,8 +40,13 @@ class ClickHandle(private val mode: Mode) {
         isSet = true
     }
 
+    fun unregisterSwipeEvent(viewId: String) {
+        isSet = false
+        _viewId = ""
+    }
+
     fun handleViewClick(viewId: String, event: MotionEvent, callback: SwipeCallback): Boolean {
-        if(_viewId != viewId) {
+        if(_viewId != viewId || _viewId.isBlank()) {
             return true
         }
         var handleFlag = true

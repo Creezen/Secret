@@ -2,6 +2,11 @@ package com.jayce.vexis.exchange
 
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -33,7 +38,9 @@ class ExchangeActivity : BaseActivity() {
         with(binding) {
             page.adapter = exchangeAdapter
             TabLayoutMediator(tab, page){ tab, pos ->
-                val textView = TextView(this@ExchangeActivity)
+                val textView = TextView(this@ExchangeActivity).apply {
+                    gravity = Gravity.CENTER
+                }
                 textView.text = when(pos) {
                     0 -> getString(R.string.knowledge_share)
                     1 -> getString(R.string.resource_share)

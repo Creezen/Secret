@@ -10,10 +10,12 @@
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabGravity="center"
-        app:tabSelectedTextColor="@color/BeanGreen"/>
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="@color/BeanGreen"
+        android:background="#E8F5E9"/>
     <androidx.viewpager2.widget.ViewPager2
+        android:layout_marginTop="3dp"
         android:id="@+id/page"
         android:layout_width="match_parent"
         android:layout_height="0dp"

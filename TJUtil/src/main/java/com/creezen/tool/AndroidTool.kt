@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.BaseTool.env
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
@@ -138,5 +139,9 @@ object AndroidTool {
 
     fun View.registerSwipeEvent(viewId: String, handle: ClickHandle, callback: SwipeCallback) {
         handle.registerSwipeEvent(viewId, this, callback)
+    }
+
+    fun View.unregisterSwipeEvent(viewId: String, handle: ClickHandle) {
+        handle.unregisterSwipeEvent(viewId)
     }
 }

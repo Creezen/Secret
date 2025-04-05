@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/chat"
-        android:icon="@drawable/chat"
-        android:title="@string/chat_room"
-        app:showAsAction="ifRoom"/>
     <item android:id="@+id/hub"
         android:icon="@drawable/hub"
         android:title="@string/hub"
@@ -13,5 +9,5 @@
         android:id="@+id/logout"
         android:icon="@drawable/exist_vector"
         android:title="@string/exist"
-        app:showAsAction="withText"/>
+        app:showAsAction="ifRoom"/>
 </menu>

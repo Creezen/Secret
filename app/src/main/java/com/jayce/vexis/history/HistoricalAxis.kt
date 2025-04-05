@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.creezen.tool.AndroidTool.registerSwipeEvent
+import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.base.BaseFragment
@@ -27,6 +28,11 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         binding = TimeLineBinding.inflate(inflater)
         initView()
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.base.unregisterSwipeEvent("base", eventHandle)
     }
 
     private fun initView() {

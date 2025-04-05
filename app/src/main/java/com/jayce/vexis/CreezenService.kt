@@ -32,6 +32,10 @@ class CreezenService : Service() {
        private val chatQueue = LinkedBlockingQueue<ChatItem>()
        private val backupList = ArrayList<ChatItem>()
 
+       fun getUnreadSize(): Int {
+           return chatQueue.size
+       }
+
        fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
            block.invoke(chatQueue)
        }

@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
@@ -28,6 +30,7 @@ import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.member.dashboard.HomePage
 import com.jayce.vexis.widgets.SimpleDialog
 import com.jayce.vexis.writing.Article
+import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
 class Main : BaseActivity() {
@@ -36,6 +39,8 @@ class Main : BaseActivity() {
     private lateinit var avatarView: ImageView
     private lateinit var emailView: ImageView
     private lateinit var chatMsgView: ImageView
+    private lateinit var emailBadge: Badge
+    private lateinit var chatBadge: Badge
     private var viewHolder: ViewHolder? = null
     inner class ViewHolder(val feedback: Feedback, val gadget: Gadget,
                            val historicalAxis: HistoricalAxis, val article: Article)
@@ -46,6 +51,11 @@ class Main : BaseActivity() {
         setContentView(binding.root)
         initPage()
         startService(Intent(this, CreezenService::class.java))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        chatBadge.badgeNumber = CreezenService.getUnreadSize()
     }
 
     private fun initPage(){
@@ -85,16 +95,28 @@ class Main : BaseActivity() {
             avatarView.setOnClickListener {
                 startActivity(Intent(this@Main, HomePage::class.java))
             }
-            QBadgeView(this@Main).bindTarget(emailView).apply {
-                badgeNumber = 99
+            emailBadge = QBadgeView(this@Main).bindTarget(emailView)
+            emailBadge.apply {
                 setBadgeTextSize(7f, true)
                 badgeGravity = Gravity.END or Gravity.TOP
             }
-            QBadgeView(this@Main).bindTarget(chatMsgView).apply {
-                badgeNumber = 66
+            chatBadge = QBadgeView(this@Main).bindTarget(chatMsgView)
+            chatBadge.apply {
                 setBadgeTextSize(7f, true)
                 badgeGravity = Gravity.END or Gravity.TOP
             }
+            chatMsgView.setOnClickListener {
+                startActivity(Intent(this@Main, ChatActivity::class.java))
+            }
+            drawerLayout.addDrawerListener(object : DrawerListener{
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+                override fun onDrawerClosed(drawerView: View) {}
+                override fun onDrawerStateChanged(newState: Int) {}
+                override fun onDrawerOpened(drawerView: View) {
+                    chatBadge.badgeNumber = CreezenService.getUnreadSize()
+                    emailBadge.badgeNumber = 0
+                }
+            })
             NetTool.setImage(
                 this@Main,
                 avatarView,
@@ -131,9 +153,6 @@ class Main : BaseActivity() {
         when(item.itemId){
             R.id.logout -> {
                 finishAll()
-            }
-            R.id.chat -> {
-                startActivity(Intent(this, ChatActivity::class.java))
             }
             R.id.hub -> {
                 startActivity(Intent(this, ExchangeActivity::class.java))
