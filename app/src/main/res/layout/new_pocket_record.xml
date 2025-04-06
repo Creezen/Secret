@@ -100,18 +100,21 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/add"/>
+            android:src="@drawable/add"
+            android:importantForAccessibility="no"/>
         <ImageView
             android:id="@+id/addRecord"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/payment"/>
+            android:src="@drawable/payment"
+            android:importantForAccessibility="no"/>
         <ImageView
             android:id="@+id/save"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/save"/>
+            android:src="@drawable/save"
+            android:importantForAccessibility="no"/>
     </LinearLayout>
 </LinearLayout>

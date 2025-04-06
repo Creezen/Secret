@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="3dp"
@@ -24,13 +23,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/corner_16"/>
+            android:background="@drawable/corner_16"
+            android:inputType="text"
+            android:hint="@string/chat_health"/>
         <Button
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/send_message"
             android:background="@drawable/chat_corner"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </LinearLayout>

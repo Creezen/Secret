@@ -15,7 +15,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="注册时间"/>
+            android:text="@string/register_time"/>
         <TextView
             android:id="@+id/createTime"
             android:layout_width="0dp"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:visibility="gone"
-            android:text="点我完善信息"/>
+            android:text="@string/click_to_fill_info"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="性别"
+            android:text="@string/sex"
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"/>
@@ -57,7 +57,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="年龄"
+            android:text="@string/age"
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"/>
@@ -72,7 +72,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="资产"
+            android:text="@string/money"
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"/>
@@ -96,7 +96,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="生日"/>
+            android:text="@string/birthday"/>
         <TextView
             android:id="@+id/birthday"
             android:layout_width="0dp"
@@ -117,7 +117,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="电话"/>
+            android:text="@string/phone_number"/>
         <TextView
             android:id="@+id/phone"
             android:layout_width="0dp"
@@ -138,7 +138,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="电子邮件"/>
+            android:text="@string/email"/>
         <TextView
             android:id="@+id/email"
             android:layout_width="0dp"
@@ -159,7 +159,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="地址"/>
+            android:text="@string/address"/>
         <TextView
             android:id="@+id/address"
             android:layout_width="0dp"
@@ -180,7 +180,7 @@
             android:gravity="start"
             android:textColor="@color/InformationLabel"
             android:textSize="20sp"
-            android:text="自我介绍"/>
+            android:text="@string/self_intro"/>
         <TextView
             android:id="@+id/selfIntroduction"
             android:layout_width="0dp"

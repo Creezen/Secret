@@ -11,20 +11,25 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
-
 import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.FileTool.isFileDownload
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class MediaElementAdapter(private val context: Context, private val parent: LifecycleOwner, val list: List<MediaItem>): RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
+class MediaElementAdapter (
+    private val context: Context,
+    private val parent: LifecycleOwner,
+    val list: List<MediaItem>
+): RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
+
+    companion object {
+        const val TAG = "MediaElementAdapter"
+    }
 
     private var progressBar: ProgressBar? = null
 
@@ -47,7 +52,7 @@ class MediaElementAdapter(private val context: Context, private val parent: Life
         holder.name.text = item.fileName
         holder.size.text = handleSizeDisplay(item.fileSize)
         holder.time.text = item.uploadTime
-        var isDownload = isFileDownload(item.fileName, item.fileSize)
+        val isDownload = isFileDownload(item.fileName, item.fileSize)
         if (isDownload) {
             holder.download.setImageResource(R.drawable.open)
         }
@@ -68,6 +73,9 @@ class MediaElementAdapter(private val context: Context, private val parent: Life
                 progressBar?.max = item.fileSize.toInt()
                 downloadFileByNet(responseStream, item.fileName) { size ->
                     progressBar?.progress = size
+                    if (size == item.fileSize.toInt()) {
+                        holder.download.setImageResource(R.drawable.open)
+                    }
                 }
             }
         }

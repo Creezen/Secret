@@ -28,4 +28,8 @@ data class UserItem (
 
     @PrimaryKey
     var id: Long=0
+
+    fun isAdministrator(): Boolean {
+        return administrator == 1
+    }
 }

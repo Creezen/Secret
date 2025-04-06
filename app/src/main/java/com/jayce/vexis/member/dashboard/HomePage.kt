@@ -27,6 +27,10 @@ import kotlinx.coroutines.launch
 
 class HomePage: BaseActivity() {
 
+    companion object {
+        const val TAG = "HomePage"
+    }
+
     private lateinit var binding: HomePageBinding
     private val userBasicInfo = UserBasicInfo()
     private val userLive = UserLive()
@@ -45,7 +49,11 @@ class HomePage: BaseActivity() {
                         buildFileMultipart(filePath, "file")
                     ).await()
                 if(result["status"] == true) {
-                    loadAvatarFromNet()
+                    val cursorTime = System.currentTimeMillis()
+                    writePrefs {
+                        it.putLong("cursorTime", cursorTime)
+                    }
+                    loadAvatarFromNet(0, cursorTime)
                 }
             }
         }
@@ -62,9 +70,9 @@ class HomePage: BaseActivity() {
         with(binding) {
             nickname.text = onlineUser.nickname
             id.text = onlineUser.userId
-//            if (onlineUser.administrator == 1) {
+            if (onlineUser.isAdministrator()) {
                 administrator.visibility = View.VISIBLE
-//            }
+            }
             replaceFragment(supportFragmentManager, R.id.page, userBasicInfo , false)
             administrator.setOnClickListener {
                 startActivity(Intent(this@HomePage, AdminActivity::class.java))
@@ -93,25 +101,24 @@ class HomePage: BaseActivity() {
                 "${BASE_FILE_PATH}head/${onlineUser.userId}.png",
                 key = AvatarSignnature(cacheKey)
             )
-            loadAvatarFromNet(300)
+            loadAvatarFromNet(300, cursorTime)
         }
     }
 
-    private fun loadAvatarFromNet(delayTime: Long = 0) {
+    private fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
+        val key = cursorTime?.let {
+            AvatarSignnature("key:$cursorTime")
+        }
         lifecycleScope.launch {
             delay(delayTime)
             val old = binding.image.drawable
-            val cursorTime = System.currentTimeMillis()
             NetTool.setImage(
                 this@HomePage,
                 binding.image,
                 "${BASE_FILE_PATH}head/${onlineUser.userId}.png",
                 old,
-                key = AvatarSignnature("key:$cursorTime"),
+                key = key
             )
-            writePrefs {
-                it.putLong("cursorTime", cursorTime)
-            }
         }
     }
 }

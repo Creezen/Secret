@@ -1,6 +1,7 @@
 package com.jayce.vexis.exchange.media
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
 import com.creezen.commontool.CreezenTool.getRandomString
@@ -21,6 +22,7 @@ class MediaUploadActivity : BaseActivity() {
 
     companion object{
         const val SPLIT = "/"
+        const val TAG = "MediaUploadActivity"
     }
 
     private var selectedFilePath: String? = null
@@ -59,6 +61,7 @@ class MediaUploadActivity : BaseActivity() {
                     "你还没选择文件哦！".toast()
                     return@setOnClickListener
                 }
+                "正在上传中，请稍等....".toast()
                 val file = File(filePath)
                 val fileID = "${getRandomString(6)}${System.currentTimeMillis()}"
                 val fileSuffix = fileName.substring(fileName.lastIndexOf("."))

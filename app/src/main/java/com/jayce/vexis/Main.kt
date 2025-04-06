@@ -3,6 +3,7 @@ package com.jayce.vexis
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.Constant
+import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.NetTool
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
@@ -34,6 +36,10 @@ import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
 class Main : BaseActivity() {
+
+    companion object {
+        const val TAG = "Main"
+    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var avatarView: ImageView
@@ -56,11 +62,21 @@ class Main : BaseActivity() {
     override fun onResume() {
         super.onResume()
         chatBadge.badgeNumber = CreezenService.getUnreadSize()
+        val avatarTimestamp = readPrefs {
+            it.getLong("cursorTime", 0)
+        }
+        NetTool.setImage(
+            this@Main,
+            avatarView,
+            "${BASE_FILE_PATH}head/${onlineUser.userId}.png",
+            key = AvatarSignnature("key:$avatarTimestamp"),
+            isCircle = true
+        )
     }
 
     private fun initPage(){
-        with(binding){
-            if (null == viewHolder){
+        with(binding) {
+            if (null == viewHolder) {
                 viewHolder = ViewHolder(Feedback(), Gadget(), HistoricalAxis(), Article())
                 root.tag = viewHolder
             } else viewHolder = root.tag as ViewHolder
@@ -85,9 +101,6 @@ class Main : BaseActivity() {
                 return@setNavigationItemSelectedListener true
             }
             navigation.setCheckedItem(R.id.MainMenuTimeline)
-            val avatarTimestamp = readPrefs {
-                it.getLong("cursorTime", 0)
-            }
             val headView = navigation.getHeaderView(0) as LinearLayout
             avatarView = headView.findViewById(R.id.avataView)
             emailView = headView.findViewById(R.id.myEmail)
@@ -117,13 +130,6 @@ class Main : BaseActivity() {
                     emailBadge.badgeNumber = 0
                 }
             })
-            NetTool.setImage(
-                this@Main,
-                avatarView,
-                "${Constant.BASE_FILE_PATH}head/${onlineUser.userId}.png",
-                key = AvatarSignnature("key:$avatarTimestamp"),
-                isCircle = true
-            )
         }
         onBackPressedDispatcher.addCallback(this, object:OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

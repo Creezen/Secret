@@ -19,6 +19,9 @@
             android:layout_weight="1"
             android:background="@drawable/corner_8"
             android:textColorHint="#D3D3D3"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            android:hint="@string/input_user_name"
             android:afterTextChanged="@{() -> baseRoot.afterChange(nameEdt)}"/>
         <ImageButton
             android:id="@+id/delBtn"

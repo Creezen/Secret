@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/add_player"
             android:scaleType="fitCenter"
-            android:background="#F5F5F5"/>
+            android:background="#F5F5F5"
+            android:importantForAccessibility="no"/>
     </LinearLayout>
 </layout>

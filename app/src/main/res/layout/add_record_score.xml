@@ -14,18 +14,21 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="+"/>
+        android:text="@string/add_symbol"/>
     <EditText
         android:id="@+id/edit"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="0"/>
+        android:text="@string/zero"
+        android:hint="@string/score"
+        android:importantForAutofill="no"
+        android:inputType="number"/>
     <Button
         android:id="@+id/sub"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="-"/>
+        android:text="@string/line"/>
 </LinearLayout>

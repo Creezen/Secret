@@ -8,5 +8,5 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="60sp"
-        android:text="这是用户的社交动态页"/>
+        android:text="@string/user_live_page_info_default"/>
 </LinearLayout>

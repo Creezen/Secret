@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -14,7 +13,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:importantForAccessibility="no"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="ID"
+                    android:text="@string/id"
                     android:gravity="center"
                     android:textSize="20sp"
                     android:textColor="#CDBC54"
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="用户管理"/>
+        android:text="@string/user_manage"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="关注"
+            android:text="@string/folllow"
             android:gravity="center"
             android:background="@color/Button"
             android:layout_marginLeft="1dp"
@@ -77,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="拉黑"
+            android:text="@string/black_list"
             android:gravity="center"
             android:background="@color/Button"
             android:layout_marginLeft="1dp"
@@ -95,7 +95,7 @@
             android:gravity="center"
             android:textSize="25sp"
             android:textColor="#BE5FD8"
-            android:text="基本信息" />
+            android:text="@string/base_info" />
         <TextView
             android:id="@+id/live"
             android:layout_width="0dp"
@@ -104,7 +104,7 @@
             android:gravity="center"
             android:textSize="25sp"
             android:textColor="#BE5FD8"
-            android:text="创作动态"/>
+            android:text="@string/creation_live"/>
     </LinearLayout>
     <FrameLayout
         android:id="@+id/page"

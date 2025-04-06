@@ -51,7 +51,8 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:paddingStart="5dp"
-                    android:paddingEnd="5dp"/>
+                    android:paddingEnd="5dp"
+                    android:inputType="text"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,7 +79,8 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:paddingStart="5dp"
-                    android:paddingEnd="5dp"/>
+                    android:paddingEnd="5dp"
+                    android:importantForAutofill="no"/>
             </LinearLayout>
             <Button
                 android:id="@+id/login"
@@ -109,7 +111,7 @@
                 android:id="@+id/quickStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="快捷跳转"/>
+                android:text="@string/quick_jump"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

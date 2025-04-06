@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="创建账户"
+            android:text="@string/create_account"
             android:textSize="40sp"
             android:textColor="#A600FF00"
             android:layout_marginBottom="16dp"/>
@@ -73,7 +73,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="账户"
+                        android:text="@string/account"
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"/>
                     <EditText
@@ -83,13 +83,15 @@
                         android:layout_weight="1"
                         android:textSize="@dimen/content"
                         android:text="@={activity.accountLiveData}"
-                        android:hint="此信息为登录凭证，请牢记..."
+                        android:hint="@string/this_message_login_id"
                         android:textColor="@{accountCode == 0 ? 0xFF00FF00 : 0xFF000000}"
                         android:textColorHint="@color/hint"
                         android:background="@drawable/corner_8"
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
-                        android:paddingStart="@dimen/margin"/>
+                        android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
+                        android:inputType="text"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/nameHintLength"
@@ -107,7 +109,8 @@
                         android:textColor="@color/hintText"
                         android:textSize="@dimen/hint"
                         android:text="@string/from_6_to_18"
-                        android:paddingStart="@dimen/margin"/>
+                        android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/nameHIntExist"
@@ -124,8 +127,9 @@
                         android:layout_weight="1"
                         android:textColor="@color/hintText"
                         android:textSize="@dimen/hint"
-                        android:text="用户名已存在，请重试"
-                        android:paddingStart="@dimen/margin"/>
+                        android:text="@string/user_name_exist"
+                        android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,7 +141,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="昵称"/>
+                        android:text="@string/nickname"/>
                     <EditText
                         android:id="@+id/nickname"
                         android:layout_width="0dp"
@@ -148,8 +152,10 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
                         android:text="@={activity.nicknameLiveData}"
-                        android:textColor="@{nickNameCode == 0 ? 0xFF00FF00 : 0xFF000000}"/>
+                        android:textColor="@{nickNameCode == 0 ? 0xFF00FF00 : 0xFF000000}"
+                        android:inputType="text"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/nicknameHintLength"
@@ -184,7 +190,7 @@
                         android:layout_weight="1"
                         android:textColor="@color/hintText"
                         android:textSize="@dimen/hint"
-                        android:text="昵称不可包含空格！"
+                        android:text="@string/nickname_no_blank"
                         android:paddingStart="@dimen/margin"/>
                 </LinearLayout>
                 <LinearLayout
@@ -197,7 +203,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="输入密码"/>
+                        android:text="@string/input_password"/>
                     <EditText
                         android:id="@+id/password"
                         android:inputType="textPassword"
@@ -209,6 +215,7 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
                         android:text="@={activity.passwordLiveData}"/>
                 </LinearLayout>
                 <LinearLayout
@@ -226,8 +233,9 @@
                         android:layout_weight="1"
                         android:textColor="@color/hintText"
                         android:textSize="@dimen/hint"
-                        android:text="密码长度为6-18位"
-                        android:paddingStart="@dimen/margin"/>
+                        android:text="@string/password_length_6_18"
+                        android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,7 +247,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="确认密码"/>
+                        android:text="@string/password_confirm"/>
                     <EditText
                         android:id="@+id/confirmPassword"
                         android:inputType="textPassword"
@@ -251,6 +259,8 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
+                        android:importantForAutofill="no"
                         android:text="@={activity.passwordConfirmLiveData}"/>
                 </LinearLayout>
                 <LinearLayout
@@ -268,8 +278,9 @@
                         android:layout_weight="1"
                         android:textColor="@color/hintText"
                         android:textSize="@dimen/hint"
-                        android:text="两次密码不一致，请修改..."
-                        android:paddingStart="@dimen/margin"/>
+                        android:text="@string/password_not_equal"
+                        android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -281,7 +292,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="生日"/>
+                        android:text="@string/birthday"/>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -326,7 +337,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="性别"/>
+                        android:text="@string/sex"/>
                     <com.jayce.vexis.widgets.DefaultSpinner
                         android:id="@+id/sex"
                         android:layout_width="0dp"
@@ -345,7 +356,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="邮件"/>
+                        android:text="@string/email"/>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -362,8 +373,11 @@
                             android:layout_marginTop="@dimen/margin"
                             android:layout_marginBottom="@dimen/margin"
                             android:paddingStart="@dimen/margin"
+                            android:paddingEnd="0dp"
                             android:layout_marginEnd="@dimen/margin"
-                            android:textColorHint="@color/hint"/>
+                            android:textColorHint="@color/hint"
+                            android:importantForAutofill="no"
+                            android:inputType="textEmailAddress"/>
                         <com.jayce.vexis.widgets.DefaultSpinner
                             android:id="@+id/emailPostfix"
                             android:layout_width="wrap_content"
@@ -387,7 +401,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="手机号"/>
+                        android:text="@string/phone_number"/>
                     <EditText
                         android:id="@+id/phone"
                         android:layout_width="0dp"
@@ -398,8 +412,11 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
                         android:textColorHint="@color/hint"
-                        android:hint="@string/choose_fill" />
+                        android:hint="@string/choose_fill"
+                        android:importantForAutofill="no"
+                        android:inputType="phone"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -412,7 +429,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center"
-                        android:text="地址"/>
+                        android:text="@string/address"/>
                     <EditText
                         android:id="@+id/address"
                         android:layout_width="0dp"
@@ -423,8 +440,11 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
                         android:textColorHint="@color/hint"
-                        android:hint="@string/choose_fill"/>
+                        android:hint="@string/choose_fill"
+                        android:importantForAutofill="no"
+                        android:inputType="none"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -437,7 +457,7 @@
                         android:textColor="@color/label"
                         android:textSize="@dimen/label"
                         android:gravity="center_horizontal"
-                        android:text="自我介绍"/>
+                        android:text="@string/self_intro"/>
                     <EditText
                         android:id="@+id/selfIntroduction"
                         android:layout_width="0dp"
@@ -448,10 +468,12 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
+                        android:paddingEnd="0dp"
                         android:textColorHint="@color/hint"
                         android:gravity="top|start"
                         android:hint="@string/choose_fill"
                         android:lines="8"
+                        android:inputType="text"
                         android:text="@={activity.introductionLiveData}"/>
                 </LinearLayout>
                 <TextView

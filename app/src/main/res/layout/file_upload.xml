@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:hint="请介绍一下你分享的资源！（必填）"
+            android:hint="@string/intro_file"
             android:gravity="top"
             android:text="@={activity.descTextLivedata}"
             android:background="@drawable/editview_border">
@@ -59,7 +59,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="使用说明"
+            android:text="@string/use_description"
             android:background="#86F3EFD8"/>
         <EditText
             android:id="@+id/illustrate"
@@ -67,13 +67,13 @@
             android:layout_height="0dp"
             android:layout_weight="6"
             android:gravity="top"
-            android:hint="给大家介绍一下你对资源的描述...（非必填）"
+            android:hint="@string/description_option"
             android:background="@drawable/editview_border"/>
         <Button
             android:id="@+id/upload"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="上传文件"/>
+            android:text="@string/upload_file"/>
     </LinearLayout>
 </layout>

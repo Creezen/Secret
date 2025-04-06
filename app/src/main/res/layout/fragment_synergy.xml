@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
     tools:context=".writing.Article"
     android:orientation="vertical">
     <LinearLayout
@@ -28,7 +27,8 @@
             android:layout_height="match_parent"
             android:src="@drawable/search"
             android:layout_marginEnd="5dp"
-            android:background="@color/TowelBlanket"/>
+            android:background="@color/TowelBlanket"
+            android:importantForAccessibility="no"/>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/paragraphRv"
@@ -40,5 +40,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/post_vector"/>
+        android:src="@drawable/post_vector"
+        android:importantForAccessibility="no"/>
 </LinearLayout>

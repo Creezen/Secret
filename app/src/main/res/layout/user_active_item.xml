@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:layout_marginBottom="5dp"
     android:background="#DCE2F1">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +25,8 @@
             android:gravity="start|top"
             android:layout_toEndOf="@+id/nickname"
             android:layout_alignParentTop="true"
-            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
             android:textSize="15sp"
             android:textColor="#cd7f32"/>
     </RelativeLayout>
