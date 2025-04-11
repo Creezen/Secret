@@ -3,7 +3,6 @@ package com.jayce.vexis
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -17,7 +16,6 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
-import com.creezen.tool.Constant
 import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.NetTool
 import com.jayce.vexis.base.BaseActivity
@@ -34,6 +32,7 @@ import com.jayce.vexis.widgets.SimpleDialog
 import com.jayce.vexis.writing.Article
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
+import java.io.File
 
 class Main : BaseActivity() {
 
@@ -72,6 +71,10 @@ class Main : BaseActivity() {
             key = AvatarSignnature("key:$avatarTimestamp"),
             isCircle = true
         )
+    }
+
+    fun aaatt() {
+        TODO("FKJHBFGH")
     }
 
     private fun initPage(){

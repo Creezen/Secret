@@ -164,4 +164,6 @@ dependencies {
     implementation("com.tencent:mmkv:2.0.2")
 
     embed("com.creezen.tool.commontool:tools:1.0.0")
+
+    lintPublish("com.creezen.tool.lint:lintTool:1.0.0@jar")
 }

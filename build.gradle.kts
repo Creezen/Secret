@@ -14,6 +14,7 @@ buildscript {
     }
     dependencies {
         classpath("com.github.aasitnikov:fat-aar-android:b2a038763c")
+        classpath("org.jsoup:jsoup:1.16.1")
     }
 }
 
