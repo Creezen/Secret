@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.UserLiveBinding
 
-class UserLive: BaseFragment() {
-
+class UserLive : BaseFragment() {
     private lateinit var binding: UserLiveBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = UserLiveBinding.inflate(inflater)
         initView()
         return binding.root

@@ -11,14 +11,14 @@ import com.jayce.vexis.gadgets.gomoku.GomokuActivity
 import com.jayce.vexis.gadgets.sheet.PokerSheet
 import com.jayce.vexis.gadgets.maze.MazeActivity
 
-class Gadget: BaseFragment() {
+class Gadget : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val binding = WidgetsBinding.inflate(inflater)
-        with(binding){
+        with(binding) {
             ledger.setOnClickListener {
                 startActivity(Intent(context, PokerSheet::class.java))
             }
@@ -32,4 +32,3 @@ class Gadget: BaseFragment() {
         return binding.root
     }
 }
-

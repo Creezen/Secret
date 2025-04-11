@@ -22,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterActivity : BaseActivity() {
-
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
     val passwordLiveData = MutableLiveData<String>()
@@ -41,19 +40,20 @@ class RegisterActivity : BaseActivity() {
         private lateinit var EMAIL_PROFIX: ArrayList<String>
     }
 
-    private lateinit var binding : AccountCreationBinding
+    private lateinit var binding: AccountCreationBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")
-        if(!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)
+        if (!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)
         EMAIL_PROFIX = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
         initView()
     }
 
-    private fun initView(){
-        with(binding){
+    private fun initView() {
+        with(binding) {
             val contextEnv = this@RegisterActivity
             lifecycleOwner = contextEnv
             activity = contextEnv
@@ -72,10 +72,11 @@ class RegisterActivity : BaseActivity() {
                     return@observe
                 }
                 accountCode = 4
-                val map = HashMap<String, String>().also { hashmap ->
-                    hashmap["type"] = "0"
-                    hashmap["name"] = it
-                }
+                val map =
+                    HashMap<String, String>().also { hashmap ->
+                        hashmap["type"] = "0"
+                        hashmap["name"] = it
+                    }
                 lifecycleScope.launch(Dispatchers.Main) {
                     val result = NetTool.create<UserService>()
                         .checkUserName(map)
@@ -113,13 +114,13 @@ class RegisterActivity : BaseActivity() {
             yearSpinner.configuration(YEAR_DATA) {
                 val item = MONTH_DATA[monthSelected]
                 val source = if(item == 2) {
-                    if(isLeapYear(YEAR_DATA[it])) {
+                    if (isLeapYear(YEAR_DATA[it])) {
                         LEAP_DAY
                     } else {
                         COMMON_DAY
                     }
                 } else {
-                    if(item in listOf(4, 6, 9, 11)) {
+                    if (item in listOf(4, 6, 9, 11)) {
                         SMALL_DAY
                     } else {
                         BIG_DAY
@@ -146,7 +147,7 @@ class RegisterActivity : BaseActivity() {
             sex.configuration(SEX)
             emailPostfix.configuration(EMAIL_PROFIX)
             register.setOnClickListener {
-                val dialog = SimpleDialog(this@RegisterActivity).apply{
+                val dialog = SimpleDialog(this@RegisterActivity).apply {
                     setTitle("提示")
                     setMessage("注册中，请稍后...")
                 }
@@ -170,7 +171,7 @@ class RegisterActivity : BaseActivity() {
                             .checkUserName(map1)
                             .await()
                         if (null != awaitResult["status"]){
-                            if(awaitResult["status"] == 2) finish()
+                            if (awaitResult["status"] == 2) finish()
                         } else dialog.dismiss()
                     } catch (e: Exception) {
                         e.message?.let { it1 -> Log.e("msg", it1) }
@@ -181,7 +182,7 @@ class RegisterActivity : BaseActivity() {
         }
     }
 
-    private fun checkLoginCondition(){
+    private fun checkLoginCondition() {
         with(binding) {
             isLoginOK = (accountCode + nickNameCode + passwordCode + passwordConfirmCode) == 0
         }

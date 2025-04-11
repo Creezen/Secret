@@ -15,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AdminActivity: BaseActivity() {
-
     private lateinit var binding: ActivityAdminBinding
     private val userList = arrayListOf<ActiveItem>()
     private val adapter by lazy {

@@ -7,7 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-
     @GET("dictionary")
     fun getDictionary(
         @Query("content") content: String,

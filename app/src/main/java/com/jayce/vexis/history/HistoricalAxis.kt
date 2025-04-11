@@ -13,7 +13,6 @@ import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.TimeLineBinding
 
 class HistoricalAxis : BaseFragment(), SwipeCallback {
-
     companion object {
         const val TAG = "HistoricalAxis"
     }
@@ -24,7 +23,11 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
 
     private var ratio: Float = -1f
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = TimeLineBinding.inflate(inflater)
         initView()
         return binding.root
@@ -41,7 +44,10 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         }
     }
 
-    override fun onPinchIn(viewId: String, scaleFactor: Float): Boolean {
+    override fun onPinchIn(
+        viewId: String,
+        scaleFactor: Float,
+    ): Boolean {
         Log.d(TAG,"onPinchIn  $viewId  $scaleFactor")
         if(viewId == "base") {
             val param = binding.center.layoutParams
@@ -58,13 +64,16 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         return super.onPinchIn(viewId, scaleFactor)
     }
 
-    override fun onPinchOut(viewId: String, scaleFactor: Float): Boolean {
+    override fun onPinchOut(
+        viewId: String,
+        scaleFactor: Float,
+    ): Boolean {
         Log.d(TAG,"onPinchOut   $viewId  $scaleFactor")
         if(viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth
             val measuredHeight = binding.center.measuredHeight
-            if(ratio < 0) {
+            if (ratio < 0) {
                 ratio = measuredWidth.toFloat() / measuredHeight.toFloat()
             }
             param.height = (measuredHeight.toFloat() * scaleFactor).toInt()

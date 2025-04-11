@@ -7,7 +7,6 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ArticleService {
-
     @POST("/postSynergy")
     @FormUrlEncoded
     fun postSynergy(@Field("paragraphs") paragraphs: List<String>) : Call<Boolean>

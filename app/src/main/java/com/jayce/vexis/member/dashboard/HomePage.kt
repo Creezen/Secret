@@ -25,8 +25,7 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HomePage: BaseActivity() {
-
+class HomePage : BaseActivity() {
     companion object {
         const val TAG = "HomePage"
     }
@@ -37,25 +36,24 @@ class HomePage: BaseActivity() {
     private var imageLauncher: ActivityResultLauncher<Array<String>>? = null
 
     override fun registerLauncher() {
-        imageLauncher = getLauncher(openFile()) {
-            if (it == null) {
-                return@getLauncher
-            }
-            val filePath = getFilePathByUri(it) ?: return@getLauncher
-            lifecycleScope.launch {
-                val result = NetTool.create<UserService>()
-                    .uploadAvatar(
-                        onlineUser.userId,
-                        buildFileMultipart(filePath, "file")
-                    ).await()
-                if(result["status"] == true) {
-                    val cursorTime = System.currentTimeMillis()
-                    writePrefs {
-                        it.putLong("cursorTime", cursorTime)
+        imageLauncher =
+            getLauncher(openFile()) {
+                if (it == null) return@getLauncher
+                val filePath = getFilePathByUri(it) ?: return@getLauncher
+                lifecycleScope.launch {
+                    val result = NetTool.create<UserService>()
+                        .uploadAvatar(
+                            onlineUser.userId,
+                            buildFileMultipart(filePath, "file")
+                        ).await()
+                    if (result["status"] == true) {
+                        val cursorTime = System.currentTimeMillis()
+                        writePrefs {
+                            it.putLong("cursorTime", cursorTime)
+                        }
+                        loadAvatarFromNet(0, cursorTime)
                     }
-                    loadAvatarFromNet(0, cursorTime)
                 }
-            }
         }
     }
 

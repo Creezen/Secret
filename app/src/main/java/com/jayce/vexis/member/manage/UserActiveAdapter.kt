@@ -12,8 +12,10 @@ import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.widgets.TrackPopupMenu
 
-class UserActiveAdapter(private val context: Context, private val userList: List<ActiveItem>): RecyclerView.Adapter<UserActiveAdapter.ViewHolder>()  {
-
+class UserActiveAdapter(
+    private val context: Context,
+    private val userList: List<ActiveItem>,
+): RecyclerView.Adapter<UserActiveAdapter.ViewHolder>()  {
     class ViewHolder(val binding: UserActiveItemBinding): RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val nickname = binding.nickname
@@ -22,21 +24,24 @@ class UserActiveAdapter(private val context: Context, private val userList: List
         val time = binding.createTime
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ViewHolder {
         val binding = UserActiveItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val item = userList[position]
         val menu by lazy {
             TrackPopupMenu(context, holder.view)
         }
         menu.setOnMenuItemClickListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.delete -> "删除${item.nickname}".toast()
                 R.id.setAdministrator -> "${item.nickname}已成为管理员".toast()
             }

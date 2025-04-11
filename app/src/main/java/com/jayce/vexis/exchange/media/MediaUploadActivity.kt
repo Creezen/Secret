@@ -78,7 +78,7 @@ class MediaUploadActivity : BaseActivity() {
                             illustrate,
                             fileSize,
                             uploadTime,
-                            filePart
+                            filePart,
                         ).await()
                         if(result["loadResult"] == true) {
                             finish()

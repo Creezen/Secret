@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class UserItem (
+data class UserItem(
     var userId: String,
     var nickname: String,
     var name: String,
@@ -25,7 +25,6 @@ data class UserItem (
     var birthday: String,
     var headType: String
 ): Parcelable {
-
     @PrimaryKey
     var id: Long=0
 
@@ -33,3 +32,4 @@ data class UserItem (
         return administrator == 1
     }
 }
+

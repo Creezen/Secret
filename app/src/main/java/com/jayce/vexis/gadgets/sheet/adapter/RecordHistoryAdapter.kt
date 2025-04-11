@@ -20,7 +20,6 @@ class RecordHistoryAdapter(
     private val list: List<RecordListItem>,
     private val owner: LifecycleOwner,
 ): RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
-
     companion object {
         const val TAG = "RecordHistoryAdapter"
     }

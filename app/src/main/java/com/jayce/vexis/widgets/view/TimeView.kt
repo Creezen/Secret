@@ -10,7 +10,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.jayce.vexis.R
 
 class TimeView(context: Context, attributeSet: AttributeSet): View(context, attributeSet) {
-
     companion object {
         const val TAG = "TimeView"
     }

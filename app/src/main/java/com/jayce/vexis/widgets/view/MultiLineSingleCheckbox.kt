@@ -13,9 +13,8 @@ import com.jayce.vexis.databinding.TextCheckBoxBinding
 
 class MultiLineSingleCheckbox(
     private val context: Context,
-    attr: AttributeSet
-): LinearLayout(context, attr) {
-
+    attr: AttributeSet,
+) : LinearLayout(context, attr) {
     private var itemOneLine: Int = 1
     private var childItemCount = 0
     private val strList = arrayListOf<String>()
@@ -30,13 +29,16 @@ class MultiLineSingleCheckbox(
     }
 
     fun selectedItem(): CheckBox? {
-        return if (previewSelected < 0) null
-            else childList[previewSelected]
+        return if (previewSelected < 0) {
+            null
+        } else {
+            childList[previewSelected]
+        }
     }
 
     fun setChildLayout(
         list: ArrayList<String>,
-        backgroundId: Int = R.drawable.checkbox_style
+        backgroundId: Int = R.drawable.checkbox_style,
     ) {
         if (isInit) return
         isInit = true
@@ -51,7 +53,10 @@ class MultiLineSingleCheckbox(
         }
     }
 
-    private fun addLayout(position: Int, backgroundId: Int?) {
+    private fun addLayout(
+        position: Int,
+        backgroundId: Int?,
+    ) {
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = HORIZONTAL
         linearLayout.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)

@@ -11,7 +11,6 @@ import com.jayce.vexis.writing.ArticleService
 import kotlinx.coroutines.launch
 
 class ParagraphActivity : BaseActivity() {
-
     private lateinit var binding: ActivityParagraphBinding
     private val paragraphList = arrayListOf<ParagraphCommandBean>()
     private var articleId: Long = -1
@@ -37,12 +36,13 @@ class ParagraphActivity : BaseActivity() {
 
     private fun initData() {
         lifecycleScope.launch {
-            val paragraphs = create<ArticleService>()
-                .getParagraphs(articleId)
-                ?.await() ?: arrayListOf()
+            val paragraphs =
+                create<ArticleService>()
+                    .getParagraphs(articleId)
+                    ?.await()
+                    ?: arrayListOf()
             paragraphList.addAll(paragraphs)
             adapter.notifyDataSetChanged()
         }
     }
-
 }

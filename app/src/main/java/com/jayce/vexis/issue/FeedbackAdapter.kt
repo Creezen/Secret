@@ -14,9 +14,8 @@ import com.jayce.vexis.onlineUser
 
 class FeedbackAdapter(
     val context: Context,
-    val feedbackItemList: List<FeedbackItem>
+    val feedbackItemList: List<FeedbackItem>,
 ): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
-
     class ViewHolder(val binding: FeedbackItemBinding): RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val head = binding.head

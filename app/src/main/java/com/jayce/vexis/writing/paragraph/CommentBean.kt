@@ -7,5 +7,5 @@ data class CommentBean(
     val commentId: Long,
     val cotent: String,
     val favor: Long,
-    val createTime: Long
+    val createTime: Long,
 )

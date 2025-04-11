@@ -10,10 +10,11 @@ import android.view.View
 import com.creezen.tool.DataTool.calculateMultiPointDistance
 import kotlin.math.abs
 import kotlin.math.absoluteValue
-import kotlin.math.sqrt
 
-class PaintView(context: Context, attributeSet: AttributeSet): View(context, attributeSet) {
-
+class PaintView(
+    context: Context,
+    attributeSet: AttributeSet,
+): View(context, attributeSet) {
     private val paint = Paint()
     private var ballX = 500f
     private var ballY = 500f
@@ -43,7 +44,7 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
             }
             MotionEvent.ACTION_UP -> {
                 pointCount --
-                if(pointCount >= 1) {
+                if (pointCount >= 1) {
                     return true
                 }
                 if(previewAction == MotionEvent.ACTION_POINTER_UP) {
@@ -54,28 +55,28 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
                 previewAction = event.actionMasked
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
-                pointCount ++
-                if(pointCount >= 2) {
+                pointCount++
+                if (pointCount >= 2) {
                     previewDistinct = calculateMultiPointDistance(event)
                 }
                 previewAction = event.actionMasked
             }
             MotionEvent.ACTION_POINTER_UP -> {
-                pointCount --
+                pointCount--
                 previewDistinct = -1f
                 previewAction = event.actionMasked
             }
             MotionEvent.ACTION_MOVE -> {
-                if(pointCount <= 1) {
+                if (pointCount <= 1) {
                     return true
                 }
                 val distanceNow = calculateMultiPointDistance(event)
-                if(abs(previewDistinct - distanceNow) < 50) {
+                if (abs(previewDistinct - distanceNow) < 50) {
                     return true
                 }
                 radis *= distanceNow/previewDistinct
-                if(radis > 800) radis = 800f
-                if(radis < 20) radis = 20f
+                if (radis > 800) radis = 800f
+                if (radis < 20) radis = 20f
                 previewDistinct = distanceNow
                 invalidate()
             }
@@ -83,12 +84,15 @@ class PaintView(context: Context, attributeSet: AttributeSet): View(context, att
         return true
     }
 
-    private fun handleClickPoint(x: Float, y: Float) {
+    private fun handleClickPoint(
+        x: Float,
+        y: Float,
+    ) {
         val horizon = x - previewX
         val vertical = y - previewY
         val absX = horizon.absoluteValue
         val absY = vertical.absoluteValue
-        if(absX >= absY) {
+        if (absX >= absY) {
             ballX += horizon * 0.5f
         } else {
             ballY += vertical * 0.5f

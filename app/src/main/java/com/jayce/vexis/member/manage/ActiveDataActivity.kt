@@ -12,10 +12,9 @@ import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.member.UserService
 import kotlinx.coroutines.launch
 
-class ActiveDataActivity: BaseActivity() {
-
+class ActiveDataActivity : BaseActivity() {
     private lateinit var binding: ActivityActiveDataBinding
-    private var activeItem : ActiveItem? = null
+    private var activeItem: ActiveItem? = null
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +39,14 @@ class ActiveDataActivity: BaseActivity() {
                 fans.text = "${it.fans}"
                 post.text = "${it.post}"
                 setAdministrator.setOnClickListener {
-                    lifecycleScope.launch{
+                    lifecycleScope.launch {
                         activeItem?.let {
                            manageUser(1, it.userID)
                         }
                     }
                 }
                 delete.setOnClickListener {
-                    lifecycleScope.launch{
+                    lifecycleScope.launch {
                         activeItem?.let {
                             manageUser(2, it.userID)
                         }

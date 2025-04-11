@@ -8,8 +8,10 @@ import com.bumptech.glide.Glide
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.HomePagePicLayoutBinding
 
-class HomePagePicAdapter(private val context: Context, private val list: List<String>) : RecyclerView.Adapter<HomePagePicAdapter.ViewHolder>(){
-
+class HomePagePicAdapter(
+    private val context: Context,
+    private val list: List<String>
+) : RecyclerView.Adapter<HomePagePicAdapter.ViewHolder>(){
     class ViewHolder(val binding: HomePagePicLayoutBinding): RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.view
     }

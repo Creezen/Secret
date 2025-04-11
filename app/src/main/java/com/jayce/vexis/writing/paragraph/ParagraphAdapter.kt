@@ -26,32 +26,36 @@ class ParagraphAdapter(
     private val list = arrayListOf(
         "富强", "民主", "文明", "和谐",
         "自由", "平等", "公正", "法治",
-        "爱国", "敬业", "诚信", "友善"
+        "爱国", "敬业", "诚信", "友善",
     )
 
     private val dialog by lazy {
         CustomDialog(
             context,
-            AddCommentLayoutBinding.inflate(activity.layoutInflater)
+            AddCommentLayoutBinding.inflate(activity.layoutInflater),
         ).apply {
             setTitle("留言")
             viewBinding.singleSelect.setChildLayout(list)
         }
     }
 
-    class ViewHolder(val binding: ParagraphItemLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ParagraphItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val paragraph = binding.content
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
+        val binding =
+            ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
         holder.paragraph.setOnLongClickListener {
-            it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen))
+            it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen, null))
             showCommentDialog(position, it)
             true
         }

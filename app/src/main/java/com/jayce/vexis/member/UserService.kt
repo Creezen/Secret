@@ -11,25 +11,22 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface UserService {
-
     @POST("register")
     @FormUrlEncoded
-    fun checkUserName(
-        @FieldMap requestUser: Map<String, String>
-    ) : Call<LinkedTreeMap<String,Int>>
+    fun checkUserName(@FieldMap requestUser: Map<String, String>) : Call<LinkedTreeMap<String,Int>>
 
     @POST("/login")
     @FormUrlEncoded
     fun loginSystem(
         @Field("unique") unique: String,
-        @Field("password") password: String
+        @Field("password") password: String,
     ): Call<LinkedTreeMap<String,String>>
 
     @POST("/postAvatar")
     @Multipart
     fun uploadAvatar(
         @Part("userID") userId: String,
-        @Part filePart: MultipartBody.Part
+        @Part filePart: MultipartBody.Part,
     ): Call<LinkedTreeMap<String, Boolean>>
 
     @POST("/getAllUser")
@@ -39,6 +36,6 @@ interface UserService {
     @FormUrlEncoded
     fun manageUser(
         @Field("operation") operation: Int,
-        @Field("userId") userId: String
+        @Field("userId") userId: String,
     ): Call<LinkedTreeMap<String, Boolean>>
 }

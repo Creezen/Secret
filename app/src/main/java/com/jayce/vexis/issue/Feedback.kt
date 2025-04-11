@@ -14,7 +14,6 @@ import com.jayce.vexis.base.BaseFragment
 import kotlinx.coroutines.launch
 
 class Feedback: BaseFragment() {
-
     private lateinit var binding: ActivityFeedbackBinding
     private val feedbackItemList = arrayListOf<FeedbackItem>()
     private val feedbackAdapter by lazy {
@@ -33,7 +32,7 @@ class Feedback: BaseFragment() {
     }
 
     private fun initView() {
-        with(binding){
+        with (binding){
             floatingBtn.setOnClickListener {
                 startActivity(Intent(activity, FeedbackEditActivity::class.java))
             }

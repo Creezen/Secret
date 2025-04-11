@@ -72,7 +72,7 @@ class Login : AppCompatActivity() {
         binding.login.startAnimation(animation)
     }
 
-    private fun initView(){
+    private fun initView() {
         with(binding){
             lifecycleOwner = this@Login
             env = this@Login
@@ -89,38 +89,43 @@ class Login : AppCompatActivity() {
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
                 val intent = Intent(this@Login, RegisterActivity::class.java)
-                intent.putExtra("intentAccount",name.msg())
+                intent.putExtra("intentAccount", name.msg())
                 startActivity(intent)
             }
             login.setOnClickListener {
                 login.isClickable = false
                 playShortSound(R.raw.click)
-                workInDispatch(this@Login,  2000L, Dispatchers.Main, object : LifecycleJob{
-                    override suspend fun onDispatch() {
-                        val loginResult = NetTool.create<UserService>()
-                            .loginSystem(name.msg(), password.msg())
-                            .await()
-                        if (!loginResult.containsKey("status")) {
-                            onlineUser = loginResult.map2pojo()
-                            val socket = lifecycleScope.async(Dispatchers.IO) {
-                                Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                            }.await()
-                            setOnlineSocket(socket)
-                            startActivity(Intent(this@Login, Main::class.java))
-                        } else {
-                            val status = loginResult["status"]?.toInt()
-                            if (status == 0) {
-                                "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
+                workInDispatch(
+                    this@Login,
+                    2000L,
+                    Dispatchers.Main,
+                    object : LifecycleJob{
+                        override suspend fun onDispatch() {
+                            val loginResult = NetTool.create<UserService>()
+                                .loginSystem(name.msg(), password.msg())
+                                .await()
+                            if (!loginResult.containsKey("status")) {
+                                onlineUser = loginResult.map2pojo()
+                                val socket = lifecycleScope.async(Dispatchers.IO) {
+                                    Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                                }.await()
+                                setOnlineSocket(socket)
+                                startActivity(Intent(this@Login, Main::class.java))
                             } else {
-                                "账号或密码错误，请检查后再次尝试！".toast()
+                                val status = loginResult["status"]?.toInt()
+                                if (status == 0) {
+                                    "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
+                                } else {
+                                    "账号或密码错误，请检查后再次尝试！".toast()
+                                }
                             }
                         }
-                    }
 
-                    override fun onTimeoutFinish(isWorkFinished: Boolean) {
-                        login.isClickable = true
+                        override fun onTimeoutFinish(isWorkFinished: Boolean) {
+                            login.isClickable = true
+                        }
                     }
-                })
+                )
             }
             quickStart.setOnClickListener {
                 val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")

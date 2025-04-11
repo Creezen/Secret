@@ -14,7 +14,7 @@ class TrackPopupMenu(context: Context, private val view: View): PopupMenu(contex
     private var clickY: Int = 0
 
     init {
-        view.setOnTouchListener { v, event ->
+        view.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_DOWN) {
                 clickX = event.x.toInt()
                 clickY = event.y.toInt()

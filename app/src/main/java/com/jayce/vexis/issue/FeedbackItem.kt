@@ -9,5 +9,5 @@ data class FeedbackItem(
     val content: String,
     val createTime: Long,
     val support: Long,
-    val against: Long
+    val against: Long,
 )

@@ -11,7 +11,6 @@ import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 
 class Senior: BaseFragment() {
-
     private val primaryList = getPrimarySubjectList()
     private val secondaryList = getSecondSubjectList()
     private val tertiaryList = getTertiarySubjectList()

@@ -15,14 +15,17 @@ import com.jayce.vexis.databinding.FragmentSynergyBinding
 import kotlinx.coroutines.launch
 
 class Article: BaseFragment() {
-
     private lateinit var binding: FragmentSynergyBinding
     private val list = arrayListOf<ArticleBean>()
     private val adapter by lazy {
         ArticleAdapter(requireActivity(), list)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentSynergyBinding.inflate(inflater)
         initView()
         initData()
@@ -53,5 +56,4 @@ class Article: BaseFragment() {
             adapter.notifyDataSetChanged()
         }
     }
-
 }

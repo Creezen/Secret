@@ -7,14 +7,15 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface FeedbackService {
-
     @POST("/sendFeedback")
     @FormUrlEncoded
-    fun sendFeedback(@Field("userID") userID: String,
-                     @Field("title") title: String,
-                     @Field("content") content: String
+    fun sendFeedback(
+        @Field("userID") userID: String,
+        @Field("title") title: String,
+        @Field("content") content: String,
     ): Call<Boolean>
 
     @GET("/getFeedback")
     fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackItem>>>
 }
+

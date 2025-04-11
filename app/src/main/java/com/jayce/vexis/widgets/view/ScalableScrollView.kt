@@ -9,7 +9,6 @@ import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 
 class ScalableScrollView(context: Context, attr: AttributeSet): ScrollView(context, attr), SwipeCallback {
-
     private val handle by lazy {
         ClickHandle(ClickHandle.Mode.INTERCEPT)
     }
@@ -20,18 +19,24 @@ class ScalableScrollView(context: Context, attr: AttributeSet): ScrollView(conte
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         var flag = false
-        if(computeVerticalScrollRange() <= height) return false
+        if (computeVerticalScrollRange() <= height) return false
         ev?.let {
             flag = handle.handleViewClick("scale", ev, this@ScalableScrollView)
         }
         return super.onInterceptTouchEvent(ev) && flag
     }
 
-    override fun onPinchIn(viewId: String, scaleFactor: Float): Boolean {
+    override fun onPinchIn(
+        viewId: String,
+        scaleFactor: Float
+    ): Boolean {
         return false
     }
 
-    override fun onPinchOut(viewId: String, scaleFactor: Float): Boolean {
+    override fun onPinchOut(
+        viewId: String,
+        scaleFactor: Float
+    ): Boolean {
         return false
     }
 }

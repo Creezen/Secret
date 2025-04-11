@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
 class ScoreBoard : AppCompatActivity() {
-
     companion object {
         const val WIDTH = 180
         const val HEIGHT = 180
@@ -87,7 +86,7 @@ class ScoreBoard : AppCompatActivity() {
                     AddRecordUserBinding.inflate(layoutInflater)
                 ).apply{
                     setTitle("添加角色")
-                    setCustomLeftButton{ binding, _ ->
+                    setCustomLeftButton{ _, _ ->
                         dismiss()
                     }
                     setCustomRightButton("添加") { bind, _ ->
@@ -146,7 +145,7 @@ class ScoreBoard : AppCompatActivity() {
                 playerNameSV.scrollTo(i, i2)
                 totalScoreSV.scrollTo(i, i2)
             }
-            rv.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            rv.setOnScrollChangeListener { _, _, _, oldScrollX, oldScrollY ->
                 val scX = roundNumRV.scrollX
                 val scY = roundNumRV.scrollY
                 roundNumRV.scrollTo(scX - oldScrollX, scY - oldScrollY)
@@ -180,7 +179,7 @@ class ScoreBoard : AppCompatActivity() {
                 val roundScore = value.scores
                 roundScore.forEachIndexed { i, v ->
                     scoreStr.append(v)
-                    if(i != roundScore.size - 1) {
+                    if (i != roundScore.size - 1) {
                         scoreStr.append("$")
                     }
                 }

@@ -11,7 +11,6 @@ import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 import com.jayce.vexis.gadgets.sheet.PokerSheet.Companion.INIT_USER_COUNT
 
 class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(context, attr) {
-
     var binding: PocketUsernameItemLayoutBinding
     private var position: Int = 0
     private var func: ((Int, String)-> Unit)? = null
@@ -20,12 +19,12 @@ class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(
         binding = PocketUsernameItemLayoutBinding.inflate(
             LayoutInflater.from(context),
             this,
-            true
+            true,
         )
         binding.baseRoot = this
     }
 
-    fun setOnButtonClick(function:(View, Int) -> Unit){
+    fun setOnButtonClick(function: (View, Int) -> Unit) {
         binding.delBtn.setOnClickListener {
             function(it, position)
         }
@@ -45,5 +44,4 @@ class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(
             binding.delBtn.visibility = View.INVISIBLE
         } 
     }
-
 }

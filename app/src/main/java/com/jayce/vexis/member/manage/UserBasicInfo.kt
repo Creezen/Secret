@@ -8,10 +8,14 @@ import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.onlineUser
 import com.jayce.vexis.databinding.UserBasicInfoBinding
 
-class UserBasicInfo: BaseFragment() {
+class UserBasicInfo : BaseFragment() {
     private lateinit var binding: UserBasicInfoBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = UserBasicInfoBinding.inflate(inflater)
         initView()
         return binding.root
@@ -33,5 +37,4 @@ class UserBasicInfo: BaseFragment() {
             }
         }
     }
-
 }

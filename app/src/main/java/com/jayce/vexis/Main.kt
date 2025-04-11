@@ -32,10 +32,8 @@ import com.jayce.vexis.widgets.SimpleDialog
 import com.jayce.vexis.writing.Article
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
-import java.io.File
 
 class Main : BaseActivity() {
-
     companion object {
         const val TAG = "Main"
     }
@@ -47,11 +45,12 @@ class Main : BaseActivity() {
     private lateinit var emailBadge: Badge
     private lateinit var chatBadge: Badge
     private var viewHolder: ViewHolder? = null
+
     inner class ViewHolder(
         val feedback: Feedback,
         val gadget: Gadget,
         val historicalAxis: HistoricalAxis,
-        val article: Article
+        val article: Article,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,11 +76,7 @@ class Main : BaseActivity() {
         )
     }
 
-    fun aaatt() {
-        TODO("FKJHBFGH")
-    }
-
-    private fun initPage(){
+    private fun initPage() {
         with(binding) {
             if (null == viewHolder) {
                 viewHolder = ViewHolder(Feedback(), Gadget(), HistoricalAxis(), Article())
@@ -139,20 +134,20 @@ class Main : BaseActivity() {
             })
         }
         onBackPressedDispatcher.addCallback(this, object:OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    SimpleDialog(this@Main).apply {
-                        setTitle("消息提醒")
-                        setMessage("确定退出吗？")
-                        setLeftButton("点错了"){ _, dialog ->
-                            dialog.dismiss()
-                        }
-                        setRightButton("退出"){ _, _ ->
-                            dismiss()
-                            finishAll()
-                        }
-                        show()
+            override fun handleOnBackPressed() {
+                SimpleDialog(this@Main).apply {
+                    setTitle("消息提醒")
+                    setMessage("确定退出吗？")
+                    setLeftButton("点错了"){ _, dialog ->
+                        dialog.dismiss()
                     }
+                    setRightButton("退出"){ _, _ ->
+                        dismiss()
+                        finishAll()
+                    }
+                    show()
                 }
+            }
             }
         )
     }

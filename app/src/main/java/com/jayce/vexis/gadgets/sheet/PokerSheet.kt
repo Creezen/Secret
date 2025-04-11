@@ -9,8 +9,7 @@ import com.jayce.vexis.databinding.PocketMainBinding
 import com.jayce.vexis.widgets.CustomDialog
 import com.jayce.vexis.widgets.SimpleDialog
 
-class PokerSheet: BaseActivity() {
-
+class PokerSheet : BaseActivity() {
     private lateinit var binding: PocketMainBinding
     private lateinit var userBinding: AddPocketRecordLayoutBinding
     private val userList = ArrayList<String>()
@@ -32,7 +31,7 @@ class PokerSheet: BaseActivity() {
             create.setOnClickListener {
                 CustomDialog(
                     this@PokerSheet,
-                    AddPocketRecordLayoutBinding.inflate(layoutInflater)
+                    AddPocketRecordLayoutBinding.inflate(layoutInflater),
                 ).apply {
                     setVisible(SimpleDialog.TITLE_INVISIBLE)
                     userBinding = this.viewBinding
