@@ -1,7 +1,6 @@
 package com.jayce.vexis.exchange.media
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
 import com.creezen.commontool.CreezenTool.getRandomString
@@ -19,8 +18,7 @@ import com.jayce.vexis.databinding.FileUploadBinding
 import java.io.File
 
 class MediaUploadActivity : BaseActivity() {
-
-    companion object{
+    companion object {
         const val SPLIT = "/"
         const val TAG = "MediaUploadActivity"
     }
@@ -73,8 +71,14 @@ class MediaUploadActivity : BaseActivity() {
                     override suspend fun onDispatch() {
                         val filePart = buildFileMultipart(filePath, "file")
                         val result = NetTool.create<MediaService>().uploadFile(
-                            fileName, fileID, fileSuffix, description,
-                            illustrate, fileSize, uploadTime, filePart
+                            fileName,
+                            fileID,
+                            fileSuffix,
+                            description,
+                            illustrate,
+                            fileSize,
+                            uploadTime,
+                            filePart
                         ).await()
                         if(result["loadResult"] == true) {
                             finish()

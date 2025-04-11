@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class RecordHistoryAdapter(
     private val context: Context,
     private val list: List<RecordListItem>,
-    private val owner: LifecycleOwner
+    private val owner: LifecycleOwner,
 ): RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
 
     companion object {

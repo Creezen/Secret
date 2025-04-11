@@ -1,10 +1,8 @@
 package com.jayce.vexis
 
-import q.rorbin.badgeview.QBadgeView
-
-
+fun main() {}
 //
-//private fun threatFunction() {
+// private fun threatFunction() {
 //    val handleThread = HandlerThread("gfh")
 //    handleThread.start()
 //    val handle = Handler(handleThread.looper) { msg ->
@@ -25,11 +23,11 @@ import q.rorbin.badgeview.QBadgeView
 //        Log.d(CreezenService.TAG,"pinyin: $it")
 //    }
 //    messenger.send(msg)
-//}
+// }
 //
-//private val runnable = Runnable {
+// private val runnable = Runnable {
 //    Log.d(CreezenService.TAG,"dgfdgff")
-//}
+// }
 
 //    private fun test() {
 //        val a = binding.longText

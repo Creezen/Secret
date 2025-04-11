@@ -11,30 +11,38 @@ import com.jayce.vexis.databinding.ParentNodeLayoutBinding
 class MediaDetailAdapter(
     private val context: Context,
     private val parentList: List<String>,
-    private val childList: List<List<String>>
+    private val childList: List<List<String>>,
 ) : BaseExpandableListAdapter(){
-
     override fun getGroupCount() = parentList.size
 
     override fun getChildrenCount(groupPosition: Int) = childList[groupPosition].size
 
     override fun getGroup(groupPosition: Int) = parentList[groupPosition]
 
-    override fun getChild(groupPosition: Int, childPosition: Int) = childList[groupPosition][childPosition]
+    override fun getChild(
+        groupPosition: Int,
+        childPosition: Int,
+    ) = childList[groupPosition][childPosition]
 
     override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
-    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
+    override fun getChildId(
+        groupPosition: Int,
+        childPosition: Int,
+    ) = childPosition.toLong()
 
     override fun hasStableIds() = true
 
-    override fun isChildSelectable(groupPosition: Int, childPosition: Int) = true
+    override fun isChildSelectable(
+        groupPosition: Int,
+        childPosition: Int
+    ) = true
 
     override fun getGroupView(
         groupPosition: Int,
         isExpanded: Boolean,
         convertView: View?,
-        parent: ViewGroup?
+        parent: ViewGroup?,
     ): View {
         val binding: ParentNodeLayoutBinding
         var view = convertView
@@ -54,7 +62,7 @@ class MediaDetailAdapter(
         childPosition: Int,
         isLastChild: Boolean,
         convertView: View?,
-        parent: ViewGroup?
+        parent: ViewGroup?,
     ): View {
         val binding: ChildNodeLayoutBinding
         var view = convertView
@@ -69,5 +77,5 @@ class MediaDetailAdapter(
         return view
     }
 
-    //todo SpannableStringBuilder
+    // todo SpannableStringBuilder
 }

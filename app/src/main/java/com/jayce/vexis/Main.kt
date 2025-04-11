@@ -47,8 +47,12 @@ class Main : BaseActivity() {
     private lateinit var emailBadge: Badge
     private lateinit var chatBadge: Badge
     private var viewHolder: ViewHolder? = null
-    inner class ViewHolder(val feedback: Feedback, val gadget: Gadget,
-                           val historicalAxis: HistoricalAxis, val article: Article)
+    inner class ViewHolder(
+        val feedback: Feedback,
+        val gadget: Gadget,
+        val historicalAxis: HistoricalAxis,
+        val article: Article
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,21 +139,22 @@ class Main : BaseActivity() {
             })
         }
         onBackPressedDispatcher.addCallback(this, object:OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                SimpleDialog(this@Main).apply {
-                    setTitle("消息提醒")
-                    setMessage("确定退出吗？")
-                    setLeftButton("点错了"){ _, dialog ->
-                        dialog.dismiss()
+                override fun handleOnBackPressed() {
+                    SimpleDialog(this@Main).apply {
+                        setTitle("消息提醒")
+                        setMessage("确定退出吗？")
+                        setLeftButton("点错了"){ _, dialog ->
+                            dialog.dismiss()
+                        }
+                        setRightButton("退出"){ _, _ ->
+                            dismiss()
+                            finishAll()
+                        }
+                        show()
                     }
-                    setRightButton("退出"){ _, _ ->
-                        dismiss()
-                        finishAll()
-                    }
-                    show()
                 }
             }
-        })
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

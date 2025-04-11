@@ -11,7 +11,6 @@ import retrofit2.http.Path
 import retrofit2.http.Streaming
 
 interface MediaService {
-
     @POST("/fileUpload")
     @Multipart
     fun uploadFile(

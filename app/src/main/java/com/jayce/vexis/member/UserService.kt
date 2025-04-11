@@ -14,14 +14,16 @@ interface UserService {
 
     @POST("register")
     @FormUrlEncoded
-    fun checkUserName(@FieldMap requestUser: Map<String,String>) : Call<LinkedTreeMap<String,Int>>
+    fun checkUserName(
+        @FieldMap requestUser: Map<String, String>
+    ) : Call<LinkedTreeMap<String,Int>>
 
     @POST("/login")
     @FormUrlEncoded
     fun loginSystem(
         @Field("unique") unique: String,
         @Field("password") password: String
-    ) : Call<LinkedTreeMap<String,String>>
+    ): Call<LinkedTreeMap<String,String>>
 
     @POST("/postAvatar")
     @Multipart

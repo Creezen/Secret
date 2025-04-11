@@ -9,7 +9,7 @@ plugins {
     id("kotlin-parcelize")
     id("kotlin-kapt")
     id("maven-publish")
-    id ("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
 repositories {
@@ -37,7 +37,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -55,7 +55,7 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         dataBinding = true
     }
@@ -95,11 +95,12 @@ tasks.register<DefaultTask>("kt-lint") {
                 body { font-family: 'Source Code Pro', monospace; }
                 h3 { font-size: 12pt; }
             </style>
-            """.trimIndent()
+            """.trimIndent(),
         )
 
         val body = mergedDoc.body().apply {
-            appendElement("h1").text("Merged Ktlint Report")
+            appendElement("h1")
+                .text("Merged Ktlint Report")
         }
 
         var totalIssues = 0
@@ -136,20 +137,22 @@ tasks.register<DefaultTask>("kt-lint") {
         )
 
         val mergedContent = body.outerHtml()
-        if (mergedContent.contains("<h3>"))
+        if (mergedContent.contains("<h3>")) {
             outputFile.writeText(mergedContent)
+        }
     }
 }
 
 tasks.register("mergeReports") {
     group = "verification"
 
-    dependsOn("lint", "kt-lint").doLast{
+    dependsOn("lint", "kt-lint").doLast {
         delete("$buildDir/reports/ktlint")
         val file = fileTree("$buildDir/reports/")
         file.forEach {
-            println(it.name)
-            if(it.name.contains("lint-result")) delete(it)
+            if (it.name.contains("lint-result")) {
+                delete(it)
+            }
         }
     }
 
@@ -162,9 +165,9 @@ tasks.register("mergeReports") {
         val lintDoc = Jsoup.parse(file("$buildDir/reports/combined/lint-report.html").readText())
 
         lintDoc.body()
-                .select("main.mdl-layout__content div.mdl-layout__tab-panel.is-active")
-                .first()
-                ?.append(ktlintDoc.body().html())
+            .select("main.mdl-layout__content div.mdl-layout__tab-panel.is-active")
+            .first()
+            ?.append(ktlintDoc.body().html())
 
         // 保存合并后的文件
         mergedReport.writeText(lintDoc.html())
@@ -178,18 +181,18 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    implementation ("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-runtime:2.5.2")
     kapt ("androidx.room:room-compiler:2.5.2")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 
-    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 
-    implementation ("com.alibaba:fastjson:2.0.40")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    implementation("com.alibaba:fastjson:2.0.40")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
-    implementation ("com.github.stuxuhai:jpinyin:1.1.7")
+    implementation("com.github.stuxuhai:jpinyin:1.1.7")
 
     implementation("q.rorbin:badgeview:1.1.3")
 

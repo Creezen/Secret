@@ -73,13 +73,13 @@ class HomePage: BaseActivity() {
             if (onlineUser.isAdministrator()) {
                 administrator.visibility = View.VISIBLE
             }
-            replaceFragment(supportFragmentManager, R.id.page, userBasicInfo , false)
+            replaceFragment(supportFragmentManager, R.id.page, userBasicInfo, false)
             administrator.setOnClickListener {
                 startActivity(Intent(this@HomePage, AdminActivity::class.java))
             }
             info.setOnClickListener {
                 if (userBasicInfo.isVisible.not()) {
-                    replaceFragment(supportFragmentManager, R.id.page, userBasicInfo , false)
+                    replaceFragment(supportFragmentManager, R.id.page, userBasicInfo, false)
                 }
             }
             live.setOnClickListener {
@@ -88,7 +88,7 @@ class HomePage: BaseActivity() {
                 }
             }
             image.setOnClickListener {
-                Log.e("HomePage.initPage","click image")
+                Log.e("HomePage.initPage", "click image")
                 imageLauncher?.launch(arrayOf("image/*"))
             }
             val cursorTime = readPrefs {

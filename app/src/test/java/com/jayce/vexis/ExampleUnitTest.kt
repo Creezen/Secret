@@ -1,7 +1,6 @@
 package com.jayce.vexis
 
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**

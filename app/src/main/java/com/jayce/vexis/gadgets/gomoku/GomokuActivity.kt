@@ -5,7 +5,6 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityGomokuBinding
 
 class GomokuActivity : BaseActivity() {
-
     private lateinit var binding: ActivityGomokuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,5 +19,4 @@ class GomokuActivity : BaseActivity() {
 
         }
     }
-
 }

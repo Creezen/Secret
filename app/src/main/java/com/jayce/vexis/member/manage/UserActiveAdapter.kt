@@ -27,7 +27,10 @@ class UserActiveAdapter(private val context: Context, private val userList: List
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int
+    ) {
         val item = userList[position]
         val menu by lazy {
             TrackPopupMenu(context, holder.view)

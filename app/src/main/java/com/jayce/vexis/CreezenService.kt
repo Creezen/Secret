@@ -23,29 +23,28 @@ import kotlinx.coroutines.SupervisorJob
 import java.util.concurrent.LinkedBlockingQueue
 
 class CreezenService : Service() {
+    companion object {
+        const val TAG = "CreezenService"
+        const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
+        const val CACHE_MESSAGE = "CACHE_MESSAGE"
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        private val chatQueue = LinkedBlockingQueue<ChatItem>()
+        private val backupList = ArrayList<ChatItem>()
 
-   companion object {
-       const val TAG = "CreezenService"
-       const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
-       const val CACHE_MESSAGE = "CACHE_MESSAGE"
-       val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-       private val chatQueue = LinkedBlockingQueue<ChatItem>()
-       private val backupList = ArrayList<ChatItem>()
+        fun getUnreadSize(): Int {
+            return chatQueue.size
+        }
 
-       fun getUnreadSize(): Int {
-           return chatQueue.size
-       }
+        fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
+            block.invoke(chatQueue)
+        }
 
-       fun getChatMessage(block: (LinkedBlockingQueue<ChatItem>) -> Unit) {
-           block.invoke(chatQueue)
-       }
+        fun sendFinish() {
+            chatQueue.put(ChatItem("", "", ""))
+        }
 
-       fun sendFinish() {
-           chatQueue.put(ChatItem("", "", ""))
-       }
-
-       fun getBackupContent() = backupList
-   }
+        fun getBackupContent() = backupList
+    }
 
     override fun onCreate() {
         Log.d(TAG,"onCreate")
@@ -55,7 +54,7 @@ class CreezenService : Service() {
         notifySocket()
     }
 
-    private fun initData()  {
+    private fun initData() {
         val data = readPrefs {
             it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
         }

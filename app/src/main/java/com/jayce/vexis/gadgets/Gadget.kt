@@ -12,7 +12,11 @@ import com.jayce.vexis.gadgets.sheet.PokerSheet
 import com.jayce.vexis.gadgets.maze.MazeActivity
 
 class Gadget: BaseFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = WidgetsBinding.inflate(inflater)
         with(binding){
             ledger.setOnClickListener {
@@ -28,3 +32,4 @@ class Gadget: BaseFragment() {
         return binding.root
     }
 }
+

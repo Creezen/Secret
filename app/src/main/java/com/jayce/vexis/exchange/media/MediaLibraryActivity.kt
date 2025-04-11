@@ -24,7 +24,6 @@ import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MediaLibraryActivity : BaseFragment() {
-
     private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
     private val resItemList = ArrayList<MediaItem>()

@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
-import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.base.BaseActivity

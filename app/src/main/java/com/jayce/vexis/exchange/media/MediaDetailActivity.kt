@@ -8,8 +8,7 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class MediaDetailActivity: BaseActivity() {
-
+class MediaDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityFileDetailBinding
     private lateinit var fileItem: MediaItem
     private val parentNode by lazy {
@@ -27,7 +26,7 @@ class MediaDetailActivity: BaseActivity() {
         binding = ActivityFileDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fileItem = intent.getParcelableExtra("fileInfo", MediaItem::class.java) ?: return
-        Log.e("MediaDetailActivity.onCreate","$fileItem")
+        Log.e("MediaDetailActivity.onCreate", "$fileItem")
         initView()
         initData()
     }

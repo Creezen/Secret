@@ -12,8 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ChatActivity: BaseActivity() {
-
+class ChatActivity : BaseActivity() {
     companion object {
         const val TAG = "ChatActivity"
         private val itemList = arrayListOf<ChatItem>()
@@ -43,7 +42,7 @@ class ChatActivity: BaseActivity() {
             adapter.notifyItemRangeInserted(afterSize - dataSize, dataSize)
             binding.message.scrollToPosition(afterSize - 1)
             scope.launch {
-                while(true) {
+                while (true) {
                     val msg = it.take()
                     if (msg.msg.isEmpty()) break
                     itemList.add(msg)
@@ -63,7 +62,7 @@ class ChatActivity: BaseActivity() {
             message.adapter = adapter
             send.setOnClickListener {
                 val content = edit.msg(true)
-                if(content.isEmpty()) {
+                if (content.isEmpty()) {
                     return@setOnClickListener
                 }
                 sendChatMessage(CreezenService.scope, edit.msg(true))

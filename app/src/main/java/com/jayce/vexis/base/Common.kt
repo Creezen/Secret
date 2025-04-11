@@ -8,8 +8,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 
-interface Common: ActivityResultCaller {
-
+interface Common : ActivityResultCaller {
     fun openFile(): ActivityResultContract<Array<String>, Uri?> {
         return ActivityResultContracts.OpenDocument()
     }
@@ -24,7 +23,7 @@ interface Common: ActivityResultCaller {
 
     fun <I, O> getLauncher(
         contract: ActivityResultContract<I, O>,
-        action: (O) -> Unit
+        action: (O) -> Unit,
     ): ActivityResultLauncher<I> {
         return registerForActivityResult(contract) {
             action(it)

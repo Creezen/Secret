@@ -86,7 +86,7 @@ class PokerSheet: BaseActivity() {
         })
     }
 
-    private fun refreshItem(startIndex: Int){
+    private fun refreshItem(startIndex: Int) {
         with(userBinding.itemLayout) {
             for (index in 0 until childCount) {
                 if (index < startIndex) {

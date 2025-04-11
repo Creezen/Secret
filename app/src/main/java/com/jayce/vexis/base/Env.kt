@@ -10,19 +10,19 @@ import com.creezen.tool.Constant.BROAD_LOGOUT
 import com.creezen.tool.Constant.BROAD_NOTIFY
 import com.jayce.vexis.GlobalReceiver
 
-class Env: Application() {
-
+class Env : Application() {
     companion object {
         const val TAG = "Env"
     }
-    
+
     private val globalReceiver = GlobalReceiver()
 
-    private val filter = IntentFilter().apply {
-        addAction(BROAD_LOGOUT)
-        addAction(BROAD_NOTIFY)
-        addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
-    }
+    private val filter = IntentFilter()
+        .apply {
+            addAction(BROAD_LOGOUT)
+            addAction(BROAD_NOTIFY)
+            addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+        }
 
     override fun onCreate() {
         super.onCreate()

@@ -7,7 +7,6 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityMazeBinding
 
 class MazeActivity : BaseActivity() {
-
     private lateinit var binding: ActivityMazeBinding
     private var startTime: Long = 0
 
@@ -40,5 +39,4 @@ class MazeActivity : BaseActivity() {
             })
         }
     }
-
 }

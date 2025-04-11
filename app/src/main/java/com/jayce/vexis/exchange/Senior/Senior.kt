@@ -25,19 +25,19 @@ class Senior: BaseFragment() {
     }
 
     private fun initView(){
-        with(binding){
-            primary.configuration(primaryList){
+        with(binding) {
+            primary.configuration(primaryList) {
                 secondary.refreshData(secondaryList[primary.selectedItemPosition])
                 tertiary.refreshData(tertiaryList[primary.selectedItemPosition][0])
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }
-            secondary.configuration(secondaryList[0]){
+            secondary.configuration(secondaryList[0]) {
                 tertiary.refreshData(tertiaryList[primary.selectedItemPosition][it])
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }
-            tertiary.configuration(tertiaryList[0][0]){
+            tertiary.configuration(tertiaryList[0][0]) {
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }

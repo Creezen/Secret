@@ -8,7 +8,6 @@ import com.jayce.vexis.gadgets.sheet.bean.ScoreBean
 
 @Dao
 interface RecordDao {
-
     @Insert
     fun insertRecord(recordItemBean: RecordItemBean): Long
 
@@ -16,8 +15,8 @@ interface RecordDao {
     fun insertScore(scoreBean: ScoreBean)
 
     @Query("select * from RecordItemBean")
-    fun getRecordList() : List<RecordItemBean>
+    fun getRecordList(): List<RecordItemBean>
 
     @Query("select * from ScoreBean where recordId = :id")
-    fun getScoreList(id: Long) : ScoreBean
+    fun getScoreList(id: Long): ScoreBean
 }

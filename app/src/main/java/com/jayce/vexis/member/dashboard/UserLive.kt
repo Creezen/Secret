@@ -18,5 +18,4 @@ class UserLive: BaseFragment() {
     }
 
     private fun initView() {}
-
 }

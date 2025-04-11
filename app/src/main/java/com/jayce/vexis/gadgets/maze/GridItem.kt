@@ -7,5 +7,5 @@ data class GridItem(
     var left: Boolean = true,
     var top: Boolean = true,
     var right: Boolean = true,
-    var bottom: Boolean = true
+    var bottom: Boolean = true,
 )

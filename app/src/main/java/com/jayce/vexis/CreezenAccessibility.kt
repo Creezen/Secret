@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 
 class CreezenAccessibility : AccessibilityService() {
-
     companion object {
         const val TAG = "CreezenAccessibility"
     }
@@ -19,10 +18,10 @@ class CreezenAccessibility : AccessibilityService() {
     }
 
     override fun onInterrupt() {
-        Log.d(TAG,"onInterrupt")
+        Log.d(TAG, "onInterrupt")
     }
 
     override fun onServiceConnected() {
-        Log.d(TAG,"onServiceConnected")
+        Log.d(TAG, "onServiceConnected")
     }
 }

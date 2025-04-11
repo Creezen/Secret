@@ -37,8 +37,8 @@ class RegisterActivity : BaseActivity() {
         private val SMALL_DAY = (1..30).toList() as ArrayList
         private val LEAP_DAY = (1..29).toList() as ArrayList
         private val COMMON_DAY = (1..28).toList() as ArrayList
-        private val SEX = arrayOf("男","女","保密").toList() as ArrayList<String>
-        private lateinit var EMAIL_PROFIX : ArrayList<String>
+        private val SEX = arrayOf("男", "女", "保密").toList() as ArrayList<String>
+        private lateinit var EMAIL_PROFIX: ArrayList<String>
     }
 
     private lateinit var binding : AccountCreationBinding
@@ -113,15 +113,17 @@ class RegisterActivity : BaseActivity() {
             yearSpinner.configuration(YEAR_DATA) {
                 val item = MONTH_DATA[monthSelected]
                 val source = if(item == 2) {
-                    if(isLeapYear(YEAR_DATA[it]))
+                    if(isLeapYear(YEAR_DATA[it])) {
                         LEAP_DAY
-                    else
+                    } else {
                         COMMON_DAY
+                    }
                 } else {
-                    if(item in listOf(4, 6, 9, 11))
+                    if(item in listOf(4, 6, 9, 11)) {
                         SMALL_DAY
-                    else
+                    } else {
                         BIG_DAY
+                    }
                 }
                 daySpinner.refreshData(source)
             }
