@@ -21,19 +21,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-class MediaElementAdapter (
+class MediaElementAdapter(
     private val context: Context,
     private val parent: LifecycleOwner,
-    val list: List<MediaItem>
-): RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
-
+    val list: List<MediaItem>,
+) : RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
     companion object {
         const val TAG = "MediaElementAdapter"
     }
 
     private var progressBar: ProgressBar? = null
 
-    class ViewHodler(val binding: ResItemBinding): RecyclerView.ViewHolder(binding.root){
+    class ViewHodler(val binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val name = binding.name
         val size = binding.size
@@ -41,12 +40,18 @@ class MediaElementAdapter (
         val download = binding.download
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHodler {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHodler {
         val binding = ResItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHodler(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHodler, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHodler,
+        position: Int,
+    ) {
         val item = list[position]
         holder.view.isSelected = true
         holder.name.text = item.fileName
@@ -65,11 +70,11 @@ class MediaElementAdapter (
             progressBar?.progress = 0
             parent.lifecycleScope.launch(Dispatchers.IO) {
                 val fileName = "${item.fileID}${item.fileSuffix}"
-                val responseStream = NetTool
-                    .create<MediaService>()
-                    .downloadFile(fileName)
-                    .await()
-                    .byteStream()
+                val responseStream =
+                    NetTool.create<MediaService>()
+                        .downloadFile(fileName)
+                        .await()
+                        .byteStream()
                 progressBar?.max = item.fileSize.toInt()
                 downloadFileByNet(responseStream, item.fileName) { size ->
                     progressBar?.progress = size
@@ -80,9 +85,11 @@ class MediaElementAdapter (
             }
         }
         holder.view.setOnClickListener {
-            context.startActivity(Intent(context, MediaDetailActivity::class.java).also {
-                it.putExtra("fileInfo", item)
-            })
+            context.startActivity(
+                Intent(context, MediaDetailActivity::class.java).also {
+                    it.putExtra("fileInfo", item)
+                },
+            )
         }
     }
 
@@ -95,11 +102,11 @@ class MediaElementAdapter (
             return "$size b"
         }
         if (size < 1024 * 1024) {
-            val sizeNum = size/1024.0
+            val sizeNum = size / 1024.0
             val finalNum = "%.2f".format(sizeNum)
             return "$finalNum kb"
         }
-        val sizeNum = size/(1024.0 * 1024)
+        val sizeNum = size / (1024.0 * 1024)
         val finalNum = "%.2f".format(sizeNum)
         return "$finalNum M"
     }

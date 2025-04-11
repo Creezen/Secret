@@ -47,7 +47,7 @@ class CreezenService : Service() {
     }
 
     override fun onCreate() {
-        Log.d(TAG,"onCreate")
+        Log.d(TAG, "onCreate")
         ThreadTool.registerScope(NAME_MESSAGE_SCOPE, scope)
         initData()
         sendNotification()
@@ -55,9 +55,10 @@ class CreezenService : Service() {
     }
 
     private fun initData() {
-        val data = readPrefs {
-            it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
-        }
+        val data =
+            readPrefs {
+                it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
+            }
         chatQueue.clear()
         data?.toData<ArrayList<ChatItem>>().let {
             it?.forEach {
@@ -69,21 +70,22 @@ class CreezenService : Service() {
 
     private fun sendNotification() {
         val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-        val builder = NotificationCompat.Builder(BaseTool.env(), "1")
-            .setSmallIcon(R.drawable.tianji)
-            .setContentTitle("登录成功通知")
-            .setContentText("欢迎您，${onlineUser.nickname}")
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(Notification.CATEGORY_SERVICE)
-            .setOngoing(true)
-            .build()
+        val builder =
+            NotificationCompat.Builder(BaseTool.env(), "1")
+                .setSmallIcon(R.drawable.tianji)
+                .setContentTitle("登录成功通知")
+                .setContentText("欢迎您，${onlineUser.nickname}")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .setOngoing(true)
+                .build()
         val manager = getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(notifyChannel)
         startForeground(1, builder)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Log.d(TAG,"onBind")
+        Log.d(TAG, "onBind")
         return null
     }
 

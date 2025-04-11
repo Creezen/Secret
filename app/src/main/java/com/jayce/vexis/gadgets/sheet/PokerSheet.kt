@@ -36,7 +36,7 @@ class PokerSheet : BaseActivity() {
                     setVisible(SimpleDialog.TITLE_INVISIBLE)
                     userBinding = this.viewBinding
                     dialogInit()
-                    setCustomLeftButton("取消") { _,dialog ->
+                    setCustomLeftButton("取消") { _, dialog ->
                         dialog.dismiss()
                     }
                     setCustomRightButton("确定") { _, dialog ->
@@ -46,7 +46,7 @@ class PokerSheet : BaseActivity() {
                                 it.putExtra("userData", userList)
                                 it.putExtra("title", userBinding.titleEdt.text.toString())
                                 it.putExtra("time", System.currentTimeMillis())
-                            }
+                            },
                         )
                     }
                     userBinding.addBtn.setOnClickListener {
@@ -57,31 +57,34 @@ class PokerSheet : BaseActivity() {
             }
             history.setOnClickListener {
                 startActivity(Intent(this@PokerSheet, PokerHistoryActivity::class.java))
-
             }
         }
     }
 
     private fun dialogInit() {
-        for (i in 0 until  INIT_USER_COUNT) {
+        for (i in 0 until INIT_USER_COUNT) {
             addView(i)
         }
     }
 
     private fun addView(position: Int) {
         userList.add("")
-        userBinding.itemLayout.addView(ScoreInsertEntryView(this, null).also {
-            it.binding.nameEdt.hint = "请输入第${position+1}个Player"
-            it.binding.nameEdt.setText(userList[position])
-            it.setPositon(position)
-            it.setOnButtonClick { _,pos ->
-                userBinding.itemLayout.removeViewAt(pos)
-                userList.removeAt(pos)
-                refreshItem(pos)
-            }
-            it.setTextChange { pos, value ->
-                userList[pos] = value
-            }
+        userBinding.itemLayout.addView(
+            ScoreInsertEntryView(
+                this,
+                null,
+            ).also {
+                it.binding.nameEdt.hint = "请输入第${position + 1}个Player"
+                it.binding.nameEdt.setText(userList[position])
+                it.setPositon(position)
+                it.setOnButtonClick { _, pos ->
+                        userBinding.itemLayout.removeViewAt(pos)
+                        userList.removeAt(pos)
+                        refreshItem(pos)
+                    }
+                it.setTextChange { pos, value ->
+                    userList[pos] = value
+                }
         })
     }
 
@@ -92,7 +95,7 @@ class PokerSheet : BaseActivity() {
                     continue
                 }
                 val itemView = getChildAt(index) as ScoreInsertEntryView
-                itemView.binding.nameEdt.hint = "请输入第${index+1}个Player"
+                itemView.binding.nameEdt.hint = "请输入第${index + 1}个Player"
                 itemView.setPositon(index)
                 userList[index] = itemView.binding.nameEdt.msg()
             }

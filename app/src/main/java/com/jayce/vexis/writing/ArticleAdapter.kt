@@ -12,26 +12,30 @@ class ArticleAdapter(
     val context: Context,
     val itemList: List<ArticleBean>,
 ) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
-    class ViewHolder(val binding: ParagraphItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ParagraphItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val paragraph = binding.paragraph
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ViewHolder {
         val binding = ParagraphItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val item = itemList[position]
         holder.paragraph.text = item.title
         holder.paragraph.setOnClickListener {
-            context.startActivity(Intent(context, ParagraphActivity::class.java)
-                .apply {
-                    putExtra("articleId", item.synergyId)
-                }
+            context.startActivity(
+                Intent(context, ParagraphActivity::class.java)
+                    .apply {
+                        putExtra("articleId", item.synergyId)
+                    },
             )
         }
     }

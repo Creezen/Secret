@@ -37,7 +37,7 @@ class RegisterActivity : BaseActivity() {
         private val LEAP_DAY = (1..29).toList() as ArrayList
         private val COMMON_DAY = (1..28).toList() as ArrayList
         private val SEX = arrayOf("男", "女", "保密").toList() as ArrayList<String>
-        private lateinit var EMAIL_PROFIX: ArrayList<String>
+        private lateinit var emailProfix: ArrayList<String>
     }
 
     private lateinit var binding: AccountCreationBinding
@@ -48,7 +48,7 @@ class RegisterActivity : BaseActivity() {
         setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")
         if (!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)
-        EMAIL_PROFIX = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
+        emailProfix = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>
         initView()
     }
 
@@ -67,7 +67,7 @@ class RegisterActivity : BaseActivity() {
             daySelected = 0
 
             accountLiveData.observe(contextEnv) {
-                if (it.length !in 6 .. 18) {
+                if (it.length !in 6..18) {
                     accountCode = 1
                     return@observe
                 }
@@ -78,9 +78,10 @@ class RegisterActivity : BaseActivity() {
                         hashmap["name"] = it
                     }
                 lifecycleScope.launch(Dispatchers.Main) {
-                    val result = NetTool.create<UserService>()
-                        .checkUserName(map)
-                        .await()
+                    val result =
+                        NetTool.create<UserService>()
+                            .checkUserName(map)
+                            .await()
                     if (result["status"] == 0) {
                         accountCode = 0
                         return@launch
@@ -91,7 +92,7 @@ class RegisterActivity : BaseActivity() {
             }
             nicknameLiveData.observe(contextEnv) {
                 nickNameCode = 1
-                if (it.length !in 1 .. 8) {
+                if (it.length !in 1 ..8) {
                     nickNameCode = 1
                 } else if (it.contains(" ")) {
                     nickNameCode = 2
@@ -101,7 +102,7 @@ class RegisterActivity : BaseActivity() {
                 checkLoginCondition()
             }
             passwordLiveData.observe(contextEnv) {
-                passwordCode = if (it.length !in 6 .. 18) 1 else 0
+                passwordCode = if (it.length !in 6..18) 1 else 0
                 checkLoginCondition()
             }
             passwordConfirmLiveData.observe(contextEnv) {
@@ -113,23 +114,24 @@ class RegisterActivity : BaseActivity() {
             }
             yearSpinner.configuration(YEAR_DATA) {
                 val item = MONTH_DATA[monthSelected]
-                val source = if(item == 2) {
-                    if (isLeapYear(YEAR_DATA[it])) {
-                        LEAP_DAY
+                val source =
+                    if (item == 2) {
+                        if (isLeapYear(YEAR_DATA[it])) {
+                            LEAP_DAY
+                        } else {
+                            COMMON_DAY
+                        }
                     } else {
-                        COMMON_DAY
+                        if (item in listOf(4, 6, 9, 11)) {
+                            SMALL_DAY
+                        } else {
+                            BIG_DAY
+                        }
                     }
-                } else {
-                    if (item in listOf(4, 6, 9, 11)) {
-                        SMALL_DAY
-                    } else {
-                        BIG_DAY
-                    }
-                }
                 daySpinner.refreshData(source)
             }
             monthSpinner.configuration(MONTH_DATA) {
-                when(MONTH_DATA[it]) {
+                when (MONTH_DATA[it]) {
                     2 -> {
                         if (isLeapYear(YEAR_DATA[yearSelect])) {
                             daySpinner.refreshData(LEAP_DAY)
@@ -145,34 +147,62 @@ class RegisterActivity : BaseActivity() {
             DAY_DATA.addAll(BIG_DAY)
             daySpinner.configuration(DAY_DATA)
             sex.configuration(SEX)
-            emailPostfix.configuration(EMAIL_PROFIX)
+            emailPostfix.configuration(emailProfix)
             register.setOnClickListener {
-                val dialog = SimpleDialog(this@RegisterActivity).apply {
-                    setTitle("提示")
-                    setMessage("注册中，请稍后...")
-                }
+                val dialog =
+                    SimpleDialog(this@RegisterActivity).apply {
+                        setTitle("提示")
+                        setMessage("注册中，请稍后...")
+                    }
                 val currentTime = System.currentTimeMillis()
                 val userIdValue = "${currentTime}${getRandomString(7)}"
                 val createTimeValue = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
-                val emailValue = if(email.msg().isNotEmpty()) "${email.msg()}${EMAIL_PROFIX[emailPostfix.selectedItemPosition]}" else ""
+                val emailValue = if (email.msg().isNotEmpty()) "${email.msg()}${emailProfix[emailPostfix.selectedItemPosition]}" else ""
                 val phoneValue = phone.msg()
                 val addressValue = address.msg()
                 val selfIntroductionValue = selfIntroduction.msg()
-                val isEdit = if((emailValue.isNotEmpty()) and (phoneValue.isNotEmpty()) and (addressValue.isNotEmpty()) and (selfIntroductionValue.isNotEmpty())) 1 else 0
-                val ageValue = createTimeValue.subSequence(0,4).toString().toInt()- YEAR_DATA[yearSelect]
+                val isEdit = if (
+                    (emailValue.isNotEmpty())
+                    and (phoneValue.isNotEmpty())
+                    and (addressValue.isNotEmpty())
+                    and (selfIntroductionValue.isNotEmpty())
+                        ) {
+                        1
+                    } else {
+                        0
+                    }
+                val ageValue = createTimeValue.subSequence(0, 4).toString().toInt() - YEAR_DATA[yearSelect]
                 val birthdayValue = "${YEAR_DATA[yearSelect]}-${MONTH_DATA[monthSelected]}-${BIG_DAY[daySelected]}"
                 lifecycleScope.launch(Dispatchers.Main) {
                     try {
-                        val map1= UserItem(userIdValue, nickname.msg(), account.msg(), ageValue, sex.selectedItem as String,password.msg(), createTimeValue,
-                            0, 0, isEdit, emailValue, selfIntroductionValue, phoneValue, addressValue, birthdayValue, ""
+                        val map1= UserItem(
+                            userIdValue,
+                            nickname.msg(),
+                            account.msg(),
+                            ageValue,
+                            sex.selectedItem as String,
+                            password.msg(),
+                            createTimeValue,
+                            0,
+                            0,
+                            isEdit,
+                            emailValue,
+                            selfIntroductionValue,
+                            phoneValue,
+                            addressValue,
+                            birthdayValue,
+                            "",
                         ).pojo2Map()
-                        map1["type"]="1"
-                        val awaitResult = NetTool.create<UserService>()
-                            .checkUserName(map1)
-                            .await()
-                        if (null != awaitResult["status"]){
+                        map1["type"] = "1"
+                        val awaitResult =
+                            NetTool.create<UserService>()
+                                .checkUserName(map1)
+                                .await()
+                        if (null != awaitResult["status"]) {
                             if (awaitResult["status"] == 2) finish()
-                        } else dialog.dismiss()
+                        } else {
+                            dialog.dismiss()
+                        }
                     } catch (e: Exception) {
                         e.message?.let { it1 -> Log.e("msg", it1) }
                     }

@@ -10,20 +10,24 @@ import com.creezen.tool.Constant.getTertiarySubjectList
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 
-class Senior: BaseFragment() {
+class Senior : BaseFragment() {
     private val primaryList = getPrimarySubjectList()
     private val secondaryList = getSecondSubjectList()
     private val tertiaryList = getTertiarySubjectList()
 
     private lateinit var binding: SageFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = SageFragmentBinding.inflate(inflater)
         initView()
         return binding.root
     }
 
-    private fun initView(){
+    private fun initView() {
         with(binding) {
             primary.configuration(primaryList) {
                 secondary.refreshData(secondaryList[primary.selectedItemPosition])

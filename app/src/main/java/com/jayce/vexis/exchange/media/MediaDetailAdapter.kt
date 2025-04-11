@@ -12,7 +12,7 @@ class MediaDetailAdapter(
     private val context: Context,
     private val parentList: List<String>,
     private val childList: List<List<String>>,
-) : BaseExpandableListAdapter(){
+) : BaseExpandableListAdapter() {
     override fun getGroupCount() = parentList.size
 
     override fun getChildrenCount(groupPosition: Int) = childList[groupPosition].size
@@ -35,7 +35,7 @@ class MediaDetailAdapter(
 
     override fun isChildSelectable(
         groupPosition: Int,
-        childPosition: Int
+        childPosition: Int,
     ) = true
 
     override fun getGroupView(

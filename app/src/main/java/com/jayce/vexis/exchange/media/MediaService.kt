@@ -21,7 +21,7 @@ interface MediaService {
         @Part("illustrate") illustrate: String,
         @Part("fileSize") fileSize: Long,
         @Part("uploadTime") uploadTime: String,
-        @Part file: MultipartBody.Part
+        @Part file: MultipartBody.Part,
     ): Call<LinkedHashMap<String, Boolean>>
 
     @POST("/fileFetch")
@@ -29,5 +29,7 @@ interface MediaService {
 
     @Streaming
     @GET("FileSystem/{fileName}")
-    fun downloadFile(@Path("fileName") fileName: String): Call<ResponseBody>
+    fun downloadFile(
+        @Path("fileName") fileName: String,
+    ): Call<ResponseBody>
 }

@@ -19,7 +19,7 @@ class RecordHistoryAdapter(
     private val context: Context,
     private val list: List<RecordListItem>,
     private val owner: LifecycleOwner,
-): RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
     companion object {
         const val TAG = "RecordHistoryAdapter"
     }
@@ -28,19 +28,25 @@ class RecordHistoryAdapter(
         ScoreDatabase.getDatabase(context).recordDao()
     }
 
-    class ViewHolder(val binding: RecordListLayoutBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: RecordListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val title = binding.title
         val time = binding.time
         val result = binding.result
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val binding = RecordListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val items = list[position]
         holder.title.text = items.title
         holder.time.text = items.time
@@ -49,15 +55,15 @@ class RecordHistoryAdapter(
             owner.lifecycleScope.launch(Dispatchers.IO) {
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
-                Log.e(TAG,"$userList")
-                val intent = Intent(context, ScoreBoard::class.java).also {
-                    it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
-                }
+                Log.e(TAG, "$userList")
+                val intent =
+                    Intent(context, ScoreBoard::class.java).also {
+                        it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
+                    }
                 context.startActivity(intent)
 //                Log.e(TAG,"${scoreList.scoreList} ${scoreList.userList}  " +
 //                        "${scoreList.totalStr}  ")
             }
-
         }
     }
 

@@ -64,15 +64,16 @@ class Main : BaseActivity() {
     override fun onResume() {
         super.onResume()
         chatBadge.badgeNumber = CreezenService.getUnreadSize()
-        val avatarTimestamp = readPrefs {
-            it.getLong("cursorTime", 0)
-        }
+        val avatarTimestamp =
+            readPrefs {
+                it.getLong("cursorTime", 0)
+            }
         NetTool.setImage(
             this@Main,
             avatarView,
             "${BASE_FILE_PATH}head/${onlineUser.userId}.png",
             key = AvatarSignnature("key:$avatarTimestamp"),
-            isCircle = true
+            isCircle = true,
         )
     }
 
@@ -81,7 +82,9 @@ class Main : BaseActivity() {
             if (null == viewHolder) {
                 viewHolder = ViewHolder(Feedback(), Gadget(), HistoricalAxis(), Article())
                 root.tag = viewHolder
-            } else viewHolder = root.tag as ViewHolder
+            } else {
+                viewHolder = root.tag as ViewHolder
+            }
             setSupportActionBar(toolBar)
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
@@ -93,7 +96,7 @@ class Main : BaseActivity() {
                 toolBarText.text = item.title
                 drawerLayout.closeDrawers()
                 viewHolder?.apply {
-                    when(item.itemId){
+                    when (item.itemId) {
                         R.id.MainMenuFeedback -> replaceFragment(feedback)
                         R.id.MainMenuWidget -> replaceFragment(gadget)
                         R.id.MainMenuTimeline -> replaceFragment(historicalAxis)
@@ -123,31 +126,41 @@ class Main : BaseActivity() {
             chatMsgView.setOnClickListener {
                 startActivity(Intent(this@Main, ChatActivity::class.java))
             }
-            drawerLayout.addDrawerListener(object : DrawerListener{
-                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
-                override fun onDrawerClosed(drawerView: View) {}
-                override fun onDrawerStateChanged(newState: Int) {}
-                override fun onDrawerOpened(drawerView: View) {
-                    chatBadge.badgeNumber = CreezenService.getUnreadSize()
-                    emailBadge.badgeNumber = 0
+            drawerLayout.addDrawerListener(
+                object : DrawerListener {
+                    override fun onDrawerSlide(
+                        drawerView: View,
+                        slideOffset: Float,
+                    ) {}
+
+                    override fun onDrawerClosed(drawerView: View) {}
+
+                    override fun onDrawerStateChanged(newState: Int) {}
+
+                    override fun onDrawerOpened(drawerView: View) {
+                        chatBadge.badgeNumber = CreezenService.getUnreadSize()
+                        emailBadge.badgeNumber = 0
+                    }
                 }
-            })
+            )
         }
-        onBackPressedDispatcher.addCallback(this, object:OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                SimpleDialog(this@Main).apply {
-                    setTitle("消息提醒")
-                    setMessage("确定退出吗？")
-                    setLeftButton("点错了"){ _, dialog ->
-                        dialog.dismiss()
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    SimpleDialog(this@Main).apply {
+                        setTitle("消息提醒")
+                        setMessage("确定退出吗？")
+                        setLeftButton("点错了") { _, dialog ->
+                            dialog.dismiss()
+                        }
+                        setRightButton("退出") { _, _ ->
+                            dismiss()
+                            finishAll()
+                        }
+                        show()
                     }
-                    setRightButton("退出"){ _, _ ->
-                        dismiss()
-                        finishAll()
-                    }
-                    show()
                 }
-            }
             }
         )
     }
@@ -159,7 +172,7 @@ class Main : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.logout -> {
                 finishAll()
             }
@@ -171,7 +184,7 @@ class Main : BaseActivity() {
         return true
     }
 
-    private fun replaceFragment(fragment: Fragment){
-        replaceFragment(supportFragmentManager,R.id.frame,fragment)
+    private fun replaceFragment(fragment: Fragment) {
+        replaceFragment(supportFragmentManager, R.id.frame,fragment)
     }
 }

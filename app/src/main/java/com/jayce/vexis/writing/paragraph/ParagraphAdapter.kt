@@ -20,14 +20,14 @@ import com.jayce.vexis.widgets.CustomDialog
 class ParagraphAdapter(
     val context: Context,
     val activity: Activity,
-    private val itemList: List<ParagraphCommandBean>
-): RecyclerView.Adapter<ParagraphAdapter.ViewHolder>() {
-
-    private val list = arrayListOf(
-        "富强", "民主", "文明", "和谐",
-        "自由", "平等", "公正", "法治",
-        "爱国", "敬业", "诚信", "友善",
-    )
+    private val itemList: List<ParagraphCommandBean>,
+) : RecyclerView.Adapter<ParagraphAdapter.ViewHolder>() {
+    private val list =
+        arrayListOf(
+            "富强", "民主", "文明", "和谐",
+            "自由", "平等", "公正", "法治",
+            "爱国", "敬业", "诚信", "友善",
+        )
 
     private val dialog by lazy {
         CustomDialog(
@@ -52,7 +52,10 @@ class ParagraphAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val item = itemList[position]
         holder.paragraph.setOnLongClickListener {
             it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen, null))
@@ -70,15 +73,16 @@ class ParagraphAdapter(
 
     private fun displayComment(
         position: Int,
-        textView: TextView
+        textView: TextView,
     ) {
         val contentLength = itemList[position].content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
-        val clickSpan = object : ClickableSpan(){
-            override fun onClick(widget: View) {
-                "I am click".toast()
+        val clickSpan =
+            object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    "I am click".toast()
+                }
             }
-        }
         val spanString = SpannableString("${itemList[position].content}    ")
         spanString.setSpan(imageSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
         spanString.setSpan(clickSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
@@ -86,14 +90,17 @@ class ParagraphAdapter(
         textView.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun showCommentDialog(position: Int, view: View) {
+    private fun showCommentDialog(
+        position: Int,
+        view: View,
+    ) {
         dialog.apply {
-            setCustomLeftButton("取消") { _, dialog ->
-                view.setBackgroundColor(context.resources.getColor(R.color.white))
+            setCustomLeftButton("取消") { _, _ ->
+                view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 dismiss()
             }
-            setCustomRightButton("提交") { _, dialog ->
-                view.setBackgroundColor(context.resources.getColor(R.color.white))
+            setCustomRightButton("提交") { _, _ ->
+                view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 dismiss()
             }
             show()

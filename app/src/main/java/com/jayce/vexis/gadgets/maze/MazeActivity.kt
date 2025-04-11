@@ -22,21 +22,23 @@ class MazeActivity : BaseActivity() {
             binding.maze.setRowAndLine(50f)
             binding.maze.invalidate()
             startTime = System.currentTimeMillis()
-            binding.maze.registerCallback(object : MazeStatusCallback {
-                override fun onMove() {
-                    playShortSound(R.raw.move)
-                }
+            binding.maze.registerCallback(
+                object : MazeStatusCallback {
+                    override fun onMove() {
+                        playShortSound(R.raw.move)
+                    }
 
-                override fun onError() {
-                    playShortSound(R.raw.error)
-                }
+                    override fun onError() {
+                        playShortSound(R.raw.error)
+                    }
 
-                override fun onFinish() {
-                    val costTime = System.currentTimeMillis() - startTime
-                    playShortSound(R.raw.win)
-                    "你一共使用了${costTime / 1000f}s 的时间!".toast()
+                    override fun onFinish() {
+                        val costTime = System.currentTimeMillis() - startTime
+                        playShortSound(R.raw.win)
+                        "你一共使用了${costTime / 1000f}s 的时间!".toast()
+                    }
                 }
-            })
+            )
         }
     }
 }

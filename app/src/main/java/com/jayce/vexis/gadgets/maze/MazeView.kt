@@ -88,15 +88,17 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
                 val absX = horizon.absoluteValue
                 val absY = vertical.absoluteValue
                 if (absX > absY) {
-                    if ((horizon > 0 && mazeMatrix[playerX][playerY].right)
-                        || (horizon < 0 && mazeMatrix[playerX][playerY].left)) {
+                    if ((horizon > 0 && mazeMatrix[playerX][playerY].right) ||
+                        (horizon < 0 && mazeMatrix[playerX][playerY].left)
+                    ) {
                         statusCallback?.onError()
                         return true
                     }
                     playerY += (horizon / absX).toInt()
                 } else {
-                    if ((vertical > 0 && mazeMatrix[playerX][playerY].bottom)
-                        || (vertical < 0 && mazeMatrix[playerX][playerY].top)) {
+                    if ((vertical > 0 && mazeMatrix[playerX][playerY].bottom) ||
+                        (vertical < 0 && mazeMatrix[playerX][playerY].top)
+                    ) {
                         statusCallback?.onError()
                         return true
                     }
@@ -120,7 +122,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
             previewY * gridWidth + paint.strokeWidth * 0.6f,
             previewX * gridWidth + paint.strokeWidth * 0.6f,
             (previewY + 1) * gridWidth - paint.strokeWidth * 0.6f,
-            (previewX + 1) * gridWidth - paint.strokeWidth * 0.6f
+            (previewX + 1) * gridWidth - paint.strokeWidth * 0.6f,
         )
         bitmapCanvas.drawColor(0, PorterDuff.Mode.CLEAR)
         bitmapCanvas.restore()
@@ -132,13 +134,13 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
             playerX * gridWidth + paint.strokeWidth * 0.5f + playerPaint.strokeWidth * 1.2f,
             (playerY + 1) * gridWidth - paint.strokeWidth * 0.5f - playerPaint.strokeWidth * 1.2f,
             (playerX + 1) * gridWidth - paint.strokeWidth * 0.5f - playerPaint.strokeWidth * 1.2f,
-            playerPaint
+            playerPaint,
         )
     }
 
     private fun initMazeMatrix() {
         mazeMatrix = Array(row) { Array(line) { GridItem() } }
-        for (i in 0 until  row) {
+        for (i in 0 until row) {
             for (j in 0 until line) {
                 mazeMatrix[i][j].x = i
                 mazeMatrix[i][j].y = j
@@ -154,27 +156,39 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     ) {
         with(item) {
             if (top) {
-                canvas.drawLine(y * gridWidth, x * gridWidth,
-                    (y + 1) * gridWidth, x * gridWidth,
-                    paint
+                canvas.drawLine(
+                    y * gridWidth,
+                    x * gridWidth,
+                    (y + 1) * gridWidth,
+                    x * gridWidth,
+                    paint,
                 )
             }
             if (right) {
-                canvas.drawLine((y + 1) * gridWidth, x * gridWidth,
-                    (y + 1) * gridWidth, (x + 1) * gridWidth,
-                    paint
+                canvas.drawLine(
+                    (y + 1) * gridWidth,
+                    x * gridWidth,
+                    (y + 1) * gridWidth,
+                    (x + 1) * gridWidth,
+                    paint,
                 )
             }
             if (bottom) {
-                canvas.drawLine(y * gridWidth, (x + 1) * gridWidth,
-                    (y + 1) * gridWidth, (x + 1) * gridWidth,
-                    paint
+                canvas.drawLine(
+                    y * gridWidth,
+                    (x + 1) * gridWidth,
+                    (y + 1) * gridWidth,
+                    (x + 1) * gridWidth,
+                    paint,
                 )
             }
             if (left) {
-                canvas.drawLine(y * gridWidth, x * gridWidth,
-                    y * gridWidth, (x + 1) * gridWidth,
-                    paint
+                canvas.drawLine(
+                    y * gridWidth,
+                    x * gridWidth,
+                    y * gridWidth,
+                    (x + 1) * gridWidth,
+                    paint,
                 )
             }
         }

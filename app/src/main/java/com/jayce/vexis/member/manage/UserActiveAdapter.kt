@@ -15,8 +15,8 @@ import com.jayce.vexis.widgets.TrackPopupMenu
 class UserActiveAdapter(
     private val context: Context,
     private val userList: List<ActiveItem>,
-): RecyclerView.Adapter<UserActiveAdapter.ViewHolder>()  {
-    class ViewHolder(val binding: UserActiveItemBinding): RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.Adapter<UserActiveAdapter.ViewHolder>() {
+    class ViewHolder(val binding: UserActiveItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val nickname = binding.nickname
         val admin = binding.administrator
@@ -26,7 +26,7 @@ class UserActiveAdapter(
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ViewHolder {
         val binding = UserActiveItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -53,9 +53,11 @@ class UserActiveAdapter(
         holder.id.text = item.userID
         holder.time.text = item.createTime
         holder.view.setOnClickListener {
-            context.startActivity(Intent(context, ActiveDataActivity::class.java).also {
-                it.putExtra("activeItem", item)
-            })
+            context.startActivity(
+                Intent(context, ActiveDataActivity::class.java).also {
+                    it.putExtra("activeItem", item)
+                },
+            )
         }
         holder.view.setOnLongClickListener {
             menu.show()

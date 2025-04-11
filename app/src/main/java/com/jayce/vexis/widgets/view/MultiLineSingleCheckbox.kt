@@ -2,13 +2,14 @@ package com.jayce.vexis.widgets.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import com.jayce.vexis.R
 import kotlin.math.ceil
-import android.view.LayoutInflater
+
 import com.jayce.vexis.databinding.TextCheckBoxBinding
 
 class MultiLineSingleCheckbox(
@@ -60,7 +61,7 @@ class MultiLineSingleCheckbox(
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = HORIZONTAL
         linearLayout.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
-        for (i in position * itemOneLine until  (position + 1) * itemOneLine) {
+        for (i in position * itemOneLine until (position + 1) * itemOneLine) {
             if (i >= childItemCount) {
                 break
             }

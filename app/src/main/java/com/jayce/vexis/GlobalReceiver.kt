@@ -15,16 +15,19 @@ class GlobalReceiver : BroadcastReceiver() {
         const val TAG = "GlobalReceiver"
     }
 
-    override fun onReceive(context: Context?, intent: Intent?) {
-        if (intent == null)  return
-        when(intent.action) {
+    override fun onReceive(
+        context: Context?,
+        intent: Intent?,
+    ) {
+        if (intent == null) return
+        when (intent.action) {
             BROAD_LOGOUT -> "logout".toast()
             BROAD_NOTIFY -> {
                 val msg = intent.getStringExtra("broadcastNotify")
                 msg?.toast()
             }
             Intent.ACTION_CLOSE_SYSTEM_DIALOGS -> {
-                Log.d(TAG,"write message")
+                Log.d(TAG, "write message")
                 writePrefs {
                     CreezenService.getBackupContent().toJson()?.let { str ->
                         it.putString(CreezenService.CACHE_MESSAGE, str)

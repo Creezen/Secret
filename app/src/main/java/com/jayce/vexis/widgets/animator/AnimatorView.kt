@@ -10,8 +10,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 
-class AnimatorView(context: Context, attrs: AttributeSet): View(context, attrs) {
-
+class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var ball: AnimatorBall = AnimatorBall(-1f, -1f)
     private val radius = 100f
@@ -37,14 +36,15 @@ class AnimatorView(context: Context, attrs: AttributeSet): View(context, attrs) 
     }
 
     private fun setBallAnimator(): ValueAnimator {
-        val valueAnimator = ValueAnimator.ofObject(
-            BallEvaluator(),
-            AnimatorBall(radius, height / 2f),
-            AnimatorBall(width / 2f, height - radius),
-            AnimatorBall(width - radius, height / 2f),
-            AnimatorBall(width / 2f, radius),
-            AnimatorBall(radius, height / 2f)
-        )
+        val valueAnimator =
+            ValueAnimator.ofObject(
+                BallEvaluator(),
+                AnimatorBall(radius, height / 2f),
+                AnimatorBall(width / 2f, height - radius),
+                AnimatorBall(width - radius, height / 2f),
+                AnimatorBall(width / 2f, radius),
+                AnimatorBall(radius, height / 2f)
+            )
         valueAnimator.addUpdateListener {
             ball = it.animatedValue as AnimatorBall
             invalidate()
@@ -54,15 +54,16 @@ class AnimatorView(context: Context, attrs: AttributeSet): View(context, attrs) 
     }
 
     private fun setBackgroundAnimator(): ObjectAnimator {
-        val objAnimator = ObjectAnimator.ofArgb(
-            this,
-            "backgroundColor",
-            Color.parseColor("#00ffff"),
-            Color.parseColor("#00ffff"),
-            Color.parseColor("#0000ff"),
-            Color.parseColor("#000000"),
-            Color.parseColor("#ffffff")
-        )
+        val objAnimator =
+            ObjectAnimator.ofArgb(
+                this,
+                "backgroundColor",
+                Color.parseColor("#00ffff"),
+                Color.parseColor("#00ffff"),
+                Color.parseColor("#0000ff"),
+                Color.parseColor("#000000"),
+                Color.parseColor("#ffffff"),
+            )
         objAnimator.repeatCount = ValueAnimator.INFINITE
         return objAnimator
     }

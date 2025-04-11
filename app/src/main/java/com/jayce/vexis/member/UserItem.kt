@@ -23,13 +23,12 @@ data class UserItem(
     var phone: String,
     var address: String,
     var birthday: String,
-    var headType: String
-): Parcelable {
+    var headType: String,
+) : Parcelable {
     @PrimaryKey
-    var id: Long=0
+    var id: Long = 0
 
     fun isAdministrator(): Boolean {
         return administrator == 1
     }
 }
-

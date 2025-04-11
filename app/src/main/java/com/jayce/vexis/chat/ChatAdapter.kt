@@ -14,7 +14,7 @@ class ChatAdapter(private val msgList: List<ChatItem>) : RecyclerView.Adapter<Ch
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
     ): ViewHolder {
         val binding = ChatItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -22,7 +22,7 @@ class ChatAdapter(private val msgList: List<ChatItem>) : RecyclerView.Adapter<Ch
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        position: Int
+        position: Int,
     ) {
         val items = msgList[position]
         holder.nickname.text = items.nickname

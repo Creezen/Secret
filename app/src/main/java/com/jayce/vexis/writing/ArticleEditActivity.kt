@@ -12,7 +12,6 @@ import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import kotlinx.coroutines.launch
 
 class ArticleEditActivity : BaseActivity() {
-
     private lateinit var binding: ActivitySynergyEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +25,10 @@ class ArticleEditActivity : BaseActivity() {
         binding.submit.setOnClickListener {
             val paragraphs = getParagraphList(binding.content)
             lifecycleScope.launch {
-                val uploadResult = create<ArticleService>()
-                    .postSynergy(paragraphs)
-                    .await()
+                val uploadResult =
+                    create<ArticleService>()
+                        .postSynergy(paragraphs)
+                        .await()
                 if (uploadResult) {
                     finish()
                 }
@@ -38,16 +38,16 @@ class ArticleEditActivity : BaseActivity() {
 
     private fun getParagraphList(textView: TextView): ArrayList<String> {
         val msg = textView.msg(true)
-        val paragraphSequence = msg.split("\n")
-            .asSequence()
-            .filterNot {
-                it.isEmpty()
-            }.map {
-                "$PARAGRAPH_HEAD${it.trim()}"
-            }
+        val paragraphSequence =
+            msg.split("\n")
+                .asSequence()
+                .filterNot {
+                    it.isEmpty()
+                }.map {
+                    "$PARAGRAPH_HEAD${it.trim()}"
+                }
         val list = arrayListOf<String>()
         list.addAll(paragraphSequence.toList())
         return list
     }
-
 }

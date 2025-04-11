@@ -33,12 +33,17 @@ class MediaLibraryActivity : BaseFragment() {
     private var tag: Any? = null
 
     override fun registerLauncher() {
-        readExternalLaunch = getLauncher(startActivity()) {
-            Log.e("MediaLibraryActivity.registerLauncher","$it")
-        }
+        readExternalLaunch =
+            getLauncher(startActivity()) {
+                Log.e("MediaLibraryActivity.registerLauncher", "$it")
+            }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         if (tag != null) {
             initData()
             return tag as View
@@ -59,9 +64,10 @@ class MediaLibraryActivity : BaseFragment() {
     private fun initData() {
         kotlin.runCatching {
             lifecycleScope.launch(Dispatchers.IO) {
-                val result = NetTool.create<MediaService>()
-                    .fetchFile()
-                    .await()
+                val result =
+                    NetTool.create<MediaService>()
+                        .fetchFile()
+                        .await()
                 val list = result["items"]
                 if (list.isNullOrEmpty()) {
                     return@launch
@@ -73,7 +79,7 @@ class MediaLibraryActivity : BaseFragment() {
                 }
             }
         }.onFailure {
-            Log.e("MediaLibraryActivity.initData","$it")
+            Log.e("MediaLibraryActivity.initData", "$it")
         }
     }
 
@@ -83,9 +89,11 @@ class MediaLibraryActivity : BaseFragment() {
                 if (Environment.isExternalStorageManager()) {
                     startActivity(Intent(this@MediaLibraryActivity.activity, MediaUploadActivity::class.java))
                 } else {
-                    readExternalLaunch?.launch(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                        it.data = Uri.parse("package:" + activity?.packageName)
-                    })
+                    readExternalLaunch?.launch(
+                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
+                            it.data = Uri.parse("package:" + activity?.packageName)
+                        },
+                    )
                 }
             }
             refresh.setOnClickListener {

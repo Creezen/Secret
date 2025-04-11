@@ -13,8 +13,7 @@ import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.onlineUser
 
-class FeedbackEditActivity: BaseActivity() {
-
+class FeedbackEditActivity : BaseActivity() {
     private lateinit var binding: ActivityFeedbackEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,26 +24,34 @@ class FeedbackEditActivity: BaseActivity() {
     }
 
     private fun initView() {
-        with(binding){
+        with(binding) {
             submit.setOnClickListener {
                 val titleMsg = title.msg()
                 val contentMsg = content.msg()
-                workInDispatch(this@FeedbackEditActivity, 3000, lifecycleJob = object: LifecycleJob{
-                    override suspend fun onDispatch() {
-                        val result = create<FeedbackService>()
-                            .sendFeedback(onlineUser.userId, titleMsg, contentMsg)
-                            .await()
-                        if(result) { finish() }
-                    }
+                workInDispatch(
+                    this@FeedbackEditActivity,
+                    3000,
+                    lifecycleJob =
+                        object : LifecycleJob {
+                            override suspend fun onDispatch() {
+                                val result =
+                                    create<FeedbackService>()
+                                        .sendFeedback(onlineUser.userId, titleMsg, contentMsg)
+                                        .await()
+                                if (result) {
+                                    finish()
+                                }
+                            }
 
-                    override fun onTimeoutFinish(isWorkFinished: Boolean) {
-                        if(isWorkFinished) {
-                            sendNotifyMessage(CreezenService.scope, contentMsg)
-                        }
-                    }
-                })
+                            override fun onTimeoutFinish(isWorkFinished: Boolean) {
+                                if (isWorkFinished) {
+                                    sendNotifyMessage(CreezenService.scope, contentMsg)
+                                }
+                            }
+                        },
+                )
             }
-            Log.e("FeedbackEditActivity.initView","click")
+            Log.e("FeedbackEditActivity.initView", "click")
         }
     }
 }

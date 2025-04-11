@@ -10,8 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.jayce.vexis.R
 
-class LongTextView(context: Context, attr: AttributeSet): View(context, attr){
-
+class LongTextView(context: Context, attr: AttributeSet) : View(context, attr) {
     private val textPaint: TextPaint = TextPaint()
     private var mCanvas: Canvas? = null
     var longText: String = ""
@@ -39,14 +38,15 @@ class LongTextView(context: Context, attr: AttributeSet): View(context, attr){
     private fun drawText(canvas: Canvas?) {
         canvas?.let {
 //            it.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
-            val staticLayout = StaticLayout.Builder
-                .obtain(
-                    longText,
-                    0,
-                    longText.length,
-                    textPaint,
-                    width
-                ).build()
+            val staticLayout =
+                StaticLayout.Builder
+                    .obtain(
+                        longText,
+                        0,
+                        longText.length,
+                        textPaint,
+                        width,
+                    ).build()
             staticLayout.draw(it)
             postInvalidate()
         }

@@ -18,4 +18,3 @@ interface FeedbackService {
     @GET("/getFeedback")
     fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackItem>>>
 }
-

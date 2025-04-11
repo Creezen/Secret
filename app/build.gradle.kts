@@ -98,25 +98,28 @@ tasks.register<DefaultTask>("kt-lint") {
             """.trimIndent(),
         )
 
-        val body = mergedDoc.body().apply {
-            appendElement("h1")
-                .text("Merged Ktlint Report")
-        }
+        val body =
+            mergedDoc.body().apply {
+                appendElement("h1")
+                    .text("Merged Ktlint Report")
+            }
 
         var totalIssues = 0
-        val htmlFiles = sourceDir.listFiles { file ->
-            val subFile = file?.listFiles()?.get(0) ?: return@listFiles false
-            subFile.isFile && subFile.extension == "html"
-        }?.sortedBy { it.name }
+        val htmlFiles =
+            sourceDir.listFiles { file ->
+                val subFile = file?.listFiles()?.get(0) ?: return@listFiles false
+                subFile.isFile && subFile.extension == "html"
+            }?.sortedBy { it.name }
         if (htmlFiles.isNullOrEmpty()) return@doLast
         htmlFiles.forEach { fileParent ->
             val path = "${fileParent.absolutePath}/${fileParent.name}.html"
             val doc = Jsoup.parse(File(path), "UTF-8")
             // 提取 Issues found 数值
             val issuesFoundPara = doc.select("body > p:contains(Issues found)").first()
-            val issuesCount = issuesFoundPara?.text()?.let { text ->
-                Regex("\\d+").find(text)?.value?.toInt() ?: 0
-            } ?: 0
+            val issuesCount =
+                issuesFoundPara?.text()?.let { text ->
+                    Regex("\\d+").find(text)?.value?.toInt() ?: 0
+                } ?: 0
             totalIssues += issuesCount
 
             // 提取文件名和问题列表（修复选择器）
@@ -133,7 +136,7 @@ tasks.register<DefaultTask>("kt-lint") {
         }
 
         body.prependChild(
-            Element("p").text("Total Issues found: $totalIssues")
+            Element("p").text("Total Issues found: $totalIssues"),
         )
 
         val mergedContent = body.outerHtml()
@@ -182,7 +185,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("androidx.room:room-runtime:2.5.2")
-    kapt ("androidx.room:room-compiler:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")

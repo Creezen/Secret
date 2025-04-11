@@ -10,5 +10,5 @@ interface UserDao {
     fun insertuser(userItem: UserItem): Long
 
     @Query("select * from UserItem where name = :name")
-    fun fetchUser(name:String): List<UserItem>
+    fun fetchUser(name: String): List<UserItem>
 }

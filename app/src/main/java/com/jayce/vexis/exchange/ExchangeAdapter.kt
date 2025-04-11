@@ -8,9 +8,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class ExchangeAdapter(
     fragmentManager: FragmentManager,
     val lifecycle: Lifecycle,
-    private val fragmentList: List<Fragment>
-): FragmentStateAdapter(fragmentManager, lifecycle) {
-
+    private val fragmentList: List<Fragment>,
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return fragmentList.size
     }
@@ -18,5 +17,4 @@ class ExchangeAdapter(
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
     }
-
 }

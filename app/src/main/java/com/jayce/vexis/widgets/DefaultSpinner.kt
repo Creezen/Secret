@@ -7,7 +7,6 @@ import androidx.appcompat.widget.AppCompatSpinner
 import com.jayce.vexis.R
 
 class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(context, attr) {
-
     private var selectCallback: ((Int) -> Unit)? = null
 
     fun onItemSelect() {
@@ -18,7 +17,7 @@ class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(co
         source: List<T>,
         prompLayoutId: Int = R.layout.spinner_prompt,
         downLayoutId: Int = R.layout.spinner_dropdown,
-        onSelect: ((Int) -> Unit)? = null
+        onSelect: ((Int) -> Unit)? = null,
     ) {
         val adapter = ArrayAdapter(context, prompLayoutId, source)
         adapter.setDropDownViewResource(downLayoutId)

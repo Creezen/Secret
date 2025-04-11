@@ -1,10 +1,9 @@
 package com.jayce.vexis.gadgets.maze
 
 interface MazeStatusCallback {
+    fun onMove() {}
 
-    fun onMove(){}
+    fun onError() {}
 
-    fun onError(){}
-
-    fun onFinish(){}
+    fun onFinish() {}
 }

@@ -39,8 +39,7 @@ import org.json.JSONObject
 import java.net.Socket
 
 class Login : AppCompatActivity() {
-
-    private lateinit var binding : ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
     private val list = arrayListOf<String>()
     private val picAdapter by lazy {
         HomePagePicAdapter(this, list)
@@ -58,11 +57,12 @@ class Login : AppCompatActivity() {
 
     private fun getNewestVersion() {
         lifecycleScope.launch {
-            val versionInfo = NetTool.create<PackageService>()
-                .getVersion()
-                .await()
+            val versionInfo =
+                NetTool.create<PackageService>()
+                    .getVersion()
+                    .await()
             versionInfo.apply {
-               "${modifyTime.toTime()}  $versionName".toast()
+                "${modifyTime.toTime()}  $versionName".toast()
             }
         }
     }
@@ -73,7 +73,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun initView() {
-        with(binding){
+        with(binding) {
             lifecycleOwner = this@Login
             env = this@Login
             liveData.observe(this@Login) {
@@ -99,16 +99,18 @@ class Login : AppCompatActivity() {
                     this@Login,
                     2000L,
                     Dispatchers.Main,
-                    object : LifecycleJob{
+                    object : LifecycleJob {
                         override suspend fun onDispatch() {
-                            val loginResult = NetTool.create<UserService>()
-                                .loginSystem(name.msg(), password.msg())
-                                .await()
+                            val loginResult =
+                                NetTool.create<UserService>()
+                                    .loginSystem(name.msg(), password.msg())
+                                    .await()
                             if (!loginResult.containsKey("status")) {
                                 onlineUser = loginResult.map2pojo()
-                                val socket = lifecycleScope.async(Dispatchers.IO) {
-                                    Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                                }.await()
+                                val socket =
+                                    lifecycleScope.async(Dispatchers.IO) {
+                                        Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                                    }.await()
                                 setOnlineSocket(socket)
                                 startActivity(Intent(this@Login, Main::class.java))
                             } else {
@@ -159,20 +161,21 @@ class Login : AppCompatActivity() {
             list.add("${BASE_FILE_PATH}GfRPrs1716640205738.jpg")
             list.add("${BASE_FILE_PATH}MHcneb1716619071218.jpg")
             list.add("${BASE_FILE_PATH}njduhB1716695687532.jpg")
-            picAdapter.notifyItemRangeInserted(0,5)
+            picAdapter.notifyItemRangeInserted(0, 5)
             setPageTransformer(MyCustomTransformer())
         }
     }
 
     private fun getPinyinForChinese(chineseChar: String?) {
-        if(chineseChar == null) {
+        if (chineseChar == null) {
             return
         }
         lifecycleScope.launch {
             kotlin.runCatching {
-                val res = createApi<ApiService>()
-                    .getDictionary(chineseChar)
-                    .await()
+                val res =
+                    createApi<ApiService>()
+                        .getDictionary(chineseChar)
+                        .await()
                 val jsonObj = JSONObject(res)
                 val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
                 val realVal = data.optString("pinyin")

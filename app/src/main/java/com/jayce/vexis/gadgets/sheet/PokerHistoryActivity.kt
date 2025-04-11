@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PokerHistoryActivity : BaseActivity() {
-
     companion object {
         const val TAG = "PokerHistoryActivity"
     }
@@ -33,7 +32,7 @@ class PokerHistoryActivity : BaseActivity() {
         initPage()
         loadData()
     }
-    
+
     private fun initPage() {
         with(binding) {
             historyListRv.layoutManager = LinearLayoutManager(this@PokerHistoryActivity)
@@ -52,5 +51,4 @@ class PokerHistoryActivity : BaseActivity() {
 
         }
     }
-    
 }

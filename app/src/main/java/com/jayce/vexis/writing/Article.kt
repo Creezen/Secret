@@ -14,7 +14,7 @@ import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
 import kotlinx.coroutines.launch
 
-class Article: BaseFragment() {
+class Article : BaseFragment() {
     private lateinit var binding: FragmentSynergyBinding
     private val list = arrayListOf<ArticleBean>()
     private val adapter by lazy {
@@ -24,7 +24,7 @@ class Article: BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentSynergyBinding.inflate(inflater)
         initView()
@@ -48,9 +48,10 @@ class Article: BaseFragment() {
 
     private fun initData() {
         lifecycleScope.launch {
-            val result = create<ArticleService>()
-                .getArticle()
-                ?.await() ?: arrayListOf()
+            val result =
+                create<ArticleService>()
+                    .getArticle()
+                    ?.await() ?: arrayListOf()
             list.clear()
             list.addAll(result)
             adapter.notifyDataSetChanged()

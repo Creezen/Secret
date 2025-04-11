@@ -33,14 +33,16 @@ class ExchangeActivity : BaseActivity() {
         with(binding) {
             page.adapter = exchangeAdapter
             TabLayoutMediator(tab, page) { tab, pos ->
-                val textView = TextView(this@ExchangeActivity).apply {
-                    gravity = Gravity.CENTER
-                }
-                textView.text = when(pos) {
-                    0 -> getString(R.string.knowledge_share)
-                    1 -> getString(R.string.resource_share)
-                    else -> ""
-                }
+                val textView =
+                    TextView(this@ExchangeActivity).apply {
+                        gravity = Gravity.CENTER
+                    }
+                textView.text =
+                    when (pos) {
+                        0 -> getString(R.string.knowledge_share)
+                        1 -> getString(R.string.resource_share)
+                        else -> ""
+                    }
                 tab.customView = textView
             }.attach()
         }

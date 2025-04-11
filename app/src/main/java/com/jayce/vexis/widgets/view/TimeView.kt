@@ -9,17 +9,18 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.jayce.vexis.R
 
-class TimeView(context: Context, attributeSet: AttributeSet): View(context, attributeSet) {
+class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
     companion object {
         const val TAG = "TimeView"
     }
+
     private val paint = Paint()
     private val bitmap by lazy {
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.delete, null)
         var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         drawable?.let {
             bitmap = Bitmap.createBitmap(it.intrinsicWidth, it.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas =  Canvas(bitmap)
+            val canvas = Canvas(bitmap)
             it.setBounds(0, 0, canvas.width, canvas.height)
             it.draw(canvas)
         }

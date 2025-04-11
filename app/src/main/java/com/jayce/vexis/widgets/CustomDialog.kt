@@ -7,8 +7,8 @@ import android.widget.Button
 import androidx.viewbinding.ViewBinding
 
 class CustomDialog<T : ViewBinding>(
-    mContext:Context,
-    var viewBinding: T
+    mContext: Context,
+    var viewBinding: T,
 ) : SimpleDialog(mContext) {
     init {
         super.binding.apply {
@@ -26,16 +26,16 @@ class CustomDialog<T : ViewBinding>(
 
     fun setCustomRightButton(
         text: String = "确定",
-        onPositiveClick: (T, Dialog) -> Unit
+        onPositiveClick: (T, Dialog) -> Unit,
     ) {
         setButton(binding.yes, text, onPositiveClick)
     }
 
     private fun setButton(
         button: Button,
-        text:String,
+        text: String,
         onClick: (T, Dialog) -> Unit,
-    ){
+    ) {
         button.visibility = View.VISIBLE
         button.setText(text)
         button.setOnClickListener { onClick(viewBinding, this) }

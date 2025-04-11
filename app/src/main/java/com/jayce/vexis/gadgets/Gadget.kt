@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
 import com.jayce.vexis.gadgets.gomoku.GomokuActivity
-import com.jayce.vexis.gadgets.sheet.PokerSheet
 import com.jayce.vexis.gadgets.maze.MazeActivity
+import com.jayce.vexis.gadgets.sheet.PokerSheet
 
 class Gadget : BaseFragment() {
     override fun onCreateView(

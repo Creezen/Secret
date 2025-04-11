@@ -1,14 +1,14 @@
 package com.jayce.vexis.member.manage
 
-import android.os.Build
-import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
+import android.os.Build
+import android.os.Bundle
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
+import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.member.UserService
 import kotlinx.coroutines.launch
 
@@ -41,7 +41,7 @@ class ActiveDataActivity : BaseActivity() {
                 setAdministrator.setOnClickListener {
                     lifecycleScope.launch {
                         activeItem?.let {
-                           manageUser(1, it.userID)
+                            manageUser(1, it.userID)
                         }
                     }
                 }
@@ -56,7 +56,10 @@ class ActiveDataActivity : BaseActivity() {
         }
     }
 
-    private suspend fun manageUser(operation: Int, userId: String) {
+    private suspend fun manageUser(
+        operation: Int,
+        userId: String,
+    ) {
         activeItem?.let {
             lifecycleScope.launch {
                 val awaitMap = create<UserService>()

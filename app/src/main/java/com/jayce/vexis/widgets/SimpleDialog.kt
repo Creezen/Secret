@@ -68,7 +68,7 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
     ) {
         button.visibility = View.VISIBLE
         button.text = text
-        button.setOnClickListener { onClick(binding.message,this) }
+        button.setOnClickListener { onClick(binding.message, this) }
     }
 
     fun setVisible(viewType: Int) {
@@ -79,7 +79,6 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
             LEFT_BUTTON_INVISIBLE -> binding.no.visibility = View.GONE
             RIGHT_BUTTON_VISIBLE -> binding.yes.visibility = View.VISIBLE
             RIGHT_BUTTON_INVISIBLE -> binding.yes.visibility = View.GONE
-
         }
     }
 }

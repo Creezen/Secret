@@ -10,17 +10,21 @@ import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 import com.jayce.vexis.gadgets.sheet.PokerSheet.Companion.INIT_USER_COUNT
 
-class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(context, attr) {
+class ScoreInsertEntryView(
+    context: Context,
+    attr: AttributeSet?,
+) : LinearLayout(context, attr) {
     var binding: PocketUsernameItemLayoutBinding
     private var position: Int = 0
-    private var func: ((Int, String)-> Unit)? = null
+    private var func: ((Int, String) -> Unit)? = null
 
     init {
-        binding = PocketUsernameItemLayoutBinding.inflate(
-            LayoutInflater.from(context),
-            this,
-            true,
-        )
+        binding =
+            PocketUsernameItemLayoutBinding.inflate(
+                LayoutInflater.from(context),
+                this,
+                true,
+            )
         binding.baseRoot = this
     }
 
@@ -30,7 +34,7 @@ class ScoreInsertEntryView(context: Context, attr: AttributeSet?): LinearLayout(
         }
     }
 
-    fun setTextChange(function: (Int, String)-> Unit) {
+    fun setTextChange(function: (Int, String) -> Unit) {
         this.func = function
     }
 

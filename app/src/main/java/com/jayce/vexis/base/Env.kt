@@ -17,8 +17,8 @@ class Env : Application() {
 
     private val globalReceiver = GlobalReceiver()
 
-    private val filter = IntentFilter()
-        .apply {
+    private val filter =
+        IntentFilter().apply {
             addAction(BROAD_LOGOUT)
             addAction(BROAD_NOTIFY)
             addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
@@ -28,9 +28,10 @@ class Env : Application() {
         super.onCreate()
         BaseTool.register(applicationContext)
 
-        val font = AndroidTool.readPrefs {
-            it.getString("font", "华文行楷")
-        }
+        val font =
+            AndroidTool.readPrefs {
+                it.getString("font", "华文行楷")
+            }
         setFont(font as String)
         registerReceiver(globalReceiver, filter, RECEIVER_NOT_EXPORTED)
     }

@@ -14,7 +14,7 @@ import kotlin.math.absoluteValue
 class PaintView(
     context: Context,
     attributeSet: AttributeSet,
-): View(context, attributeSet) {
+) : View(context, attributeSet) {
     private val paint = Paint()
     private var ballX = 500f
     private var ballY = 500f
@@ -35,19 +35,19 @@ class PaintView(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when(event.actionMasked) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 previewX = event.x
                 previewY = event.y
-                pointCount ++
+                pointCount++
                 previewAction = event.actionMasked
             }
             MotionEvent.ACTION_UP -> {
-                pointCount --
+                pointCount--
                 if (pointCount >= 1) {
                     return true
                 }
-                if(previewAction == MotionEvent.ACTION_POINTER_UP) {
+                if (previewAction == MotionEvent.ACTION_POINTER_UP) {
                     return true
                 }
                 handleClickPoint(event.x, event.y)
@@ -74,7 +74,7 @@ class PaintView(
                 if (abs(previewDistinct - distanceNow) < 50) {
                     return true
                 }
-                radis *= distanceNow/previewDistinct
+                radis *= distanceNow / previewDistinct
                 if (radis > 800) radis = 800f
                 if (radis < 20) radis = 20f
                 previewDistinct = distanceNow

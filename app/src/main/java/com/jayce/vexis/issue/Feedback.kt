@@ -9,18 +9,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import com.jayce.vexis.base.BaseFragment
+import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import kotlinx.coroutines.launch
 
-class Feedback: BaseFragment() {
+class Feedback : BaseFragment() {
     private lateinit var binding: ActivityFeedbackBinding
     private val feedbackItemList = arrayListOf<FeedbackItem>()
     private val feedbackAdapter by lazy {
         FeedbackAdapter(requireActivity(), feedbackItemList)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         binding = ActivityFeedbackBinding.inflate(inflater)
         initView()
         return binding.root
@@ -32,7 +36,7 @@ class Feedback: BaseFragment() {
     }
 
     private fun initView() {
-        with (binding){
+        with(binding) {
             floatingBtn.setOnClickListener {
                 startActivity(Intent(activity, FeedbackEditActivity::class.java))
             }
@@ -43,9 +47,10 @@ class Feedback: BaseFragment() {
 
     private fun updateData() {
         lifecycleScope.launch {
-            val feedbackRes = NetTool.create<FeedbackService>()
-                .getFeedback()
-                .await()
+            val feedbackRes =
+                NetTool.create<FeedbackService>()
+                    .getFeedback()
+                    .await()
             val list = feedbackRes["items"] ?: arrayListOf()
             feedbackItemList.clear()
             feedbackItemList.addAll(list)

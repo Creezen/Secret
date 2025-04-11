@@ -16,6 +16,7 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
     companion object {
         const val TAG = "HistoricalAxis"
     }
+
     private lateinit var binding: TimeLineBinding
     private val eventHandle by lazy {
         ClickHandle(ClickHandle.Mode.LISTENER)
@@ -48,12 +49,12 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(TAG,"onPinchIn  $viewId  $scaleFactor")
-        if(viewId == "base") {
+        Log.d(TAG, "onPinchIn  $viewId  $scaleFactor")
+        if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth
             val measuredHeight = binding.center.measuredHeight
-            if(ratio < 0) {
+            if (ratio < 0) {
                 ratio = measuredWidth.toFloat() / measuredHeight.toFloat()
             }
             param.height = (measuredHeight.toFloat() * scaleFactor).toInt()
@@ -68,8 +69,8 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(TAG,"onPinchOut   $viewId  $scaleFactor")
-        if(viewId == "base") {
+        Log.d(TAG, "onPinchOut   $viewId  $scaleFactor")
+        if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth
             val measuredHeight = binding.center.measuredHeight

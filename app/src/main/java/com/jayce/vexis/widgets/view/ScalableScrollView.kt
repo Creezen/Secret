@@ -8,7 +8,7 @@ import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 
-class ScalableScrollView(context: Context, attr: AttributeSet): ScrollView(context, attr), SwipeCallback {
+class ScalableScrollView(context: Context, attr: AttributeSet) : ScrollView(context, attr), SwipeCallback {
     private val handle by lazy {
         ClickHandle(ClickHandle.Mode.INTERCEPT)
     }
@@ -28,14 +28,14 @@ class ScalableScrollView(context: Context, attr: AttributeSet): ScrollView(conte
 
     override fun onPinchIn(
         viewId: String,
-        scaleFactor: Float
+        scaleFactor: Float,
     ): Boolean {
         return false
     }
 
     override fun onPinchOut(
         viewId: String,
-        scaleFactor: Float
+        scaleFactor: Float,
     ): Boolean {
         return false
     }

@@ -15,8 +15,8 @@ import com.jayce.vexis.onlineUser
 class FeedbackAdapter(
     val context: Context,
     val feedbackItemList: List<FeedbackItem>,
-): RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
-    class ViewHolder(val binding: FeedbackItemBinding): RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
+    class ViewHolder(val binding: FeedbackItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val head = binding.head
         val nickname = binding.nickname
@@ -29,12 +29,18 @@ class FeedbackAdapter(
         val againstCount = binding.againstCount
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val binding = FeedbackItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val item = feedbackItemList[position]
         holder.nickname.text = item.userName
         holder.time.text = item.createTime.toTime()

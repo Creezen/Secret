@@ -37,7 +37,7 @@ class ScoreBoard : AppCompatActivity() {
     private val userList = ArrayList<String>()
     private val scoreList = ArrayList<RecordBean>()
     private val totalScoreList = ArrayList<Int>()
-    private val adapter by lazy{
+    private val adapter by lazy {
         RecordAdapter(scoreList)
     }
     private val scoreDao by lazy {
@@ -56,13 +56,13 @@ class ScoreBoard : AppCompatActivity() {
     private fun initData() {
         userList.clear()
         val list = intent.getStringArrayListExtra("userData")
-        Log.e("TAG","get data: $list")
+        Log.e("TAG", "get data: $list")
         intent.getStringArrayListExtra("userData")?.let { userNames ->
             userList.addAll(
-                userNames.filter { it.isNotEmpty() }.toSet()
+                userNames.filter { it.isNotEmpty() }.toSet(),
             )
         }
-        Log.e("TAG","$userList")
+        Log.e("TAG", "$userList")
         repeat(userList.size) {
             totalScoreList.add(0)
         }
@@ -76,17 +76,17 @@ class ScoreBoard : AppCompatActivity() {
             titleTv.text = title
             createTime = intent.getLongExtra("time", 0).toTime()
             timeTv.text = createTime
-            userList.forEach{ name ->
+            userList.forEach { name ->
                 playerName.addSimpleView(name, WIDTH)
                 totalScore.addSimpleView("0", WIDTH)
             }
             addUser.setOnClickListener {
                 CustomDialog(
                     this@ScoreBoard,
-                    AddRecordUserBinding.inflate(layoutInflater)
-                ).apply{
+                    AddRecordUserBinding.inflate(layoutInflater),
+                ).apply {
                     setTitle("添加角色")
-                    setCustomLeftButton{ _, _ ->
+                    setCustomLeftButton { _, _ ->
                         dismiss()
                     }
                     setCustomRightButton("添加") { bind, _ ->
@@ -108,7 +108,7 @@ class ScoreBoard : AppCompatActivity() {
             addRecord.setOnClickListener {
                 CustomDialog(
                     this@ScoreBoard,
-                    AddRecordDialogBinding.inflate(layoutInflater)
+                    AddRecordDialogBinding.inflate(layoutInflater),
                 ).apply {
                     val rv = viewBinding.scoreRv
                     rv.layoutManager = LinearLayoutManager(this@ScoreBoard)
@@ -165,13 +165,13 @@ class ScoreBoard : AppCompatActivity() {
             val totalStr = StringBuilder()
             userList.forEachIndexed { i, v ->
                 userStr.append(v)
-                if(i != userList.size - 1) {
+                if (i != userList.size - 1) {
                     userStr.append("$")
                 }
             }
             totalScoreList.forEachIndexed { i, v ->
                 totalStr.append(v)
-                if(i != totalScoreList.size - 1) {
+                if (i != totalScoreList.size - 1) {
                     totalStr.append("$")
                 }
             }

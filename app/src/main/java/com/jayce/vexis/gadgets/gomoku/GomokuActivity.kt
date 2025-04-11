@@ -14,9 +14,5 @@ class GomokuActivity : BaseActivity() {
         initPage()
     }
 
-    private fun initPage() {
-        with(binding) {
-
-        }
-    }
+    private fun initPage() {}
 }

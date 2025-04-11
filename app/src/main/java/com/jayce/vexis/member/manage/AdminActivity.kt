@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.base.BaseActivity
-import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.databinding.ActivityAdminBinding
+import com.jayce.vexis.member.ActiveItem
 import com.jayce.vexis.member.UserService
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AdminActivity: BaseActivity() {
+class AdminActivity : BaseActivity() {
     private lateinit var binding: ActivityAdminBinding
     private val userList = arrayListOf<ActiveItem>()
     private val adapter by lazy {
@@ -38,13 +38,14 @@ class AdminActivity: BaseActivity() {
 
     private fun initData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val remoteList = NetTool.create<UserService>()
-                .getAllUser()
-                .await()
+            val remoteList =
+                NetTool.create<UserService>()
+                    .getAllUser()
+                    .await()
             val remoteRes = remoteList["userActiveData"] ?: listOf()
             val originSize = userList.size
             userList.addAll(remoteRes)
-            Log.e("AdminActivity.initData","$userList")
+            Log.e("AdminActivity.initData", "$userList")
             launch(Dispatchers.Main) {
                 adapter.notifyItemRangeInserted(originSize, remoteRes.size)
             }

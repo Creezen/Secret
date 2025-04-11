@@ -7,27 +7,34 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.intMsg
 import com.jayce.vexis.databinding.AddRecordScoreBinding
 
-class ScoreInsertAdapter(private val list: ArrayList<String>): RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>()  {
-    private val scoreList = arrayListOf<Int>().apply {
-        repeat(list.size) {
-            add(0)
+class ScoreInsertAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>() {
+    private val scoreList =
+        arrayListOf<Int>().apply {
+            repeat(list.size) {
+                add(0)
+            }
+            Log.e("ScoreInsertAdapter.", "scoreList.size:  ${this.size}")
         }
-        Log.e("ScoreInsertAdapter.","scoreList.size:  ${this.size}")
-    }
 
-    class ViewHolder(val binding: AddRecordScoreBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: AddRecordScoreBinding) : RecyclerView.ViewHolder(binding.root) {
         val userName = binding.userName
         val add = binding.add
         val sub = binding.sub
         val edit = binding.edit
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder {
         val binding = AddRecordScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         val item = list[position]
         holder.apply {
             edit.setText("0")

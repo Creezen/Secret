@@ -67,40 +67,47 @@ class MediaUploadActivity : BaseActivity() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(this@MediaUploadActivity, delayMillis = 5000L, lifecycleJob = object : LifecycleJob{
-                    override suspend fun onDispatch() {
-                        val filePart = buildFileMultipart(filePath, "file")
-                        val result = NetTool.create<MediaService>().uploadFile(
-                            fileName,
-                            fileID,
-                            fileSuffix,
-                            description,
-                            illustrate,
-                            fileSize,
-                            uploadTime,
-                            filePart,
-                        ).await()
-                        if(result["loadResult"] == true) {
-                            finish()
-                        }
-                    }
-                })
+                workInDispatch(
+                    this@MediaUploadActivity,
+                    delayMillis = 5000L,
+                    lifecycleJob =
+                        object : LifecycleJob {
+                            override suspend fun onDispatch() {
+                                val filePart = buildFileMultipart(filePath, "file")
+                                val result =
+                                    NetTool.create<MediaService>().uploadFile(
+                                        fileName,
+                                        fileID,
+                                        fileSuffix,
+                                        description,
+                                        illustrate,
+                                        fileSize,
+                                        uploadTime,
+                                        filePart,
+                                    ).await()
+                                if (result["loadResult"] == true) {
+                                    finish()
+                                }
+                            }
+                        },
+                )
             }
         }
     }
 
     override fun registerLauncher() {
-        fileLaunch = getLauncher(openFile()) {
-            it?.let { uri ->
-                val filePath = getFilePathByUri(uri)
-                if (filePath.isNullOrEmpty()) {
-                    return@let
+        fileLaunch =
+            getLauncher(openFile()) {
+                it?.let { uri ->
+                    val filePath = getFilePathByUri(uri)
+                    if (filePath.isNullOrEmpty()) {
+                        return@let
+                    }
+                    selectedFilePath = filePath
+                    val splitIdex = filePath.lastIndexOf(SPLIT)
+                    val displayFileName = filePath.substring(splitIdex + 1)
+                    binding.selectedFile.setText(displayFileName)
                 }
-                selectedFilePath = filePath
-                val splitIdex = filePath.lastIndexOf(SPLIT)
-                val displayFileName = filePath.substring(splitIdex + 1)
-                binding.selectedFile.setText(displayFileName)
             }
-        }
     }
 }

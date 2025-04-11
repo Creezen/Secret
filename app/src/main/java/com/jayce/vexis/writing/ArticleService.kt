@@ -9,12 +9,16 @@ import retrofit2.http.POST
 interface ArticleService {
     @POST("/postSynergy")
     @FormUrlEncoded
-    fun postSynergy(@Field("paragraphs") paragraphs: List<String>) : Call<Boolean>
+    fun postSynergy(
+        @Field("paragraphs") paragraphs: List<String>,
+    ): Call<Boolean>
 
     @POST("/getSynergy")
     fun getArticle(): Call<ArrayList<ArticleBean>>?
 
     @POST("getArticle")
     @FormUrlEncoded
-    fun getParagraphs(@Field("synergyId") synergyId: Long): Call<ArrayList<ParagraphCommandBean>>?
+    fun getParagraphs(
+        @Field("synergyId") synergyId: Long,
+    ): Call<ArrayList<ParagraphCommandBean>>?
 }

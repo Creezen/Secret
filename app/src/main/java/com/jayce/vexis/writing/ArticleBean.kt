@@ -6,5 +6,5 @@ data class ArticleBean(
     var title: String = "",
     var createTime: Long = 0,
     var updateTime: Long = 0,
-    var favor: Long = 0
+    var favor: Long = 0,
 )
