@@ -84,23 +84,12 @@
                 android:gravity="center"
                 android:textSize="15sp"/>
         </LinearLayout>
-        <LinearLayout
+        <ImageView
+            android:id="@+id/against"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/against"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/accept"
-                android:scaleType="fitCenter"/>
-            <TextView
-                android:id="@+id/againstCount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="15sp"/>
-        </LinearLayout>
+            android:layout_weight="1"
+            android:src="@drawable/accept"
+            android:scaleType="fitCenter"/>
     </LinearLayout>
 </LinearLayout>

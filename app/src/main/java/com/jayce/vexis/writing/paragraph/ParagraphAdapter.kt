@@ -35,6 +35,7 @@ class ParagraphAdapter(
             AddCommentLayoutBinding.inflate(activity.layoutInflater),
         ).apply {
             setTitle("留言")
+            setCancel(true)
             viewBinding.singleSelect.setChildLayout(list)
         }
     }

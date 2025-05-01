@@ -11,6 +11,7 @@ interface ArticleService {
     @FormUrlEncoded
     fun postSynergy(
         @Field("paragraphs") paragraphs: List<String>,
+        @Field("userID") userID: String
     ): Call<Boolean>
 
     @POST("/getSynergy")

@@ -1,4 +1,4 @@
-package com.jayce.vexis.issue
+package com.jayce.vexis.feedback
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -26,7 +26,6 @@ class FeedbackAdapter(
         val support = binding.support
         val supportCount = binding.supportCount
         val against = binding.against
-        val againstCount = binding.againstCount
     }
 
     override fun onCreateViewHolder(
@@ -47,7 +46,6 @@ class FeedbackAdapter(
         holder.title.text = item.title
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
-        holder.againstCount.text = "${item.against}"
 
         val avatarTimestamp = AndroidTool.readPrefs {
             it.getLong("cursorTime", 0)

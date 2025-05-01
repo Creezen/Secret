@@ -84,7 +84,7 @@
             android:name=".chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".issue.FeedbackEditActivity"
+            android:name=".feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
             android:name=".exchange.media.MediaDetailActivity"

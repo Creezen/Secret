@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.registerSwipeEvent
+import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
@@ -42,6 +44,11 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
     private fun initView() {
         with(binding) {
             base.registerSwipeEvent("base", eventHandle, this@HistoricalAxis)
+            left.init(0, 2524608000000) {
+                it.timeStamp.toTime().toast()
+            }
+            left.addTraceCell(System.currentTimeMillis())
+            left.addTraceCell(System.currentTimeMillis() - 30 * 31536000000)
         }
     }
 

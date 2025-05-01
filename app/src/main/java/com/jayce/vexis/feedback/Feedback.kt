@@ -1,4 +1,4 @@
-package com.jayce.vexis.issue
+package com.jayce.vexis.feedback
 
 import android.content.Intent
 import android.os.Bundle
@@ -54,7 +54,7 @@ class Feedback : BaseFragment() {
             val list = feedbackRes["items"] ?: arrayListOf()
             feedbackItemList.clear()
             feedbackItemList.addAll(list)
-            feedbackAdapter.notifyDataSetChanged()
+            feedbackAdapter.notifyItemRangeChanged(0, list.size)
         }
     }
 }

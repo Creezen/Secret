@@ -1,7 +1,6 @@
-package com.jayce.vexis.issue
+package com.jayce.vexis.feedback
 
 import android.os.Bundle
-import android.util.Log
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.NetTool.await
@@ -51,7 +50,6 @@ class FeedbackEditActivity : BaseActivity() {
                         },
                 )
             }
-            Log.e("FeedbackEditActivity.initView", "click")
         }
     }
 }

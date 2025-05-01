@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 
 class Article : BaseFragment() {
     private lateinit var binding: FragmentSynergyBinding
@@ -47,7 +47,7 @@ class Article : BaseFragment() {
     }
 
     private fun initData() {
-        lifecycleScope.launch {
+        ThreadTool.runOnMulti(Dispatchers.Main) {
             val result =
                 create<ArticleService>()
                     .getArticle()

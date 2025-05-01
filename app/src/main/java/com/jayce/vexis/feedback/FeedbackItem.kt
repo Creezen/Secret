@@ -1,4 +1,4 @@
-package com.jayce.vexis.issue
+package com.jayce.vexis.feedback
 
 data class FeedbackItem(
     val feedbackID: String,

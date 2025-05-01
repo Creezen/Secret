@@ -9,6 +9,7 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
+import com.jayce.vexis.onlineUser
 import kotlinx.coroutines.launch
 
 class ArticleEditActivity : BaseActivity() {
@@ -27,7 +28,7 @@ class ArticleEditActivity : BaseActivity() {
             lifecycleScope.launch {
                 val uploadResult =
                     create<ArticleService>()
-                        .postSynergy(paragraphs)
+                        .postSynergy(paragraphs, onlineUser.userId)
                         .await()
                 if (uploadResult) {
                     finish()

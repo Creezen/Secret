@@ -25,7 +25,7 @@ import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.exchange.ExchangeActivity
 import com.jayce.vexis.gadgets.Gadget
 import com.jayce.vexis.history.HistoricalAxis
-import com.jayce.vexis.issue.Feedback
+import com.jayce.vexis.feedback.Feedback
 import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.member.dashboard.HomePage
 import com.jayce.vexis.widgets.SimpleDialog
