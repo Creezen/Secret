@@ -41,12 +41,12 @@
                     android:gravity="center"
                     android:textSize="20sp"
                     android:textColor="#CDBC54"
-                    android:layout_marginEnd="3dp"/>
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginStart="3dp"/>
                 <TextView
                     android:id="@+id/id"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:gravity="start|center"
                     android:textSize="20sp"
                     android:textColor="#00ff00"/>

@@ -14,9 +14,15 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:textColor="#00ff00"/>
+            android:gravity="start|center"
+            android:textSize="20sp"
+            android:textColor="#6600ff00"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:scrollHorizontally="true"/>
         <TextView
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -50,5 +56,6 @@
     <ExpandableListView
         android:id="@+id/expView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:groupIndicator="@null"/>
 </LinearLayout>

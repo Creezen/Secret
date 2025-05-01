@@ -77,5 +77,5 @@ class MediaDetailAdapter(
         return view
     }
 
-    // todo SpannableStringBuilder
+    // TODO SpannableStringBuilder
 }

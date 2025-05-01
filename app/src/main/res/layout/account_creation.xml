@@ -85,7 +85,6 @@
                         android:text="@={activity.accountLiveData}"
                         android:hint="@string/this_message_login_id"
                         android:textColor="@{accountCode == 0 ? 0xFF00FF00 : 0xFF000000}"
-                        android:textColorHint="@color/hint"
                         android:background="@drawable/corner_8"
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
@@ -375,7 +374,6 @@
                             android:paddingStart="@dimen/margin"
                             android:paddingEnd="0dp"
                             android:layout_marginEnd="@dimen/margin"
-                            android:textColorHint="@color/hint"
                             android:importantForAutofill="no"
                             android:inputType="textEmailAddress"/>
                         <com.jayce.vexis.widgets.DefaultSpinner
@@ -413,7 +411,6 @@
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
                         android:paddingEnd="0dp"
-                        android:textColorHint="@color/hint"
                         android:hint="@string/choose_fill"
                         android:importantForAutofill="no"
                         android:inputType="phone"/>
@@ -441,7 +438,6 @@
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
                         android:paddingEnd="0dp"
-                        android:textColorHint="@color/hint"
                         android:hint="@string/choose_fill"
                         android:importantForAutofill="no"
                         android:inputType="none"/>
@@ -469,11 +465,10 @@
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
                         android:paddingEnd="0dp"
-                        android:textColorHint="@color/hint"
                         android:gravity="top|start"
                         android:hint="@string/choose_fill"
                         android:lines="8"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
                         android:text="@={activity.introductionLiveData}"/>
                 </LinearLayout>
                 <TextView

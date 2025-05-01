@@ -24,6 +24,7 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
 import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.SoundTool.playShortSound
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.Main
 import com.jayce.vexis.R
@@ -56,7 +57,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun getNewestVersion() {
-        lifecycleScope.launch {
+        ThreadTool.runOnMulti(Dispatchers.Main) {
             val versionInfo =
                 NetTool.create<PackageService>()
                     .getVersion()
