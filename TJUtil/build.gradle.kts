@@ -157,13 +157,11 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
-
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation("com.google.code.gson:gson:2.10.1")
-
     implementation("com.tencent:mmkv:2.0.2")
+    implementation("org.yaml:snakeyaml:2.4")
 
     embed("com.creezen.tool.commontool:tools:1.0.0")
-
     lintPublish("com.creezen.tool.lint:lintTool:1.0.0@jar")
 }

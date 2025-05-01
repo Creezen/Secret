@@ -183,20 +183,15 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-
     implementation("androidx.room:room-runtime:2.5.2")
     kapt("androidx.room:room-compiler:2.5.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-
     implementation("com.alibaba:fastjson:2.0.40")
     implementation("com.github.bumptech.glide:glide:4.15.1")
-
     implementation("com.github.stuxuhai:jpinyin:1.1.7")
-
     implementation("q.rorbin:badgeview:1.1.3")
 
     testImplementation("junit:junit:4.13.2")

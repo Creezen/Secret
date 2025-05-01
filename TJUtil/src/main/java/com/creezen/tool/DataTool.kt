@@ -4,6 +4,10 @@ import android.util.Log
 import android.view.MotionEvent
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import org.yaml.snakeyaml.LoaderOptions
+import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.constructor.Construct
+import org.yaml.snakeyaml.constructor.Constructor
 import java.lang.reflect.Type
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -50,4 +54,15 @@ object DataTool {
     fun Any.toJson() = dataToJson(this)
 
     inline fun <reified T> String.toData() = jsonToData<T>(this)
+
+    inline fun <reified T> loadDataFromYAML(path: String): T? {
+        kotlin.runCatching {
+            val yaml = Yaml(Constructor(T::class.java, LoaderOptions()))
+            val source = BaseTool.env().resources.assets.open("yaml/$path.yaml")
+            val values = yaml.load<T>(source)
+            source.close()
+            return values
+        }
+        return null
+    }
 }

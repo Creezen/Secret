@@ -3,6 +3,7 @@ package com.jayce.vexis.login
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.util.Log
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +17,11 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.BaseTool.restartApp
+import com.creezen.tool.Constant
 import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.Constant.BASE_SOCKET_PATH
 import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
+import com.creezen.tool.DataTool
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
@@ -33,6 +36,7 @@ import com.jayce.vexis.member.UserService
 import com.jayce.vexis.member.register.RegisterActivity
 import com.jayce.vexis.onlineUser
 import com.jayce.vexis.widgets.animator.MyCustomTransformer
+import com.jayce.vexis.widgets.bean.SubjectTable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -40,6 +44,11 @@ import org.json.JSONObject
 import java.net.Socket
 
 class Login : AppCompatActivity() {
+
+    companion object {
+        const val TAG = "Login"
+    }
+
     private lateinit var binding: ActivityLoginBinding
     private val list = arrayListOf<String>()
     private val picAdapter by lazy {

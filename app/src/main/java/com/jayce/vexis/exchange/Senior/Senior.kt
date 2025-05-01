@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.tool.Constant.getPrimarySubjectList
-import com.creezen.tool.Constant.getSecondSubjectList
-import com.creezen.tool.Constant.getTertiarySubjectList
+import com.creezen.tool.DataTool
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
+import com.jayce.vexis.widgets.bean.SubjectTable
 
 class Senior : BaseFragment() {
-    private val primaryList = getPrimarySubjectList()
-    private val secondaryList = getSecondSubjectList()
-    private val tertiaryList = getTertiarySubjectList()
+    private lateinit var primaryList: List<String>
+    private lateinit var secondaryList: List<List<String>>
+    private lateinit var tertiaryList: List<List<List<String>>>
 
     private lateinit var binding: SageFragmentBinding
 
@@ -23,8 +22,16 @@ class Senior : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = SageFragmentBinding.inflate(inflater)
+        initData()
         initView()
         return binding.root
+    }
+
+    private fun initData() {
+        val subjectTable = DataTool.loadDataFromYAML<SubjectTable>("SubjectTable") ?: return
+        primaryList = subjectTable.discipline
+        secondaryList = subjectTable.category
+        tertiaryList = subjectTable.major
     }
 
     private fun initView() {
