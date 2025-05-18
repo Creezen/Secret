@@ -24,9 +24,7 @@ class ParagraphAdapter(
 ) : RecyclerView.Adapter<ParagraphAdapter.ViewHolder>() {
     private val list =
         arrayListOf(
-            "富强", "民主", "文明", "和谐",
-            "自由", "平等", "公正", "法治",
-            "爱国", "敬业", "诚信", "友善",
+            "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
         )
 
     private val dialog by lazy {
@@ -36,7 +34,9 @@ class ParagraphAdapter(
         ).apply {
             setTitle("留言")
             setCancel(true)
-            viewBinding.singleSelect.setChildLayout(list)
+            viewBinding.singleSelect.setChildLayout(list) {
+                viewBinding.commentContent.hint = it
+            }
         }
     }
 
@@ -100,8 +100,9 @@ class ParagraphAdapter(
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 dismiss()
             }
-            setCustomRightButton("提交") { _, _ ->
+            setCustomRightButton("提交") { binding, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
+                binding.commentContent.text.toast()
                 dismiss()
             }
             show()

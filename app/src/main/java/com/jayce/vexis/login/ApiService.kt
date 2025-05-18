@@ -1,7 +1,7 @@
 package com.jayce.vexis.login
 
-import com.creezen.tool.Constant.DICTIONARY_API_APPID
-import com.creezen.tool.Constant.DICTIONARY_API_APPSECRET
+import com.jayce.vexis.Constant.DICTIONARY_API_APPID
+import com.jayce.vexis.Constant.DICTIONARY_API_APPSECRET
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

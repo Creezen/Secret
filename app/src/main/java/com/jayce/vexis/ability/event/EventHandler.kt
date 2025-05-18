@@ -7,7 +7,7 @@ import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.broadcastByAction
-import com.creezen.tool.Constant.BROAD_NOTIFY
+import com.jayce.vexis.Constant.BROAD_NOTIFY
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 

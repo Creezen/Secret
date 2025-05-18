@@ -32,6 +32,8 @@ object ThreadTool {
 
     private val scopeMap = HashMap<String, CoroutineScope>()
 
+    fun init() {}
+
     fun runOnSingle(
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
         func: suspend () -> Unit

@@ -29,6 +29,8 @@ import kotlinx.coroutines.withTimeoutOrNull
 
 object AndroidTool {
 
+    fun init() {}
+
     private val prefs by lazy {
         env().getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
     }

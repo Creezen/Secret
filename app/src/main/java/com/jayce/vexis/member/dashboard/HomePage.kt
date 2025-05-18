@@ -9,11 +9,11 @@ import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.writePrefs
-import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
+import com.jayce.vexis.Constant.BASE_FILE_PATH
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.HomePageBinding

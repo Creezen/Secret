@@ -12,6 +12,8 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
+apply("${rootProject.projectDir}/config.gradle")
+
 repositories {
     google()
     mavenCentral()
@@ -40,11 +42,23 @@ android {
                 "proguard-rules.pro",
             )
             signingConfig = signingConfigs.getByName("debug")
+            buildConfigField("String", "baseUrl", "${project.ext["localUrl"]}")
+            buildConfigField("String", "socketUrl", "${project.ext["localSocketPath"]}")
+            buildConfigField("Integer", "socketPort", "${project.ext["localSocketPort"]}")
         }
 
-        create("mock") {
+        debug {
+            buildConfigField("String", "baseUrl", "${project.ext["localUrl"]}")
+            buildConfigField("String", "socketUrl", "${project.ext["localSocketPath"]}")
+            buildConfigField("Integer", "socketPort", "${project.ext["localSocketPort"]}")
+        }
+
+        create("cloud") {
             isDebuggable = true
             signingConfig = signingConfigs.getByName("debug")
+            buildConfigField("String", "baseUrl", "${project.ext["cloudUrl"]}")
+            buildConfigField("String", "socketUrl", "${project.ext["cloudSocketPath"]}")
+            buildConfigField("Integer", "socketPort", "${project.ext["cloudSocketPort"]}")
         }
     }
 
@@ -58,6 +72,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
     lint {
         baseline = file("lint-baseline.xml")

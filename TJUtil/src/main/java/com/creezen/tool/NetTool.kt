@@ -4,26 +4,22 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.widget.ImageView
-import androidx.lifecycle.LifecycleOwner
 import com.bumptech.glide.Glide
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.Key
+import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.Constant.BASE_SOCKET_PATH
-import com.creezen.tool.Constant.BASE_URL
-import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
+import com.creezen.tool.bean.InitParam
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
@@ -41,30 +37,39 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.File
+import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.Socket
 import java.util.Arrays
 import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Future
-import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
+import javax.net.ssl.HostnameVerifier
 import kotlin.coroutines.resume
 
 object NetTool {
 
     private const val TAG = "NetTool"
 
-    private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
-    private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
-
+    private lateinit var baseUrl: String
+    private lateinit var apiBaseUri: String
+    private var socketPort: Int = 0
+    private lateinit var baseSocketPath: String
     private lateinit var onlineSocket : Socket
     private val socketFlag = AtomicBoolean(true)
-
+    private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
+    private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
     private var socketReader: BufferedReader? = null
-
     private var socketWriter: BufferedWriter? = null
+
+    fun init(initParam: InitParam) {
+        baseUrl = initParam.baseUrl
+        apiBaseUri = initParam.apiBaseUrl
+        baseSocketPath = initParam.baseSocketPath
+        socketPort = initParam.socketPort
+        Glide.get(BaseTool.env()).registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(getOKHTTPClinet()))
+    }
 
     private fun reConnect(msg: String? = null) {
         val future = CompletableFuture<Unit>()
@@ -72,7 +77,7 @@ object NetTool {
             kotlin.runCatching {
                 socketReader = null
                 socketWriter = null
-                onlineSocket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                onlineSocket = Socket(baseSocketPath, socketPort)
                 socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
                 socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
                 Log.d(TAG,"connection OK!")
@@ -116,15 +121,20 @@ object NetTool {
 
     private val okHttp by lazy {
         OkHttpClient.Builder()
+            .hostnameVerifier(HostnameVerifier{ _, _ ->
+                return@HostnameVerifier true
+            })
             .cookieJar(cookieJar)
             .protocols(Arrays.asList(Protocol.HTTP_1_1))
             .readTimeout(60000, TimeUnit.SECONDS)
             .build()
     }
 
+    fun getOKHTTPClinet() = okHttp
+
     val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(baseUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(okHttp)
@@ -133,7 +143,7 @@ object NetTool {
 
     val apiRetrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(Constant.API_BASE_URL)
+            .baseUrl(apiBaseUri)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -192,7 +202,8 @@ object NetTool {
                 }
 
                 override fun onFailure(p0: Call<T>, p1: Throwable) {
-                    "网络请求失败".toast()
+                    Log.d(TAG, "net error: ${p1.message}")
+//                    "网络请求失败".toast()
                 }
             })
         }

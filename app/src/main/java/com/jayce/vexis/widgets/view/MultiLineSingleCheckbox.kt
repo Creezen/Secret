@@ -29,17 +29,18 @@ class MultiLineSingleCheckbox(
         styleAttribute.recycle()
     }
 
-    fun selectedItem(): CheckBox? {
+    fun selectedItem(): String {
         return if (previewSelected < 0) {
-            null
+            ""
         } else {
-            childList[previewSelected]
+            strList[previewSelected]
         }
     }
 
     fun setChildLayout(
         list: ArrayList<String>,
         backgroundId: Int = R.drawable.checkbox_style,
+        onItemSelect: (String) -> Unit
     ) {
         if (isInit) return
         isInit = true
@@ -50,13 +51,14 @@ class MultiLineSingleCheckbox(
         val result = ceil(childItemCount.toDouble() / itemOneLine).toInt()
         layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         for (i in 0 until result) {
-            addLayout(i, backgroundId)
+            addLayout(i, backgroundId, onItemSelect)
         }
     }
 
     private fun addLayout(
         position: Int,
         backgroundId: Int?,
+        onItemSelect: (String) -> Unit,
     ) {
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = HORIZONTAL
@@ -73,6 +75,12 @@ class MultiLineSingleCheckbox(
             child.layoutParams = LayoutParams(0, MATCH_PARENT, 1f)
             child.setOnClickListener {
                 setClickAction(i)
+                val str = if(previewSelected < 0) {
+                    "请输入你的建议..."
+                } else {
+                    "请描述你认为${strList[i]}的理由..."
+                }
+                onItemSelect.invoke(str)
             }
             childList.add(child)
             linearLayout.addView(child)

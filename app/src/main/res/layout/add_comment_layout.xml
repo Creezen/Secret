@@ -2,10 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <com.jayce.vexis.widgets.view.MultiLineSingleCheckbox
         android:id="@+id/singleSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemOneLine="6"/>
+        app:itemOneLine="3"/>
+    <EditText
+        android:id="@+id/commentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="3"
+        android:textSize="15sp"
+        android:hint="请输入你的建议..."
+        android:gravity="start|top"/>
 </LinearLayout>

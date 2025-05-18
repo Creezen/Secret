@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool
-import com.creezen.tool.Constant
 import com.creezen.tool.NetTool
+import com.jayce.vexis.Constant.BASE_FILE_PATH
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.member.dashboard.AvatarSignnature
 import com.jayce.vexis.onlineUser
@@ -53,7 +53,7 @@ class FeedbackAdapter(
         NetTool.setImage(
             context,
             holder.head,
-            "${Constant.BASE_FILE_PATH}head/${onlineUser.userId}.png",
+            "${BASE_FILE_PATH}head/${onlineUser.userId}.png",
             key = AvatarSignnature("key:$avatarTimestamp"),
             isCircle = true
         )

@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -16,9 +17,6 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.BaseTool.restartApp
-import com.creezen.tool.Constant.BASE_FILE_PATH
-import com.creezen.tool.Constant.BASE_SOCKET_PATH
-import com.creezen.tool.Constant.LOCAL_SOCKET_PORT
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
@@ -26,6 +24,10 @@ import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.contract.LifecycleJob
+import com.jayce.vexis.BuildConfig
+import com.jayce.vexis.Constant.BASE_FILE_PATH
+import com.jayce.vexis.Constant.BASE_SOCKET_PATH
+import com.jayce.vexis.Constant.LOCAL_SOCKET_PORT
 import com.jayce.vexis.Main
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ActivityLoginBinding
@@ -37,7 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.net.Socket
+import javax.net.ssl.SSLSocketFactory
 
 class Login : AppCompatActivity() {
 
@@ -59,6 +61,7 @@ class Login : AppCompatActivity() {
         getNewestVersion()
         initView()
         setAnimation()
+        BuildConfig.baseUrl
     }
 
     private fun getNewestVersion() {
@@ -113,12 +116,16 @@ class Login : AppCompatActivity() {
                                     .await()
                             if (!loginResult.containsKey("status")) {
                                 onlineUser = loginResult.map2pojo()
-                                val socket =
-                                    lifecycleScope.async(Dispatchers.IO) {
-                                        Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                                    }.await()
-                                setOnlineSocket(socket)
-                                startActivity(Intent(this@Login, Main::class.java))
+                                kotlin.runCatching {
+                                    val socket =
+                                        lifecycleScope.async(Dispatchers.IO) {
+                                            SSLSocketFactory.getDefault().createSocket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                                        }.await()
+                                    setOnlineSocket(socket)
+                                    startActivity(Intent(this@Login, Main::class.java))
+                                }.onFailure {
+                                    Log.e(TAG, "socket error: ${it.javaClass.simpleName}  $it")
+                                }
                             } else {
                                 val status = loginResult["status"]?.toInt()
                                 if (status == 0) {

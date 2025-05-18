@@ -16,6 +16,8 @@ object DataTool {
 
     const val TAG = "DataTool"
 
+    fun init() {}
+
     fun calculateMultiPointDistance(event: MotionEvent): Float {
         return calculateDistance(
             event.getX(0),

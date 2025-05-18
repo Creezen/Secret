@@ -7,6 +7,8 @@ import com.creezen.tool.BaseTool.env
 
 object SoundTool {
 
+    fun init() {}
+
     private val attribute by lazy {
         AudioAttributes.Builder()
             .setLegacyStreamType(AudioManager.STREAM_MUSIC)

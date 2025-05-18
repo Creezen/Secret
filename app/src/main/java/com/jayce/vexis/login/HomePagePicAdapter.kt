@@ -12,6 +12,10 @@ class HomePagePicAdapter(
     private val context: Context,
     private val list: List<String>,
 ) : RecyclerView.Adapter<HomePagePicAdapter.ViewHolder>() {
+    companion object {
+        const val TAG = "HomePagePicAdapter"
+    }
+
     class ViewHolder(val binding: HomePagePicLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.view
     }
@@ -29,6 +33,7 @@ class HomePagePicAdapter(
         position: Int,
     ) {
         val item = list[position]
+
         Glide.with(context)
             .load(item)
             .placeholder(R.drawable.loading)

@@ -6,8 +6,11 @@ import android.content.IntentFilter
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
-import com.creezen.tool.Constant.BROAD_LOGOUT
-import com.creezen.tool.Constant.BROAD_NOTIFY
+import com.creezen.tool.bean.InitParam
+import com.jayce.vexis.BuildConfig
+import com.jayce.vexis.Constant.API_BASE_URL
+import com.jayce.vexis.Constant.BROAD_LOGOUT
+import com.jayce.vexis.Constant.BROAD_NOTIFY
 import com.jayce.vexis.GlobalReceiver
 
 class Env : Application() {
@@ -26,7 +29,13 @@ class Env : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BaseTool.register(applicationContext)
+        val param = InitParam(
+            BuildConfig.socketPort,
+            BuildConfig.socketUrl,
+            BuildConfig.baseUrl,
+            API_BASE_URL
+        )
+        BaseTool.init(applicationContext, param)
 
         val font =
             AndroidTool.readPrefs {

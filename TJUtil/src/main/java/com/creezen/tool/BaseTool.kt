@@ -4,14 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import com.creezen.tool.bean.InitParam
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
 
     private lateinit var envContext: Context
 
-    fun register(context: Context) {
+    fun init(context: Context, initParam: InitParam) {
         envContext = context
+        AndroidTool.init()
+        DataTool.init()
+        FileTool.init()
+        NetTool.init(initParam)
+        SoundTool.init()
+        ThreadTool.init()
     }
 
     fun env(): Context {

@@ -13,6 +13,8 @@ import java.io.RandomAccessFile
 
 object FileTool {
 
+    fun init() {}
+
     /**
      * 通过Uri获取文件路径
      */

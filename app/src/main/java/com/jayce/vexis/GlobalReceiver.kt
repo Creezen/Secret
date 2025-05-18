@@ -6,9 +6,9 @@ import android.content.Intent
 import android.util.Log
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.writePrefs
-import com.creezen.tool.Constant.BROAD_LOGOUT
-import com.creezen.tool.Constant.BROAD_NOTIFY
 import com.creezen.tool.DataTool.toJson
+import com.jayce.vexis.Constant.BROAD_LOGOUT
+import com.jayce.vexis.Constant.BROAD_NOTIFY
 
 class GlobalReceiver : BroadcastReceiver() {
     companion object {

@@ -1,0 +1,10 @@
+ext {
+    localUrl = "\"https://zrzklsaaov5s.xiaomiqiu.com\""
+    cloudUrl = "\"https://117.72.197.40\""
+
+    localSocketPath = "\"vipvip.xiaomiqiu.com\""
+    cloudSocketPath = "\"117.72.197.40\""
+
+    localSocketPort = 55067
+    cloudSocketPort = 5786
+}

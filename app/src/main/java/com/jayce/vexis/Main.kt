@@ -16,8 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
-import com.creezen.tool.Constant.BASE_FILE_PATH
 import com.creezen.tool.NetTool
+import com.jayce.vexis.Constant.BASE_FILE_PATH
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.chat.ChatActivity
