@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.media
+package com.jayce.vexis.media
 
 import android.content.Intent
 import android.net.Uri

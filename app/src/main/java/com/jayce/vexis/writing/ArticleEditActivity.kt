@@ -6,7 +6,6 @@ import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
-import com.jayce.vexis.Constant.PARAGRAPH_HEAD
 import com.jayce.vexis.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.onlineUser
@@ -44,8 +43,6 @@ class ArticleEditActivity : BaseActivity() {
                 .asSequence()
                 .filterNot {
                     it.isEmpty()
-                }.map {
-                    "$PARAGRAPH_HEAD${it.trim()}"
                 }
         val list = arrayListOf<String>()
         list.addAll(paragraphSequence.toList())

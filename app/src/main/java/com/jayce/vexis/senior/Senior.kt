@@ -1,5 +1,6 @@
-package com.jayce.vexis.exchange.Senior
+package com.jayce.vexis.senior
 
+import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,11 @@ import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.widgets.bean.SubjectTable
 
 class Senior : BaseFragment() {
+
+    companion object {
+        const val TAG = "Senior"
+    }
+
     private lateinit var primaryList: List<String>
     private lateinit var secondaryList: List<List<String>>
     private lateinit var tertiaryList: List<List<List<String>>>
@@ -37,8 +43,8 @@ class Senior : BaseFragment() {
     private fun initView() {
         with(binding) {
             primary.configuration(primaryList) {
-                secondary.refreshData(secondaryList[primary.selectedItemPosition])
-                tertiary.refreshData(tertiaryList[primary.selectedItemPosition][0])
+                secondary.refreshData(secondaryList[it])
+                tertiary.refreshData(tertiaryList[it][0])
                 val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
                 binding.text.text = textShow
             }

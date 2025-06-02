@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginBottom="6dp"
-    android:padding="5dp"
+    android:layout_marginBottom="2dp"
+    android:padding="3dp"
     android:background="#FFFFFF">
     <LinearLayout
         android:layout_width="0dp"
@@ -36,8 +36,10 @@
                 android:id="@+id/size"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="end|center"
-                android:background="#F8F8F8"/>
+                android:gravity="end|top"
+                android:background="#F8F8F8"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="0dp"/>
         </LinearLayout>
         <TextView
             android:id="@+id/uploadTime"

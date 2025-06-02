@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.media
+package com.jayce.vexis.media
 
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody

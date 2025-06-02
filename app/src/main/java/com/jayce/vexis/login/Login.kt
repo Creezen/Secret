@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
+import com.creezen.commontool.Article
 import com.creezen.commontool.CreezenTool.map2pojo
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool
@@ -61,7 +62,6 @@ class Login : AppCompatActivity() {
         getNewestVersion()
         initView()
         setAnimation()
-        BuildConfig.baseUrl
     }
 
     private fun getNewestVersion() {

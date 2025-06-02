@@ -10,6 +10,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:typeface">monospace</item>
         <item name="android:textColorHint">@color/hint</item>
+        <item name="android:windowBackground">#F5ECE0</item>
     </style>
 
     <style name="Dialog" parent="android:style/Theme.Dialog">

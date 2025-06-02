@@ -1,4 +1,4 @@
-package com.jayce.vexis.exchange.media
+package com.jayce.vexis.media
 
 import android.os.Build
 import android.os.Bundle

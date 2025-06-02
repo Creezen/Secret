@@ -8,5 +8,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/paragraphRv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"/>
 </LinearLayout>

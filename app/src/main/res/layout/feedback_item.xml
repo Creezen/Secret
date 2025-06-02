@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:gravity="start|center"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginBottom="2dp"
         android:textColor="#5C6773"/>
@@ -57,7 +57,7 @@
         android:layout_weight="1"
         android:paddingTop="8dp"
         android:layout_gravity="start|top"
-        android:textSize="20sp"
+        android:textSize="12sp"
         android:paddingBottom="5dp"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,30 +65,25 @@
         android:orientation="horizontal"
         android:paddingBottom="8dp"
         android:paddingTop="5dp">
-        <LinearLayout
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/support"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1">
-            <ImageView
-                android:id="@+id/support"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/support"
-                android:scaleType="fitCenter"
-                android:importantForAccessibility="no"/>
-            <TextView
-                android:id="@+id/supportCount"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textSize="15sp"/>
-        </LinearLayout>
+            android:src="@drawable/support"
+            android:scaleType="fitCenter"
+            android:importantForAccessibility="no"/>
+        <TextView
+            android:id="@+id/supportCount"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:layout_marginStart="8dp"/>
         <ImageView
             android:id="@+id/against"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_height="match_parent"
             android:src="@drawable/accept"
             android:scaleType="fitCenter"/>
     </LinearLayout>

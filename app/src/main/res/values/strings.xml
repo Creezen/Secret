@@ -28,8 +28,8 @@
     <string name="choose_fill">选填</string>
     <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
     <string name="register">点击注册</string>
-    <string name="login_name"> </string>
-    <string name="login_password"> </string>
+    <string name="login_name">123456</string>
+    <string name="login_password">123456</string>
     <string name="show_history">查看历史</string>
     <string name="new_record">新建记录</string>
     <string name="pocket_book">记账本</string>
@@ -43,15 +43,15 @@
     <string name="password">密码</string>
     <string name="account">账号</string>
     <string name="from_6_to_18">账户名长度为6至18位</string>
-    <string name="feedback">意见反馈</string>
+    <string name="feedback">建言献策</string>
     <string name="feedback_type">反馈类型</string>
     <string name="feedback_content">详细内容</string>
     <string name="total">总计</string>
     <string name="record">记录</string>
     <string name="input_add_player">输入要添加的玩家…</string>
     <string name="exist">退出</string>
-    <string name="history_timeline">历史事件</string>
-    <string name="local_tool">本地工具箱</string>
+    <string name="history_timeline">时光切片</string>
+    <string name="local_tool">百宝工具</string>
     <string name="knowledge_share">学习交流</string>
     <string name="resource_share">资源共享</string>
     <string name="send_message">发送消息</string>
@@ -65,7 +65,7 @@
     <string name="hub">论坛</string>
     <string name="set_as_admin">设置为管理员</string>
     <string name="delete">删除</string>
-    <string name="synergy">内容共创</string>
+    <string name="synergy">群编共创</string>
     <string name="hint_synergy">输入想查找的标题、内容、作者…</string>
     <string name="toolbar">ToolBar</string>
     <string name="maze">迷宫</string>
@@ -126,4 +126,7 @@
     <string name="user_live_page_info_default">这是用户的社交动态页</string>
     <string name="score">score</string>
     <string name="chat_health">文明发言</string>
+    <string name="scan">扫码</string>
+    <string name="senior">校园智库</string>
+    <string name="file_station">资源驿站</string>
 </resources>

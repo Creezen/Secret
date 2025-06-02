@@ -1,5 +1,6 @@
 package com.jayce.vexis.widgets
 
+import android.util.Log
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ArrayAdapter
@@ -7,6 +8,11 @@ import androidx.appcompat.widget.AppCompatSpinner
 import com.jayce.vexis.R
 
 class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(context, attr) {
+
+    companion object {
+        const val TAG = "DefaultSpinner"
+    }
+
     private var selectCallback: ((Int) -> Unit)? = null
 
     fun onItemSelect() {
@@ -19,7 +25,10 @@ class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(co
         downLayoutId: Int = R.layout.spinner_dropdown,
         onSelect: ((Int) -> Unit)? = null,
     ) {
-        val adapter = ArrayAdapter(context, prompLayoutId, source)
+        val list = ArrayList<T>().apply {
+            source.forEach { add(it) }
+        }
+        val adapter = ArrayAdapter(context, prompLayoutId, list)
         adapter.setDropDownViewResource(downLayoutId)
         this.adapter = adapter
         this.selectCallback = onSelect

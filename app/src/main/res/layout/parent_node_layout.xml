@@ -3,7 +3,9 @@
     android:id="@+id/parentNodeName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="#D4E6F4"
+    android:textColor="#336D82"
     android:textStyle="bold"
-    android:textSize="25sp"
-    android:gravity="center"/>
+    android:textSize="15.4sp"
+    android:gravity="start"
+    android:paddingStart="3dp"
+    android:paddingEnd="0dp"/>

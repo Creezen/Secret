@@ -22,4 +22,8 @@ interface ArticleService {
     fun getParagraphs(
         @Field("synergyId") synergyId: Long,
     ): Call<ArrayList<ParagraphCommandBean>>?
+
+    @POST("postCommen")
+    @FormUrlEncoded
+    fun postCommen(@Field("commen") commen: String): Call<Boolean>
 }

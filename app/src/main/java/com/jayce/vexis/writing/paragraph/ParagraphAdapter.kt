@@ -11,11 +11,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.NetTool
+import com.creezen.tool.NetTool.await
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.widgets.CustomDialog
+import com.jayce.vexis.writing.ArticleService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ParagraphAdapter(
     val context: Context,
@@ -64,7 +71,7 @@ class ParagraphAdapter(
             true
         }
         if (item.list.isEmpty()) {
-            holder.paragraph.text = item.content
+            holder.paragraph.text = item.content.trim()
             return
         }
         displayComment(position, holder.paragraph)
@@ -76,7 +83,8 @@ class ParagraphAdapter(
         position: Int,
         textView: TextView,
     ) {
-        val contentLength = itemList[position].content.length
+        val content = itemList[position].content.trim()
+        val contentLength = content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
         val clickSpan =
             object : ClickableSpan() {
@@ -84,7 +92,7 @@ class ParagraphAdapter(
                     "I am click".toast()
                 }
             }
-        val spanString = SpannableString("${itemList[position].content}    ")
+        val spanString = SpannableString("$content    ")
         spanString.setSpan(imageSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
         spanString.setSpan(clickSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
         textView.text = spanString
@@ -102,7 +110,15 @@ class ParagraphAdapter(
             }
             setCustomRightButton("提交") { binding, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
-                binding.commentContent.text.toast()
+                ThreadTool.runOnMulti(Dispatchers.IO) {
+                    val result = NetTool.create<ArticleService>()
+                        .postCommen(itemList[position].content)
+                        .await()
+                    withContext(Dispatchers.Main) {
+                        binding.commentContent.msg().toast()
+                    }
+                }
+                itemList[position].paragraphId.toast()
                 dismiss()
             }
             show()

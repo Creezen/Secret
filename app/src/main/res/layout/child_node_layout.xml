@@ -3,7 +3,7 @@
     android:id="@+id/childNodeName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:textColor="#706771BC"
+    android:textSize="25sp"
+    android:textColor="#693382"
     android:paddingStart="3dp"
     android:paddingEnd="0dp"/>

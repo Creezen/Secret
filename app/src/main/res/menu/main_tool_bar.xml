@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/hub"
-        android:icon="@drawable/hub"
-        android:title="@string/hub"
+    <item
+        android:id="@+id/scanQRCode"
+        android:icon="@drawable/scan"
+        android:title="@string/scan"
         app:showAsAction="always"/>
     <item
         android:id="@+id/logout"
