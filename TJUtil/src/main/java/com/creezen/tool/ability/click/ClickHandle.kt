@@ -112,7 +112,7 @@ class ClickHandle(private val mode: Mode) {
         val flag: Boolean
         if(lastDist < 0) return true
         val distance = calculatePointDistance(event)
-        if(abs(distance - lastDist) < 2) return true
+        if(abs(distance - lastDist) < 2 || distance <= 0) return true
         if(distance < lastDist)
             flag = callback.onPinchIn(viewId, distance / lastDist)
         else

@@ -36,10 +36,10 @@ class PokerSheet : BaseActivity() {
                     setVisible(SimpleDialog.TITLE_INVISIBLE)
                     userBinding = this.viewBinding
                     dialogInit()
-                    setCustomLeftButton("取消") { _, dialog ->
+                    LeftButton("取消") { _, dialog ->
                         dialog.dismiss()
                     }
-                    setCustomRightButton("确定") { _, dialog ->
+                    RightButton("确定") { _, dialog ->
                         dialog.dismiss()
                         startActivity(
                             Intent(this@PokerSheet, ScoreBoard::class.java).also {

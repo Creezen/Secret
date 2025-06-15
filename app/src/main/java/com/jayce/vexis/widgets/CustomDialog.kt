@@ -17,14 +17,14 @@ class CustomDialog<T : ViewBinding>(
         }
     }
 
-    fun setCustomLeftButton(
+    fun LeftButton(
         text: String = "取消",
         onNegativeClick: (T, Dialog) -> Unit,
     ) {
         setButton(binding.no, text, onNegativeClick)
     }
 
-    fun setCustomRightButton(
+    fun RightButton(
         text: String = "确定",
         onPositiveClick: (T, Dialog) -> Unit,
     ) {
@@ -37,7 +37,7 @@ class CustomDialog<T : ViewBinding>(
         onClick: (T, Dialog) -> Unit,
     ) {
         button.visibility = View.VISIBLE
-        button.setText(text)
+        button.text = text
         button.setOnClickListener { onClick(viewBinding, this) }
     }
 }

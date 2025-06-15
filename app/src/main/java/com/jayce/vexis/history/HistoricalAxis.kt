@@ -25,6 +25,8 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
     }
 
     private var ratio: Float = -1f
+    private var rootWidth: Int = -1
+    private var rootHeight: Int = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +35,12 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
     ): View {
         binding = TimeLineBinding.inflate(inflater)
         initView()
+        binding.root.apply {
+            post {
+                rootHeight = measuredHeight
+                rootWidth = width
+            }
+        }
         return binding.root
     }
 
@@ -59,14 +67,9 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
         Log.d(TAG, "onPinchIn  $viewId  $scaleFactor")
         if (viewId == "base") {
             val param = binding.center.layoutParams
-            val measuredWidth = binding.center.measuredWidth
-            val measuredHeight = binding.center.measuredHeight
-            if (ratio < 0) {
-                ratio = measuredWidth.toFloat() / measuredHeight.toFloat()
-            }
+            val measuredHeight = binding.center.height
             param.height = (measuredHeight.toFloat() * scaleFactor).toInt()
-            param.width = (param.height.toFloat() * ratio).toInt()
-            if (param.height <= 20 || param.width <= 20) return true
+            if (param.height <= rootHeight) param.height = rootHeight
             binding.center.layoutParams = param
         }
         return super.onPinchIn(viewId, scaleFactor)
@@ -85,7 +88,6 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
                 ratio = measuredWidth.toFloat() / measuredHeight.toFloat()
             }
             param.height = (measuredHeight.toFloat() * scaleFactor).toInt()
-            param.width = (param.height.toFloat() * ratio).toInt()
             binding.center.layoutParams = param
         }
         return super.onPinchOut(viewId, scaleFactor)

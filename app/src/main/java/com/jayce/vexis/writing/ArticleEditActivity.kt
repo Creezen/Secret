@@ -23,11 +23,12 @@ class ArticleEditActivity : BaseActivity() {
 
     private fun initPage() {
         binding.submit.setOnClickListener {
+            val title = binding.title.msg(true)
             val paragraphs = getParagraphList(binding.content)
             lifecycleScope.launch {
                 val uploadResult =
                     create<ArticleService>()
-                        .postSynergy(paragraphs, onlineUser.userId)
+                        .postSynergy(title, paragraphs, onlineUser.userId)
                         .await()
                 if (uploadResult) {
                     finish()

@@ -31,6 +31,7 @@ class ParagraphActivity : BaseActivity() {
         with(binding) {
             paragraphRv.layoutManager = LinearLayoutManager(this@ParagraphActivity)
             paragraphRv.adapter = adapter
+            adapter.setArticleId(articleId)
         }
     }
 

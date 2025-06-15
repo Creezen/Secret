@@ -28,7 +28,6 @@ class Article : BaseFragment() {
     ): View {
         binding = FragmentSynergyBinding.inflate(inflater)
         initView()
-        initData()
         return binding.root
     }
 
@@ -41,9 +40,15 @@ class Article : BaseFragment() {
                 activity?.overridePendingTransition(
                     R.anim.edit_activity_enter,
                     R.anim.edit_activity_close,
+
                 )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     private fun initData() {

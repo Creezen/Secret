@@ -129,4 +129,5 @@
     <string name="scan">扫码</string>
     <string name="senior">校园智库</string>
     <string name="file_station">资源驿站</string>
+    <string name="input_title">请输入标题...</string>
 </resources>

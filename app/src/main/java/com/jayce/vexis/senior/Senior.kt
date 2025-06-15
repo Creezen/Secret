@@ -1,6 +1,5 @@
 package com.jayce.vexis.senior
 
-import android.util.Log
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

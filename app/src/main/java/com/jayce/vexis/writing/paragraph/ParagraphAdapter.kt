@@ -19,6 +19,7 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
+import com.jayce.vexis.onlineUser
 import com.jayce.vexis.widgets.CustomDialog
 import com.jayce.vexis.writing.ArticleService
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,8 @@ class ParagraphAdapter(
         arrayListOf(
             "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
         )
+
+    private var articleId: Long = -1
 
     private val dialog by lazy {
         CustomDialog(
@@ -89,7 +92,8 @@ class ParagraphAdapter(
         val clickSpan =
             object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    "I am click".toast()
+                    val contentList = itemList[position].list
+                    contentList[0].cotent.toast()
                 }
             }
         val spanString = SpannableString("$content    ")
@@ -104,18 +108,21 @@ class ParagraphAdapter(
         view: View,
     ) {
         dialog.apply {
-            setCustomLeftButton("取消") { _, _ ->
+            LeftButton("取消") { _, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 dismiss()
             }
-            setCustomRightButton("提交") { binding, _ ->
+            RightButton("提交") { binding, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 ThreadTool.runOnMulti(Dispatchers.IO) {
+                    val userId = onlineUser.userId
+                    val paragraphId = itemList[position].paragraphId
+                    val content = binding.commentContent.msg()
                     val result = NetTool.create<ArticleService>()
-                        .postCommen(itemList[position].content)
+                        .postCommen(articleId, paragraphId, userId, content)
                         .await()
                     withContext(Dispatchers.Main) {
-                        binding.commentContent.msg().toast()
+                        result.toast()
                     }
                 }
                 itemList[position].paragraphId.toast()
@@ -123,5 +130,9 @@ class ParagraphAdapter(
             }
             show()
         }
+    }
+
+    fun setArticleId(articleId: Long) {
+        this.articleId = articleId
     }
 }

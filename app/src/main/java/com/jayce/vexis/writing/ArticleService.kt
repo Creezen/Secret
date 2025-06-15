@@ -10,6 +10,7 @@ interface ArticleService {
     @POST("/postSynergy")
     @FormUrlEncoded
     fun postSynergy(
+        @Field("articleTitle") title: String,
         @Field("paragraphs") paragraphs: List<String>,
         @Field("userID") userID: String
     ): Call<Boolean>
@@ -25,5 +26,10 @@ interface ArticleService {
 
     @POST("postCommen")
     @FormUrlEncoded
-    fun postCommen(@Field("commen") commen: String): Call<Boolean>
+    fun postCommen(
+        @Field("synergyId") synergyId: Long,
+        @Field("paragraphId") paragraphId: Long,
+        @Field("userId") userId: String,
+        @Field("comment") comment: String,
+    ): Call<Boolean>
 }

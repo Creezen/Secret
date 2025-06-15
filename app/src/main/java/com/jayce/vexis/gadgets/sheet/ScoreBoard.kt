@@ -86,10 +86,10 @@ class ScoreBoard : AppCompatActivity() {
                     AddRecordUserBinding.inflate(layoutInflater),
                 ).apply {
                     setTitle("添加角色")
-                    setCustomLeftButton { _, _ ->
+                    LeftButton { _, _ ->
                         dismiss()
                     }
-                    setCustomRightButton("添加") { bind, _ ->
+                    RightButton("添加") { bind, _ ->
                         val addUserName = bind.edit.msg()
                         playerName.addSimpleView(addUserName, WIDTH)
                         userList.add(addUserName)
@@ -114,16 +114,16 @@ class ScoreBoard : AppCompatActivity() {
                     rv.layoutManager = LinearLayoutManager(this@ScoreBoard)
                     rv.adapter = scoreInsertAdapter
                     setTitle("设置分数")
-                    setCustomLeftButton { _, _ ->
+                    LeftButton { _, _ ->
                         dismiss()
                     }
-                    setCustomRightButton("添加") { _, _ ->
+                    RightButton("添加") { _, _ ->
                         val scoreList = scoreInsertAdapter.getscoreList()
                         val newList = ArrayList<Int>()
                         newList.addAll(scoreList)
                         if (newList.sum() != 0) {
                             "分数设置不合法，请检查一下哦".toast()
-                            return@setCustomRightButton
+                            return@RightButton
                         }
                         newList.forEachIndexed { index, value ->
                             totalScoreList[index] += value

@@ -64,6 +64,10 @@ class Main : BaseActivity() {
     override fun registerLauncher() {
         scanLauncher = getLauncher(ScanContract()){
             val resultContent = it.contents
+            if (resultContent.isNullOrBlank() || !resultContent.startsWith("https://com.jayce.vexis")) {
+                "无效的二维码链接！！！".toast()
+                return@getLauncher
+            }
             resultContent.toast()
         }
     }
