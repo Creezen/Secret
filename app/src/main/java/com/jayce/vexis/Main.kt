@@ -110,18 +110,18 @@ class Main : BaseActivity() {
                 setHomeAsUpIndicator(R.drawable.open_drawer)
             }
             toolBarText.text = navigation.menu.getItem(0).title
-            replaceFragment(viewHolder!!.historicalAxis)
+            replaceFragment(viewHolder!!.historicalAxis, "historicalAxis")
             navigation.setNavigationItemSelectedListener { item ->
                 toolBarText.text = item.title
                 drawerLayout.closeDrawers()
                 viewHolder?.apply {
                     when (item.itemId) {
-                        R.id.MainMenuFeedback -> replaceFragment(feedback)
-                        R.id.MainMenuWidget -> replaceFragment(gadget)
-                        R.id.MainMenuTimeline -> replaceFragment(historicalAxis)
-                        R.id.MainMenuSynergy -> replaceFragment(article)
-                        R.id.MainMenuSenior -> replaceFragment(senior)
-                        R.id.MainMenuResource -> replaceFragment(mediaLibraryActivity)
+                        R.id.MainMenuFeedback -> replaceFragment(feedback, "feedback")
+                        R.id.MainMenuWidget -> replaceFragment(gadget, "gadget")
+                        R.id.MainMenuTimeline -> replaceFragment(historicalAxis, "historicalAxis")
+                        R.id.MainMenuSynergy -> replaceFragment(article, "article")
+                        R.id.MainMenuSenior -> replaceFragment(senior, "senior")
+                        R.id.MainMenuResource -> replaceFragment(mediaLibraryActivity, "mediaLibraryActivity")
                     }
                 }
                 return@setNavigationItemSelectedListener true
@@ -210,7 +210,7 @@ class Main : BaseActivity() {
         return true
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        replaceFragment(supportFragmentManager, R.id.frame,fragment)
+    private fun replaceFragment(fragment: Fragment, fragmentTag: String) {
+        replaceFragment(supportFragmentManager, R.id.frame, fragment, fragmentTag)
     }
 }

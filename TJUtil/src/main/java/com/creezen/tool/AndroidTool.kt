@@ -99,10 +99,21 @@ object AndroidTool {
         fragmentManager: FragmentManager,
         resourceID: Int,
         fragment: Fragment,
+        fragmentTag: String,
         isAddToStack: Boolean = false
     ){
         val beginTransaction = fragmentManager.beginTransaction()
-        beginTransaction.replace(resourceID,fragment)
+        var displayFragment = fragmentManager.findFragmentByTag(fragmentTag)
+        if (displayFragment == null) {
+            beginTransaction.add(resourceID, fragment, fragmentTag)
+            displayFragment = fragment
+        }
+        fragmentManager.fragments.forEach {
+            if(it.tag != fragmentTag) {
+                beginTransaction.hide(it)
+            }
+        }
+        beginTransaction.show(displayFragment)
         if (isAddToStack) {
             beginTransaction.addToBackStack(null)
         }

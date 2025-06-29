@@ -1,19 +1,28 @@
 package com.jayce.vexis.senior
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.creezen.tool.DataTool
+import com.creezen.tool.NetTool
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.widgets.bean.SubjectTable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class Senior : BaseFragment() {
 
     companion object {
         const val TAG = "Senior"
     }
+
+    private var primaryNum = 0
+    private var secordNum = 0
+    private var tertiaryNum = 0
 
     private lateinit var primaryList: List<String>
     private lateinit var secondaryList: List<List<String>>
@@ -28,15 +37,19 @@ class Senior : BaseFragment() {
     ): View {
         binding = SageFragmentBinding.inflate(inflater)
         initData()
-        initView()
         return binding.root
     }
 
     private fun initData() {
-        val subjectTable = DataTool.loadDataFromYAML<SubjectTable>("SubjectTable") ?: return
-        primaryList = subjectTable.discipline
-        secondaryList = subjectTable.category
-        tertiaryList = subjectTable.major
+        ThreadTool.runOnMulti(Dispatchers.IO) {
+            val subjectTable = DataTool.loadDataFromYAML<SubjectTable>("SubjectTable") ?: return@runOnMulti
+            primaryList = subjectTable.discipline
+            secondaryList = subjectTable.category
+            tertiaryList = subjectTable.major
+            withContext(Dispatchers.Main) {
+                initView()
+            }
+        }
     }
 
     private fun initView() {
@@ -44,18 +57,31 @@ class Senior : BaseFragment() {
             primary.configuration(primaryList) {
                 secondary.refreshData(secondaryList[it])
                 tertiary.refreshData(tertiaryList[it][0])
-                val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
-                binding.text.text = textShow
+                primaryNum = it
+                secordNum = 0
+                tertiaryNum = 0
             }
             secondary.configuration(secondaryList[0]) {
                 tertiary.refreshData(tertiaryList[primary.selectedItemPosition][it])
-                val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
-                binding.text.text = textShow
+                secordNum = it
+                tertiaryNum = 0
             }
             tertiary.configuration(tertiaryList[0][0]) {
-                val textShow = "${binding.primary.selectedItem}/${binding.secondary.selectedItem}/${binding.tertiary.selectedItem}"
-                binding.text.text = textShow
+                tertiaryNum = it
             }
+            advice.setOnClickListener {
+                val intent = Intent(context, AdviceActivity::class.java)
+                intent.putExtra("primary", primaryList[primaryNum])
+                intent.putExtra("secord", secondaryList[primaryNum][secordNum])
+                intent.putExtra("tertiary", tertiaryList[primaryNum][secordNum][tertiaryNum])
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun fetchAdvice() {
+        ThreadTool.runOnMulti(Dispatchers.IO) {
+
         }
     }
 }

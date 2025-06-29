@@ -75,29 +75,6 @@ val processSources by tasks.register<Copy>("processSources") {
 fun processKotlinFile(file: File): String {
     val content = file.readText()
     return content
-
-//    // 第一步：保护字符串内容（避免字符串中的大括号被误处理）
-//    val protectedContent = content.replace(Regex("""(?s)(\"\"\"\".*?\"\"\"\"|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')""")) { m ->
-//        m.value.replace("{", "«").replace("}", "»")
-//    }
-//
-//    // 第二步：移除方法体，但保留方法签名和注释
-//    val result = protectedContent.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{[^{}]*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{.*?\.use\s*\{[^{}]*?\}.*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{.*?\.runCatching\s*\{[^{}]*?\}.*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{.*?if\s*\(.*?\)\s*\{[^{}]*?\}.*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{.*?when\s*\(.*?\)\s*\{[^{}]*?\}.*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }.replace(Regex("""(?s)\b(fun\s+((?!fun).)*?)(\s*\{.*?\.let\s*\{[^{}]*?\}.*?\}|\s*=.*?(?=\n|$))""")) {
-//        it.groupValues[1].trimEnd()
-//    }
-//
-//    // 第三步：恢复字符串中的大括号
-//    return result.replace(Regex("""«"""), "{").replace(Regex("""»"""), "}")
 }
 
 tasks.dokkaHtml.configure {
@@ -164,5 +141,4 @@ dependencies {
     implementation("com.github.bumptech.glide:okhttp3-integration:4.15.1")
 
     embed("com.creezen.tool.commontool:tools:1.0.0")
-    lintPublish("com.creezen.tool.lint:lintTool:1.0.0@jar")
 }
