@@ -2,9 +2,11 @@ package com.jayce.vexis.member.manage
 
 import android.content.Context
 import android.content.Intent
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
@@ -38,7 +40,7 @@ class UserActiveAdapter(
     ) {
         val item = userList[position]
         val menu by lazy {
-            TrackPopupMenu(context, holder.view)
+            TrackPopupMenu(holder.view.context, holder.view)
         }
         menu.setOnMenuItemClickListener {
             when (it.itemId) {

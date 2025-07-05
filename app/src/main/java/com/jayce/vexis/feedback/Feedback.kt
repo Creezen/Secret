@@ -2,6 +2,7 @@ package com.jayce.vexis.feedback
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,11 @@ import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import kotlinx.coroutines.launch
 
 class Feedback : BaseFragment() {
+
+    companion object {
+        const val TAG = "Feedback"
+    }
+
     private lateinit var binding: ActivityFeedbackBinding
     private val feedbackItemList = arrayListOf<FeedbackItem>()
     private val feedbackAdapter by lazy {
@@ -33,6 +39,13 @@ class Feedback : BaseFragment() {
     override fun onResume() {
         super.onResume()
         updateData()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) {
+            updateData()
+        }
     }
 
     private fun initView() {

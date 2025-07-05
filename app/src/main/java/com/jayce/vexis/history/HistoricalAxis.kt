@@ -12,7 +12,10 @@ import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.base.BaseFragment
+import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
+import com.jayce.vexis.widgets.CustomDialog
+import com.jayce.vexis.widgets.SimpleDialog
 
 class HistoricalAxis : BaseFragment(), SwipeCallback {
     companion object {
@@ -57,6 +60,22 @@ class HistoricalAxis : BaseFragment(), SwipeCallback {
             }
             left.addTraceCell(System.currentTimeMillis())
             left.addTraceCell(System.currentTimeMillis() - 30 * 31536000000)
+            floatingBtn.setOnClickListener {
+                CustomDialog(
+                    requireContext(),
+                    DialogTimelineBinding.inflate(layoutInflater)
+                ).apply {
+                    RightButton { dialogTimelineBinding, dialog ->
+                        "insert OK".toast()
+                        dismiss()
+                    }
+                    LeftButton { dialogTimelineBinding, dialog ->
+                        "insert error".toast()
+                        dismiss()
+                    }
+                    show()
+                }
+            }
         }
     }
 
