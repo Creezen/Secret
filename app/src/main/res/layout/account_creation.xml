@@ -8,10 +8,10 @@
 
         <variable
             name="defaultSpinner"
-            type="com.jayce.vexis.widgets.DefaultSpinner" />
+            type="com.jayce.vexis.foundation.DefaultSpinner" />
         <variable
             name="activity"
-            type="com.jayce.vexis.member.register.RegisterActivity"/>
+            type="com.jayce.vexis.business.member.register.RegisterActivity"/>
         <variable
             name="accountCode"
             type="int"/>
@@ -296,7 +296,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <com.jayce.vexis.widgets.DefaultSpinner
+                        <com.jayce.vexis.foundation.DefaultSpinner
                             android:id="@+id/yearSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -305,7 +305,7 @@
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={yearSelect}"
                             android:onItemSelected="@{() -> yearSpinner.onItemSelect()}"/>
-                        <com.jayce.vexis.widgets.DefaultSpinner
+                        <com.jayce.vexis.foundation.DefaultSpinner
                             android:id="@+id/monthSpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -316,7 +316,7 @@
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={monthSelected}"
                             android:onItemSelected="@{() -> monthSpinner.onItemSelect()}"/>
-                        <com.jayce.vexis.widgets.DefaultSpinner
+                        <com.jayce.vexis.foundation.DefaultSpinner
                             android:id="@+id/daySpinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -337,7 +337,7 @@
                         android:textSize="@dimen/label"
                         android:gravity="center"
                         android:text="@string/sex"/>
-                    <com.jayce.vexis.widgets.DefaultSpinner
+                    <com.jayce.vexis.foundation.DefaultSpinner
                         android:id="@+id/sex"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -376,7 +376,7 @@
                             android:layout_marginEnd="@dimen/margin"
                             android:importantForAutofill="no"
                             android:inputType="textEmailAddress"/>
-                        <com.jayce.vexis.widgets.DefaultSpinner
+                        <com.jayce.vexis.foundation.DefaultSpinner
                             android:id="@+id/emailPostfix"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"

@@ -197,7 +197,7 @@ object NetTool {
                     if(body != null) {
                         continuation.resume(body)
                     } else {
-                        "服务当前离线".toast()
+                        "服务器返回错误!".toast()
                     }
                 }
 

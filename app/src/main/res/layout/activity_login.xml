@@ -6,7 +6,7 @@
     <data>
         <variable
             name="env"
-            type="com.jayce.vexis.login.Login" />
+            type="com.jayce.vexis.business.login.Login" />
     </data>
 
     <LinearLayout
@@ -111,7 +111,8 @@
                 android:id="@+id/quickStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/quick_jump"/>
+                android:text="@string/quick_jump"
+                android:background="@color/Button"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

@@ -29,7 +29,7 @@
                 android:text="@string/gomoku"/>
         </LinearLayout>
     </LinearLayout>
-    <com.jayce.vexis.widgets.animator.AnimatorView
+    <com.jayce.vexis.foundation.animator.AnimatorView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

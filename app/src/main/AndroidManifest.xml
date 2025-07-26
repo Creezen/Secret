@@ -25,7 +25,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
-        android:name=".base.Env"
+        android:name=".core.Env"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -37,7 +37,7 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
-            android:name=".senior.AdviceActivity"
+            android:name=".business.peer.AdviceActivity"
             android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -45,7 +45,7 @@
             tools:replace="screenOrientation" />
 
         <service
-            android:name=".CreezenAccessibility"
+            android:name=".core.CreezenAccessibility"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -58,65 +58,62 @@
                 android:resource="@xml/accessibilityservice" />
         </service>
         <service
-            android:name=".CreezenService"
+            android:name=".core.CoreService"
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="dataSync" />
 
         <activity
-            android:name=".gadgets.sheet.PokerHistoryActivity"
+            android:name=".business.kit.ledger.LedgerHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".gadgets.gomoku.GomokuActivity"
+            android:name=".business.kit.gomoku.GomokuActivity"
             android:exported="false" />
         <activity
-            android:name=".gadgets.maze.MazeActivity"
+            android:name=".business.kit.maze.MazeActivity"
             android:exported="false" />
         <activity
-            android:name=".writing.paragraph.ParagraphActivity"
+            android:name=".business.article.paragraph.Para"
             android:exported="false" />
         <activity
-            android:name=".writing.ArticleEditActivity"
+            android:name=".business.article.ArticleEditActivity"
             android:exported="false" />
         <activity
-            android:name=".exchange.ExchangeActivity"
+            android:name=".business.member.manage.ActiveDataActivity"
             android:exported="false" />
         <activity
-            android:name=".member.manage.ActiveDataActivity"
-            android:exported="false" />
-        <activity
-            android:name=".member.manage.AdminActivity"
+            android:name=".business.member.manage.AdminActivity"
             android:exported="false"
             android:theme="@style/adminActivityTheme" />
         <activity
-            android:name=".chat.ChatActivity"
+            android:name=".business.chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".feedback.FeedbackEditActivity"
+            android:name=".business.feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".media.MediaDetailActivity"
+            android:name=".business.media.MediaDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".media.MediaUploadActivity"
+            android:name=".business.media.MediaUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".gadgets.sheet.ScoreBoard"
+            android:name=".business.kit.ledger.ScoreBoard"
             android:exported="false" />
         <activity
-            android:name=".member.dashboard.HomePage"
+            android:name=".business.member.dashboard.Dashboard"
             android:exported="false" />
         <activity
-            android:name=".gadgets.sheet.PokerSheet"
+            android:name=".business.kit.ledger.LedgerSheet"
             android:exported="false" />
         <activity
-            android:name=".Main"
+            android:name=".business.main.Main"
             android:exported="false" />
         <activity
-            android:name=".member.register.RegisterActivity"
+            android:name=".business.member.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".login.Login"
+            android:name=".business.login.Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

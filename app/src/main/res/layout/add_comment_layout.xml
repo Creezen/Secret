@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.jayce.vexis.widgets.view.MultiLineSingleCheckbox
+    <com.jayce.vexis.foundation.view.MultiLineSingleCheckbox
         android:id="@+id/singleSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

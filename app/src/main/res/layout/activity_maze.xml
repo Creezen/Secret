@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gadgets.maze.MazeActivity">
-    <com.jayce.vexis.gadgets.maze.MazeView
+    tools:context=".business.kit.maze.MazeActivity">
+    <com.jayce.vexis.business.kit.maze.MazeView
         android:id="@+id/maze"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

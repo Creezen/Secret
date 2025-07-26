@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.jayce.vexis.widgets.view.ScalableScrollView
+    <com.jayce.vexis.foundation.view.ScalableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.jayce.vexis.widgets.view.TimeView
+            <com.jayce.vexis.foundation.view.TimeView
                 android:id="@+id/left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
             </TextView>
-            <com.jayce.vexis.widgets.view.TimeView
+            <com.jayce.vexis.foundation.view.TimeView
                 android:id="@+id/right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                 android:background="@color/Carminum"
                 android:orientation="vertical"/>
         </LinearLayout>
-    </com.jayce.vexis.widgets.view.ScalableScrollView>
+    </com.jayce.vexis.foundation.view.ScalableScrollView>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
