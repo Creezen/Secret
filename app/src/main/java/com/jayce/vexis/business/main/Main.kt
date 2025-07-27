@@ -24,7 +24,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.foundation.base.BaseActivity.ActivityCollector.finishAll
-import com.jayce.vexis.business.chat.ChatActivity
+import com.jayce.vexis.business.chat.Chat
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.business.feedback.Feedback
 import com.jayce.vexis.business.kit.Kit
@@ -148,7 +148,7 @@ class Main : BaseActivity() {
                 badgeGravity = Gravity.END or Gravity.TOP
             }
             chatMsgView.setOnClickListener {
-                startActivity(Intent(this@Main, ChatActivity::class.java))
+                startActivity(Intent(this@Main, Chat::class.java))
             }
             drawerLayout.addDrawerListener(
                 object : DrawerListener {

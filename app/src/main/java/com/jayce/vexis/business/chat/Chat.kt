@@ -1,6 +1,7 @@
 package com.jayce.vexis.business.chat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
@@ -12,11 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ChatActivity : BaseActivity() {
+class Chat : BaseActivity() {
 
     companion object {
-        const val TAG = "ChatActivity"
-        private val itemList = arrayListOf<ChatItem>()
+        const val TAG = "Chat"
+        private val itemList = arrayListOf<ChatEntity>()
     }
 
     private lateinit var binding: ActivityChatBinding
@@ -33,7 +34,7 @@ class ChatActivity : BaseActivity() {
 
     private fun initData() {
         CoreService.getChatMessage {
-            val localList = arrayListOf<ChatItem>()
+            val localList = arrayListOf<ChatEntity>()
             while (it.isNotEmpty()) {
                 localList.add(it.take())
             }
@@ -59,13 +60,14 @@ class ChatActivity : BaseActivity() {
 
     private fun initView() {
         with(binding) {
-            message.layoutManager = LinearLayoutManager(this@ChatActivity)
+            message.layoutManager = LinearLayoutManager(this@Chat)
             message.adapter = adapter
             send.setOnClickListener {
                 val content = edit.msg(true)
                 if (content.isEmpty()) {
                     return@setOnClickListener
                 }
+                Log.d(TAG, "sendChatMessage")
                 sendChatMessage(CoreService.scope, edit.msg(true))
             }
         }

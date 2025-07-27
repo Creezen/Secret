@@ -65,8 +65,9 @@ class History : BaseFragment(), SwipeCallback {
                     requireContext(),
                     DialogTimelineBinding.inflate(layoutInflater)
                 ).apply {
-                    RightButton { dialogTimelineBinding, dialog ->
-                        "insert OK".toast()
+                    RightButton { binding, dialog ->
+//                        "insert OK".toast()
+                        binding.picker.time().toast()
                         dismiss()
                     }
                     LeftButton { dialogTimelineBinding, dialog ->
@@ -83,7 +84,7 @@ class History : BaseFragment(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(com.jayce.vexis.business.history.History.Companion.TAG, "onPinchIn  $viewId  $scaleFactor")
+        Log.d(TAG, "onPinchIn  $viewId  $scaleFactor")
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredHeight = binding.center.height
@@ -98,7 +99,7 @@ class History : BaseFragment(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(com.jayce.vexis.business.history.History.Companion.TAG, "onPinchOut   $viewId  $scaleFactor")
+        Log.d(TAG, "onPinchOut   $viewId  $scaleFactor")
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth

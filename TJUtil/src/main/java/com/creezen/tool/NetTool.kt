@@ -229,6 +229,7 @@ object NetTool {
                 if(msg.isEmpty()) {
                     return@runCatching
                 }
+                Log.d(TAG, "send message: $msg")
                 socketWriter?.write("$msg\n")
                 socketWriter?.flush()
             }.onFailure {

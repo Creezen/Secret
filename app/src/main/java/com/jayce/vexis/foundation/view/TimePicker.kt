@@ -42,6 +42,20 @@ class TimePicker(context: Context, attr: AttributeSet): LinearLayout(context, at
         }
     }
 
+    fun time(): List<String> {
+        with(binding) {
+            return ArrayList<String>().apply {
+                add(yearList[year.value])
+                add(monthList[month.value])
+                add(dayList[day.value])
+                add(hourList[hour.value])
+                add(minusList[minus.value])
+                add(secondList[second.value])
+                add(millsList[mills.value])
+            }
+        }
+    }
+
     private fun getList(num: Int, offset: Int = 0): Array<String> {
         return ArrayList<String>().apply {
             repeat(num) {

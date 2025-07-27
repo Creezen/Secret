@@ -86,7 +86,7 @@
             android:exported="false"
             android:theme="@style/adminActivityTheme" />
         <activity
-            android:name=".business.chat.ChatActivity"
+            android:name=".business.chat.Chat"
             android:exported="false" />
         <activity
             android:name=".business.feedback.FeedbackEditActivity"
