@@ -15,6 +15,7 @@ import com.jayce.vexis.databinding.FragmentSynergyBinding
 import kotlinx.coroutines.Dispatchers
 
 class Article : BaseFragment() {
+
     private lateinit var binding: FragmentSynergyBinding
     private val list = arrayListOf<ArticleBean>()
     private val adapter by lazy {
@@ -53,8 +54,7 @@ class Article : BaseFragment() {
 
     private fun initData() {
         ThreadTool.runOnMulti(Dispatchers.Main) {
-            val result =
-                create<ArticleService>()
+            val result = create<ArticleService>()
                     .getArticle()
                     ?.await() ?: arrayListOf()
             list.clear()

@@ -9,6 +9,7 @@ import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
 
 class UserBasicInfo : BaseFragment() {
+
     private lateinit var binding: UserBasicInfoBinding
 
     override fun onCreateView(

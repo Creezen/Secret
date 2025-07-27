@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class AdminActivity : BaseActivity() {
+
     private lateinit var binding: ActivityAdminBinding
     private val userList = arrayListOf<ActiveItem>()
     private val adapter by lazy {
@@ -38,8 +39,7 @@ class AdminActivity : BaseActivity() {
 
     private fun initData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val remoteList =
-                NetTool.create<UserService>()
+            val remoteList = NetTool.create<UserService>()
                     .getAllUser()
                     .await()
             val remoteRes = remoteList["userActiveData"] ?: listOf()

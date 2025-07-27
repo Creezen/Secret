@@ -10,6 +10,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.databinding.DialogLayoutBinding
 
 open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
+
     companion object {
         const val TITLE_VISIBLE = 0
         const val TITLE_INVISIBLE = 1

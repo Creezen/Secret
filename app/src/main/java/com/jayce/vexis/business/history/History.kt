@@ -17,6 +17,7 @@ import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.CustomDialog
 
 class History : BaseFragment(), SwipeCallback {
+
     companion object {
         const val TAG = "History"
     }

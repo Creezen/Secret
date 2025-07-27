@@ -9,6 +9,7 @@ import androidx.appcompat.widget.PopupMenu
 
 @SuppressLint("ClickableViewAccessibility")
 class TrackPopupMenu(context: Context, private val view: View) : PopupMenu(context, view) {
+
     private var clickX: Int = 0
     private var clickY: Int = 0
 

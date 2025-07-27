@@ -10,6 +10,7 @@ import com.jayce.vexis.business.kit.ledger.ScoreBoard.Companion.HEIGHT
 import com.jayce.vexis.business.kit.ledger.ScoreBoard.Companion.WIDTH
 
 class RecordAdapter(private val recordList: List<RecordBean>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+
     class ViewHolder(val binding: RecordItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.itemLayout
     }

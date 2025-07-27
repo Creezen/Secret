@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LedgerHistoryActivity : BaseActivity() {
+
     companion object {
         const val TAG = "LedgerHistoryActivity"
     }

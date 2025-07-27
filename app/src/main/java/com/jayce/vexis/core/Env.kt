@@ -13,14 +13,14 @@ import com.jayce.vexis.core.Config.BROAD_LOGOUT
 import com.jayce.vexis.core.Config.BROAD_NOTIFY
 
 class Env : Application() {
+
     companion object {
         const val TAG = "Env"
     }
 
     private val coreReceiver = CoreReceiver()
 
-    private val filter =
-        IntentFilter().apply {
+    private val filter = IntentFilter().apply {
             addAction(BROAD_LOGOUT)
             addAction(BROAD_NOTIFY)
             addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
@@ -36,8 +36,7 @@ class Env : Application() {
         )
         BaseTool.init(applicationContext, param)
 
-        val font =
-            AndroidTool.readPrefs {
+        val font = AndroidTool.readPrefs {
                 it.getString("font", "华文行楷")
             }
         setFont(font as String)

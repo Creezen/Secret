@@ -12,6 +12,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.business.history.TraceCell
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
+
     companion object {
         const val TAG = "TimeView"
     }

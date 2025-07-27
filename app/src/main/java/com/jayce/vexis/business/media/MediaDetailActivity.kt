@@ -8,6 +8,7 @@ import com.jayce.vexis.databinding.ActivityFileDetailBinding
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MediaDetailActivity : BaseActivity() {
+
     private lateinit var binding: ActivityFileDetailBinding
     private lateinit var fileItem: MediaItem
     private val parentNode = arrayListOf("资源描述", "资源说明")

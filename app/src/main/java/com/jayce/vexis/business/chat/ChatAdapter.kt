@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
 
 class ChatAdapter(private val msgList: List<ChatItem>) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+
     class ViewHolder(val binding: ChatItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val nickname = binding.nickname
         val time = binding.time

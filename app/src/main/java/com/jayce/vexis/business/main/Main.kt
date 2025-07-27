@@ -41,6 +41,7 @@ import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
 class Main : BaseActivity() {
+
     companion object {
         const val TAG = "Main"
     }
@@ -85,8 +86,7 @@ class Main : BaseActivity() {
     override fun onResume() {
         super.onResume()
         chatBadge.badgeNumber = CoreService.getUnreadSize()
-        val avatarTimestamp =
-            readPrefs {
+        val avatarTimestamp = readPrefs {
                 it.getLong("cursorTime", 0)
             }
         NetTool.setImage(

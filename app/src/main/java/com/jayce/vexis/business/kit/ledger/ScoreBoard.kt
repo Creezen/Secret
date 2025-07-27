@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
 class ScoreBoard : AppCompatActivity() {
+
     companion object {
         const val WIDTH = 180
         const val HEIGHT = 180

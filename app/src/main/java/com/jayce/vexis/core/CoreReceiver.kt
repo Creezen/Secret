@@ -11,6 +11,7 @@ import com.jayce.vexis.core.Config.BROAD_LOGOUT
 import com.jayce.vexis.core.Config.BROAD_NOTIFY
 
 class CoreReceiver : BroadcastReceiver() {
+
     companion object {
         const val TAG = "CoreReceiver"
     }

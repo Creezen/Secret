@@ -19,8 +19,7 @@ class ScoreInsertEntryView(
     private var func: ((Int, String) -> Unit)? = null
 
     init {
-        binding =
-            PocketUsernameItemLayoutBinding.inflate(
+        binding = PocketUsernameItemLayoutBinding.inflate(
                 LayoutInflater.from(context),
                 this,
                 true,

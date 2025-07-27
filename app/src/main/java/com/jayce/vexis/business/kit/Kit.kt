@@ -12,6 +12,7 @@ import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.ledger.LedgerSheet
 
 class Kit : BaseFragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

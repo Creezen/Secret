@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.View
 
 class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var ball: AnimatorBall = AnimatorBall(-1f, -1f)
     private val radius = 100f
@@ -36,8 +37,7 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     private fun setBallAnimator(): ValueAnimator {
-        val valueAnimator =
-            ValueAnimator.ofObject(
+        val valueAnimator = ValueAnimator.ofObject(
                 BallEvaluator(),
                 AnimatorBall(radius, height / 2f),
                 AnimatorBall(width / 2f, height - radius),
@@ -54,8 +54,7 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     private fun setBackgroundAnimator(): ObjectAnimator {
-        val objAnimator =
-            ObjectAnimator.ofArgb(
+        val objAnimator = ObjectAnimator.ofArgb(
                 this,
                 "backgroundColor",
                 Color.parseColor("#00ffff"),

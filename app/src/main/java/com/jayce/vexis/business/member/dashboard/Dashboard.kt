@@ -25,6 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class Dashboard : BaseActivity() {
+
     companion object {
         const val TAG = "Dashboard"
     }
@@ -35,13 +36,11 @@ class Dashboard : BaseActivity() {
     private var imageLauncher: ActivityResultLauncher<Array<String>>? = null
 
     override fun registerLauncher() {
-        imageLauncher =
-            getLauncher(openFile()) {
+        imageLauncher = getLauncher(openFile()) {
                 if (it == null) return@getLauncher
                 val filePath = getFilePathByUri(it) ?: return@getLauncher
                 lifecycleScope.launch {
-                    val result =
-                        NetTool.create<UserService>()
+                    val result = NetTool.create<UserService>()
                             .uploadAvatar(
                                 user().userId,
                                 buildFileMultipart(filePath, "file")
@@ -89,8 +88,7 @@ class Dashboard : BaseActivity() {
                 Log.e("Dashboard.initPage", "click image")
                 imageLauncher?.launch(arrayOf("image/*"))
             }
-            val cursorTime =
-                readPrefs {
+            val cursorTime = readPrefs {
                     it.getLong("cursorTime", 0)
                 }
             val cacheKey = "key:$cursorTime"

@@ -59,8 +59,7 @@ class Feedback : BaseFragment() {
 
     private fun updateData() {
         lifecycleScope.launch {
-            val feedbackRes =
-                NetTool.create<FeedbackService>()
+            val feedbackRes = NetTool.create<FeedbackService>()
                     .getFeedback()
                     .await()
             val list = feedbackRes["items"] ?: arrayListOf()

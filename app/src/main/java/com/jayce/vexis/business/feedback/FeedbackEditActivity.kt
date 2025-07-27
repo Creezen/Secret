@@ -13,6 +13,7 @@ import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 
 class FeedbackEditActivity : BaseActivity() {
+
     private lateinit var binding: ActivityFeedbackEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,11 +31,9 @@ class FeedbackEditActivity : BaseActivity() {
                 workInDispatch(
                     this@FeedbackEditActivity,
                     3000,
-                    lifecycleJob =
-                        object : LifecycleJob {
+                    lifecycleJob = object : LifecycleJob {
                             override suspend fun onDispatch() {
-                                val result =
-                                    create<FeedbackService>()
+                                val result = create<FeedbackService>()
                                         .sendFeedback(user().userId, titleMsg, contentMsg)
                                         .await()
                                 if (result) {

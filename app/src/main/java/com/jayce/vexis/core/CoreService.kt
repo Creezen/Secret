@@ -25,6 +25,7 @@ import kotlinx.coroutines.SupervisorJob
 import java.util.concurrent.LinkedBlockingQueue
 
 class CoreService : Service() {
+
     companion object {
         const val TAG = "CoreService"
         const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
@@ -57,8 +58,7 @@ class CoreService : Service() {
     }
 
     private fun initData() {
-        val data =
-            readPrefs {
+        val data = readPrefs {
                 it.getString(CACHE_MESSAGE, ArrayList<ChatItem>().toJson())
             }
         chatQueue.clear()
@@ -72,8 +72,7 @@ class CoreService : Service() {
 
     private fun sendNotification() {
         val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-        val builder =
-            NotificationCompat.Builder(BaseTool.env(), "1")
+        val builder = NotificationCompat.Builder(BaseTool.env(), "1")
                 .setSmallIcon(R.drawable.tianji)
                 .setContentTitle("登录成功通知")
                 .setContentText("欢迎您，${user().nickname}")

@@ -18,6 +18,7 @@ import com.jayce.vexis.databinding.FileUploadBinding
 import java.io.File
 
 class MediaUploadActivity : BaseActivity() {
+
     companion object {
         const val SPLIT = "/"
         const val TAG = "MediaUploadActivity"
@@ -70,12 +71,10 @@ class MediaUploadActivity : BaseActivity() {
                 workInDispatch(
                     this@MediaUploadActivity,
                     delayMillis = 5000L,
-                    lifecycleJob =
-                        object : LifecycleJob {
+                    lifecycleJob = object : LifecycleJob {
                             override suspend fun onDispatch() {
                                 val filePart = buildFileMultipart(filePath, "file")
-                                val result =
-                                    NetTool.create<MediaService>().uploadFile(
+                                val result = NetTool.create<MediaService>().uploadFile(
                                         fileName,
                                         fileID,
                                         fileSuffix,
@@ -96,8 +95,7 @@ class MediaUploadActivity : BaseActivity() {
     }
 
     override fun registerLauncher() {
-        fileLaunch =
-            getLauncher(openFile()) {
+        fileLaunch = getLauncher(openFile()) {
                 it?.let { uri ->
                     val filePath = getFilePathByUri(uri)
                     if (filePath.isNullOrEmpty()) {

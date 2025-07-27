@@ -10,6 +10,7 @@ import com.jayce.vexis.foundation.CustomDialog
 import com.jayce.vexis.foundation.SimpleDialog
 
 class LedgerSheet : BaseActivity() {
+
     private lateinit var binding: PocketMainBinding
     private lateinit var userBinding: AddPocketRecordLayoutBinding
     private val userList = ArrayList<String>()

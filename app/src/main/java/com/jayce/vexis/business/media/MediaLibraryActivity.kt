@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MediaLibraryActivity : BaseFragment() {
+
     private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
     private val resItemList = ArrayList<MediaItem>()
@@ -33,8 +34,7 @@ class MediaLibraryActivity : BaseFragment() {
     private var tag: Any? = null
 
     override fun registerLauncher() {
-        readExternalLaunch =
-            getLauncher(startActivity()) {
+        readExternalLaunch = getLauncher(startActivity()) {
                 Log.e("MediaLibraryActivity.registerLauncher", "$it")
             }
     }
@@ -64,8 +64,7 @@ class MediaLibraryActivity : BaseFragment() {
     private fun initData() {
         kotlin.runCatching {
             lifecycleScope.launch(Dispatchers.IO) {
-                val result =
-                    NetTool.create<MediaService>()
+                val result = NetTool.create<MediaService>()
                         .fetchFile()
                         .await()
                 val list = result["items"]

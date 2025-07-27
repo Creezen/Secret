@@ -3,6 +3,7 @@ package com.jayce.vexis.foundation.animator
 import android.animation.TypeEvaluator
 
 class BallEvaluator : TypeEvaluator<AnimatorBall> {
+
     override fun evaluate(
         fraction: Float,
         start: AnimatorBall?,

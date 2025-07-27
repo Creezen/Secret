@@ -70,8 +70,7 @@ class MediaElementAdapter(
             progressBar?.progress = 0
             parent.lifecycleScope.launch(Dispatchers.IO) {
                 val fileName = "${item.fileID}${item.fileSuffix}"
-                val responseStream =
-                    NetTool.create<MediaService>()
+                val responseStream = NetTool.create<MediaService>()
                         .downloadFile(fileName)
                         .await()
                         .byteStream()

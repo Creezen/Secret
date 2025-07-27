@@ -8,8 +8,8 @@ import com.creezen.tool.AndroidTool.intMsg
 import com.jayce.vexis.databinding.AddRecordScoreBinding
 
 class ScoreInsertAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>() {
-    private val scoreList =
-        arrayListOf<Int>().apply {
+
+    private val scoreList = arrayListOf<Int>().apply {
             repeat(list.size) {
                 add(0)
             }

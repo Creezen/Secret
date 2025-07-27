@@ -13,6 +13,7 @@ import java.util.Stack
 import kotlin.math.absoluteValue
 
 class MazeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
+
     private val paint = Paint()
     private val playerPaint = Paint()
     private lateinit var bitmap: Bitmap

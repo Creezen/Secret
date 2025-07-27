@@ -13,6 +13,7 @@ import com.jayce.vexis.business.member.UserService
 import kotlinx.coroutines.launch
 
 class ActiveDataActivity : BaseActivity() {
+
     private lateinit var binding: ActivityActiveDataBinding
     private var activeItem: ActiveItem? = null
 

@@ -8,6 +8,7 @@ import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.UserLiveBinding
 
 class UserLive : BaseFragment() {
+
     private lateinit var binding: UserLiveBinding
 
     override fun onCreateView(

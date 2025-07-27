@@ -56,8 +56,7 @@ class RecordHistoryAdapter(
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
                 Log.e(TAG, "$userList")
-                val intent =
-                    Intent(context, ScoreBoard::class.java).also {
+                val intent = Intent(context, ScoreBoard::class.java).also {
                         it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
                     }
                 context.startActivity(intent)

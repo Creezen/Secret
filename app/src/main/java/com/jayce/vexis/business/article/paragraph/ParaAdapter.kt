@@ -30,8 +30,7 @@ class ParaAdapter(
     val activity: Activity,
     private val itemList: List<ParaRemarkBean>,
 ) : RecyclerView.Adapter<ParaAdapter.ViewHolder>() {
-    private val list =
-        arrayListOf(
+    private val list = arrayListOf(
             "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
         )
 
@@ -58,8 +57,7 @@ class ParaAdapter(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        val binding =
-            ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -89,8 +87,7 @@ class ParaAdapter(
         val content = itemList[position].content.trim()
         val contentLength = content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
-        val clickSpan =
-            object : ClickableSpan() {
+        val clickSpan = object : ClickableSpan() {
                 override fun onClick(widget: View) {
                     val contentList = itemList[position].list
                     contentList[0].cotent.toast()

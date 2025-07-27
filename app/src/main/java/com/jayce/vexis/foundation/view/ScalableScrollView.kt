@@ -9,6 +9,7 @@ import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 
 class ScalableScrollView(context: Context, attr: AttributeSet) : ScrollView(context, attr), SwipeCallback {
+
     private val handle by lazy {
         ClickHandle(ClickHandle.Mode.INTERCEPT)
     }

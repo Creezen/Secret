@@ -64,8 +64,7 @@ class Login : AppCompatActivity() {
 
     private fun getNewestVersion() {
         ThreadTool.runOnMulti(Dispatchers.Main) {
-            val versionInfo =
-                NetTool.create<PackageService>()
+            val versionInfo = NetTool.create<PackageService>()
                     .getVersion()
                     .await()
             versionInfo.apply {
@@ -108,15 +107,13 @@ class Login : AppCompatActivity() {
                     Dispatchers.Main,
                     object : LifecycleJob {
                         override suspend fun onDispatch() {
-                            val loginResult =
-                                NetTool.create<UserService>()
+                            val loginResult = NetTool.create<UserService>()
                                     .loginSystem(name.msg(), password.msg())
                                     .await()
                             if (!loginResult.containsKey("status")) {
                                 registerUser(loginResult.map2pojo())
                                 kotlin.runCatching {
-                                    val socket =
-                                        lifecycleScope.async(Dispatchers.IO) {
+                                    val socket = lifecycleScope.async(Dispatchers.IO) {
                                             SSLSocketFactory.getDefault().createSocket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                                         }.await()
                                     setOnlineSocket(socket)
@@ -180,8 +177,7 @@ class Login : AppCompatActivity() {
         }
         lifecycleScope.launch {
             kotlin.runCatching {
-                val res =
-                    createApi<ApiService>()
+                val res = createApi<ApiService>()
                         .getDictionary(chineseChar)
                         .await()
                 val jsonObj = JSONObject(res)

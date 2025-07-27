@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RegisterActivity : BaseActivity() {
+
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
     val passwordLiveData = MutableLiveData<String>()
@@ -72,14 +73,12 @@ class RegisterActivity : BaseActivity() {
                     return@observe
                 }
                 accountCode = 4
-                val map =
-                    HashMap<String, String>().also { hashmap ->
+                val map = HashMap<String, String>().also { hashmap ->
                         hashmap["type"] = "0"
                         hashmap["name"] = it
                     }
                 lifecycleScope.launch(Dispatchers.Main) {
-                    val result =
-                        NetTool.create<UserService>()
+                    val result = NetTool.create<UserService>()
                             .checkUserName(map)
                             .await()
                     if (result["status"] == 0) {
@@ -114,8 +113,7 @@ class RegisterActivity : BaseActivity() {
             }
             yearSpinner.configuration(YEAR_DATA) {
                 val item = MONTH_DATA[monthSelected]
-                val source =
-                    if (item == 2) {
+                val source = if (item == 2) {
                         if (isLeapYear(YEAR_DATA[it])) {
                             LEAP_DAY
                         } else {
@@ -149,8 +147,7 @@ class RegisterActivity : BaseActivity() {
             sex.configuration(SEX)
             emailPostfix.configuration(emailProfix)
             register.setOnClickListener {
-                val dialog =
-                    SimpleDialog(this@RegisterActivity).apply {
+                val dialog = SimpleDialog(this@RegisterActivity).apply {
                         setTitle("提示")
                         setMessage("注册中，请稍后...")
                     }
@@ -194,8 +191,7 @@ class RegisterActivity : BaseActivity() {
                             "",
                         ).pojo2Map()
                         map1["type"] = "1"
-                        val awaitResult =
-                            NetTool.create<UserService>()
+                        val awaitResult = NetTool.create<UserService>()
                                 .checkUserName(map1)
                                 .await()
                         if (null != awaitResult["status"]) {

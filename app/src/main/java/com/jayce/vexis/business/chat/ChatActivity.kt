@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ChatActivity : BaseActivity() {
+
     companion object {
         const val TAG = "ChatActivity"
         private val itemList = arrayListOf<ChatItem>()

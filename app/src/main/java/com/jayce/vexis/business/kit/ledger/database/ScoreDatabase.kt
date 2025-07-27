@@ -9,6 +9,7 @@ import com.jayce.vexis.business.kit.ledger.bean.ScoreBean
 
 @Database(version = 1, entities = [RecordItemBean::class, ScoreBean::class], exportSchema = false)
 abstract class ScoreDatabase : RoomDatabase() {
+
     abstract fun recordDao(): RecordDao
 
     companion object {
