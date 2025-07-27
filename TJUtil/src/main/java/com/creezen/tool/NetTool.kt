@@ -233,7 +233,7 @@ object NetTool {
                 socketWriter?.write("$msg\n")
                 socketWriter?.flush()
             }.onFailure {
-                it.printStackTrace()
+                Log.d(TAG, "sendMessage error: ${it.message}")
                 destroySocket()
                 reConnect(msg)
             }
@@ -285,7 +285,7 @@ object NetTool {
                     }
                 }
             }.onFailure {
-                it.printStackTrace()
+                Log.d(TAG, "openMessageReceiver error: ${it.message}")
                 reConnect()
                 openMessageReceiver(scope, onReceiveMessage)
             }

@@ -38,7 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import javax.net.ssl.SSLSocketFactory
+import java.net.Socket
 
 class Login : AppCompatActivity() {
 
@@ -114,7 +114,7 @@ class Login : AppCompatActivity() {
                                 registerUser(loginResult.map2pojo())
                                 kotlin.runCatching {
                                     val socket = lifecycleScope.async(Dispatchers.IO) {
-                                            SSLSocketFactory.getDefault().createSocket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                                            Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
                                         }.await()
                                     setOnlineSocket(socket)
                                     startActivity(Intent(this@Login, Main::class.java))
