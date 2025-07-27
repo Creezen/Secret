@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.animator
+package com.jayce.vexis.foundation.view.animator
 
 data class AnimatorBall(
     var x: Float,

@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.animator
+package com.jayce.vexis.foundation.view.animator
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2

@@ -9,7 +9,6 @@ import com.creezen.tool.DataTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
-import com.jayce.vexis.foundation.bean.SubjectTable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

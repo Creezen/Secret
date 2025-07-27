@@ -34,7 +34,7 @@ import com.jayce.vexis.business.member.dashboard.Dashboard
 import com.jayce.vexis.business.peer.Peer
 import com.jayce.vexis.business.article.Article
 import com.jayce.vexis.core.CoreService
-import com.jayce.vexis.foundation.SimpleDialog
+import com.jayce.vexis.foundation.view.SimpleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import q.rorbin.badgeview.Badge

@@ -14,7 +14,7 @@ import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
-import com.jayce.vexis.foundation.CustomDialog
+import com.jayce.vexis.foundation.view.CustomDialog
 
 class History : BaseFragment(), SwipeCallback {
 

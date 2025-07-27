@@ -9,7 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.jayce.vexis.foundation.DefaultSpinner
+            <com.jayce.vexis.foundation.view.DefaultSpinner
                 android:id="@+id/primary"
                 android:dropDownVerticalOffset="30dp"
                 android:spinnerMode="dropdown"
@@ -19,7 +19,7 @@
                 android:prompt="@string/prompt"
                 android:background="@drawable/editview_border"
                 android:onItemSelected="@{() -> primary.onItemSelect()}"/>
-            <com.jayce.vexis.foundation.DefaultSpinner
+            <com.jayce.vexis.foundation.view.DefaultSpinner
                 android:id="@+id/secondary"
                 android:dropDownVerticalOffset="30dp"
                 android:spinnerMode="dropdown"
@@ -29,7 +29,7 @@
                 android:prompt="@string/prompt"
                 android:background="@drawable/editview_border"
                 android:onItemSelected="@{() -> secondary.onItemSelect()}"/>
-            <com.jayce.vexis.foundation.DefaultSpinner
+            <com.jayce.vexis.foundation.view.DefaultSpinner
                 android:id="@+id/tertiary"
                 android:dropDownVerticalOffset="30dp"
                 android:spinnerMode="dropdown"

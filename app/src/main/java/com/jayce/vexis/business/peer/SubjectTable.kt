@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.bean
+package com.jayce.vexis.business.peer
 
 data class SubjectTable (
     val discipline: List<String> = listOf(),

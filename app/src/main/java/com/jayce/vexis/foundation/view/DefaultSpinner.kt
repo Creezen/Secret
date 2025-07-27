@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation
+package com.jayce.vexis.foundation.view
 
 import android.content.Context
 import android.util.AttributeSet

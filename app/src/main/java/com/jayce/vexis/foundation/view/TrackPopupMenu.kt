@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation
+package com.jayce.vexis.foundation.view
 
 import android.annotation.SuppressLint
 import android.content.Context

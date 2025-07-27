@@ -10,7 +10,7 @@ import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.business.member.ActiveItem
-import com.jayce.vexis.foundation.TrackPopupMenu
+import com.jayce.vexis.foundation.view.TrackPopupMenu
 
 class UserActiveAdapter(
     private val context: Context,

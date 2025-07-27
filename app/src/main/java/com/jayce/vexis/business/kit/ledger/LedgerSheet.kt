@@ -6,8 +6,8 @@ import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.PocketMainBinding
-import com.jayce.vexis.foundation.CustomDialog
-import com.jayce.vexis.foundation.SimpleDialog
+import com.jayce.vexis.foundation.view.CustomDialog
+import com.jayce.vexis.foundation.view.SimpleDialog
 
 class LedgerSheet : BaseActivity() {
 

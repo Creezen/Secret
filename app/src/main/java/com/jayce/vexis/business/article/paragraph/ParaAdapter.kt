@@ -20,7 +20,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
-import com.jayce.vexis.foundation.CustomDialog
+import com.jayce.vexis.foundation.view.CustomDialog
 import com.jayce.vexis.business.article.ArticleService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

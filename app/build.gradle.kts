@@ -24,6 +24,7 @@ android {
     namespace = "com.jayce.vexis"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.jayce.vexis"
         minSdk = 30
@@ -75,6 +76,7 @@ android {
         buildConfig = true
     }
     lint {
+        enable.add("HardcodedText")
         baseline = file("lint-baseline.xml")
         abortOnError = false
         htmlOutput = file("$buildDir/reports/combined/lint-report.html")

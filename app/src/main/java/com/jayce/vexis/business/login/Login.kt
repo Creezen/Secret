@@ -33,7 +33,7 @@ import com.jayce.vexis.core.SessionManager.registerUser
 import com.jayce.vexis.business.member.UserService
 import com.jayce.vexis.business.member.register.RegisterActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
-import com.jayce.vexis.foundation.animator.MyCustomTransformer
+import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

@@ -12,7 +12,7 @@ import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.AddRecordDialogBinding
 import com.jayce.vexis.databinding.AddRecordUserBinding
 import com.jayce.vexis.databinding.NewPocketRecordBinding
-import com.jayce.vexis.foundation.CustomDialog
+import com.jayce.vexis.foundation.view.CustomDialog
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
