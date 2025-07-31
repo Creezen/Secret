@@ -7,8 +7,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
     id("maven-publish")
+    id("com.google.devtools.ksp")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
@@ -196,12 +196,12 @@ tasks.register("mergeReports") {
 
 dependencies {
 
+    ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.room:room-runtime:2.5.2")
-    kapt("androidx.room:room-compiler:2.5.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
@@ -211,6 +211,7 @@ dependencies {
     implementation("com.github.stuxuhai:jpinyin:1.1.7")
     implementation("q.rorbin:badgeview:1.1.3")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("androidx.preference:preference-ktx:1.2.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

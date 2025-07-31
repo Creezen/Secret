@@ -1,6 +1,5 @@
 package com.jayce.vexis.business.member.manage
 
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import android.os.Build
 import android.os.Bundle
@@ -17,12 +16,15 @@ class ActiveDataActivity : BaseActivity() {
     private lateinit var binding: ActivityActiveDataBinding
     private var activeItem: ActiveItem? = null
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityActiveDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        activeItem = intent.getParcelableExtra("activeItem", ActiveItem::class.java)
+        activeItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("activeItem", ActiveItem::class.java)
+        } else {
+            intent.getParcelableExtra("activeItem")
+        }
         initPage()
     }
 

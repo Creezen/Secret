@@ -1,7 +1,6 @@
 package com.jayce.vexis.business.main
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -11,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
@@ -19,21 +17,21 @@ import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
-import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.R
-import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.foundation.base.BaseActivity.ActivityCollector.finishAll
+import com.jayce.vexis.business.article.Article
 import com.jayce.vexis.business.chat.Chat
-import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.business.feedback.Feedback
 import com.jayce.vexis.business.kit.Kit
 import com.jayce.vexis.business.media.MediaLibraryActivity
 import com.jayce.vexis.business.member.dashboard.AvatarSignnature
 import com.jayce.vexis.business.member.dashboard.Dashboard
 import com.jayce.vexis.business.peer.Peer
-import com.jayce.vexis.business.article.Article
+import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.CoreService
+import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.databinding.ActivityMainBinding
+import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.foundation.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.foundation.view.SimpleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
@@ -96,6 +94,7 @@ class Main : BaseActivity() {
             key = AvatarSignnature("key:$avatarTimestamp"),
             isCircle = true,
         )
+
     }
 
     private fun initPage() {
@@ -194,7 +193,6 @@ class Main : BaseActivity() {
         return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {

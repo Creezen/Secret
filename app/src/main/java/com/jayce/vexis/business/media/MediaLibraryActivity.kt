@@ -2,7 +2,6 @@ package com.jayce.vexis.business.media
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
@@ -11,18 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
+import com.jayce.vexis.foundation.base.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MediaLibraryActivity : BaseFragment() {
 
     private lateinit var binding: FileShareBinding

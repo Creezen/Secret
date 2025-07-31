@@ -65,8 +65,8 @@ class Login : AppCompatActivity() {
     private fun getNewestVersion() {
         ThreadTool.runOnMulti(Dispatchers.Main) {
             val versionInfo = NetTool.create<PackageService>()
-                    .getVersion()
-                    .await()
+                .getVersion()
+                .await()
             versionInfo.apply {
                 "${modifyTime.toTime()}  $versionName".toast()
             }
@@ -108,14 +108,14 @@ class Login : AppCompatActivity() {
                     object : LifecycleJob {
                         override suspend fun onDispatch() {
                             val loginResult = NetTool.create<UserService>()
-                                    .loginSystem(name.msg(), password.msg())
-                                    .await()
+                                .loginSystem(name.msg(), password.msg())
+                                .await()
                             if (!loginResult.containsKey("status")) {
                                 registerUser(loginResult.map2pojo())
                                 kotlin.runCatching {
                                     val socket = lifecycleScope.async(Dispatchers.IO) {
-                                            Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                                        }.await()
+                                        Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                                    }.await()
                                     setOnlineSocket(socket)
                                     startActivity(Intent(this@Login, Main::class.java))
                                 }.onFailure {
@@ -145,7 +145,7 @@ class Login : AppCompatActivity() {
             }
             val packageInfo = packageManager.getPackageInfo(
                 packageName,
-                PackageManager.PackageInfoFlags.of(0)
+                PackageManager.PackageInfoFlags.of(0),
             )
             val verMsg = "APP : v${packageInfo.versionName}  ${packageInfo.lastUpdateTime.toTime()}"
             versionMsg.text = verMsg

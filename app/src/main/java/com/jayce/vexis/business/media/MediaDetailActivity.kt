@@ -2,11 +2,9 @@ package com.jayce.vexis.business.media
 
 import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MediaDetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityFileDetailBinding
@@ -22,7 +20,11 @@ class MediaDetailActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFileDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        fileItem = intent.getParcelableExtra("fileInfo", MediaItem::class.java) ?: return
+        fileItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("fileInfo", MediaItem::class.java) ?: MediaItem("","","","","",0,"")
+        } else {
+            intent.getParcelableExtra("fileInfo") ?: MediaItem("","","","","",0,"")
+        }
         initView()
         initData()
     }

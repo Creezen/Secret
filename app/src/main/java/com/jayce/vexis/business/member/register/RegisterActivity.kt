@@ -74,13 +74,13 @@ class RegisterActivity : BaseActivity() {
                 }
                 accountCode = 4
                 val map = HashMap<String, String>().also { hashmap ->
-                        hashmap["type"] = "0"
-                        hashmap["name"] = it
-                    }
+                    hashmap["type"] = "0"
+                    hashmap["name"] = it
+                }
                 lifecycleScope.launch(Dispatchers.Main) {
                     val result = NetTool.create<UserService>()
-                            .checkUserName(map)
-                            .await()
+                        .checkUserName(map)
+                        .await()
                     if (result["status"] == 0) {
                         accountCode = 0
                         return@launch
@@ -114,18 +114,18 @@ class RegisterActivity : BaseActivity() {
             yearSpinner.configuration(YEAR_DATA) {
                 val item = MONTH_DATA[monthSelected]
                 val source = if (item == 2) {
-                        if (isLeapYear(YEAR_DATA[it])) {
-                            LEAP_DAY
-                        } else {
-                            COMMON_DAY
-                        }
+                    if (isLeapYear(YEAR_DATA[it])) {
+                        LEAP_DAY
                     } else {
-                        if (item in listOf(4, 6, 9, 11)) {
-                            SMALL_DAY
-                        } else {
-                            BIG_DAY
-                        }
+                        COMMON_DAY
                     }
+                } else {
+                    if (item in listOf(4, 6, 9, 11)) {
+                        SMALL_DAY
+                    } else {
+                        BIG_DAY
+                    }
+                }
                 daySpinner.refreshData(source)
             }
             monthSpinner.configuration(MONTH_DATA) {
