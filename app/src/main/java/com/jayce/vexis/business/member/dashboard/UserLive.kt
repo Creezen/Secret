@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.UserLiveBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class UserLive : BaseFragment() {
+class UserLive : BaseFragment<BaseViewModel>() {
 
     private lateinit var binding: UserLiveBinding
 

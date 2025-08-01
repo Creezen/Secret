@@ -10,11 +10,12 @@ import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.business.member.ActiveItem
 import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.foundation.base.BaseViewModel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AdminActivity : BaseActivity() {
+class AdminActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityAdminBinding
     private val userList = arrayListOf<ActiveItem>()

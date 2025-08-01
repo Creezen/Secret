@@ -9,9 +9,10 @@ import com.creezen.tool.NetTool.create
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class ArticleEditActivity : BaseActivity() {
+class ArticleEditActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivitySynergyEditBinding
 

@@ -8,9 +8,10 @@ import com.creezen.tool.NetTool.create
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
 import com.jayce.vexis.business.article.ArticleService
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class Para : BaseActivity() {
+class Para : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityParagraphBinding
     private val paragraphList = arrayListOf<ParaRemarkBean>()

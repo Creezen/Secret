@@ -1,12 +1,14 @@
 package com.jayce.vexis.business.kit.maze
+
 import android.os.Bundle
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.SoundTool.playShortSound
 import com.jayce.vexis.R
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityMazeBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class MazeActivity : BaseActivity() {
+class MazeActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityMazeBinding
     private var startTime: Long = 0

@@ -10,8 +10,9 @@ import com.jayce.vexis.databinding.WidgetsBinding
 import com.jayce.vexis.business.kit.gomoku.GomokuActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.ledger.LedgerSheet
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class Kit : BaseFragment() {
+class Kit : BaseFragment<BaseViewModel>() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -6,10 +6,11 @@ import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.PocketMainBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import com.jayce.vexis.foundation.view.CustomDialog
 import com.jayce.vexis.foundation.view.SimpleDialog
 
-class LedgerSheet : BaseActivity() {
+class LedgerSheet : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: PocketMainBinding
     private lateinit var userBinding: AddPocketRecordLayoutBinding

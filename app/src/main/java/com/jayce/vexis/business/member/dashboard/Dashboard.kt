@@ -21,10 +21,11 @@ import com.jayce.vexis.business.member.manage.AdminActivity
 import com.jayce.vexis.business.member.manage.UserBasicInfo
 import com.jayce.vexis.business.member.UserService
 import com.jayce.vexis.databinding.DashboardBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class Dashboard : BaseActivity() {
+class Dashboard : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val TAG = "Dashboard"

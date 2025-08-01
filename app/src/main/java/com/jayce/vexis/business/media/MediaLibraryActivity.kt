@@ -16,11 +16,12 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.base.BaseFragment
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MediaLibraryActivity : BaseFragment() {
+class MediaLibraryActivity : BaseFragment<BaseViewModel>() {
 
     private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null

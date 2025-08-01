@@ -7,8 +7,10 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.ViewModel
 
 interface Common : ActivityResultCaller {
+
     fun openFile(): ActivityResultContract<Array<String>, Uri?> {
         return ActivityResultContracts.OpenDocument()
     }
@@ -29,4 +31,6 @@ interface Common : ActivityResultCaller {
             action(it)
         }
     }
+
+    fun getViewModel(): ViewModel
 }

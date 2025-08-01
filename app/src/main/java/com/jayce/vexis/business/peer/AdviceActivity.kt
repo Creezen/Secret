@@ -9,9 +9,10 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdviceBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
-class AdviceActivity : BaseActivity() {
+class AdviceActivity : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val TAG = "AdviceActivity"

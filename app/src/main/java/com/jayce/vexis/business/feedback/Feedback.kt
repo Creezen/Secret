@@ -11,9 +11,10 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class Feedback : BaseFragment() {
+class Feedback() : BaseFragment<BaseViewModel>() {
 
     companion object {
         const val TAG = "Feedback"

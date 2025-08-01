@@ -9,10 +9,11 @@ import com.creezen.tool.DataTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Peer : BaseFragment() {
+class Peer : BaseFragment<BaseViewModel>() {
 
     companion object {
         const val TAG = "Peer"

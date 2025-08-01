@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class UserBasicInfo : BaseFragment() {
+class UserBasicInfo : BaseFragment<BaseViewModel>() {
 
     private lateinit var binding: UserBasicInfoBinding
 

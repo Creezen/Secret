@@ -8,10 +8,11 @@ import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
 import com.jayce.vexis.business.kit.ledger.bean.RecordListItem
 import com.jayce.vexis.business.kit.ledger.database.ScoreDatabase
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LedgerHistoryActivity : BaseActivity() {
+class LedgerHistoryActivity : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val TAG = "LedgerHistoryActivity"

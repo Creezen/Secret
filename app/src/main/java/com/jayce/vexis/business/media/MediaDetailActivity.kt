@@ -4,8 +4,9 @@ import android.os.Build
 import android.os.Bundle
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class MediaDetailActivity : BaseActivity() {
+class MediaDetailActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityFileDetailBinding
     private lateinit var fileItem: MediaItem

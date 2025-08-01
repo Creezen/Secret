@@ -8,12 +8,13 @@ import com.creezen.tool.NetTool.sendChatMessage
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Chat : BaseActivity() {
+class Chat : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val TAG = "Chat"

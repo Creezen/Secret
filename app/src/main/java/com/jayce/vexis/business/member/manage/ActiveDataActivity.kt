@@ -9,9 +9,10 @@ import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.business.member.ActiveItem
 import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class ActiveDataActivity : BaseActivity() {
+class ActiveDataActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityActiveDataBinding
     private var activeItem: ActiveItem? = null

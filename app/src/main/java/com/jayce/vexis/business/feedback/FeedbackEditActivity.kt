@@ -11,8 +11,9 @@ import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 
-class FeedbackEditActivity : BaseActivity() {
+class FeedbackEditActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityFeedbackEditBinding
 

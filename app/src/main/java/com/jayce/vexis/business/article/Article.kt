@@ -12,9 +12,10 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 
-class Article : BaseFragment() {
+class Article : BaseFragment<BaseViewModel>() {
 
     private lateinit var binding: FragmentSynergyBinding
     private val list = arrayListOf<ArticleBean>()

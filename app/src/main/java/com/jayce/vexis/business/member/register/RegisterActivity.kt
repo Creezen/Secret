@@ -13,15 +13,15 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.R
-import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.databinding.AccountCreationBinding
 import com.jayce.vexis.business.member.User
 import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.databinding.AccountCreationBinding
+import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.foundation.view.SimpleDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class RegisterActivity : BaseActivity() {
+class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
@@ -43,8 +43,13 @@ class RegisterActivity : BaseActivity() {
 
     private lateinit var binding: AccountCreationBinding
 
+    override fun getViewModelClazz(): Class<RegisterViewModel> {
+        return RegisterViewModel::class.java
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        model.aaa()
         binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")

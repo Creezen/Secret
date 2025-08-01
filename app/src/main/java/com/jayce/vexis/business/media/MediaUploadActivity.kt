@@ -15,9 +15,10 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
+import com.jayce.vexis.foundation.base.BaseViewModel
 import java.io.File
 
-class MediaUploadActivity : BaseActivity() {
+class MediaUploadActivity : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val SPLIT = "/"

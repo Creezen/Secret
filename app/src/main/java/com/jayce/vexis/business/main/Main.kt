@@ -32,13 +32,14 @@ import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.foundation.base.BaseActivity.ActivityCollector.finishAll
+import com.jayce.vexis.foundation.base.BaseViewModel
 import com.jayce.vexis.foundation.view.SimpleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
-class Main : BaseActivity() {
+class Main : BaseActivity<BaseViewModel>() {
 
     companion object {
         const val TAG = "Main"
