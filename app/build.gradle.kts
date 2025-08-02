@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.diagnostics.reportOnDeclarationOrFail
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -9,6 +10,7 @@ plugins {
     id("kotlin-parcelize")
     id("maven-publish")
     id("com.google.devtools.ksp")
+    id("io.gitlab.arturbosch.detekt")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
@@ -18,6 +20,10 @@ repositories {
     google()
     mavenCentral()
     mavenLocal()
+}
+
+detekt {
+    ignoreFailures = true
 }
 
 android {
@@ -165,6 +171,8 @@ tasks.register<DefaultTask>("kt-lint") {
 
 tasks.register("mergeReports") {
     group = "verification"
+
+    dependsOn("detekt")
 
     dependsOn("lint", "kt-lint").doLast {
         delete("$buildDir/reports/ktlint")

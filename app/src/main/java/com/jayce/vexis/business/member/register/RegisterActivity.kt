@@ -49,7 +49,6 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        model.aaa()
         binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")
