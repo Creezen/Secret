@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
@@ -26,6 +27,7 @@ import com.jayce.vexis.business.media.MediaLibraryActivity
 import com.jayce.vexis.business.member.dashboard.AvatarSignnature
 import com.jayce.vexis.business.member.dashboard.Dashboard
 import com.jayce.vexis.business.peer.Peer
+import com.jayce.vexis.business.setting.Setting
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
@@ -206,6 +208,9 @@ class Main : BaseActivity<BaseViewModel>() {
                     setTimeout(5000)
                     setBarcodeImageEnabled(false)
                 })
+            }
+            R.id.setting -> {
+                startActivity(Intent(this, Setting::class.java))
             }
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }

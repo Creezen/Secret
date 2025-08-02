@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Preference
+        android:key="dfgdfhgf"
+        android:title="perie"
+        android:summary="sdgdghrftg"/>
+    <Preference
+        android:key="aaa"
+        android:title="aaaa"
+        android:summary="vvvvv"/>
+    <Preference
+        android:key="vvvvv"
+        android:title="eewerg"
+        android:summary="gytjhjyu"/>
+</PreferenceScreen>

@@ -5,10 +5,15 @@
         android:id="@+id/scanQRCode"
         android:icon="@drawable/scan"
         android:title="@string/scan"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/setting"
+        android:title="@string/setting"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/logout"
         android:icon="@drawable/exist_vector"
         android:title="@string/exist"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 </menu>

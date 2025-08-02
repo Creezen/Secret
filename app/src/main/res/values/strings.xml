@@ -131,4 +131,5 @@
     <string name="file_station">资源驿站</string>
     <string name="input_title">请输入标题...</string>
     <string name="record_event">记录一下大事件</string>
+    <string name="setting">偏好管理</string>
 </resources>

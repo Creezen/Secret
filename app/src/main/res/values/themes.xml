@@ -11,6 +11,30 @@
         <item name="android:typeface">monospace</item>
         <item name="android:textColorHint">@color/hint</item>
         <item name="android:windowBackground">#F5ECE0</item>
+        <item name="preferenceTheme">@style/customPreference</item>
+    </style>
+
+    <style name="customPreference" parent="@style/PreferenceThemeOverlay">
+        <item name="preferenceStyle">@style/preferenceBase</item>
+        <item name="preferenceCategoryStyle">@style/preferenceCate</item>
+        <item name="checkBoxPreferenceStyle">@style/checkPre</item>
+        <item name="allowDividerAbove">false</item>
+        <item name="allowDividerBelow">false</item>
+    </style>
+
+    <style name="checkPre" parent="Preference.CheckBoxPreference.Material">
+        <item name="iconSpaceReserved">false</item>
+        <item name="icon">@null</item>
+    </style>
+
+    <style name="preferenceCate" parent="Preference.Category.Material">
+        <item name="iconSpaceReserved">false</item>
+        <item name="icon">@null</item>
+    </style>
+
+    <style name="preferenceBase" parent="Preference">
+        <item name="iconSpaceReserved">false</item>
+        <item name="icon">@null</item>
     </style>
 
     <style name="Dialog" parent="android:style/Theme.Dialog">
