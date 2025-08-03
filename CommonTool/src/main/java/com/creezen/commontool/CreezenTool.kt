@@ -38,5 +38,4 @@ object CreezenTool {
         year % 4 == 0 -> true
         else -> false
     }
-
 }

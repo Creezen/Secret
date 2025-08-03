@@ -9,7 +9,6 @@ import com.jayce.vexis.R
 class SettingFragment: PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        context?.theme?.applyStyle(R.style.customPreference, true)
         addPreferencesFromResource(R.xml.setting)
     }
 

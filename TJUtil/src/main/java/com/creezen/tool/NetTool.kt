@@ -307,5 +307,4 @@ object NetTool {
             onlineSocket.close()
         }
     }
-
 }

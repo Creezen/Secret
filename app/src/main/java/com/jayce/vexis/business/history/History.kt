@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.creezen.commontool.CreezenTool.toTime
+import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
+import com.creezen.tool.NetTool
+import com.creezen.tool.NetTool.await
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.foundation.base.BaseFragment
@@ -16,6 +20,8 @@ import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.base.BaseViewModel
 import com.jayce.vexis.foundation.view.CustomDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class History : BaseFragment<BaseViewModel>(), SwipeCallback {
 
@@ -67,14 +73,19 @@ class History : BaseFragment<BaseViewModel>(), SwipeCallback {
                     DialogTimelineBinding.inflate(layoutInflater)
                 ).apply {
                     RightButton { binding, dialog ->
-//                        "insert OK".toast()
-                        binding.picker.time().toast()
+                        ThreadTool.runOnMulti(Dispatchers.IO) {
+                            val status = NetTool.create<HistoryService>()
+                                .sendEventData(
+                                    binding.picker.formatTime(),
+                                    binding.content.msg()
+                                ).await()
+                            withContext(Dispatchers.Main) {
+                                status.toast()
+                            }
+                        }
                         dismiss()
                     }
-                    LeftButton { dialogTimelineBinding, dialog ->
-                        "insert error".toast()
-                        dismiss()
-                    }
+                    LeftButton { _, _ -> dismiss() }
                     show()
                 }
             }

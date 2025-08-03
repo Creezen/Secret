@@ -198,5 +198,4 @@ object FileTool {
     private fun e(file: File?) {
         Log.e("file", "$file")
     }
-
 }

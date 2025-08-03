@@ -56,6 +56,20 @@ class TimePicker(context: Context, attr: AttributeSet): LinearLayout(context, at
         }
     }
 
+    fun formatTime(): String {
+        var timeStr = ""
+        time().forEachIndexed { i, v ->
+            if(i == 0) {
+                timeStr += v.padStart(4, '0')
+            } else if(i == 6) {
+                timeStr += v.padStart(3, '0')
+            } else {
+                timeStr += v.padStart(2, '0')
+            }
+        }
+        return timeStr
+    }
+
     private fun getList(num: Int, offset: Int = 0): Array<String> {
         return ArrayList<String>().apply {
             repeat(num) {
