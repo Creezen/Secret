@@ -38,7 +38,7 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
-            android:name=".business.setting.Setting"
+            android:name=".business.setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".business.peer.AdviceActivity"
@@ -77,7 +77,7 @@
             android:name=".business.kit.maze.MazeActivity"
             android:exported="false" />
         <activity
-            android:name=".business.article.paragraph.Para"
+            android:name=".business.article.paragraph.ParagraptActivity"
             android:exported="false" />
         <activity
             android:name=".business.article.ArticleEditActivity"
@@ -90,7 +90,7 @@
             android:exported="false"
             android:theme="@style/adminActivityTheme" />
         <activity
-            android:name=".business.chat.Chat"
+            android:name=".business.chat.ChatActivity"
             android:exported="false" />
         <activity
             android:name=".business.feedback.FeedbackEditActivity"
@@ -102,22 +102,22 @@
             android:name=".business.media.MediaUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".business.kit.ledger.ScoreBoard"
+            android:name=".business.kit.ledger.ScoreBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".business.member.dashboard.Dashboard"
+            android:name=".business.member.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".business.kit.ledger.LedgerSheet"
+            android:name=".business.kit.ledger.LedgerSheetActivity"
             android:exported="false" />
         <activity
-            android:name=".business.main.Main"
+            android:name=".business.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".business.member.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".business.login.Login"
+            android:name=".business.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

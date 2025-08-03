@@ -11,10 +11,11 @@ import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.business.member.dashboard.AvatarSignnature
+import com.jayce.vexis.foundation.bean.FeedbackEntry
 
 class FeedbackAdapter(
     val context: Context,
-    val feedbackItemList: List<FeedbackItem>,
+    val feedbackEntryList: List<FeedbackEntry>,
 ) : RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
     class ViewHolder(val binding: FeedbackItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
@@ -40,7 +41,7 @@ class FeedbackAdapter(
         holder: ViewHolder,
         position: Int,
     ) {
-        val item = feedbackItemList[position]
+        val item = feedbackEntryList[position]
         holder.nickname.text = item.userName
         holder.time.text = item.createTime.toTime()
         holder.title.text = item.title
@@ -59,5 +60,5 @@ class FeedbackAdapter(
         )
     }
 
-    override fun getItemCount() = feedbackItemList.size
+    override fun getItemCount() = feedbackEntryList.size
 }

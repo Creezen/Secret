@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.ParagraphItemBinding
-import com.jayce.vexis.business.article.paragraph.Para
+import com.jayce.vexis.business.article.paragraph.ParagraptActivity
+import com.jayce.vexis.foundation.bean.ArticleEntry
 
 class ArticleAdapter(
     val context: Context,
-    val itemList: List<ArticleBean>,
+    val itemList: List<ArticleEntry>,
 ) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     class ViewHolder(val binding: ParagraphItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val paragraph = binding.paragraph
@@ -32,7 +33,7 @@ class ArticleAdapter(
         holder.paragraph.text = item.title
         holder.paragraph.setOnClickListener {
             context.startActivity(
-                Intent(context, Para::class.java)
+                Intent(context, ParagraptActivity::class.java)
                     .apply {
                         putExtra("articleId", item.synergyId)
                     },

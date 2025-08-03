@@ -6,7 +6,7 @@
     <data>
         <variable
             name="env"
-            type="com.jayce.vexis.business.login.Login" />
+            type="com.jayce.vexis.business.login.LoginActivity" />
     </data>
 
     <LinearLayout

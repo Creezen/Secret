@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.RecordItemLayoutBinding
-import com.jayce.vexis.business.kit.ledger.bean.RecordBean
-import com.jayce.vexis.business.kit.ledger.ScoreBoard.Companion.HEIGHT
-import com.jayce.vexis.business.kit.ledger.ScoreBoard.Companion.WIDTH
+import com.jayce.vexis.foundation.bean.RecordEntry
+import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.HEIGHT
+import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.WIDTH
 
-class RecordAdapter(private val recordList: List<RecordBean>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+class RecordAdapter(private val recordList: List<RecordEntry>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: RecordItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.itemLayout

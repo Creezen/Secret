@@ -15,7 +15,10 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.foundation.route.MediaService
+import kotlinx.coroutines.Dispatchers
 import java.io.File
 
 class MediaUploadActivity : BaseActivity<BaseViewModel>() {
@@ -69,28 +72,18 @@ class MediaUploadActivity : BaseActivity<BaseViewModel>() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(
-                    this@MediaUploadActivity,
-                    delayMillis = 5000L,
-                    lifecycleJob = object : LifecycleJob {
-                            override suspend fun onDispatch() {
-                                val filePart = buildFileMultipart(filePath, "file")
-                                val result = NetTool.create<MediaService>().uploadFile(
-                                        fileName,
-                                        fileID,
-                                        fileSuffix,
-                                        description,
-                                        illustrate,
-                                        fileSize,
-                                        uploadTime,
-                                        filePart,
-                                    ).await()
-                                if (result["loadResult"] == true) {
-                                    finish()
-                                }
+                workInDispatch(this@MediaUploadActivity,  5000L, Dispatchers.Default, object : LifecycleJob {
+                    override suspend fun onDispatch() {
+                        val filePart = buildFileMultipart(filePath, "file")
+                        request<MediaService, LinkedHashMap<String, Boolean>>({
+                            uploadFile(fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, filePart)
+                        }) {
+                            if (it["loadResult"] == true) {
+                                finish()
                             }
-                        },
-                )
+                        }
+                    }
+                })
             }
         }
     }

@@ -9,6 +9,8 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.jayce.vexis.foundation.bean.GridIEntry
+import com.jayce.vexis.foundation.bean.PointEntry
 import java.util.Stack
 import kotlin.math.absoluteValue
 
@@ -21,8 +23,8 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private var row: Int = -1
     private var line: Int = -1
     private var initStatus = 0
-    private lateinit var mazeMatrix: Array<Array<GridItem>>
-    private val visitStack = Stack<GridItem>()
+    private lateinit var mazeMatrix: Array<Array<GridIEntry>>
+    private val visitStack = Stack<GridIEntry>()
     private var gridWidth = -1f
     private var previewX = 0
     private var previewY = 0
@@ -140,7 +142,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private fun initMazeMatrix() {
-        mazeMatrix = Array(row) { Array(line) { GridItem() } }
+        mazeMatrix = Array(row) { Array(line) { GridIEntry() } }
         for (i in 0 until row) {
             for (j in 0 until line) {
                 mazeMatrix[i][j].x = i
@@ -153,7 +155,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     private fun drawLine(
         canvas: Canvas,
-        item: GridItem,
+        item: GridIEntry,
     ) {
         with(item) {
             if (top) {
@@ -203,7 +205,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
             visitStack.push(mazeMatrix[x][y])
             mazeMatrix[x][y].visit = true
         }
-        val validGrid = arrayListOf<PointBean>()
+        val validGrid = arrayListOf<PointEntry>()
         setVisitableGrid(validGrid, x, y)
         if (validGrid.isEmpty()) {
             if (visitStack.isEmpty()) {
@@ -222,24 +224,24 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private fun makeWall(
         x: Int,
         y: Int,
-        pointBean: PointBean,
+        pointEntry: PointEntry,
     ) {
-        if (pointBean.x == -1 && pointBean.y == 0) {
+        if (pointEntry.x == -1 && pointEntry.y == 0) {
             mazeMatrix[x][y].top = false
             mazeMatrix[x - 1][y].bottom = false
             return
         }
-        if (pointBean.x == 0 && pointBean.y == 1) {
+        if (pointEntry.x == 0 && pointEntry.y == 1) {
             mazeMatrix[x][y].right = false
             mazeMatrix[x][y + 1].left = false
             return
         }
-        if (pointBean.x == 1 && pointBean.y == 0) {
+        if (pointEntry.x == 1 && pointEntry.y == 0) {
             mazeMatrix[x][y].bottom = false
             mazeMatrix[x + 1][y].top = false
             return
         }
-        if (pointBean.x == 0 && pointBean.y == -1) {
+        if (pointEntry.x == 0 && pointEntry.y == -1) {
             mazeMatrix[x][y].left = false
             mazeMatrix[x][y - 1].right = false
         }
@@ -260,21 +262,21 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private fun setVisitableGrid(
-        validGrid: ArrayList<PointBean>,
+        validGrid: ArrayList<PointEntry>,
         x: Int,
         y: Int,
     ) {
         if (isValidGrid(x - 1, y)) {
-            validGrid.add(PointBean(-1, 0))
+            validGrid.add(PointEntry(-1, 0))
         }
         if (isValidGrid(x, y + 1)) {
-            validGrid.add(PointBean(0, 1))
+            validGrid.add(PointEntry(0, 1))
         }
         if (isValidGrid(x + 1, y)) {
-            validGrid.add(PointBean(1, 0))
+            validGrid.add(PointEntry(1, 0))
         }
         if (isValidGrid(x, y - 1)) {
-            validGrid.add(PointBean(0, -1))
+            validGrid.add(PointEntry(0, -1))
         }
     }
 

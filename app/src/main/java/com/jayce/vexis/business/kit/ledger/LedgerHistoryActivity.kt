@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
-import com.jayce.vexis.business.kit.ledger.bean.RecordListItem
-import com.jayce.vexis.business.kit.ledger.database.ScoreDatabase
+import com.jayce.vexis.foundation.bean.RecordListEntry
+import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
 import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class LedgerHistoryActivity : BaseActivity<BaseViewModel>() {
     private val scoreDao by lazy {
         ScoreDatabase.getDatabase(this).recordDao()
     }
-    private val list = arrayListOf<RecordListItem>()
+    private val list = arrayListOf<RecordListEntry>()
     private val adapter by lazy {
         RecordHistoryAdapter(this, list, this)
     }
@@ -47,7 +47,7 @@ class LedgerHistoryActivity : BaseActivity<BaseViewModel>() {
             list.clear()
             val recordList = scoreDao.getRecordList()
             recordList.forEach {
-                list.add(RecordListItem(it.title, it.time, "this is rank!", it.id))
+                list.add(RecordListEntry(it.title, it.time, "this is rank!", it.id))
             }
             adapter.notifyDataSetChanged()
 

@@ -11,6 +11,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.withTimeoutOrNull
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.Executors
 
@@ -33,6 +34,12 @@ object ThreadTool {
     private val scopeMap = HashMap<String, CoroutineScope>()
 
     fun init() {}
+
+    suspend fun ui(block: () -> Unit) {
+        withContext(Dispatchers.Main) {
+            block.invoke()
+        }
+    }
 
     fun runOnSingle(
         dispatcher: CoroutineDispatcher = Dispatchers.Default,

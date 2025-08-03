@@ -7,10 +7,14 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdviceBinding
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.foundation.route.PeerService
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AdviceActivity : BaseActivity<BaseViewModel>() {
 
@@ -47,19 +51,15 @@ class AdviceActivity : BaseActivity<BaseViewModel>() {
                     "内容不可以为空哦！".toast()
                     return@setOnClickListener
                 }
-                ThreadTool.runOnMulti(Dispatchers.IO) {
-                    Log.d(TAG, "send: $primaryKey/$secondKey/${tertiaryKey}")
-                    val flag = NetTool.create<PeerService>().sendSeniorAdvice(
-                        primaryKey,
-                        secondKey,
-                        tertiaryKey,
-                        text
-                    ).await()
-                    if(flag) {
+                Log.d(TAG, "send: $primaryKey/$secondKey/${tertiaryKey}")
+                request<PeerService, Boolean>({
+                    sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
+                }) {
+                    if(it) {
                         finish()
-                    } else {
-                        "服务器错误，请重试!!".toast()
+                        return@request
                     }
+                    ui { "服务器错误，请重试!!".toast() }
                 }
             }
         }

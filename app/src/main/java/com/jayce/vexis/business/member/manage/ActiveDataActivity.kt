@@ -7,31 +7,31 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
-import com.jayce.vexis.business.member.ActiveItem
-import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.foundation.bean.ActiveEntry
+import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class ActiveDataActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityActiveDataBinding
-    private var activeItem: ActiveItem? = null
+    private var activeEntry: ActiveEntry? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityActiveDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        activeItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("activeItem", ActiveItem::class.java)
+        activeEntry = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("activeEntry", ActiveEntry::class.java)
         } else {
-            intent.getParcelableExtra("activeItem")
+            intent.getParcelableExtra("activeEntry")
         }
         initPage()
     }
 
     private fun initPage() {
         with(binding) {
-            activeItem?.let {
+            activeEntry?.let {
                 nickname.text = it.nickname
                 userID.text = it.userID
                 createTime.text = it.createTime
@@ -44,14 +44,14 @@ class ActiveDataActivity : BaseActivity<BaseViewModel>() {
                 post.text = "${it.post}"
                 setAdministrator.setOnClickListener {
                     lifecycleScope.launch {
-                        activeItem?.let {
+                        activeEntry?.let {
                             manageUser(1, it.userID)
                         }
                     }
                 }
                 delete.setOnClickListener {
                     lifecycleScope.launch {
-                        activeItem?.let {
+                        activeEntry?.let {
                             manageUser(2, it.userID)
                         }
                     }
@@ -64,7 +64,7 @@ class ActiveDataActivity : BaseActivity<BaseViewModel>() {
         operation: Int,
         userId: String,
     ) {
-        activeItem?.let {
+        activeEntry?.let {
             lifecycleScope.launch {
                 val awaitMap = create<UserService>()
                     .manageUser(operation, userId).await()

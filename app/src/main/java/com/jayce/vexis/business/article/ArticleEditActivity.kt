@@ -10,6 +10,7 @@ import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 
 class ArticleEditActivity : BaseActivity<BaseViewModel>() {

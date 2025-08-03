@@ -20,15 +20,17 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
-import com.jayce.vexis.foundation.view.CustomDialog
-import com.jayce.vexis.business.article.ArticleService
+import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.foundation.bean.ParaRemarkEntry
+import com.jayce.vexis.foundation.view.block.CustomDialog
+import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class ParaAdapter(
     val context: Context,
     val activity: Activity,
-    private val itemList: List<ParaRemarkBean>,
+    private val itemList: List<ParaRemarkEntry>,
 ) : RecyclerView.Adapter<ParaAdapter.ViewHolder>() {
     private val list = arrayListOf(
             "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
@@ -105,21 +107,20 @@ class ParaAdapter(
         view: View,
     ) {
         dialog.apply {
-            LeftButton("取消") { _, _ ->
+            left("取消") { _, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 dismiss()
             }
-            RightButton("提交") { binding, _ ->
+            right("提交") { binding, _ ->
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
-                ThreadTool.runOnMulti(Dispatchers.IO) {
-                    val userId = user().userId
-                    val paragraphId = itemList[position].paragraphId
-                    val content = binding.commentContent.msg()
-                    val result = NetTool.create<ArticleService>()
-                        .postCommen(articleId, paragraphId, userId, content)
-                        .await()
+                val userId = user().userId
+                val paragraphId = itemList[position].paragraphId
+                val content = binding.commentContent.msg()
+                request<ArticleService, Boolean>({
+                    postCommen(articleId, paragraphId, userId, content)
+                }) {
                     withContext(Dispatchers.Main) {
-                        result.toast()
+                        it.toast()
                     }
                 }
                 itemList[position].paragraphId.toast()

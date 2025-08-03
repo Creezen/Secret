@@ -6,19 +6,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
+import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.foundation.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
-import com.jayce.vexis.business.member.ActiveItem
-import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.foundation.bean.ActiveEntry
+import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.base.BaseViewModel
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AdminActivity : BaseActivity<BaseViewModel>() {
 
     private lateinit var binding: ActivityAdminBinding
-    private val userList = arrayListOf<ActiveItem>()
+    private val userList = arrayListOf<ActiveEntry>()
     private val adapter by lazy {
         UserActiveAdapter(this, userList)
     }
@@ -39,15 +42,14 @@ class AdminActivity : BaseActivity<BaseViewModel>() {
     }
 
     private fun initData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val remoteList = NetTool.create<UserService>()
-                    .getAllUser()
-                    .await()
-            val remoteRes = remoteList["userActiveData"] ?: listOf()
+        request<UserService, LinkedTreeMap<String, List<ActiveEntry>>>({
+            getAllUser()
+        }) {
+            val remoteRes = it["userActiveData"] ?: listOf()
             val originSize = userList.size
             userList.addAll(remoteRes)
             Log.e("AdminActivity.initData", "$userList")
-            launch(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
                 adapter.notifyItemRangeInserted(originSize, remoteRes.size)
             }
         }

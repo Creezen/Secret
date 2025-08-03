@@ -9,15 +9,15 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.RecordListLayoutBinding
-import com.jayce.vexis.business.kit.ledger.ScoreBoard
-import com.jayce.vexis.business.kit.ledger.bean.RecordListItem
-import com.jayce.vexis.business.kit.ledger.database.ScoreDatabase
+import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity
+import com.jayce.vexis.foundation.bean.RecordListEntry
+import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class RecordHistoryAdapter(
     private val context: Context,
-    private val list: List<RecordListItem>,
+    private val list: List<RecordListEntry>,
     private val owner: LifecycleOwner,
 ) : RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
     companion object {
@@ -56,7 +56,7 @@ class RecordHistoryAdapter(
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
                 Log.e(TAG, "$userList")
-                val intent = Intent(context, ScoreBoard::class.java).also {
+                val intent = Intent(context, ScoreBoardActivity::class.java).also {
                         it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
                     }
                 context.startActivity(intent)

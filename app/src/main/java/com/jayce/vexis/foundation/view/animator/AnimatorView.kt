@@ -9,11 +9,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import com.jayce.vexis.foundation.bean.AnimatorBallEntry
 
 class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var ball: AnimatorBall = AnimatorBall(-1f, -1f)
+    private var ball: AnimatorBallEntry = AnimatorBallEntry(-1f, -1f)
     private val radius = 100f
 
     init {
@@ -39,14 +40,14 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
     private fun setBallAnimator(): ValueAnimator {
         val valueAnimator = ValueAnimator.ofObject(
                 BallEvaluator(),
-                AnimatorBall(radius, height / 2f),
-                AnimatorBall(width / 2f, height - radius),
-                AnimatorBall(width - radius, height / 2f),
-                AnimatorBall(width / 2f, radius),
-                AnimatorBall(radius, height / 2f)
+                AnimatorBallEntry(radius, height / 2f),
+                AnimatorBallEntry(width / 2f, height - radius),
+                AnimatorBallEntry(width - radius, height / 2f),
+                AnimatorBallEntry(width / 2f, radius),
+                AnimatorBallEntry(radius, height / 2f)
             )
         valueAnimator.addUpdateListener {
-            ball = it.animatedValue as AnimatorBall
+            ball = it.animatedValue as AnimatorBallEntry
             invalidate()
         }
         valueAnimator.repeatCount = ValueAnimator.INFINITE

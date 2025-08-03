@@ -2,7 +2,6 @@ package com.jayce.vexis.business.media
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -16,13 +15,18 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
+import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.foundation.bean.MediaEntry
+import com.jayce.vexis.foundation.route.MediaService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import java.io.InputStream
 
 class MediaElementAdapter(
     private val context: Context,
     private val parent: LifecycleOwner,
-    val list: List<MediaItem>,
+    val list: List<MediaEntry>,
 ) : RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
     companion object {
         const val TAG = "MediaElementAdapter"
@@ -66,14 +70,11 @@ class MediaElementAdapter(
             }
             "开始下载".toast()
             progressBar?.progress = 0
-            parent.lifecycleScope.launch(Dispatchers.IO) {
-                val fileName = "${item.fileID}${item.fileSuffix}"
-                val responseStream = NetTool.create<MediaService>()
-                        .downloadFile(fileName)
-                        .await()
-                        .byteStream()
+            val fileName = "${item.fileID}${item.fileSuffix}"
+            request<MediaService, ResponseBody>({ downloadFile(fileName) }) {
+                val stream = it.byteStream()
                 progressBar?.max = item.fileSize.toInt()
-                downloadFileByNet(responseStream, item.fileName) { size ->
+                downloadFileByNet(stream, item.fileName) { size ->
                     progressBar?.progress = size
                     if (size == item.fileSize.toInt()) {
                         holder.download.setImageResource(R.drawable.open)

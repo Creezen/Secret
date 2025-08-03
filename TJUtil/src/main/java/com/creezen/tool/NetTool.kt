@@ -189,7 +189,7 @@ object NetTool {
             .build()
     }
 
-    suspend fun <T : Any> Call<T>.await():T {
+    suspend fun <T> Call<T>.await():T {
         return suspendCancellableCoroutine { continuation ->
             enqueue(object : Callback<T> {
                 override fun onResponse(p0: Call<T>, p1: Response<T>) {

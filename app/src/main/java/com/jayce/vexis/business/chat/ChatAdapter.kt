@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
+import com.jayce.vexis.foundation.bean.ChatEntry
 
-class ChatAdapter(private val msgList: List<ChatEntity>) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter(private val msgList: List<ChatEntry>) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ChatItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val nickname = binding.nickname

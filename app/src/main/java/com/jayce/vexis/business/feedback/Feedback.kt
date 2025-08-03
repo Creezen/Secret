@@ -11,8 +11,13 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.foundation.bean.FeedbackEntry
+import com.jayce.vexis.foundation.route.FeedbackService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Feedback() : BaseFragment<BaseViewModel>() {
 
@@ -21,9 +26,9 @@ class Feedback() : BaseFragment<BaseViewModel>() {
     }
 
     private lateinit var binding: ActivityFeedbackBinding
-    private val feedbackItemList = arrayListOf<FeedbackItem>()
+    private val feedbackEntryList = arrayListOf<FeedbackEntry>()
     private val feedbackAdapter by lazy {
-        FeedbackAdapter(requireActivity(), feedbackItemList)
+        FeedbackAdapter(requireActivity(), feedbackEntryList)
     }
 
     override fun onCreateView(
@@ -59,14 +64,13 @@ class Feedback() : BaseFragment<BaseViewModel>() {
     }
 
     private fun updateData() {
-        lifecycleScope.launch {
-            val feedbackRes = NetTool.create<FeedbackService>()
-                    .getFeedback()
-                    .await()
-            val list = feedbackRes["items"] ?: arrayListOf()
-            feedbackItemList.clear()
-            feedbackItemList.addAll(list)
-            feedbackAdapter.notifyItemRangeChanged(0, list.size)
+        request<FeedbackService, LinkedHashMap<String, ArrayList<FeedbackEntry>>>({ getFeedback() }) {
+            withContext(Dispatchers.Main) {
+                val list = it["items"] ?: arrayListOf()
+                feedbackEntryList.clear()
+                feedbackEntryList.addAll(list)
+                feedbackAdapter.notifyItemRangeChanged(0, list.size)
+            }
         }
     }
 }

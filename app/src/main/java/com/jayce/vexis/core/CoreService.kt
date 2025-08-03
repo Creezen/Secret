@@ -18,7 +18,7 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.foundation.ability.EventHandler
-import com.jayce.vexis.business.chat.ChatEntity
+import com.jayce.vexis.foundation.bean.ChatEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -31,19 +31,19 @@ class CoreService : Service() {
         const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
         const val CACHE_MESSAGE = "CACHE_MESSAGE"
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        private val chatQueue = LinkedBlockingQueue<ChatEntity>()
-        private val backupList = ArrayList<ChatEntity>()
+        private val chatQueue = LinkedBlockingQueue<ChatEntry>()
+        private val backupList = ArrayList<ChatEntry>()
 
         fun getUnreadSize(): Int {
             return chatQueue.size
         }
 
-        fun getChatMessage(block: (LinkedBlockingQueue<ChatEntity>) -> Unit) {
+        fun getChatMessage(block: (LinkedBlockingQueue<ChatEntry>) -> Unit) {
             block.invoke(chatQueue)
         }
 
         fun sendFinish() {
-            chatQueue.put(ChatEntity("", "", ""))
+            chatQueue.put(ChatEntry("", "", ""))
         }
 
         fun getBackupContent() = backupList
@@ -59,10 +59,10 @@ class CoreService : Service() {
 
     private fun initData() {
         val data = readPrefs {
-                it.getString(CACHE_MESSAGE, ArrayList<ChatEntity>().toJson())
+                it.getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
             }
         chatQueue.clear()
-        data?.toData<ArrayList<ChatEntity>>().let {
+        data?.toData<ArrayList<ChatEntry>>().let {
             it?.forEach {
                 chatQueue.put(it)
                 backupList.add(it)
@@ -97,7 +97,7 @@ class CoreService : Service() {
         }
         ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
             EventHandler.chatFlow.collect {
-                val item = ChatEntity(user().nickname, System.currentTimeMillis().toTime(), it)
+                val item = ChatEntry(user().nickname, System.currentTimeMillis().toTime(), it)
                 backupList.add(item)
                 chatQueue.put(item)
             }

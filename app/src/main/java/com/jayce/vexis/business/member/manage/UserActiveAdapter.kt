@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.UserActiveItemBinding
-import com.jayce.vexis.business.member.ActiveItem
-import com.jayce.vexis.foundation.view.TrackPopupMenu
+import com.jayce.vexis.foundation.bean.ActiveEntry
+import com.jayce.vexis.foundation.view.block.TrackPopupMenu
 
 class UserActiveAdapter(
     private val context: Context,
-    private val userList: List<ActiveItem>,
+    private val userList: List<ActiveEntry>,
 ) : RecyclerView.Adapter<UserActiveAdapter.ViewHolder>() {
     class ViewHolder(val binding: UserActiveItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root

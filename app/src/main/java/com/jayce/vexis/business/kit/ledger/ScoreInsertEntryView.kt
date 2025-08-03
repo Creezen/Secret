@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
-import com.jayce.vexis.business.kit.ledger.LedgerSheet.Companion.INIT_USER_COUNT
+import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity.Companion.INIT_USER_COUNT
 
 class ScoreInsertEntryView(
     context: Context,

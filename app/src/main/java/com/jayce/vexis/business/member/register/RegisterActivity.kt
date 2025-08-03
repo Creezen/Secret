@@ -12,14 +12,18 @@ import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
+import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
-import com.jayce.vexis.business.member.User
-import com.jayce.vexis.business.member.UserService
+import com.jayce.vexis.foundation.bean.UserEntry
+import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.databinding.AccountCreationBinding
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.foundation.view.SimpleDialog
+import com.jayce.vexis.foundation.view.block.SimpleDialog
+import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Call
 
 class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
@@ -81,13 +85,10 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
                     hashmap["type"] = "0"
                     hashmap["name"] = it
                 }
-                lifecycleScope.launch(Dispatchers.Main) {
-                    val result = NetTool.create<UserService>()
-                        .checkUserName(map)
-                        .await()
-                    if (result["status"] == 0) {
+                request<UserService, LinkedTreeMap<String, Int>>({ checkUserName(map) }){
+                    if (it["status"] == 0) {
                         accountCode = 0
-                        return@launch
+                        return@request
                     }
                     accountCode = 2
                 }
@@ -174,37 +175,30 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
                     }
                 val ageValue = createTimeValue.subSequence(0, 4).toString().toInt() - YEAR_DATA[yearSelect]
                 val birthdayValue = "${YEAR_DATA[yearSelect]}-${MONTH_DATA[monthSelected]}-${BIG_DAY[daySelected]}"
-                lifecycleScope.launch(Dispatchers.Main) {
-                    try {
-                        val map1= User(
-                            userIdValue,
-                            nickname.msg(),
-                            account.msg(),
-                            ageValue,
-                            sex.selectedItem as String,
-                            password.msg(),
-                            createTimeValue,
-                            0,
-                            0,
-                            isEdit,
-                            emailValue,
-                            selfIntroductionValue,
-                            phoneValue,
-                            addressValue,
-                            birthdayValue,
-                            "",
-                        ).pojo2Map()
-                        map1["type"] = "1"
-                        val awaitResult = NetTool.create<UserService>()
-                                .checkUserName(map1)
-                                .await()
-                        if (null != awaitResult["status"]) {
-                            if (awaitResult["status"] == 2) finish()
-                        } else {
-                            dialog.dismiss()
-                        }
-                    } catch (e: Exception) {
-                        e.message?.let { it1 -> Log.e("msg", it1) }
+                val map1= UserEntry(
+                    userIdValue,
+                    nickname.msg(),
+                    account.msg(),
+                    ageValue,
+                    sex.selectedItem as String,
+                    password.msg(),
+                    createTimeValue,
+                    0,
+                    0,
+                    isEdit,
+                    emailValue,
+                    selfIntroductionValue,
+                    phoneValue,
+                    addressValue,
+                    birthdayValue,
+                    "",
+                ).pojo2Map()
+                map1["type"] = "1"
+                request<UserService, LinkedTreeMap<String, Int>>({ checkUserName(map1) }) {
+                    if (null != it["status"]) {
+                        if (it["status"] == 2) finish()
+                    } else {
+                        dialog.dismiss()
                     }
                 }
             }
