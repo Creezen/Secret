@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.jayce.vexis.R
+import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.bean.TraceEntry
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
@@ -24,7 +25,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     private val paint = Paint()
     private val bitmap by lazy {
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.delete, null)
+        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.goal, null)
         var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
         drawable?.let {
             bitmap = Bitmap.createBitmap(it.intrinsicWidth, it.intrinsicHeight, Bitmap.Config.ARGB_8888)
@@ -57,9 +58,12 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         this.onItemClick = onClick
     }
 
-    fun addTraceCell(time: Long) {
-        val percent = (time * 1.0 / (latestTime - earliestTime)).toFloat()
-        contentList.add(TraceEntry(timeStamp = time, percent = percent, message = "hello"))
+    fun addTraceCell(entryList: List<HistoryEntry>) {
+        entryList.forEach { entry ->
+            val time = entry.millisTime()
+            val percent = (time * 1.0 / (latestTime - earliestTime)).toFloat()
+            contentList.add(TraceEntry(timeStamp = time, percent = percent, message = entry.event))
+        }
         invalidate()
     }
 

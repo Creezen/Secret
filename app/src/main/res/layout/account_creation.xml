@@ -315,7 +315,7 @@
                             android:layout_marginEnd="@dimen/margin"
                             android:textSize="@dimen/content"
                             android:selectedItemPosition="@={monthSelected}"
-                            android:onItemSelected="@{() -> monthSpinner.onItemSelect()}"/>
+                            android:onItemSelected="@{() -> monthSpinner.onItemSelect()}" />
                         <com.jayce.vexis.foundation.view.block.DefaultSpinner
                             android:id="@+id/daySpinner"
                             android:layout_width="0dp"

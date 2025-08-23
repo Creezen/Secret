@@ -2,6 +2,7 @@ package com.jayce.vexis.foundation.view.block
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import com.jayce.vexis.R
@@ -31,7 +32,6 @@ class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(co
         adapter.setDropDownViewResource(downLayoutId)
         this.adapter = adapter
         this.selectCallback = onSelect
-        this.setSelection(0)
     }
 
     fun <T> refreshData(list: List<T>) {
@@ -40,5 +40,13 @@ class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(co
         adapter.addAll(list)
         adapter.notifyDataSetChanged()
         this.setSelection(0)
+    }
+
+    override fun setSelection(position: Int) {
+        val isSameSelect = position == selectedItemPosition
+        super.setSelection(position)
+        if (isSameSelect) {
+            onItemSelect()
+        }
     }
 }

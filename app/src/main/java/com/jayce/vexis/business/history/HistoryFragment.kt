@@ -1,11 +1,9 @@
 package com.jayce.vexis.business.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
@@ -15,8 +13,9 @@ import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
-import com.jayce.vexis.foundation.Util
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.route.HistoryService
 import com.jayce.vexis.foundation.view.block.CustomDialog
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +36,8 @@ class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
     private var rootWidth: Int = -1
     private var rootHeight: Int = -1
 
+    private val eventList: ArrayList<HistoryEntry> = arrayListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,26 +54,45 @@ class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        queryList()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden) {
+            queryList()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.base.unregisterSwipeEvent("base", eventHandle)
+    }
+
+    private fun queryList() {
+        request<HistoryService, List<HistoryEntry>>({ queryAllEvent() }) {
+            eventList.addAll(it)
+            binding.left.addTraceCell(
+                it.filter { it.isValid() }
+            )
+        }
     }
 
     private fun initView() {
         with(binding) {
             base.registerSwipeEvent("base", eventHandle, this@HistoryFragment)
             left.init(0, 2524608000000) {
-                it.timeStamp.toTime().toast()
+                it.message.toast()
             }
-            left.addTraceCell(System.currentTimeMillis())
-            left.addTraceCell(System.currentTimeMillis() - 30 * 31536000000)
             floatingBtn.setOnClickListener {
                 CustomDialog(
                     requireContext(),
                     DialogTimelineBinding.inflate(layoutInflater)
                 ).apply {
                     right { binding, dialog ->
-                        Util.request<HistoryService, Boolean> ({ sendEventData(
+                        request<HistoryService, Boolean> ({ sendEventData(
                             binding.picker.formatTime(),
                             binding.content.msg()
                         )}){
@@ -93,7 +113,6 @@ class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(TAG, "onPinchIn  $viewId  $scaleFactor")
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredHeight = binding.center.height
@@ -108,7 +127,6 @@ class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
         viewId: String,
         scaleFactor: Float,
     ): Boolean {
-        Log.d(TAG, "onPinchOut   $viewId  $scaleFactor")
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth
