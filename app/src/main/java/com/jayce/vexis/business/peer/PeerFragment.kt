@@ -18,6 +18,7 @@ import com.jayce.vexis.foundation.bean.PeerAdviceEntry
 import com.jayce.vexis.foundation.bean.SubjectTableEntry
 import com.jayce.vexis.foundation.route.PeerService
 import kotlinx.coroutines.Dispatchers
+import java.util.concurrent.atomic.AtomicInteger
 
 class PeerFragment : BaseFragment<BaseViewModel>() {
 
@@ -29,7 +30,6 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
     private var secordNum = 0
     private var tertiaryNum = 0
 
-    private var updateCount = 0
     private var isFirst: Boolean = true
 
     private lateinit var primaryList: List<String>
@@ -55,7 +55,7 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if (!hidden) {
-            fetchAdvice("a")
+            fetchAdvice()
         }
     }
 
@@ -72,38 +72,22 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
     private fun initView() {
         with(binding) {
             primary.configuration(primaryList) {
-                updateCount++
-                Log.d(TAG, "aaa  updateCount: $updateCount")
                 primaryNum = it
                 secordNum = 0
                 tertiaryNum = 0
+                if (isFirst) return@configuration
                 secondary.refreshData(secondaryList[it])
-                if (isFirst) {
-                    isFirst = false
-                    return@configuration
-                }
-                tertiary.refreshData(tertiaryList[it][0])
             }
             secondary.configuration(secondaryList[0]) {
-                updateCount++
-                Log.d(TAG, "bbb  updateCount: $updateCount")
                 secordNum = it
                 tertiaryNum = 0
+                if (isFirst) return@configuration
                 tertiary.refreshData(tertiaryList[primary.selectedItemPosition][it])
             }
             tertiary.configuration(tertiaryList[0][0]) {
                 tertiaryNum = it
-                updateCount--
-                Log.d(TAG, "ccc  updateCount: $updateCount")
-                if (updateCount == -1) {
-                    fetchAdvice("b")
-                    updateCount = 0
-                    return@configuration
-                }
-                if (updateCount == 0) {
-                    fetchAdvice("b")
-                }
-
+                fetchAdvice()
+                isFirst= false
             }
             advice.setOnClickListener {
                 val intent = Intent(context, AdviceActivity::class.java)
@@ -117,8 +101,8 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
         }
     }
 
-    private fun fetchAdvice(source: String) {
-        Log.d(TAG, "fetchAdvice source: $source ${primary()}  ${secondary()}  ${teriary()}")
+    private fun fetchAdvice() {
+        Log.d(TAG, "fetchAdvice ${primary()}  ${secondary()}  ${teriary()}")
         request<PeerService, List<PeerAdviceEntry>>({
             getAdvice(primary(),secondary(), teriary())
         }) {
