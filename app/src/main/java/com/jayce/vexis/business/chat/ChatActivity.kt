@@ -66,11 +66,9 @@ class ChatActivity : BaseActivity<BaseViewModel>() {
             message.adapter = adapter
             send.setOnClickListener {
                 val content = edit.msg(true)
-                if (content.isEmpty()) {
-                    return@setOnClickListener
+                if (content.isNotEmpty()) {
+                    sendChatMessage(CoreService.scope, content)
                 }
-                Log.d(TAG, "sendChatMessage")
-                sendChatMessage(CoreService.scope, edit.msg(true))
             }
         }
     }

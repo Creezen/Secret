@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.member.manage
+package com.jayce.vexis.business.member.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -9,6 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("maven-publish")
+    id("kotlin-kapt")
     id("com.google.devtools.ksp")
     id("io.gitlab.arturbosch.detekt")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"

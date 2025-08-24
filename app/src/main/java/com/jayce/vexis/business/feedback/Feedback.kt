@@ -5,21 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
-import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.foundation.base.BaseFragment
 import com.jayce.vexis.foundation.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.FeedbackEntry
 import com.jayce.vexis.foundation.route.FeedbackService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Feedback() : BaseFragment<BaseViewModel>() {
+class Feedback : BaseFragment<BaseViewModel>() {
 
     companion object {
         const val TAG = "Feedback"

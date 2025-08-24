@@ -45,7 +45,9 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
         private lateinit var emailProfix: ArrayList<String>
     }
 
-    private lateinit var binding: AccountCreationBinding
+    private val binding: AccountCreationBinding by lazy {
+        AccountCreationBinding.inflate(layoutInflater)
+    }
 
     override fun getViewModelClazz(): Class<RegisterViewModel> {
         return RegisterViewModel::class.java
@@ -53,7 +55,6 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = AccountCreationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")
         if (!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)

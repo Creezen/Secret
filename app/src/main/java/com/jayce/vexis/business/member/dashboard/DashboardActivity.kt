@@ -2,24 +2,23 @@ package com.jayce.vexis.business.member.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.creezen.tool.AndroidTool.readPrefs
-import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.business.member.manage.AdminActivity
-import com.jayce.vexis.business.member.manage.UserBasicInfoFragment
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.foundation.Util.request
@@ -36,6 +35,8 @@ class DashboardActivity : BaseActivity<BaseViewModel>() {
     private lateinit var binding: DashboardBinding
     private val userBasicInfoFragment = UserBasicInfoFragment()
     private val userLiveFragment = UserLiveFragment()
+    private val fragmentList = arrayListOf<Fragment>()
+    private val adapter = DashboardAdapter(supportFragmentManager, lifecycle, fragmentList)
     private var imageLauncher: ActivityResultLauncher<Array<String>>? = null
 
     override fun registerLauncher() {
@@ -60,7 +61,13 @@ class DashboardActivity : BaseActivity<BaseViewModel>() {
         super.onCreate(savedInstanceState)
         binding = DashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        prepareFragment()
         initPage()
+    }
+
+    private fun prepareFragment() {
+        fragmentList.add(userBasicInfoFragment)
+        fragmentList.add(userLiveFragment)
     }
 
     private fun initPage() {
@@ -70,22 +77,21 @@ class DashboardActivity : BaseActivity<BaseViewModel>() {
             if (user().isAdministrator()) {
                 administrator.visibility = View.VISIBLE
             }
-            replaceFragment(supportFragmentManager, R.id.page, userBasicInfoFragment,  "userBasicInfoFragment", false)
             administrator.setOnClickListener {
                 startActivity(Intent(this@DashboardActivity, AdminActivity::class.java))
             }
-            info.setOnClickListener {
-                if (userBasicInfoFragment.isVisible.not()) {
-                    replaceFragment(supportFragmentManager, R.id.page, userBasicInfoFragment,  "userBasicInfoFragment",false)
+            page.adapter = adapter
+            TabLayoutMediator(tab, page) { tab, pos ->
+                val textView = TextView(this@DashboardActivity)
+                textView.gravity = Gravity.CENTER
+                textView.text = when (pos) {
+                    0 -> "基本信息"
+                    1 -> "创作动态"
+                    else -> ""
                 }
-            }
-            live.setOnClickListener {
-                if (userLiveFragment.isVisible.not()) {
-                    replaceFragment(supportFragmentManager, R.id.page, userLiveFragment, "userLiveFragment", false)
-                }
-            }
+                tab.customView = textView
+            }.attach()
             image.setOnClickListener {
-                Log.e("DashboardActivity.initPage", "click image")
                 imageLauncher?.launch(arrayOf("image/*"))
             }
             val cursorTime = readPrefs {
