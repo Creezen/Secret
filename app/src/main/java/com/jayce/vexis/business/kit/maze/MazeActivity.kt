@@ -4,9 +4,9 @@ import android.os.Bundle
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.SoundTool.playShortSound
 import com.jayce.vexis.R
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityMazeBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 
 class MazeActivity : BaseActivity<BaseViewModel>() {
 

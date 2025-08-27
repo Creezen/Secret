@@ -3,10 +3,10 @@ package com.jayce.vexis.business.kit.ledger
 import android.content.Intent
 import android.os.Bundle
 import com.creezen.tool.AndroidTool.msg
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.PocketMainBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.view.block.CustomDialog
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 

@@ -1,9 +1,9 @@
 package com.jayce.vexis.business.kit.gomoku
 
 import android.os.Bundle
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityGomokuBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 
 class GomokuActivity : BaseActivity<BaseViewModel>() {
 

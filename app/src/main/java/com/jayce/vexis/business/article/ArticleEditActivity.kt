@@ -7,9 +7,9 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 

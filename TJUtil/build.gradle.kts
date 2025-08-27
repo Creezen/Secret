@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("maven-publish")
     id("kotlin-kapt")
-    id("com.kezong.fat-aar")
+    id("com.google.devtools.ksp")
     id("org.jetbrains.dokka")
 }
 
@@ -16,7 +16,7 @@ repositories {
 
 android {
     namespace = "com.example.testlib"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 30
@@ -77,25 +77,8 @@ fun processKotlinFile(file: File): String {
     return content
 }
 
-tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("dokka"))
-    offlineMode.set(true)
-    dokkaSourceSets {
-        configureEach {
-            noAndroidSdkLink.set(true)
-            includeNonPublic.set(true)
-            reportUndocumented.set(true)
-        }
-    }
-}
-
-val dokkaHtmlJar by tasks.register<Jar>("dokkaHtmlJar") {
-    dependsOn(tasks.dokkaHtml)
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml.get().outputDirectory)
-}
-
 val sourcesJar by tasks.register<Jar>("sourcesJar") {
+    dependsOn(tasks.named("generateMetadataFileForMavenAPublication"))
     dependsOn(processSources)
     archiveClassifier.set("sources")
     from(processedSourcesDir)
@@ -111,15 +94,14 @@ publishing {
             afterEvaluate {
                 from(components["release"])
             }
-            artifact(dokkaHtmlJar)
-            artifact(sourcesJar)
+//            artifact(sourcesJar)
         }
     }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
@@ -128,17 +110,17 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    kapt ("androidx.room:room-compiler:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
     implementation ("androidx.room:room-runtime:2.5.2")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.tencent:mmkv:2.0.2")
     implementation("org.yaml:snakeyaml:2.4")
     implementation("com.github.bumptech.glide:okhttp3-integration:4.15.1")
 
-    embed("com.creezen.tool.commontool:tools:1.0.0")
+    implementation("com.creezen.tool.commontool:tools:1.0.0")
 }

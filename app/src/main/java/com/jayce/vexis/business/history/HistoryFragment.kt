@@ -10,11 +10,11 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
-import com.jayce.vexis.foundation.base.BaseFragment
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.route.HistoryService
 import com.jayce.vexis.foundation.view.block.CustomDialog

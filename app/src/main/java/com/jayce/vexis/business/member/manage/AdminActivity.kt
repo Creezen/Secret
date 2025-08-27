@@ -2,20 +2,16 @@ package com.jayce.vexis.business.member.manage
 
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.google.gson.internal.LinkedTreeMap
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.route.UserService
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AdminActivity : BaseActivity<BaseViewModel>() {

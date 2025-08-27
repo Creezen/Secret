@@ -31,9 +31,9 @@ import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.ActivityMainBinding
-import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.foundation.base.BaseActivity.ActivityCollector.finishAll
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions

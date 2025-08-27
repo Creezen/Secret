@@ -2,9 +2,9 @@ package com.jayce.vexis.business.media
 
 import android.os.Build
 import android.os.Bundle
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
 
 class MediaDetailActivity : BaseActivity<BaseViewModel>() {

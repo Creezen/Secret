@@ -3,12 +3,12 @@ package com.jayce.vexis.business.kit.ledger
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
 import com.jayce.vexis.foundation.bean.RecordListEntry
 import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

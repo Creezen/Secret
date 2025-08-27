@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.foundation.base.BaseFragment
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 
 class UserBasicInfoFragment : BaseFragment<BaseViewModel>() {
 

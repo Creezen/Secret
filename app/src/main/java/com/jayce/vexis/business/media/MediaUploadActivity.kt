@@ -9,14 +9,12 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.FileTool.getFilePathByUri
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.contract.LifecycleJob
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.MediaService
 import kotlinx.coroutines.Dispatchers
 import java.io.File

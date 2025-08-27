@@ -15,8 +15,11 @@ import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.core.Config.API_BASE_URL
 import com.jayce.vexis.core.Config.BROAD_LOGOUT
 import com.jayce.vexis.core.Config.BROAD_NOTIFY
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.ability.net.NetStatusCallback
 import kotlinx.coroutines.Dispatchers
+import org.koin.core.module.dsl.viewModel
+import org.koin.dsl.module
 
 class Env : Application() {
 
@@ -27,10 +30,17 @@ class Env : Application() {
     private val coreReceiver = CoreReceiver()
 
     private val filter = IntentFilter().apply {
-            addAction(BROAD_LOGOUT)
-            addAction(BROAD_NOTIFY)
-            addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+        addAction(BROAD_LOGOUT)
+        addAction(BROAD_NOTIFY)
+        addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        val module = module {
+            viewModel { BaseViewModel() }
         }
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -12,13 +12,12 @@ import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseFragment
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseFragment
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.PeerAdviceEntry
 import com.jayce.vexis.foundation.bean.SubjectTableEntry
 import com.jayce.vexis.foundation.route.PeerService
 import kotlinx.coroutines.Dispatchers
-import java.util.concurrent.atomic.AtomicInteger
 
 class PeerFragment : BaseFragment<BaseViewModel>() {
 

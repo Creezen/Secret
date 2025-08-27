@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.diagnostics.reportOnDeclarationOrFail
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -29,13 +28,13 @@ detekt {
 
 android {
     namespace = "com.jayce.vexis"
-    compileSdk = 34
+    compileSdk = 35
 
 
     defaultConfig {
         applicationId = "com.jayce.vexis"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1000000
         versionName = "1.0.0"
 
@@ -206,9 +205,9 @@ tasks.register("mergeReports") {
 dependencies {
 
     ksp("androidx.room:room-compiler:2.5.2")
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.room:room-runtime:2.5.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -221,10 +220,12 @@ dependencies {
     implementation("q.rorbin:badgeview:1.1.3")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation("io.insert-koin:koin-android:4.1.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     api("com.creezen.tool:tools:1.0.0")
+    implementation("com.creezen.tool.commontool:tools:1.0.0")
 }

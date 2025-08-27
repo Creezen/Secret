@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.base
+package com.jayce.vexis.core.base
 
 import androidx.lifecycle.ViewModel
 

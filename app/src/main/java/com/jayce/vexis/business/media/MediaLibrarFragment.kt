@@ -10,20 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseFragment
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseFragment
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
 import com.jayce.vexis.foundation.route.MediaService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MediaLibrarFragment : BaseFragment<BaseViewModel>() {
 

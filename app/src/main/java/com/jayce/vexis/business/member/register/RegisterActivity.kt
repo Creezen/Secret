@@ -2,28 +2,21 @@ package com.jayce.vexis.business.member.register
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.creezen.commontool.CreezenTool.getRandomString
 import com.creezen.commontool.CreezenTool.isLeapYear
 import com.creezen.commontool.CreezenTool.pojo2Map
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.foundation.bean.UserEntry
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.databinding.AccountCreationBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Call
 
 class RegisterActivity : BaseActivity<RegisterViewModel>() {
 

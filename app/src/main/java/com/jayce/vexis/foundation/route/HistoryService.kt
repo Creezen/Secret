@@ -1,6 +1,6 @@
 package com.jayce.vexis.foundation.route
 
-import com.jayce.vexis.foundation.base.BaseService
+import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.foundation.bean.HistoryEntry
 import retrofit2.Call
 import retrofit2.http.Field

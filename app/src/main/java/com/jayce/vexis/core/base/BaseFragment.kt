@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.base
+package com.jayce.vexis.core.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

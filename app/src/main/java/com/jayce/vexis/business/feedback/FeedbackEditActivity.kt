@@ -9,9 +9,9 @@ import com.creezen.tool.NetTool.sendNotifyMessage
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.FeedbackService
 
 class FeedbackEditActivity : BaseActivity<BaseViewModel>() {

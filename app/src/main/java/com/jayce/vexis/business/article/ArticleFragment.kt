@@ -10,9 +10,9 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.foundation.base.BaseFragment
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.ArticleEntry
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.Dispatchers

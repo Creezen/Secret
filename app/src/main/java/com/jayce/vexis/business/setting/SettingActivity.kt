@@ -4,8 +4,8 @@ import android.os.Bundle
 import com.creezen.tool.AndroidTool
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ActivitySettingBinding
-import com.jayce.vexis.foundation.base.BaseActivity
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseActivity
+import com.jayce.vexis.core.base.BaseViewModel
 
 class SettingActivity : BaseActivity<BaseViewModel>() {
 

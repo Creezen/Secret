@@ -4,7 +4,7 @@ import android.util.Log
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
-import com.jayce.vexis.foundation.base.BaseService
+import com.jayce.vexis.core.base.BaseService
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import java.util.concurrent.CompletableFuture

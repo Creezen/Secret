@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
-import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
-import com.jayce.vexis.foundation.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdviceBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.base.BaseViewModel
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.PeerService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class AdviceActivity : BaseActivity<BaseViewModel>() {
 
