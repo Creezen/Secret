@@ -21,13 +21,12 @@ import com.jayce.vexis.foundation.view.block.CustomDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
+class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
 
     companion object {
         const val TAG = "HistoryFragment"
     }
 
-    private lateinit var binding: TimeLineBinding
     private val eventHandle by lazy {
         ClickHandle(ClickHandle.Mode.LISTENER)
     }
@@ -43,7 +42,6 @@ class HistoryFragment : BaseFragment<BaseViewModel>(), SwipeCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = TimeLineBinding.inflate(inflater)
         initView()
         binding.root.apply {
             post {

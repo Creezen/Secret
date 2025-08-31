@@ -2,14 +2,25 @@ package com.jayce.vexis.core.base
 
 import android.content.Intent
 import android.net.Uri
+import android.view.LayoutInflater
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModel
+import androidx.viewbinding.ViewBinding
+import java.lang.reflect.ParameterizedType
 
-interface Common : ActivityResultCaller {
+interface Common<K: ViewBinding> : ActivityResultCaller {
+
+    fun <K: ViewBinding> getBind(): K {
+        val type = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<K>
+        val method = type.getMethod("inflate", LayoutInflater::class.java)
+        return method.invoke(null, getLayoutInflate()) as K
+    }
+
+    fun getLayoutInflate(): LayoutInflater
 
     fun openFile(): ActivityResultContract<Array<String>, Uri?> {
         return ActivityResultContracts.OpenDocument()
@@ -31,6 +42,4 @@ interface Common : ActivityResultCaller {
             action(it)
         }
     }
-
-    fun getViewModel(): ViewModel
 }

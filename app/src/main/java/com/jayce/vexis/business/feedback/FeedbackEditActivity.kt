@@ -14,14 +14,10 @@ import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.FeedbackService
 
-class FeedbackEditActivity : BaseActivity<BaseViewModel>() {
-
-    private lateinit var binding: ActivityFeedbackEditBinding
+class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFeedbackEditBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initView()
     }
 

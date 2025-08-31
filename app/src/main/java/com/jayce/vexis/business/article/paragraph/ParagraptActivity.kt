@@ -12,9 +12,8 @@ import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.ParaRemarkEntry
 import kotlinx.coroutines.launch
 
-class ParagraptActivity : BaseActivity<BaseViewModel>() {
+class ParagraptActivity : BaseActivity<ActivityParagraphBinding>() {
 
-    private lateinit var binding: ActivityParagraphBinding
     private val paragraphList = arrayListOf<ParaRemarkEntry>()
     private var articleId: Long = -1
     private val adapter by lazy {
@@ -23,8 +22,6 @@ class ParagraptActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityParagraphBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initPage()
         initData()
     }

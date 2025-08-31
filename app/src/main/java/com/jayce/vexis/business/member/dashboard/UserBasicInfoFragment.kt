@@ -9,16 +9,13 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
 import com.jayce.vexis.core.base.BaseViewModel
 
-class UserBasicInfoFragment : BaseFragment<BaseViewModel>() {
-
-    private lateinit var binding: UserBasicInfoBinding
+class UserBasicInfoFragment : BaseFragment<UserBasicInfoBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = UserBasicInfoBinding.inflate(inflater)
         initView()
         return binding.root
     }

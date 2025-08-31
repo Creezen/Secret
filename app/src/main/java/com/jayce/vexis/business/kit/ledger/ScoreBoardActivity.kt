@@ -17,6 +17,7 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
 import com.jayce.vexis.business.kit.ledger.adapter.ScoreInsertAdapter
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.foundation.bean.RecordEntry
 import com.jayce.vexis.foundation.bean.RecordItemEntry
 import com.jayce.vexis.foundation.bean.ScoreEntry
@@ -25,14 +26,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.StringBuilder
 
-class ScoreBoardActivity : AppCompatActivity() {
+class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 
     companion object {
         const val WIDTH = 180
         const val HEIGHT = 180
     }
 
-    private lateinit var binding: NewPocketRecordBinding
     private lateinit var title: String
     private lateinit var createTime: String
     private val userList = ArrayList<String>()
@@ -48,8 +48,6 @@ class ScoreBoardActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = NewPocketRecordBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initData()
         initView()
     }

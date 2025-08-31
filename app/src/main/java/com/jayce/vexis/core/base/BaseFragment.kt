@@ -1,21 +1,18 @@
 package com.jayce.vexis.core.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment <T : BaseViewModel> : Fragment(), Common {
+abstract class BaseFragment <K : ViewBinding> : Fragment(), Common<K> {
 
-    protected val model by lazy {
-        getViewModel()
+    val binding: K by lazy {
+        getBind()
     }
 
-    final override fun getViewModel(): T {
-        return ViewModelProvider(this)[getViewModelClazz()]
-    }
-
-    open fun getViewModelClazz(): Class<T> {
-        return BaseViewModel::class.java as Class<T>
+    final override fun getLayoutInflate(): LayoutInflater {
+        return layoutInflater
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -19,9 +19,8 @@ import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
 import com.jayce.vexis.foundation.route.MediaService
 
-class MediaLibrarFragment : BaseFragment<BaseViewModel>() {
+class MediaLibrarFragment : BaseFragment<FileShareBinding>() {
 
-    private lateinit var binding: FileShareBinding
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
     private val resItemList = ArrayList<MediaEntry>()
     private val adapter: MediaElementAdapter by lazy {
@@ -44,7 +43,6 @@ class MediaLibrarFragment : BaseFragment<BaseViewModel>() {
             initData()
             return tag as View
         }
-        binding = FileShareBinding.inflate(inflater)
         initPage()
         initData()
         return binding.root.also {

@@ -12,14 +12,13 @@ import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
 import com.jayce.vexis.core.base.BaseViewModel
 
-class KitFragment : BaseFragment<BaseViewModel>() {
+class KitFragment : BaseFragment<WidgetsBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val binding = WidgetsBinding.inflate(inflater)
         with(binding) {
             ledger.setOnClickListener {
                 startActivity(Intent(context, LedgerSheetActivity::class.java))

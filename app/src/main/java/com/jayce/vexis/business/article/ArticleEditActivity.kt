@@ -13,14 +13,10 @@ import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 
-class ArticleEditActivity : BaseActivity<BaseViewModel>() {
-
-    private lateinit var binding: ActivitySynergyEditBinding
+class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySynergyEditBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initPage()
     }
 

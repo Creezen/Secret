@@ -19,7 +19,7 @@ import com.jayce.vexis.foundation.route.MediaService
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 
-class MediaUploadActivity : BaseActivity<BaseViewModel>() {
+class MediaUploadActivity : BaseActivity<FileUploadBinding>() {
 
     companion object {
         const val SPLIT = "/"
@@ -28,13 +28,10 @@ class MediaUploadActivity : BaseActivity<BaseViewModel>() {
 
     private var selectedFilePath: String? = null
     private var fileLaunch: ActivityResultLauncher<Array<String>>? = null
-    private lateinit var binding: FileUploadBinding
     val descTextLivedata = MutableLiveData<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FileUploadBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initView()
     }
 

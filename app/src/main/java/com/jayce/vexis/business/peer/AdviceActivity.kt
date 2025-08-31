@@ -11,13 +11,11 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.route.PeerService
 
-class AdviceActivity : BaseActivity<BaseViewModel>() {
+class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
 
     companion object {
         const val TAG = "AdviceActivity"
     }
-
-    private lateinit var binding: ActivityAdviceBinding
 
     private var primaryKey: String = ""
     private var secondKey: String = ""
@@ -25,8 +23,6 @@ class AdviceActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAdviceBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initData()
         initPage()
     }

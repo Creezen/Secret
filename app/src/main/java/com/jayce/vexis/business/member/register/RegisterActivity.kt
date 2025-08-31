@@ -18,7 +18,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 
-class RegisterActivity : BaseActivity<RegisterViewModel>() {
+class RegisterActivity : BaseActivity<AccountCreationBinding>() {
 
     val accountLiveData = MutableLiveData<String>()
     val nicknameLiveData = MutableLiveData<String>()
@@ -38,17 +38,9 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
         private lateinit var emailProfix: ArrayList<String>
     }
 
-    private val binding: AccountCreationBinding by lazy {
-        AccountCreationBinding.inflate(layoutInflater)
-    }
-
-    override fun getViewModelClazz(): Class<RegisterViewModel> {
-        return RegisterViewModel::class.java
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         val accountName = intent.getStringExtra("intentAccount")
         if (!TextUtils.isEmpty(accountName)) binding.account.setText(accountName)
         emailProfix = resources.getStringArray(R.array.EmailProfix).toList() as ArrayList<String>

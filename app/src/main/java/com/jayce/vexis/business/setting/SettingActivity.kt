@@ -7,14 +7,10 @@ import com.jayce.vexis.databinding.ActivitySettingBinding
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseViewModel
 
-class SettingActivity : BaseActivity<BaseViewModel>() {
-
-    private lateinit var binding: ActivitySettingBinding
+class SettingActivity : BaseActivity<ActivitySettingBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initPage()
     }
 

@@ -17,9 +17,8 @@ import com.jayce.vexis.foundation.bean.ArticleEntry
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.Dispatchers
 
-class ArticleFragment : BaseFragment<BaseViewModel>() {
+class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
-    private lateinit var binding: FragmentSynergyBinding
     private val list = arrayListOf<ArticleEntry>()
     private val adapter by lazy {
         ArticleAdapter(requireActivity(), list)
@@ -30,7 +29,6 @@ class ArticleFragment : BaseFragment<BaseViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = FragmentSynergyBinding.inflate(inflater)
         initView()
         return binding.root
     }

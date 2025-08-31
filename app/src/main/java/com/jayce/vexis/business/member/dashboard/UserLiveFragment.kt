@@ -8,16 +8,13 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserLiveBinding
 import com.jayce.vexis.core.base.BaseViewModel
 
-class UserLiveFragment : BaseFragment<BaseViewModel>() {
-
-    private lateinit var binding: UserLiveBinding
+class UserLiveFragment : BaseFragment<UserLiveBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = UserLiveBinding.inflate(inflater)
         initView()
         return binding.root
     }

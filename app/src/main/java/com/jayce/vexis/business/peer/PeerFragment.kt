@@ -10,16 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.DataTool
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.PeerAdviceEntry
 import com.jayce.vexis.foundation.bean.SubjectTableEntry
 import com.jayce.vexis.foundation.route.PeerService
 import kotlinx.coroutines.Dispatchers
 
-class PeerFragment : BaseFragment<BaseViewModel>() {
+class PeerFragment : BaseFragment<SageFragmentBinding>() {
 
     companion object {
         const val TAG = "PeerFragment"
@@ -35,7 +34,6 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
     private lateinit var secondaryList: List<List<String>>
     private lateinit var tertiaryList: List<List<List<String>>>
 
-    private lateinit var binding: SageFragmentBinding
     private val list = arrayListOf<PeerAdviceEntry>()
     private val adapter by lazy {
         PeerAdapter(requireActivity(), list)
@@ -46,7 +44,6 @@ class PeerFragment : BaseFragment<BaseViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = SageFragmentBinding.inflate(inflater)
         initData()
         return binding.root
     }

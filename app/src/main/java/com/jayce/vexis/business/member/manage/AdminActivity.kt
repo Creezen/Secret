@@ -14,9 +14,8 @@ import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AdminActivity : BaseActivity<BaseViewModel>() {
+class AdminActivity : BaseActivity<ActivityAdminBinding>() {
 
-    private lateinit var binding: ActivityAdminBinding
     private val userList = arrayListOf<ActiveEntry>()
     private val adapter by lazy {
         UserActiveAdapter(this, userList)
@@ -24,8 +23,6 @@ class AdminActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAdminBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initPage()
         initData()
     }

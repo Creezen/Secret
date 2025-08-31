@@ -7,9 +7,8 @@ import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
 
-class MediaDetailActivity : BaseActivity<BaseViewModel>() {
+class MediaDetailActivity : BaseActivity<ActivityFileDetailBinding>() {
 
-    private lateinit var binding: ActivityFileDetailBinding
     private lateinit var fileItem: MediaEntry
     private val parentNode = arrayListOf("资源描述", "资源说明")
     private val childNode = arrayListOf<ArrayList<String>>(arrayListOf(), arrayListOf())
@@ -20,8 +19,6 @@ class MediaDetailActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFileDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         fileItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("fileInfo", MediaEntry::class.java) ?: MediaEntry("","","","","",0,"")
         } else {

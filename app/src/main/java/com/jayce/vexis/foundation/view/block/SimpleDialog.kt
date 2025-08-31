@@ -24,7 +24,6 @@ open class SimpleDialog(mContext: Context) : Dialog(mContext, R.style.Dialog) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         setCanceledOnTouchOutside(false)
     }
 

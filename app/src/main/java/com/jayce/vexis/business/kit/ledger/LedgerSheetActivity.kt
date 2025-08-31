@@ -10,9 +10,8 @@ import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.view.block.CustomDialog
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 
-class LedgerSheetActivity : BaseActivity<BaseViewModel>() {
+class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
 
-    private lateinit var binding: PocketMainBinding
     private lateinit var userBinding: AddPocketRecordLayoutBinding
     private val userList = ArrayList<String>()
 
@@ -23,8 +22,6 @@ class LedgerSheetActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = PocketMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initView()
     }
 

@@ -12,15 +12,12 @@ import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.launch
 
-class ActiveDataActivity : BaseActivity<BaseViewModel>() {
+class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
 
-    private lateinit var binding: ActivityActiveDataBinding
     private var activeEntry: ActiveEntry? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityActiveDataBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         activeEntry = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("activeEntry", ActiveEntry::class.java)
         } else {

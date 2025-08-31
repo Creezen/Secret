@@ -6,11 +6,15 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
@@ -30,24 +34,22 @@ import com.jayce.vexis.business.setting.SettingActivity
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
-import com.jayce.vexis.core.base.BaseViewModel
+import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.foundation.view.block.SimpleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
-class MainActivity : BaseActivity<BaseViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     companion object {
         const val TAG = "MainActivity"
     }
 
     private lateinit var scanLauncher: ActivityResultLauncher<ScanOptions>
-    private lateinit var binding: ActivityMainBinding
     private lateinit var avatarView: ImageView
     private lateinit var emailView: ImageView
     private lateinit var chatMsgView: ImageView
@@ -77,9 +79,20 @@ class MainActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
         initPage()
+        //将顶部的间距设置为状态栏高度
+        //将底部的间距设置为导航栏的高度
+        //这样做的原因是使用了自定义的toolbar和 navigation组件
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top
+                bottomMargin = navigationBars.bottom
+            }
+            insets
+        }
         startService(Intent(this, CoreService::class.java))
     }
 

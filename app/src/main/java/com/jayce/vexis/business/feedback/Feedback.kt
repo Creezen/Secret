@@ -15,13 +15,12 @@ import com.jayce.vexis.foundation.route.FeedbackService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Feedback : BaseFragment<BaseViewModel>() {
+class Feedback : BaseFragment<ActivityFeedbackBinding>() {
 
     companion object {
         const val TAG = "Feedback"
     }
 
-    private lateinit var binding: ActivityFeedbackBinding
     private val feedbackEntryList = arrayListOf<FeedbackEntry>()
     private val feedbackAdapter by lazy {
         FeedbackAdapter(requireActivity(), feedbackEntryList)
@@ -32,7 +31,6 @@ class Feedback : BaseFragment<BaseViewModel>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        binding = ActivityFeedbackBinding.inflate(inflater)
         initView()
         return binding.root
     }

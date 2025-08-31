@@ -8,16 +8,9 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityMazeBinding
 import com.jayce.vexis.core.base.BaseViewModel
 
-class MazeActivity : BaseActivity<BaseViewModel>() {
+class MazeActivity : BaseActivity<ActivityMazeBinding>() {
 
-    private lateinit var binding: ActivityMazeBinding
     private var startTime: Long = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMazeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

@@ -26,13 +26,12 @@ import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DashboardActivity : BaseActivity<BaseViewModel>() {
+class DashboardActivity : BaseActivity<DashboardBinding>() {
 
     companion object {
         const val TAG = "DashboardActivity"
     }
 
-    private lateinit var binding: DashboardBinding
     private val userBasicInfoFragment = UserBasicInfoFragment()
     private val userLiveFragment = UserLiveFragment()
     private val fragmentList = arrayListOf<Fragment>()
@@ -59,8 +58,6 @@ class DashboardActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         prepareFragment()
         initPage()
     }

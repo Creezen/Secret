@@ -12,13 +12,12 @@ import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LedgerHistoryActivity : BaseActivity<BaseViewModel>() {
+class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
 
     companion object {
         const val TAG = "LedgerHistoryActivity"
     }
 
-    private lateinit var binding: ActivityRecordHistoryBinding
     private val scoreDao by lazy {
         ScoreDatabase.getDatabase(this).recordDao()
     }
@@ -29,8 +28,6 @@ class LedgerHistoryActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRecordHistoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initPage()
         loadData()
     }

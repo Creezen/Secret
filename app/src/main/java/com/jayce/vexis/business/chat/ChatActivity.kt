@@ -14,21 +14,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ChatActivity : BaseActivity<BaseViewModel>() {
+class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
     companion object {
         const val TAG = "ChatActivity"
         private val itemList = arrayListOf<ChatEntry>()
     }
 
-    private lateinit var binding: ActivityChatBinding
     private val scope = CoroutineScope(Dispatchers.IO)
     private val adapter by lazy { ChatAdapter(itemList) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChatBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         initView()
         initData()
     }

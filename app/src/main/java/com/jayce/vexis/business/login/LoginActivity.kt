@@ -15,9 +15,7 @@ import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.BaseTool.restartApp
-import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
 import com.creezen.tool.NetTool.setOnlineSocket
@@ -27,19 +25,19 @@ import com.creezen.tool.bean.BlockOption
 import com.creezen.tool.contract.LifecycleJob
 import com.creezen.tool.enum.ThreadType
 import com.google.gson.internal.LinkedTreeMap
+import com.jayce.vexis.R
+import com.jayce.vexis.business.main.MainActivity
+import com.jayce.vexis.business.member.register.RegisterActivity
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.Config.BASE_SOCKET_PATH
 import com.jayce.vexis.core.Config.LOCAL_SOCKET_PORT
-import com.jayce.vexis.R
-import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.core.SessionManager.registerUser
-import com.jayce.vexis.foundation.route.UserService
-import com.jayce.vexis.business.member.register.RegisterActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.ApkSimpleEntry
 import com.jayce.vexis.foundation.route.ApiService
 import com.jayce.vexis.foundation.route.PackageService
+import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -64,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        binding.root.fitsSystemWindows = true
         setContentView(binding.root)
         getNewestVersion()
         initView()
