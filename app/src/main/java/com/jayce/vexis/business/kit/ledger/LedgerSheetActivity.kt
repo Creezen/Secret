@@ -5,10 +5,9 @@ import android.os.Bundle
 import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
+import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.PocketMainBinding
-import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.view.block.CustomDialog
-import com.jayce.vexis.foundation.view.block.SimpleDialog
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
 class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
 
@@ -28,18 +27,14 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
     private fun initView() {
         with(binding) {
             create.setOnClickListener {
-                CustomDialog(
-                    this@LedgerSheetActivity,
-                    AddPocketRecordLayoutBinding.inflate(layoutInflater),
-                ).apply {
-                    setVisible(SimpleDialog.TITLE_INVISIBLE)
-                    userBinding = this.viewBinding
-                    dialogInit()
-                    left("取消") { _, dialog ->
-                        dialog.dismiss()
-                    }
-                    right("确定") { _, dialog ->
-                        dialog.dismiss()
+                FlexibleDialog<DialogBinding>(this@LedgerSheetActivity, layoutInflater)
+                    .flexibleView(AddPocketRecordLayoutBinding.inflate(layoutInflater)) {
+                        userBinding = this
+                        dialogInit()
+                        addBtn.setOnClickListener {
+                            addView(userBinding.itemLayout.childCount)
+                        }
+                    }.positive {
                         startActivity(
                             Intent(this@LedgerSheetActivity, ScoreBoardActivity::class.java).also {
                                 it.putExtra("userData", userList)
@@ -47,12 +42,8 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                                 it.putExtra("time", System.currentTimeMillis())
                             },
                         )
-                    }
-                    userBinding.addBtn.setOnClickListener {
-                        addView(userBinding.itemLayout.childCount)
-                    }
-                    show()
-                }
+                        return@positive -1
+                    }.show()
             }
             history.setOnClickListener {
                 startActivity(Intent(this@LedgerSheetActivity, LedgerHistoryActivity::class.java))

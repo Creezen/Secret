@@ -15,6 +15,6 @@
         android:layout_height="wrap_content"
         android:lines="3"
         android:textSize="15sp"
-        android:hint="请输入你的建议..."
+        android:hint="@string/input_suggession"
         android:gravity="start|top"/>
 </LinearLayout>

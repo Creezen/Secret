@@ -112,7 +112,7 @@
     <string name="input_user_name">输入玩家名称</string>
     <string name="intro_file">请介绍一下你分享的资源！（必填）</string>
     <string name="use_description">使用说明</string>
-    <string name="description_option">给大家介绍一下你对资源的描述...（非必填）</string>
+    <string name="description_option">给大家介绍一下你对资源的描述…（非必填）</string>
     <string name="upload_file">上传文件</string>
     <string name="id">ID</string>
     <string name="folllow">关注</string>
@@ -129,7 +129,8 @@
     <string name="scan">扫码</string>
     <string name="senior">校园智库</string>
     <string name="file_station">资源驿站</string>
-    <string name="input_title">请输入标题...</string>
+    <string name="input_title">请输入标题…</string>
     <string name="record_event">记录一下大事件</string>
     <string name="setting">偏好管理</string>
+    <string name="input_suggession">请输入你的建议…</string>
 </resources>

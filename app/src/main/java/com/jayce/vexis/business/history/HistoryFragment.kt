@@ -8,18 +8,17 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
+import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.core.base.BaseFragment
+import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.route.HistoryService
-import com.jayce.vexis.foundation.view.block.CustomDialog
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
 class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
 
@@ -85,24 +84,19 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
                 it.message.toast()
             }
             floatingBtn.setOnClickListener {
-                CustomDialog(
-                    requireContext(),
-                    DialogTimelineBinding.inflate(layoutInflater)
-                ).apply {
-                    right { binding, dialog ->
-                        request<HistoryService, Boolean> ({ sendEventData(
-                            binding.picker.formatTime(),
-                            binding.content.msg()
-                        )}){
-                            withContext(Dispatchers.Main) {
-                                it.toast()
-                            }
+                val ctx = activity ?: return@setOnClickListener
+                FlexibleDialog<DialogTimelineBinding>(ctx, layoutInflater)
+                    .flexibleView(DialogTimelineBinding::inflate)
+                    .positive {
+                        request<HistoryService, Boolean>({ sendEventData(
+                            picker.formatTime(),
+                            content.msg()
+                        ) }) {
+                            ui { it.toast() }
                         }
-                        dismiss()
+                        return@positive -1
                     }
-                    left { _, _ -> dismiss() }
-                    show()
-                }
+                    .show()
             }
         }
     }

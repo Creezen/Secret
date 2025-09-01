@@ -3,28 +3,29 @@ package com.jayce.vexis.business.kit.ledger
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
-import com.jayce.vexis.databinding.AddRecordDialogBinding
-import com.jayce.vexis.databinding.AddRecordUserBinding
-import com.jayce.vexis.databinding.NewPocketRecordBinding
-import com.jayce.vexis.foundation.view.block.CustomDialog
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.R
 import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
 import com.jayce.vexis.business.kit.ledger.adapter.ScoreInsertAdapter
 import com.jayce.vexis.core.base.BaseActivity
+import com.jayce.vexis.databinding.AddRecordDialogBinding
+import com.jayce.vexis.databinding.AddRecordUserBinding
+import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.databinding.NewPocketRecordBinding
 import com.jayce.vexis.foundation.bean.RecordEntry
 import com.jayce.vexis.foundation.bean.RecordItemEntry
 import com.jayce.vexis.foundation.bean.ScoreEntry
 import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.StringBuilder
 
 class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 
@@ -80,16 +81,13 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                 totalScore.addSimpleView("0", WIDTH)
             }
             addUser.setOnClickListener {
-                CustomDialog(
-                    this@ScoreBoardActivity,
-                    AddRecordUserBinding.inflate(layoutInflater),
-                ).apply {
-                    setTitle("添加角色")
-                    left { _, _ ->
-                        dismiss()
-                    }
-                    right("添加") { bind, _ ->
-                        val addUserName = bind.edit.msg()
+                FlexibleDialog<DialogBinding>(this@ScoreBoardActivity, layoutInflater)
+                    .flexibleView(AddRecordUserBinding.inflate(layoutInflater))
+                    .title("添加角色")
+                    .negative { return@negative -1 }
+                    .positive("添加") {
+                        val edit = findViewById<EditText>(R.id.edit)
+                        val addUserName = edit.msg()
                         playerName.addSimpleView(addUserName, WIDTH)
                         userList.add(addUserName)
                         scoreList.forEach {
@@ -99,30 +97,22 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                         scoreInsertAdapter.notifyUserAdded()
                         totalScoreList.add(0)
                         totalScore.addSimpleView("0", WIDTH)
-                        dismiss()
-                    }
-                    show()
-                }
+                        return@positive -1
+                    }.show()
             }
             addRecord.setOnClickListener {
-                CustomDialog(
-                    this@ScoreBoardActivity,
-                    AddRecordDialogBinding.inflate(layoutInflater),
-                ).apply {
-                    val rv = viewBinding.scoreRv
-                    rv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
-                    rv.adapter = scoreInsertAdapter
-                    setTitle("设置分数")
-                    left { _, _ ->
-                        dismiss()
+                FlexibleDialog<DialogBinding>(this@ScoreBoardActivity, layoutInflater)
+                    .flexibleView(AddRecordDialogBinding.inflate(layoutInflater)) {
+                        scoreRv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
+                        scoreRv.adapter = scoreInsertAdapter
                     }
-                    right("添加") { _, _ ->
+                    .positive("添加") {
                         val scoreList = scoreInsertAdapter.getscoreList()
                         val newList = ArrayList<Int>()
                         newList.addAll(scoreList)
                         if (newList.sum() != 0) {
                             "分数设置不合法，请检查一下哦".toast()
-                            return@right
+                            return@positive -1
                         }
                         newList.forEachIndexed { index, value ->
                             totalScoreList[index] += value
@@ -130,10 +120,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                             childView.text = totalScoreList[index].toString()
                         }
                         addRecord(newList)
-                        dismiss()
-                    }
-                    show()
-                }
+                        return@positive -1
+                    }.title("设置分数").show()
             }
             save.setOnClickListener {
                 saveRecord()

@@ -10,13 +10,13 @@ import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
+import com.jayce.vexis.core.base.BaseActivity
+import com.jayce.vexis.databinding.AccountCreationBinding
+import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.UserEntry
 import com.jayce.vexis.foundation.route.UserService
-import com.jayce.vexis.databinding.AccountCreationBinding
-import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseActivity
-import com.jayce.vexis.foundation.view.block.SimpleDialog
-import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
 class RegisterActivity : BaseActivity<AccountCreationBinding>() {
 
@@ -138,9 +138,10 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
             sex.configuration(SEX)
             emailPostfix.configuration(emailProfix)
             register.setOnClickListener {
-                val dialog = SimpleDialog(this@RegisterActivity).apply {
-                        setTitle("提示")
-                        setMessage("注册中，请稍后...")
+                val dialog = FlexibleDialog<DialogBinding>(this@RegisterActivity, layoutInflater)
+                    .title("提示")
+                    .flexibleView {
+                        message.text = "注册中，请稍后..."
                     }
                 val currentTime = System.currentTimeMillis()
                 val userIdValue = "${currentTime}${getRandomString(7)}"

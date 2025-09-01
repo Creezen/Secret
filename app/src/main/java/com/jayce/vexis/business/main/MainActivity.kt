@@ -37,7 +37,8 @@ import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
-import com.jayce.vexis.foundation.view.block.SimpleDialog
+import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import q.rorbin.badgeview.Badge
@@ -79,7 +80,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         initPage()
         //将顶部的间距设置为状态栏高度
         //将底部的间距设置为导航栏的高度
@@ -186,18 +186,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    SimpleDialog(this@MainActivity).apply {
-                        setTitle("消息提醒")
-                        setMessage("确定退出吗？")
-                        setLeftButton("点错了") { _, dialog ->
-                            dialog.dismiss()
+                    FlexibleDialog<DialogBinding>(this@MainActivity, layoutInflater)
+                        .flexibleView {
+                            message.text = "确定退出吗？"
                         }
-                        setRightButton("退出") { _, _ ->
-                            dismiss()
-                            finishAll()
+                        .title("消息提醒")
+                        .positive("退出", true) {
+                            return@positive 1
                         }
-                        show()
-                    }
+                        .positiveHandle{ flag,dia ->
+                            if (flag == 1) {
+                                finishAll()
+                            }
+                        }
+                        .negative("点错了", true) {
+                            return@negative 1
+                        }
+                        .show()
                 }
             }
         )

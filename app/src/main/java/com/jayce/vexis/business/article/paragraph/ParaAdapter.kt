@@ -14,24 +14,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
-import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
+import com.jayce.vexis.core.Config
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
+import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.ParaRemarkEntry
-import com.jayce.vexis.foundation.view.block.CustomDialog
 import com.jayce.vexis.foundation.route.ArticleService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
 class ParaAdapter(
     val context: Context,
     val activity: Activity,
     private val itemList: List<ParaRemarkEntry>,
-) : RecyclerView.Adapter<ParaAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = arrayListOf(
             "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
         )
@@ -39,45 +38,62 @@ class ParaAdapter(
     private var articleId: Long = -1
 
     private val dialog by lazy {
-        CustomDialog(
-            context,
-            AddCommentLayoutBinding.inflate(activity.layoutInflater),
-        ).apply {
-            setTitle("留言")
-            setCancel(true)
-            viewBinding.singleSelect.setChildLayout(list) {
-                viewBinding.commentContent.hint = it
+        FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
+            .title("留言")
+            .flexibleView(AddCommentLayoutBinding::inflate) {
+                singleSelect.setChildLayout(list) {
+                    commentContent.hint = it
+                }
             }
-        }
+            .cancelable(true)
     }
 
     class ViewHolder(val binding: ParagraphItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val paragraph = binding.content
     }
 
+    class ImageViewHolder(val binding: ArticleImageBinding) : RecyclerView.ViewHolder(binding.root) {
+        val image = binding.img
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ViewHolder {
-        val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    ): RecyclerView.ViewHolder {
+        val viewHolder = if (viewType == 1) {
+            val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ViewHolder(binding)
+        } else {
+            val binding = ArticleImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ImageViewHolder(binding)
+        }
+
+        return viewHolder
     }
 
     override fun onBindViewHolder(
-        holder: ViewHolder,
+        holder: RecyclerView.ViewHolder,
         position: Int,
     ) {
+        val type = holder.itemViewType
         val item = itemList[position]
-        holder.paragraph.setOnLongClickListener {
-            it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen, null))
-            showCommentDialog(position, it)
-            true
+        if (type == 1) {
+            val currentHolder = holder as ViewHolder
+            currentHolder.paragraph.setOnLongClickListener {
+                it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen, null))
+                showCommentDialog(position, it)
+                true
+            }
+            if (item.list.isEmpty()) {
+                currentHolder.paragraph.text = item.content.trim()
+                return
+            }
+            displayComment(position, holder.paragraph)
+        } else {
+            val currentHolder = holder as ImageViewHolder
+            NetTool.setImage(context, currentHolder.image, "${Config.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
         }
-        if (item.list.isEmpty()) {
-            holder.paragraph.text = item.content.trim()
-            return
-        }
-        displayComment(position, holder.paragraph)
+
     }
 
     override fun getItemCount() = itemList.size
@@ -107,24 +123,19 @@ class ParaAdapter(
         view: View,
     ) {
         dialog.apply {
-            left("取消") { _, _ ->
-                view.setBackgroundColor(context.resources.getColor(R.color.white, null))
-                dismiss()
-            }
-            right("提交") { binding, _ ->
+            title("评论")
+            positive("提交") {
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 val userId = user().userId
                 val paragraphId = itemList[position].paragraphId
-                val content = binding.commentContent.msg()
+                val content = commentContent.msg()
                 request<ArticleService, Boolean>({
                     postCommen(articleId, paragraphId, userId, content)
                 }) {
-                    withContext(Dispatchers.Main) {
-                        it.toast()
-                    }
+                    ui { it.toast() }
                 }
                 itemList[position].paragraphId.toast()
-                dismiss()
+                return@positive -1
             }
             show()
         }
@@ -132,5 +143,13 @@ class ParaAdapter(
 
     fun setArticleId(articleId: Long) {
         this.articleId = articleId
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position % 2 ==0) {
+            1
+        } else {
+            2
+        }
     }
 }
