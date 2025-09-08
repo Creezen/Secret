@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.FeedbackEntry
 import com.jayce.vexis.foundation.route.FeedbackService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.ArrayList
+import java.util.LinkedHashMap
 
 class Feedback : BaseFragment<ActivityFeedbackBinding>() {
 

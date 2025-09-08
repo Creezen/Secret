@@ -7,7 +7,6 @@ import com.creezen.tool.NetTool.sendChatMessage
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.ChatEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

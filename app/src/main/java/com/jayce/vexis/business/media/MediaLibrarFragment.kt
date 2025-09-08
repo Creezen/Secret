@@ -12,12 +12,13 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.ThreadTool.ui
+import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
 import com.jayce.vexis.foundation.route.MediaService
+import java.util.ArrayList
+import java.util.LinkedHashMap
 
 class MediaLibrarFragment : BaseFragment<FileShareBinding>() {
 

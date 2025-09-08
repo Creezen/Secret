@@ -22,6 +22,7 @@ import com.jayce.vexis.foundation.bean.ChatEntry
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import java.util.ArrayList
 import java.util.concurrent.LinkedBlockingQueue
 
 class CoreService : Service() {
@@ -34,9 +35,7 @@ class CoreService : Service() {
         private val chatQueue = LinkedBlockingQueue<ChatEntry>()
         private val backupList = ArrayList<ChatEntry>()
 
-        fun getUnreadSize(): Int {
-            return chatQueue.size
-        }
+        fun getUnreadSize() = chatQueue.size
 
         fun getChatMessage(block: (LinkedBlockingQueue<ChatEntry>) -> Unit) {
             block.invoke(chatQueue)

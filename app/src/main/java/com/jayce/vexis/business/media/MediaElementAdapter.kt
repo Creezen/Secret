@@ -6,22 +6,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.FileTool.isFileDownload
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.MediaEntry
 import com.jayce.vexis.foundation.route.MediaService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
-import java.io.InputStream
 
 class MediaElementAdapter(
     private val context: Context,

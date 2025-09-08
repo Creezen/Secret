@@ -7,9 +7,8 @@ import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
-import com.jayce.vexis.foundation.route.ArticleService
-import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.ParaRemarkEntry
+import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 
 class ParagraptActivity : BaseActivity<ActivityParagraphBinding>() {

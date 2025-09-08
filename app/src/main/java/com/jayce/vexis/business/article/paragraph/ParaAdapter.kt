@@ -39,7 +39,7 @@ class ParaAdapter(
 
     private val dialog by lazy {
         FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
-            .title("留言")
+            .title(context.getString(R.string.leave_message))
             .flexibleView(AddCommentLayoutBinding::inflate) {
                 singleSelect.setChildLayout(list) {
                     commentContent.hint = it
@@ -123,8 +123,8 @@ class ParaAdapter(
         view: View,
     ) {
         dialog.apply {
-            title("评论")
-            positive("提交") {
+            title(context.getString(R.string.comment))
+            positive(context.getString(R.string.submit)) {
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 val userId = user().userId
                 val paragraphId = itemList[position].paragraphId

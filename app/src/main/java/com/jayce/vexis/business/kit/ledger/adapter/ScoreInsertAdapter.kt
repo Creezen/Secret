@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.intMsg
 import com.jayce.vexis.databinding.AddRecordScoreBinding
+import java.util.ArrayList
 
 class ScoreInsertAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>() {
 

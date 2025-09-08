@@ -21,7 +21,8 @@ abstract class ScoreDatabase : RoomDatabase() {
                 return it
             }
             return Room.databaseBuilder(context.applicationContext, ScoreDatabase::class.java, "scoreDatabase")
-                .build().apply {
+                .build()
+                .apply {
                     scoreDatabase = this
                 }
         }

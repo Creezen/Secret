@@ -25,6 +25,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.Feedback
+import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.media.MediaLibrarFragment
 import com.jayce.vexis.business.member.dashboard.AvatarSignnature
@@ -116,7 +117,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         with(binding) {
             if (null == viewHolder) {
                 viewHolder = ViewHolder(Feedback(), KitFragment(),
-                    com.jayce.vexis.business.history.HistoryFragment(), ArticleFragment(), PeerFragment(), MediaLibrarFragment())
+                    HistoryFragment(), ArticleFragment(), PeerFragment(), MediaLibrarFragment())
                 root.tag = viewHolder
             } else {
                 viewHolder = root.tag as ViewHolder

@@ -46,7 +46,8 @@ class LongTextView(context: Context, attr: AttributeSet) : View(context, attr) {
                         longText.length,
                         textPaint,
                         width,
-                    ).build()
+                    )
+                    .build()
             staticLayout.draw(it)
             postInvalidate()
         }

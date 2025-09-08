@@ -8,6 +8,7 @@ import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.PocketMainBinding
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import java.util.ArrayList
 
 class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
 
@@ -34,7 +35,8 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                         addBtn.setOnClickListener {
                             addView(userBinding.itemLayout.childCount)
                         }
-                    }.positive {
+                    }
+                    .positive {
                         startActivity(
                             Intent(this@LedgerSheetActivity, ScoreBoardActivity::class.java).also {
                                 it.putExtra("userData", userList)
@@ -43,7 +45,8 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                             },
                         )
                         return@positive -1
-                    }.show()
+                    }
+                    .show()
             }
             history.setOnClickListener {
                 startActivity(Intent(this@LedgerSheetActivity, LedgerHistoryActivity::class.java))

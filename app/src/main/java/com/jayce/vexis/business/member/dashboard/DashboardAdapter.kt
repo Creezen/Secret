@@ -11,11 +11,7 @@ class DashboardAdapter(
     val list: List<Fragment>
 ) : FragmentStateAdapter(manager, lifecycle){
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount() = list.size
 
-    override fun createFragment(position: Int): Fragment {
-        return list[position]
-    }
+    override fun createFragment(position: Int) = list[position]
 }

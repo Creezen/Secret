@@ -1,6 +1,5 @@
 package com.jayce.vexis.core
 
-
 import com.jayce.vexis.foundation.bean.UserEntry
 import java.util.concurrent.atomic.AtomicReference
 
@@ -12,7 +11,5 @@ object SessionManager {
         onlineUserEntry.set(userEntry)
     }
 
-    fun user(): UserEntry {
-        return onlineUserEntry.get()
-    }
+    fun user() = onlineUserEntry.get()
 }

@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".writing.ArticleEditActivity"
+    tools:context=".business.article.ArticleEditActivity"
     android:orientation="vertical">
     <EditText
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/input_title"/>
+        android:hint="@string/input_title"
+        android:inputType="text"
+        android:importantForAutofill="no"/>
     <EditText
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="start|top"/>
+        android:gravity="start|top"
+        android:inputType="text"
+        android:importantForAutofill="no"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/photo"
+            android:importantForAccessibility="no"/>
+        <ImageView
+            android:id="@+id/link"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/link"
+            android:importantForAccessibility="no"/>
+    </LinearLayout>
     <ImageView
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/submit"
         android:importantForAccessibility="no"/>
-
 </LinearLayout>

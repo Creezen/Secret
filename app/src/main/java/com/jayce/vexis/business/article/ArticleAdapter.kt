@@ -5,11 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.NetTool
-import com.jayce.vexis.databinding.ParagraphItemBinding
 import com.jayce.vexis.business.article.paragraph.ParagraptActivity
-import com.jayce.vexis.core.Config
-import com.jayce.vexis.databinding.ArticleImageBinding
+import com.jayce.vexis.databinding.ParagraphItemBinding
 import com.jayce.vexis.foundation.bean.ArticleEntry
 
 class ArticleAdapter(

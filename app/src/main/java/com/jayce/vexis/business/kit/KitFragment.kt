@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.jayce.vexis.business.kit.gomoku.GomokuActivity
+import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
+import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
-import com.jayce.vexis.business.kit.gomoku.GomokuActivity
-import com.jayce.vexis.business.kit.maze.MazeActivity
-import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
-import com.jayce.vexis.core.base.BaseViewModel
 
 class KitFragment : BaseFragment<WidgetsBinding>() {
 

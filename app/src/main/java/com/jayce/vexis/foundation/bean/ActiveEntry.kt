@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ActiveEntry(
     val userID: String,
-    var nickname: String? = null,
+    val nickname: String? = null,
     val createTime: String,
     val administrator: Int = 0,
     val support: Long = 0,

@@ -2,6 +2,7 @@ package com.jayce.vexis.foundation.bean
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.util.ArrayList
 
 @Parcelize
 data class RecordEntry(

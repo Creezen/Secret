@@ -2,10 +2,10 @@ package com.jayce.vexis.foundation.view.block
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import com.jayce.vexis.R
+import java.util.ArrayList
 
 class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(context, attr) {
 

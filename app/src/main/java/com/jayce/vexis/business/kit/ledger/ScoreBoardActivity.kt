@@ -26,6 +26,7 @@ import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 

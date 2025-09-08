@@ -133,4 +133,6 @@
     <string name="record_event">记录一下大事件</string>
     <string name="setting">偏好管理</string>
     <string name="input_suggession">请输入你的建议…</string>
+    <string name="comment">评论</string>
+    <string name="leave_message">留言</string>
 </resources>

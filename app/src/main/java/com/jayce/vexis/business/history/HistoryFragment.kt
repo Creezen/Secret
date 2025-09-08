@@ -12,13 +12,13 @@ import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.route.HistoryService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import java.util.ArrayList
 
 class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
 

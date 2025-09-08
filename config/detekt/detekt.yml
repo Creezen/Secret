@@ -122,7 +122,7 @@ complexity:
       - 'use'
       - 'with'
   LabeledExpression:
-    active: true
+    active: false
     ignoredLabels: []
   LargeClass:
     active: true
@@ -532,7 +532,7 @@ style:
     active: true
     includeElvis: true
   ClassOrdering:
-    active: true
+    active: false
   CollapsibleIfStatements:
     active: true
   DataClassContainsFunctions:

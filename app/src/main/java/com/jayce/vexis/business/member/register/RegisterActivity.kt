@@ -17,6 +17,8 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.UserEntry
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import java.util.ArrayList
+import java.util.HashMap
 
 class RegisterActivity : BaseActivity<AccountCreationBinding>() {
 

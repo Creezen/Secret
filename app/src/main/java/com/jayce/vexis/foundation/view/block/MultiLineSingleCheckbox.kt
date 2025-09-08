@@ -11,6 +11,7 @@ import com.jayce.vexis.R
 import kotlin.math.ceil
 
 import com.jayce.vexis.databinding.TextCheckBoxBinding
+import java.util.ArrayList
 
 class MultiLineSingleCheckbox(
     private val context: Context,

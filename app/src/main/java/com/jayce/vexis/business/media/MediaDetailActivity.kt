@@ -6,6 +6,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.bean.MediaEntry
+import java.util.ArrayList
 
 class MediaDetailActivity : BaseActivity<ActivityFileDetailBinding>() {
 
