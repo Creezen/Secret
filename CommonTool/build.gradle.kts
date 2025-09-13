@@ -1,8 +1,8 @@
 import com.android.build.gradle.internal.tasks.factory.dependsOn
 
 plugins {
+    alias(libs.plugins.kotlin.jvm)
     id("java-library")
-    id("org.jetbrains.kotlin.jvm")
     id("maven-publish")
 }
 
@@ -45,6 +45,6 @@ publishing {
 }
 
 dependencies {
-    implementation ("com.alibaba:fastjson:2.0.40")
-    implementation("com.google.code.gson:gson:2.8.5")
+    implementation (libs.fastjson)
+    implementation(libs.gson)
 }

@@ -4,13 +4,12 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
     id("kotlin-parcelize")
     id("maven-publish")
-    id("kotlin-kapt")
-    id("com.google.devtools.ksp")
-    id("io.gitlab.arturbosch.detekt")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
 }
 
@@ -204,28 +203,23 @@ tasks.register("mergeReports") {
 
 dependencies {
 
-    ksp("androidx.room:room-compiler:2.5.2")
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.room:room-runtime:2.5.2")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-    implementation("com.alibaba:fastjson:2.0.40")
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-    implementation("com.github.stuxuhai:jpinyin:1.1.7")
-    implementation("q.rorbin:badgeview:1.1.3")
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-    implementation("androidx.preference:preference-ktx:1.2.0")
-    implementation("io.insert-koin:koin-android:4.1.0")
-
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    api("com.creezen.tool:tools:1.0.0")
-    implementation("com.creezen.tool.commontool:tools:1.0.0")
+    api(libs.tools)
+    ksp(libs.room.compile)
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.constraintlayout)
+    implementation(libs.room.runtime)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.converter.scalars)
+    implementation(libs.viewpager2)
+    implementation(libs.fastjson)
+    implementation(libs.glide)
+    implementation(libs.jpinyin)
+    implementation(libs.badgeview)
+    implementation(libs.zxing.android.embedded)
+    implementation(libs.preference.ktx)
+    implementation(libs.koin.android)
+    implementation(libs.common.tools)
 }

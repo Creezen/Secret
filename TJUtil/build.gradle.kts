@@ -1,10 +1,9 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.dokka)
     id("maven-publish")
-    id("kotlin-kapt")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.dokka")
 }
 
 repositories {
@@ -100,27 +99,21 @@ publishing {
 }
 
 dependencies {
-
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-common-jvm:2.8.4")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-
-    ksp("androidx.room:room-compiler:2.5.2")
-    implementation ("androidx.room:room-runtime:2.5.2")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("com.tencent:mmkv:2.0.2")
-    implementation("org.yaml:snakeyaml:2.4")
-    implementation("com.github.bumptech.glide:okhttp3-integration:4.15.1")
-
-    implementation("com.creezen.tool.commontool:tools:1.0.0")
+    ksp(libs.room.compile)
+    implementation(libs.core.ktx)
+    implementation(platform(libs.kotlin.bom))
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.lifecycle.common.jvm)
+    implementation (libs.room.runtime)
+    implementation (libs.retrofit)
+    implementation (libs.retrofit.converter.gson)
+    implementation (libs.retrofit.converter.scalars)
+    implementation (libs.glide)
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.gson)
+    implementation(libs.mmkv)
+    implementation(libs.snakeyaml)
+    implementation(libs.glide.okhttp3.integration)
+    implementation(libs.common.tools)
 }
