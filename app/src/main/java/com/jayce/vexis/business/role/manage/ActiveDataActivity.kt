@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.member.manage
+package com.jayce.vexis.business.role.manage
 
 import androidx.lifecycle.lifecycleScope
 import android.os.Build
@@ -9,7 +9,6 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.route.UserService
-import com.jayce.vexis.core.base.BaseViewModel
 import kotlinx.coroutines.launch
 
 class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {

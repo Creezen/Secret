@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.media
+package com.jayce.vexis.business.file
 
 import android.content.Intent
 import android.net.Uri
@@ -15,17 +15,17 @@ import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.MediaEntry
+import com.jayce.vexis.foundation.bean.FileEntry
 import com.jayce.vexis.foundation.route.MediaService
 import java.util.ArrayList
 import java.util.LinkedHashMap
 
-class MediaLibrarFragment : BaseFragment<FileShareBinding>() {
+class FileContentsFragment : BaseFragment<FileShareBinding>() {
 
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
-    private val resItemList = ArrayList<MediaEntry>()
-    private val adapter: MediaElementAdapter by lazy {
-        MediaElementAdapter(requireActivity(), requireActivity(), resItemList)
+    private val resItemList = ArrayList<FileEntry>()
+    private val adapter: FileEntryAdapter by lazy {
+        FileEntryAdapter(requireActivity(), requireActivity(), resItemList)
     }
     private var tag: Any? = null
 
@@ -57,7 +57,7 @@ class MediaLibrarFragment : BaseFragment<FileShareBinding>() {
     }
 
     private fun initData() {
-        request<MediaService, LinkedHashMap<String, List<MediaEntry>>>({ fetchFile() }) {
+        request<MediaService, LinkedHashMap<String, List<FileEntry>>>({ fetchFile() }) {
             val list = it["items"]
             if (list.isNullOrEmpty()) {
                 return@request
@@ -72,7 +72,7 @@ class MediaLibrarFragment : BaseFragment<FileShareBinding>() {
         with(binding) {
             uploadFile.setOnClickListener {
                 if (Environment.isExternalStorageManager()) {
-                    startActivity(Intent(this@MediaLibrarFragment.activity, MediaUploadActivity::class.java))
+                    startActivity(Intent(this@FileContentsFragment.activity, FileUploadActivity::class.java))
                 } else {
                     readExternalLaunch?.launch(
                         Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {

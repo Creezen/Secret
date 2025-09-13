@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class MediaEntry(
+data class FileEntry(
     val fileName: String,
     val fileID: String,
     val fileSuffix: String,
@@ -12,4 +12,5 @@ data class MediaEntry(
     val illustrate: String,
     val fileSize: Long,
     val uploadTime: String,
+    val fileHash: String = ""
 ) : Parcelable

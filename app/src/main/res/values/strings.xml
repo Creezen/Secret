@@ -135,4 +135,10 @@
     <string name="input_suggession">请输入你的建议…</string>
     <string name="comment">评论</string>
     <string name="leave_message">留言</string>
+    <string name="resource_description"></string>
+    <string name="resource_explain"></string>
+    <string name="begin_download">开始下载</string>
+    <string name="file_exist_open">文件已存在，是否打开?</string>
+    <string name="upload_waiting">正在上传中，请稍等....</string>
+    <string name="no_file_select">你还没选择文件哦！</string>
 </resources>

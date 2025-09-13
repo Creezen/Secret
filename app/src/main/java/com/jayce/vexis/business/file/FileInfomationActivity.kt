@@ -1,29 +1,27 @@
-package com.jayce.vexis.business.media
+package com.jayce.vexis.business.file
 
 import android.os.Build
 import android.os.Bundle
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
-import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.bean.MediaEntry
-import java.util.ArrayList
+import com.jayce.vexis.foundation.bean.FileEntry
 
-class MediaDetailActivity : BaseActivity<ActivityFileDetailBinding>() {
+class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
-    private lateinit var fileItem: MediaEntry
+    private lateinit var fileItem: FileEntry
     private val parentNode = arrayListOf("资源描述", "资源说明")
     private val childNode = arrayListOf<ArrayList<String>>(arrayListOf(), arrayListOf())
 
-    private val mediaDetailAdapter by lazy {
-        MediaDetailAdapter(this, parentNode, childNode)
+    private val fileInformationAdapter by lazy {
+        FileInformationAdapter(this, parentNode, childNode)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fileItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("fileInfo", MediaEntry::class.java) ?: MediaEntry("","","","","",0,"")
+            intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry("","","","","",0,"")
         } else {
-            intent.getParcelableExtra("fileInfo") ?: MediaEntry("","","","","",0,"")
+            intent.getParcelableExtra("fileInfo") ?: FileEntry("","","","","",0,"")
         }
         initView()
         initData()
@@ -36,7 +34,7 @@ class MediaDetailActivity : BaseActivity<ActivityFileDetailBinding>() {
             fileID.text = fileItem.fileID
             date.text = fileItem.uploadTime
             size.text = "${fileItem.fileSize}"
-            expView.setAdapter(mediaDetailAdapter)
+            expView.setAdapter(fileInformationAdapter)
             expView.expandGroup(0)
             expView.expandGroup(1)
         }
@@ -45,6 +43,6 @@ class MediaDetailActivity : BaseActivity<ActivityFileDetailBinding>() {
     private fun initData() {
         childNode[0].add(fileItem.description)
         childNode[1].add(fileItem.illustrate)
-        mediaDetailAdapter.notifyDataSetChanged()
+        fileInformationAdapter.notifyDataSetChanged()
     }
 }

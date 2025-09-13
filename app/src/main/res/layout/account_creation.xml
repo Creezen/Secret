@@ -11,7 +11,7 @@
             type="com.jayce.vexis.foundation.view.block.DefaultSpinner" />
         <variable
             name="activity"
-            type="com.jayce.vexis.business.member.register.RegisterActivity"/>
+            type="com.jayce.vexis.business.role.register.RegisterActivity"/>
         <variable
             name="accountCode"
             type="int"/>

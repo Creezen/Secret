@@ -27,7 +27,7 @@ import com.creezen.tool.enum.ThreadType
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
-import com.jayce.vexis.business.member.register.RegisterActivity
+import com.jayce.vexis.business.role.register.RegisterActivity
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.Config.BASE_SOCKET_PATH
 import com.jayce.vexis.core.Config.LOCAL_SOCKET_PORT

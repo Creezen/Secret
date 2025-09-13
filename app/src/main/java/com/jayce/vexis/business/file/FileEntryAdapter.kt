@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.media
+package com.jayce.vexis.business.file
 
 import android.content.Context
 import android.content.Intent
@@ -13,15 +13,15 @@ import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.MediaEntry
+import com.jayce.vexis.foundation.bean.FileEntry
 import com.jayce.vexis.foundation.route.MediaService
 import okhttp3.ResponseBody
 
-class MediaElementAdapter(
+class FileEntryAdapter(
     private val context: Context,
     private val parent: LifecycleOwner,
-    val list: List<MediaEntry>,
-) : RecyclerView.Adapter<MediaElementAdapter.ViewHodler>() {
+    val list: List<FileEntry>,
+) : RecyclerView.Adapter<FileEntryAdapter.ViewHodler>() {
     companion object {
         const val TAG = "MediaElementAdapter"
     }
@@ -59,10 +59,10 @@ class MediaElementAdapter(
         }
         holder.download.setOnClickListener {
             if (isDownload) {
-                "文件已存在，是否打开?".toast()
+                context.getString(R.string.file_exist_open).toast()
                 return@setOnClickListener
             }
-            "开始下载".toast()
+            context.getString(R.string.begin_download).toast()
             progressBar?.progress = 0
             val fileName = "${item.fileID}${item.fileSuffix}"
             request<MediaService, ResponseBody>({ downloadFile(fileName) }) {
@@ -78,7 +78,7 @@ class MediaElementAdapter(
         }
         holder.view.setOnClickListener {
             context.startActivity(
-                Intent(context, MediaDetailActivity::class.java).also {
+                Intent(context, FileInfomationActivity::class.java).also {
                     it.putExtra("fileInfo", item)
                 },
             )

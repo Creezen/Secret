@@ -27,9 +27,9 @@ import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.Feedback
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
-import com.jayce.vexis.business.media.MediaLibrarFragment
-import com.jayce.vexis.business.member.dashboard.AvatarSignnature
-import com.jayce.vexis.business.member.dashboard.DashboardActivity
+import com.jayce.vexis.business.file.FileContentsFragment
+import com.jayce.vexis.business.role.dashboard.AvatarSignnature
+import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.setting.SettingActivity
 import com.jayce.vexis.core.Config.BASE_FILE_PATH
@@ -65,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val historyFragment: com.jayce.vexis.business.history.HistoryFragment,
         val articleFragment: ArticleFragment,
         val senior: PeerFragment,
-        val mediaLibrarFragment: MediaLibrarFragment
+        val fileContentsFragment: FileContentsFragment
     )
 
     override fun registerLauncher() {
@@ -117,7 +117,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         with(binding) {
             if (null == viewHolder) {
                 viewHolder = ViewHolder(Feedback(), KitFragment(),
-                    HistoryFragment(), ArticleFragment(), PeerFragment(), MediaLibrarFragment())
+                    HistoryFragment(), ArticleFragment(), PeerFragment(), FileContentsFragment())
                 root.tag = viewHolder
             } else {
                 viewHolder = root.tag as ViewHolder
@@ -139,7 +139,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         R.id.MainMenuTimeline -> replaceFragment(historyFragment, "historicalAxis")
                         R.id.MainMenuSynergy -> replaceFragment(articleFragment, "articleFragment")
                         R.id.MainMenuSenior -> replaceFragment(senior, "senior")
-                        R.id.MainMenuResource -> replaceFragment(mediaLibrarFragment, "mediaLibrarFragment")
+                        R.id.MainMenuResource -> replaceFragment(fileContentsFragment, "mediaLibrarFragment")
                     }
                 }
                 return@setNavigationItemSelectedListener true

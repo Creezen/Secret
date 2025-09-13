@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.media
+package com.jayce.vexis.business.file
 
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
@@ -11,15 +11,16 @@ import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.contract.LifecycleJob
+import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.core.base.BaseViewModel
+import com.jayce.vexis.foundation.bean.FileEntry
 import com.jayce.vexis.foundation.route.MediaService
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 
-class MediaUploadActivity : BaseActivity<FileUploadBinding>() {
+class FileUploadActivity : BaseActivity<FileUploadBinding>() {
 
     companion object {
         const val SPLIT = "/"
@@ -37,11 +38,11 @@ class MediaUploadActivity : BaseActivity<FileUploadBinding>() {
 
     private fun initView() {
         with(binding) {
-            activity = this@MediaUploadActivity
-            lifecycleOwner = this@MediaUploadActivity
+            activity = this@FileUploadActivity
+            lifecycleOwner = this@FileUploadActivity
             descTextLivedata.value = ""
             textSize = "0/100"
-            descTextLivedata.observe(this@MediaUploadActivity) { text ->
+            descTextLivedata.observe(this@FileUploadActivity) { text ->
                 if (text.length > 100) {
                     descTextLivedata.value = text.substring(0, 100)
                     textSize = "100/100"
@@ -56,10 +57,10 @@ class MediaUploadActivity : BaseActivity<FileUploadBinding>() {
                 val filePath = selectedFilePath
                 val fileName = selectedFile.msg()
                 if (filePath.isNullOrEmpty()) {
-                    "你还没选择文件哦！".toast()
+                    getString(R.string.no_file_select).toast()
                     return@setOnClickListener
                 }
-                "正在上传中，请稍等....".toast()
+                getString(R.string.upload_waiting).toast()
                 val file = File(filePath)
                 val fileID = "${getRandomString(6)}${System.currentTimeMillis()}"
                 val fileSuffix = fileName.substring(fileName.lastIndexOf("."))
@@ -67,11 +68,21 @@ class MediaUploadActivity : BaseActivity<FileUploadBinding>() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(this@MediaUploadActivity,  5000L, Dispatchers.Default, object : LifecycleJob {
+                workInDispatch(this@FileUploadActivity,  5000L, Dispatchers.Default, object : LifecycleJob {
                     override suspend fun onDispatch() {
                         val filePart = buildFileMultipart(filePath, "file")
+                        val fileEntry = FileEntry(
+                            fileName,
+                            fileID,
+                            fileSuffix,
+                            description,
+                            illustrate,
+                            fileSize,
+                            uploadTime,
+                            ""
+                            )
                         request<MediaService, LinkedHashMap<String, Boolean>>({
-                            uploadFile(fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, filePart)
+                            uploadFile(fileEntry, filePart)
                         }) {
                             if (it["loadResult"] == true) {
                                 finish()

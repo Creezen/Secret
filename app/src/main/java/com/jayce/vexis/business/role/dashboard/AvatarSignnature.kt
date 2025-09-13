@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.member.dashboard
+package com.jayce.vexis.business.role.dashboard
 
 import com.bumptech.glide.load.Key
 import java.security.MessageDigest

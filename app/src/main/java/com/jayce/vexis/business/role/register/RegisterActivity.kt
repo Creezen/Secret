@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.member.register
+package com.jayce.vexis.business.role.register
 
 import android.os.Bundle
 import android.text.TextUtils

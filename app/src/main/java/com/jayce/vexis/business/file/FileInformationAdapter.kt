@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.media
+package com.jayce.vexis.business.file
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.BaseExpandableListAdapter
 import com.jayce.vexis.databinding.ChildNodeLayoutBinding
 import com.jayce.vexis.databinding.ParentNodeLayoutBinding
 
-class MediaDetailAdapter(
+class FileInformationAdapter(
     private val context: Context,
     private val parentList: List<String>,
     private val childList: List<List<String>>,

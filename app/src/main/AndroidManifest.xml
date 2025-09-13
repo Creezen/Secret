@@ -84,10 +84,10 @@
             android:name=".business.article.ArticleEditActivity"
             android:exported="false" />
         <activity
-            android:name=".business.member.manage.ActiveDataActivity"
+            android:name=".business.role.manage.ActiveDataActivity"
             android:exported="false" />
         <activity
-            android:name=".business.member.manage.AdminActivity"
+            android:name=".business.role.manage.AdminActivity"
             android:exported="false"
             android:theme="@style/adminActivityTheme" />
         <activity
@@ -97,16 +97,16 @@
             android:name=".business.feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".business.media.MediaDetailActivity"
+            android:name=".business.file.FileInfomationActivity"
             android:exported="false" />
         <activity
-            android:name=".business.media.MediaUploadActivity"
+            android:name=".business.file.FileUploadActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.ledger.ScoreBoardActivity"
             android:exported="false" />
         <activity
-            android:name=".business.member.dashboard.DashboardActivity"
+            android:name=".business.role.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.ledger.LedgerSheetActivity"
@@ -115,7 +115,7 @@
             android:name=".business.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".business.member.register.RegisterActivity"
+            android:name=".business.role.register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".business.login.LoginActivity"

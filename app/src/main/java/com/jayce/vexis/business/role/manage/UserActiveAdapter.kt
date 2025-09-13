@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.member.manage
+package com.jayce.vexis.business.role.manage
 
 import android.content.Context
 import android.content.Intent
