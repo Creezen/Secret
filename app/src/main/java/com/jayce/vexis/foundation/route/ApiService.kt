@@ -1,7 +1,7 @@
 package com.jayce.vexis.foundation.route
 
-import com.jayce.vexis.core.Config.DICTIONARY_API_APPID
-import com.jayce.vexis.core.Config.DICTIONARY_API_APPSECRET
+import com.creezen.commontool.Config.DICTIONARY_API_APPID
+import com.creezen.commontool.Config.DICTIONARY_API_APPSECRET
 import com.jayce.vexis.core.base.BaseService
 import retrofit2.Call
 import retrofit2.http.GET

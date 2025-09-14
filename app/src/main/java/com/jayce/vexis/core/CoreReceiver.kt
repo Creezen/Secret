@@ -4,11 +4,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.creezen.commontool.Config.BROAD_LOGOUT
+import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.DataTool.toJson
-import com.jayce.vexis.core.Config.BROAD_LOGOUT
-import com.jayce.vexis.core.Config.BROAD_NOTIFY
 
 class CoreReceiver : BroadcastReceiver() {
 

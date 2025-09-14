@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.CreezenTool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.NetTool
-import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
+import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.foundation.bean.FeedbackEntry
 
 class FeedbackAdapter(

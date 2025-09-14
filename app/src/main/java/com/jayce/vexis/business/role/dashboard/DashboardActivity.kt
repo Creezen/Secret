@@ -16,7 +16,7 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.business.role.manage.AdminActivity
-import com.jayce.vexis.core.Config.BASE_FILE_PATH
+import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding

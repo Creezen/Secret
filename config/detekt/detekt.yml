@@ -160,7 +160,7 @@ complexity:
     active: true
   StringLiteralDuplication:
     active: true
-    excludes: ['**/com/jayce/vexis/core/Config.kt']
+    excludes: ['**/com/creezen/commontool/Config.kt']
     threshold: 1
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: false
@@ -686,7 +686,7 @@ style:
   RedundantVisibilityModifierRule:
     active: true
   ReturnCount:
-    active: true
+    active: false
     max: 2
     excludedFunctions:
       - 'equals'

@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
 import com.creezen.commontool.CreezenTool.getRandomString
 import com.creezen.commontool.CreezenTool.toTime
+import com.creezen.commontool.FileBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
@@ -15,8 +16,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.FileEntry
-import com.jayce.vexis.foundation.route.MediaService
+import com.jayce.vexis.foundation.route.FileService
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 
@@ -71,7 +71,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 workInDispatch(this@FileUploadActivity,  5000L, Dispatchers.Default, object : LifecycleJob {
                     override suspend fun onDispatch() {
                         val filePart = buildFileMultipart(filePath, "file")
-                        val fileEntry = FileEntry(
+                        val fileBean = FileBean(
                             fileName,
                             fileID,
                             fileSuffix,
@@ -81,8 +81,8 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                             uploadTime,
                             ""
                             )
-                        request<MediaService, LinkedHashMap<String, Boolean>>({
-                            uploadFile(fileEntry, filePart)
+                        request<FileService, LinkedHashMap<String, Boolean>>({
+                            uploadFile(fileBean, filePart)
                         }) {
                             if (it["loadResult"] == true) {
                                 finish()

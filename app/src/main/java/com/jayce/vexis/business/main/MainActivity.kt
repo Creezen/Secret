@@ -32,8 +32,8 @@ import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.setting.SettingActivity
-import com.jayce.vexis.core.Config.BASE_FILE_PATH
 import com.jayce.vexis.core.CoreService
+import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll

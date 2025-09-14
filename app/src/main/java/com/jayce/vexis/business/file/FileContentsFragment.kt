@@ -11,19 +11,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.commontool.FileBean
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.FileEntry
-import com.jayce.vexis.foundation.route.MediaService
+import com.jayce.vexis.foundation.route.FileService
 import java.util.ArrayList
 import java.util.LinkedHashMap
 
 class FileContentsFragment : BaseFragment<FileShareBinding>() {
 
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
-    private val resItemList = ArrayList<FileEntry>()
+    private val resItemList = ArrayList<FileBean>()
     private val adapter: FileEntryAdapter by lazy {
         FileEntryAdapter(requireActivity(), requireActivity(), resItemList)
     }
@@ -57,7 +57,7 @@ class FileContentsFragment : BaseFragment<FileShareBinding>() {
     }
 
     private fun initData() {
-        request<MediaService, LinkedHashMap<String, List<FileEntry>>>({ fetchFile() }) {
+        request<FileService, LinkedHashMap<String, List<FileBean>>>({ fetchFile() }) {
             val list = it["items"]
             if (list.isNullOrEmpty()) {
                 return@request

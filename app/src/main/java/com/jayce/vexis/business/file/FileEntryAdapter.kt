@@ -7,20 +7,21 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.FileBean
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
+import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.FileEntry
-import com.jayce.vexis.foundation.route.MediaService
+import com.jayce.vexis.foundation.route.FileService
 import okhttp3.ResponseBody
 
 class FileEntryAdapter(
     private val context: Context,
     private val parent: LifecycleOwner,
-    val list: List<FileEntry>,
+    val list: List<FileBean>,
 ) : RecyclerView.Adapter<FileEntryAdapter.ViewHodler>() {
     companion object {
         const val TAG = "MediaElementAdapter"
@@ -65,7 +66,7 @@ class FileEntryAdapter(
             context.getString(R.string.begin_download).toast()
             progressBar?.progress = 0
             val fileName = "${item.fileID}${item.fileSuffix}"
-            request<MediaService, ResponseBody>({ downloadFile(fileName) }) {
+            request<FileService, ResponseBody>({ downloadFile(fileName) }) {
                 val stream = it.byteStream()
                 progressBar?.max = item.fileSize.toInt()
                 downloadFileByNet(stream, item.fileName) { size ->
@@ -78,16 +79,14 @@ class FileEntryAdapter(
         }
         holder.view.setOnClickListener {
             context.startActivity(
-                Intent(context, FileInfomationActivity::class.java).also {
-                    it.putExtra("fileInfo", item)
+                Intent(context, FileInfomationActivity::class.java).apply {
+                    putExtra("fileInfo", item.parcelable())
                 },
             )
         }
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount() = list.size
 
     private fun handleSizeDisplay(size: Long): String {
         if (size < 1024) {

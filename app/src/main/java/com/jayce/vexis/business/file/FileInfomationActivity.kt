@@ -2,13 +2,15 @@ package com.jayce.vexis.business.file
 
 import android.os.Build
 import android.os.Bundle
+import com.creezen.commontool.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
+import com.jayce.vexis.foundation.Util.Extension.unParcelable
 import com.jayce.vexis.foundation.bean.FileEntry
 
 class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
-    private lateinit var fileItem: FileEntry
+    private lateinit var fileItem: FileBean
     private val parentNode = arrayListOf("资源描述", "资源说明")
     private val childNode = arrayListOf<ArrayList<String>>(arrayListOf(), arrayListOf())
 
@@ -18,11 +20,12 @@ class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fileItem = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+        val item = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry("","","","","",0,"")
         } else {
             intent.getParcelableExtra("fileInfo") ?: FileEntry("","","","","",0,"")
         }
+        fileItem = item.unParcelable()
         initView()
         initData()
     }

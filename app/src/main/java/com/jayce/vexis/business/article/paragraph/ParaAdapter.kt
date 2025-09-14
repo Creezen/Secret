@@ -16,7 +16,7 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
-import com.jayce.vexis.core.Config
+import com.jayce.vexis.core.SessionManager
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
@@ -91,7 +91,7 @@ class ParaAdapter(
             displayComment(position, holder.paragraph)
         } else {
             val currentHolder = holder as ImageViewHolder
-            NetTool.setImage(context, currentHolder.image, "${Config.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+            NetTool.setImage(context, currentHolder.image, "${SessionManager.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
         }
 
     }
