@@ -2,7 +2,7 @@ package com.jayce.vexis.business.file
 
 import android.os.Build
 import android.os.Bundle
-import com.creezen.commontool.FileBean
+import com.creezen.commontool.bean.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.foundation.Util.Extension.unParcelable

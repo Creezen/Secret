@@ -3,10 +3,10 @@ package com.jayce.vexis.foundation.ability
 import android.content.Context
 import android.util.Log
 import com.creezen.commontool.Config.BROAD_NOTIFY
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_DEFAULT
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.broadcastByAction
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

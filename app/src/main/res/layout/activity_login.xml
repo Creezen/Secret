@@ -16,6 +16,10 @@
         android:gravity="center"
         tools:context="com.jayce.vexis.login.Login"
         android:background="@drawable/login">
+<!--        <com.amap.api.maps.MapView-->
+<!--            android:id="@+id/map"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/iv1"
             android:layout_width="match_parent"

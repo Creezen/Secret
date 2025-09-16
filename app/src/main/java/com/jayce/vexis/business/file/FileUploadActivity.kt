@@ -3,9 +3,9 @@ package com.jayce.vexis.business.file
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
-import com.creezen.commontool.CreezenTool.getRandomString
-import com.creezen.commontool.CreezenTool.toTime
-import com.creezen.commontool.FileBean
+import com.creezen.commontool.getRandomString
+import com.creezen.commontool.toTime
+import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch

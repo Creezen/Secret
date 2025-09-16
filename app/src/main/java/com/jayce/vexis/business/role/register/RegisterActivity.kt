@@ -3,10 +3,11 @@ package com.jayce.vexis.business.role.register
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import com.creezen.commontool.CreezenTool.getRandomString
-import com.creezen.commontool.CreezenTool.isLeapYear
-import com.creezen.commontool.CreezenTool.pojo2Map
-import com.creezen.commontool.CreezenTool.toTime
+import com.creezen.commontool.bean.UserBean
+import com.creezen.commontool.getRandomString
+import com.creezen.commontool.isLeapYear
+import com.creezen.commontool.pojo2Map
+import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
@@ -14,11 +15,8 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AccountCreationBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.UserEntry
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
-import java.util.ArrayList
-import java.util.HashMap
 
 class RegisterActivity : BaseActivity<AccountCreationBinding>() {
 
@@ -164,7 +162,7 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
                     }
                 val ageValue = createTimeValue.subSequence(0, 4).toString().toInt() - YEAR_DATA[yearSelect]
                 val birthdayValue = "${YEAR_DATA[yearSelect]}-${MONTH_DATA[monthSelected]}-${BIG_DAY[daySelected]}"
-                val map1= UserEntry(
+                val map1= UserBean(
                     userIdValue,
                     nickname.msg(),
                     account.msg(),

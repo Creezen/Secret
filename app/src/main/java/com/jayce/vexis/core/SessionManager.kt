@@ -1,7 +1,7 @@
 package com.jayce.vexis.core
 
+import com.creezen.commontool.bean.UserBean
 import com.jayce.vexis.BuildConfig
-import com.jayce.vexis.foundation.bean.UserEntry
 import java.util.concurrent.atomic.AtomicReference
 
 object SessionManager {
@@ -10,10 +10,10 @@ object SessionManager {
     val BASE_SOCKET_PATH = BuildConfig.socketUrl
     const val BASE_FILE_PATH = "${BuildConfig.baseUrl}/FileSystem/"
 
-    private var onlineUserEntry = AtomicReference(UserEntry())
+    private var onlineUserEntry = AtomicReference(UserBean())
 
-    fun registerUser(userEntry: UserEntry) {
-        onlineUserEntry.set(userEntry)
+    fun registerUser(userBean: UserBean) {
+        onlineUserEntry.set(userBean)
     }
 
     fun user() = onlineUserEntry.get()

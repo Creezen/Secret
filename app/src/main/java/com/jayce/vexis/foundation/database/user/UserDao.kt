@@ -7,8 +7,9 @@ import com.jayce.vexis.foundation.bean.UserEntry
 
 @Dao
 interface UserDao {
+
     @Insert
-    fun insertuser(userEntry: UserEntry): Long
+    fun insertUser(userEntry: UserEntry): Long
 
     @Query("select * from UserEntry where name = :name")
     fun fetchUser(name: String): List<UserEntry>

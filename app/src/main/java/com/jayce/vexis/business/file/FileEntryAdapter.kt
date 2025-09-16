@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.FileBean
+import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.FileTool.isFileDownload

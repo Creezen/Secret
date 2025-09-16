@@ -1,6 +1,6 @@
 package com.jayce.vexis.foundation.route
 
-import com.creezen.commontool.FileBean
+import com.creezen.commontool.bean.FileBean
 import com.jayce.vexis.core.base.BaseService
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody

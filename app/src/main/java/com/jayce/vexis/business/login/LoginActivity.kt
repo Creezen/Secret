@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.creezen.commontool.CreezenTool.map2pojo
-import com.creezen.commontool.CreezenTool.toTime
+import com.amap.api.offlineservice.AMapPermissionActivity
+import com.amap.api.services.core.ServiceSettings
+import com.creezen.commontool.map2pojo
+import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
@@ -64,6 +66,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.root.fitsSystemWindows = true
         setContentView(binding.root)
+//        binding.map.onCreate(savedInstanceState)
         getNewestVersion()
         initView()
         setAnimation()

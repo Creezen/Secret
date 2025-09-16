@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
+import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.API_BASE_URL
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
@@ -50,6 +51,8 @@ class Env : Application() {
             BuildConfig.baseUrl,
             API_BASE_URL
         )
+        ServiceSettings.updatePrivacyAgree(this, true)
+        ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
         val font = AndroidTool.readPrefs {

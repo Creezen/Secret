@@ -38,6 +38,11 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters.add("armeabi-v7a")
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     buildTypes {
@@ -205,6 +210,7 @@ dependencies {
 
     api(libs.tools)
     ksp(libs.room.compile)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -222,4 +228,5 @@ dependencies {
     implementation(libs.preference.ktx)
     implementation(libs.koin.android)
     implementation(libs.common.tools)
+    implementation(libs.amap)
 }

@@ -1,13 +1,6 @@
-package com.jayce.vexis.foundation.bean
+package com.creezen.commontool.bean
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-@Entity
-data class UserEntry(
+data class UserBean(
     val userId: String = "-1",
     val nickname: String = "NickUser",
     val name: String = "匿名用户",
@@ -24,8 +17,8 @@ data class UserEntry(
     val address: String = "",
     val birthday: String = "",
     val headType: String = "",
-) : Parcelable {
-
-    @PrimaryKey
-    var id: Long = 0
+) {
+    fun isAdministrator(): Boolean {
+        return administrator == 1
+    }
 }
