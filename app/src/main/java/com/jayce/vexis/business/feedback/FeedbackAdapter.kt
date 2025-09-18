@@ -4,18 +4,18 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.bean.FeedbackBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.NetTool
-import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
-import com.jayce.vexis.foundation.bean.FeedbackEntry
+import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.databinding.FeedbackItemBinding
 
 class FeedbackAdapter(
     val context: Context,
-    val feedbackEntryList: List<FeedbackEntry>,
+    val feedbackEntryList: List<FeedbackBean>,
 ) : RecyclerView.Adapter<FeedbackAdapter.ViewHolder>() {
     class ViewHolder(val binding: FeedbackItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root

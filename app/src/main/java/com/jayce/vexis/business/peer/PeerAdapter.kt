@@ -4,13 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.databinding.SeniorAdviceBinding
-import com.jayce.vexis.foundation.bean.PeerAdviceEntry
 
 class PeerAdapter(
     val context: Context,
-    val adviceList: List<PeerAdviceEntry>,
+    val adviceList: List<PeerAdviceBean>,
 ) : RecyclerView.Adapter<PeerAdapter.ViewHolder>() {
     class ViewHolder(val binding: SeniorAdviceBinding) : RecyclerView.ViewHolder(binding.root) {
         val content = binding.adviceContent

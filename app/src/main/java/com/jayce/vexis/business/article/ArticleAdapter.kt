@@ -5,13 +5,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.bean.ArticleBean
 import com.jayce.vexis.business.article.paragraph.ParagraptActivity
 import com.jayce.vexis.databinding.ParagraphItemBinding
-import com.jayce.vexis.foundation.bean.ArticleEntry
 
 class ArticleAdapter(
     val context: Context,
-    val itemList: List<ArticleEntry>,
+    val itemList: List<ArticleBean>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ViewHolder(val binding: ParagraphItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val paragraph = binding.paragraph
@@ -36,7 +36,7 @@ class ArticleAdapter(
             context.startActivity(
                 Intent(context, ParagraptActivity::class.java)
                     .apply {
-                        putExtra("articleId", item.synergyId)
+                        putExtra("articleId", item.articleID)
                     },
             )
         }

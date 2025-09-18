@@ -6,20 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.commontool.bean.ArticleBean
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
-import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.bean.ArticleEntry
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.Dispatchers
 
 class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
-    private val list = arrayListOf<ArticleEntry>()
+    private val list = arrayListOf<ArticleBean>()
     private val adapter by lazy {
         ArticleAdapter(requireActivity(), list)
     }
@@ -57,7 +56,8 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
         ThreadTool.runOnMulti(Dispatchers.Main) {
             val result = create<ArticleService>()
                     .getArticle()
-                    ?.await() ?: arrayListOf()
+                    ?.await()
+                ?: arrayListOf()
             list.clear()
             list.addAll(result)
             adapter.notifyDataSetChanged()

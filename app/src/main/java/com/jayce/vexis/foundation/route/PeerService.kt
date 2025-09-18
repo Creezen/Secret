@@ -1,7 +1,7 @@
 package com.jayce.vexis.foundation.route
 
+import com.creezen.commontool.bean.PeerAdviceBean
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.PeerAdviceEntry
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -24,5 +24,5 @@ interface PeerService : BaseService {
         @Field("primary") primary: String,
         @Field("second") second: String,
         @Field("tertiary") tertiary: String,
-    ): Call<List<PeerAdviceEntry>>
+    ): Call<List<PeerAdviceBean>>
 }

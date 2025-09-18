@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.amap.api.offlineservice.AMapPermissionActivity
-import com.amap.api.services.core.ServiceSettings
+import com.creezen.commontool.bean.ApkSimpleInfo
 import com.creezen.commontool.map2pojo
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
@@ -36,7 +35,6 @@ import com.jayce.vexis.core.SessionManager.LOCAL_SOCKET_PORT
 import com.jayce.vexis.core.SessionManager.registerUser
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.ApkSimpleEntry
 import com.jayce.vexis.foundation.route.ApiService
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
@@ -73,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getNewestVersion() {
-        request<PackageService, ApkSimpleEntry>({ getVersion() }) {
+        request<PackageService, ApkSimpleInfo>({ getVersion() }) {
             it.apply {
                 withContext(Dispatchers.Main) {
                     "${modifyTime.toTime()}  $versionName".toast()

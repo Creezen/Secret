@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.bean.SectionRemarkBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
@@ -22,14 +23,13 @@ import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.ParaRemarkEntry
 import com.jayce.vexis.foundation.route.ArticleService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
 class ParaAdapter(
     val context: Context,
     val activity: Activity,
-    private val itemList: List<ParaRemarkEntry>,
+    private val itemList: List<SectionRemarkBean>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val list = arrayListOf(
             "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
@@ -127,14 +127,14 @@ class ParaAdapter(
             positive(context.getString(R.string.submit)) {
                 view.setBackgroundColor(context.resources.getColor(R.color.white, null))
                 val userId = user().userId
-                val paragraphId = itemList[position].paragraphId
+                val paragraphId = itemList[position].sectionId
                 val content = commentContent.msg()
                 request<ArticleService, Boolean>({
                     postCommen(articleId, paragraphId, userId, content)
                 }) {
                     ui { it.toast() }
                 }
-                itemList[position].paragraphId.toast()
+                itemList[position].sectionId.toast()
                 return@positive -1
             }
             show()

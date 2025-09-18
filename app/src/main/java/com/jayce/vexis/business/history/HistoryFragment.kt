@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.creezen.commontool.bean.HistoryBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
@@ -15,10 +16,8 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.route.HistoryService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
-import java.util.ArrayList
 
 class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
 
@@ -34,7 +33,7 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
     private var rootWidth: Int = -1
     private var rootHeight: Int = -1
 
-    private val eventList: ArrayList<HistoryEntry> = arrayListOf()
+    private val eventList: ArrayList<HistoryBean> = arrayListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +68,7 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
     }
 
     private fun queryList() {
-        request<HistoryService, List<HistoryEntry>>({ queryAllEvent() }) {
+        request<HistoryService, List<HistoryBean>>({ queryAllEvent() }) {
             eventList.addAll(it)
             binding.left.addTraceCell(
                 it.filter { it.isValid() }

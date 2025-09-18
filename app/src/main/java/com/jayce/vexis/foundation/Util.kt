@@ -2,12 +2,14 @@ package com.jayce.vexis.foundation
 
 import android.util.Log
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.bean.ActiveBean
 import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.bean.FileEntry
 import com.jayce.vexis.foundation.bean.UserEntry
 import kotlinx.coroutines.Dispatchers
@@ -54,6 +56,20 @@ object Util {
             return UserBean(
                 userId, nickname, name, age, sex, password, createTime, count, administrator,
                 isEdit, email, selfIntroduction, phone, address, birthday, headType
+            )
+        }
+
+        fun ActiveBean.parcelable(): ActiveEntry {
+            return ActiveEntry(
+                userID, nickname, createTime, administrator, support, against,
+                inform, reported, follow, fans, post
+            )
+        }
+
+        fun ActiveEntry.unParcelable(): ActiveBean {
+            return ActiveBean(
+                userID, nickname, createTime, administrator, support, against,
+                inform, reported, follow, fans, post
             )
         }
     }

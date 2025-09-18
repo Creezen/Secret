@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import com.creezen.commontool.bean.HistoryBean
 import com.jayce.vexis.R
-import com.jayce.vexis.foundation.bean.HistoryEntry
 import com.jayce.vexis.foundation.bean.TraceEntry
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
@@ -58,7 +58,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         this.onItemClick = onClick
     }
 
-    fun addTraceCell(entryList: List<HistoryEntry>) {
+    fun addTraceCell(entryList: List<HistoryBean>) {
         entryList.forEach { entry ->
             val time = entry.millisTime()
             val percent = (time * 1.0 / (latestTime - earliestTime)).toFloat()

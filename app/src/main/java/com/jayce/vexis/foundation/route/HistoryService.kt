@@ -1,7 +1,7 @@
 package com.jayce.vexis.foundation.route
 
+import com.creezen.commontool.bean.HistoryBean
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.HistoryEntry
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -17,6 +17,6 @@ interface HistoryService : BaseService {
     ): Call<Boolean>
 
     @POST("/queryAllEvent")
-    fun queryAllEvent(): Call<List<HistoryEntry>>
+    fun queryAllEvent(): Call<List<HistoryBean>>
 
 }

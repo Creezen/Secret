@@ -3,31 +3,34 @@ package com.jayce.vexis.business.role.manage
 import androidx.lifecycle.lifecycleScope
 import android.os.Build
 import android.os.Bundle
+import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
+import com.jayce.vexis.foundation.Util.Extension.unParcelable
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.route.UserService
 import kotlinx.coroutines.launch
 
 class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
 
-    private var activeEntry: ActiveEntry? = null
+    private var activeBean: ActiveBean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activeEntry = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+        val activeEntry = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra("activeEntry", ActiveEntry::class.java)
         } else {
             intent.getParcelableExtra("activeEntry")
         }
+        activeBean = activeEntry?.unParcelable()
         initPage()
     }
 
     private fun initPage() {
         with(binding) {
-            activeEntry?.let {
+            activeBean?.let {
                 nickname.text = it.nickname
                 userID.text = it.userID
                 createTime.text = it.createTime
@@ -40,14 +43,14 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
                 post.text = "${it.post}"
                 setAdministrator.setOnClickListener {
                     lifecycleScope.launch {
-                        activeEntry?.let {
+                        activeBean?.let {
                             manageUser(1, it.userID)
                         }
                     }
                 }
                 delete.setOnClickListener {
                     lifecycleScope.launch {
-                        activeEntry?.let {
+                        activeBean?.let {
                             manageUser(2, it.userID)
                         }
                     }
@@ -60,7 +63,7 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
         operation: Int,
         userId: String,
     ) {
-        activeEntry?.let {
+        activeBean?.let {
             lifecycleScope.launch {
                 val awaitMap = create<UserService>()
                     .manageUser(operation, userId).await()

@@ -1,14 +1,12 @@
 package com.jayce.vexis.foundation.route
 
+import com.creezen.commontool.bean.FeedbackBean
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.FeedbackEntry
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
-import java.util.ArrayList
-import java.util.LinkedHashMap
 
 interface FeedbackService : BaseService {
 
@@ -21,5 +19,5 @@ interface FeedbackService : BaseService {
     ): Call<Boolean>
 
     @GET("/getFeedback")
-    fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackEntry>>>
+    fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackBean>>>
 }

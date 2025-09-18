@@ -1,13 +1,12 @@
 package com.jayce.vexis.foundation.route
 
+import com.creezen.commontool.bean.ArticleBean
+import com.creezen.commontool.bean.SectionRemarkBean
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.ArticleEntry
-import com.jayce.vexis.foundation.bean.ParaRemarkEntry
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import java.util.ArrayList
 
 interface ArticleService : BaseService {
     @POST("/postSynergy")
@@ -19,13 +18,13 @@ interface ArticleService : BaseService {
     ): Call<Boolean>
 
     @POST("/getSynergy")
-    fun getArticle(): Call<ArrayList<ArticleEntry>>?
+    fun getArticle(): Call<ArrayList<ArticleBean>>?
 
     @POST("getArticleFragment")
     @FormUrlEncoded
     fun getParagraphs(
         @Field("synergyId") synergyId: Long,
-    ): Call<ArrayList<ParaRemarkEntry>>?
+    ): Call<ArrayList<SectionRemarkBean>>?
 
     @POST("postCommen")
     @FormUrlEncoded

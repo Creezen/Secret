@@ -1,8 +1,8 @@
 package com.jayce.vexis.foundation.route
 
+import com.creezen.commontool.bean.ActiveBean
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.ActiveEntry
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
@@ -35,7 +35,7 @@ interface UserService : BaseService {
     ): Call<LinkedTreeMap<String, Boolean>>
 
     @POST("/getAllUser")
-    fun getAllUser(): Call<LinkedTreeMap<String, List<ActiveEntry>>>
+    fun getAllUser(): Call<LinkedTreeMap<String, List<ActiveBean>>>
 
     @POST("/managerUser")
     @FormUrlEncoded

@@ -1,6 +1,6 @@
-package com.jayce.vexis.foundation.bean
+package com.creezen.commontool.bean
 
-data class FeedbackEntry(
+data class FeedbackBean(
     val feedbackID: String,
     val userName: String,
     val userID: String,
@@ -9,5 +9,5 @@ data class FeedbackEntry(
     val content: String,
     val createTime: Long,
     val support: Long,
-    val against: Long,
+    val against: Long
 )

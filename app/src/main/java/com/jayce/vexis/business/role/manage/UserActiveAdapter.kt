@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.UserActiveItemBinding
-import com.jayce.vexis.foundation.bean.ActiveEntry
+import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.foundation.view.block.TrackPopupMenu
 
 class UserActiveAdapter(
     private val context: Context,
-    private val userList: List<ActiveEntry>,
+    private val userList: List<ActiveBean>,
 ) : RecyclerView.Adapter<UserActiveAdapter.ViewHolder>() {
     class ViewHolder(val binding: UserActiveItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
@@ -55,7 +56,7 @@ class UserActiveAdapter(
         holder.view.setOnClickListener {
             context.startActivity(
                 Intent(context, ActiveDataActivity::class.java).also {
-                    it.putExtra("activeItem", item)
+                    it.putExtra("activeItem", item.parcelable())
                 },
             )
         }
