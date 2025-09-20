@@ -1,6 +1,5 @@
 package com.creezen.commontool
 
-import com.alibaba.fastjson2.JSON
 import com.creezen.commontool.Config.Constant.BASIC_LETTER
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -25,11 +24,22 @@ fun Long.toTime(formater: String = "yyyy-MM-dd HH:mm:ss"):String{
     return ""
 }
 
-fun <T> T.pojo2Map()= JSON.parseObject(JSON.toJSONString(this), HashMap::class.java) as HashMap<String,String>
+inline fun <reified T> String.toBean(): T? {
+    runCatching {
+        return Gson().fromJson(this, T::class.java)
+    }.onFailure {
+        it.printStackTrace()
+    }
+    return null
+}
 
-inline fun <reified T> Map<String,String>.map2pojo():T{
-    val gson = Gson()
-    return gson.fromJson(gson.toJson(this), T::class.java)
+fun Any.toJson(): String? {
+    runCatching {
+        return Gson().toJson(this)
+    }.onFailure {
+       it.printStackTrace()
+    }
+    return null
 }
 
 fun isLeapYear(year: Int) = when {

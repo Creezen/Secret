@@ -36,7 +36,7 @@ class ArticleAdapter(
             context.startActivity(
                 Intent(context, ParagraptActivity::class.java)
                     .apply {
-                        putExtra("articleId", item.articleID)
+                        putExtra("articleId", item.articleId)
                     },
             )
         }

@@ -37,9 +37,8 @@ class ParagraptActivity : BaseActivity<ActivityParagraphBinding>() {
     private fun initData() {
         lifecycleScope.launch {
             val paragraphs = create<ArticleService>()
-                    .getParagraphs(articleId)
-                    ?.await()
-                    ?: arrayListOf()
+                    .getSection(articleId)
+                    .await()
             paragraphList.addAll(paragraphs)
             adapter.notifyDataSetChanged()
         }

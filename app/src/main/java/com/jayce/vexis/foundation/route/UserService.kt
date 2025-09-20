@@ -1,6 +1,8 @@
 package com.jayce.vexis.foundation.route
 
 import com.creezen.commontool.bean.ActiveBean
+import com.creezen.commontool.bean.TransferStatusBean
+import com.creezen.commontool.bean.UserBean
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseService
 import okhttp3.MultipartBody
@@ -16,16 +18,22 @@ interface UserService : BaseService {
 
     @POST("register")
     @FormUrlEncoded
-    fun checkUserName(
-        @FieldMap requestUser: Map<String, String>,
-    ): Call<LinkedTreeMap<String, Int>>
+    fun register(
+        @FieldMap requestUser: UserBean,
+    ): Call<TransferStatusBean>
+
+    @POST("checkInfo")
+    @FormUrlEncoded
+    fun checkInfo(
+        @Field("userName") userName: String,
+    ): Call<Boolean>
 
     @POST("/login")
     @FormUrlEncoded
     fun loginSystem(
         @Field("unique") unique: String,
         @Field("password") password: String,
-    ): Call<LinkedTreeMap<String, String>>
+    ): Call<TransferStatusBean>
 
     @POST("/postAvatar")
     @Multipart

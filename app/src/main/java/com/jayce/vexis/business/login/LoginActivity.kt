@@ -11,7 +11,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.creezen.commontool.bean.ApkSimpleInfo
-import com.creezen.commontool.map2pojo
+import com.creezen.commontool.bean.TransferStatusBean
+import com.creezen.commontool.bean.UserBean
+import com.creezen.commontool.toBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
@@ -111,9 +113,14 @@ class LoginActivity : AppCompatActivity() {
                 val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
                 ThreadTool.runWithBlocking(option, object : LifecycleJob {
                     override suspend fun onDispatch() {
-                        request<UserService, LinkedTreeMap<String, String>>({ loginSystem(name.msg(), password.msg()) }) {
-                            if (!it.containsKey("status")) {
-                                registerUser(it.map2pojo())
+                        request<UserService, TransferStatusBean>({
+                            loginSystem(name.msg(), password.msg())
+                        }) {
+                            Log.e(TAG, "return message: $it")
+                            if (it.statusCode == -1) {
+                                it.data.toBean<UserBean>()?.let { user ->
+                                    registerUser(user)
+                                }
                                 kotlin.runCatching {
                                     val socket = lifecycleScope.async(Dispatchers.IO) {
                                         Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
@@ -124,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
                                     Log.e(TAG, "socket error: ${it.javaClass.simpleName}  $it")
                                 }
                             } else {
-                                val status = it["status"]?.toInt()
+                                val status = it.statusCode
                                 if (status == 0) {
                                     "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
                                 } else {

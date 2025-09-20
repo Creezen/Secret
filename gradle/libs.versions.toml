@@ -6,7 +6,6 @@ material = "1.10.0"
 constraintlayout = "2.1.4"
 retrofit = "2.9.0"
 viewpager2 = "1.0.0"
-fastjson = "2.0.40"
 glide = "4.15.1"
 jpinyin = "1.1.7"
 badgeview = "1.1.3"
@@ -38,7 +37,6 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
 viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2" }
-fastjson = { group = "com.alibaba", name = "fastjson", version.ref = "fastjson" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
 jpinyin = { group = "com.github.stuxuhai", name = "jpinyin", version.ref = "jpinyin" }

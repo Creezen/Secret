@@ -111,7 +111,6 @@ dependencies {
     implementation (libs.retrofit.converter.scalars)
     implementation (libs.glide)
     implementation(libs.kotlin.stdlib)
-    implementation(libs.gson)
     implementation(libs.mmkv)
     implementation(libs.snakeyaml)
     implementation(libs.glide.okhttp3.integration)

@@ -18,7 +18,7 @@ interface FileService : BaseService {
     fun uploadFile(
         @Part("fileEntry") fileBean: FileBean,
         @Part file: MultipartBody.Part,
-    ): Call<LinkedHashMap<String, Boolean>>
+    ): Call<Int>
 
     @POST("/fileFetch")
     fun fetchFile(): Call<LinkedHashMap<String, List<FileBean>>>

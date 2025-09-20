@@ -16,6 +16,12 @@ repositories {
     gradlePluginPortal()
 }
 
+kotlin {
+    compilerOptions {
+        javaParameters.set(true)
+    }
+}
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -45,6 +51,5 @@ publishing {
 }
 
 dependencies {
-    implementation (libs.fastjson)
     implementation(libs.gson)
 }

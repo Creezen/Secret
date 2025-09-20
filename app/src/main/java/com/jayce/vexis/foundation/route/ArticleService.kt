@@ -20,16 +20,16 @@ interface ArticleService : BaseService {
     @POST("/getSynergy")
     fun getArticle(): Call<ArrayList<ArticleBean>>?
 
-    @POST("getArticleFragment")
+    @POST("/getSection")
     @FormUrlEncoded
-    fun getParagraphs(
-        @Field("synergyId") synergyId: Long,
-    ): Call<ArrayList<SectionRemarkBean>>?
+    fun getSection(
+        @Field("articleId") articleId: Long
+    ): Call<ArrayList<SectionRemarkBean>>
 
-    @POST("postCommen")
+    @POST("/postCommen")
     @FormUrlEncoded
     fun postCommen(
-        @Field("synergyId") synergyId: Long,
+        @Field("articleId") articleId: Long,
         @Field("paragraphId") paragraphId: Long,
         @Field("userId") userId: String,
         @Field("comment") comment: String,

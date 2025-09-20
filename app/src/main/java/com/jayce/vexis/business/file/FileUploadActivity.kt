@@ -11,6 +11,8 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool.buildFileMultipart
+import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.contract.LifecycleJob
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
@@ -81,11 +83,11 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                             uploadTime,
                             ""
                             )
-                        request<FileService, LinkedHashMap<String, Boolean>>({
-                            uploadFile(fileBean, filePart)
-                        }) {
-                            if (it["loadResult"] == true) {
+                        request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
+                            if (it == 1) {
                                 finish()
+                            } else {
+                                ui { "服务异常".toast() }
                             }
                         }
                     }

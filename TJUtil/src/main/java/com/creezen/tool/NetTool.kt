@@ -9,10 +9,10 @@ import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_DEFAULT
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_GAME
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_MESSAGE
-import com.creezen.commontool.CreezenParam.EVENT_TYPE_NOTIFY
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.bean.InitParam
 import com.google.gson.GsonBuilder

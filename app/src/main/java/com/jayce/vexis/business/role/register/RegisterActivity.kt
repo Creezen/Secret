@@ -3,10 +3,11 @@ package com.jayce.vexis.business.role.register
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
+import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.isLeapYear
-import com.creezen.commontool.pojo2Map
+import com.creezen.commontool.toJson
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.google.gson.internal.LinkedTreeMap
@@ -67,12 +68,8 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
                     return@observe
                 }
                 accountCode = 4
-                val map = HashMap<String, String>().also { hashmap ->
-                    hashmap["type"] = "0"
-                    hashmap["name"] = it
-                }
-                request<UserService, LinkedTreeMap<String, Int>>({ checkUserName(map) }){
-                    if (it["status"] == 0) {
+                request<UserService, Boolean>({ checkInfo(it) }){ status ->
+                    if (status) {
                         accountCode = 0
                         return@request
                     }
@@ -82,7 +79,7 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
             }
             nicknameLiveData.observe(contextEnv) {
                 nickNameCode = 1
-                if (it.length !in 1 ..8) {
+                if (it.length !in 1..8) {
                     nickNameCode = 1
                 } else if (it.contains(" ")) {
                     nickNameCode = 2
@@ -162,28 +159,14 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
                     }
                 val ageValue = createTimeValue.subSequence(0, 4).toString().toInt() - YEAR_DATA[yearSelect]
                 val birthdayValue = "${YEAR_DATA[yearSelect]}-${MONTH_DATA[monthSelected]}-${BIG_DAY[daySelected]}"
-                val map1= UserBean(
-                    userIdValue,
-                    nickname.msg(),
-                    account.msg(),
-                    ageValue,
-                    sex.selectedItem as String,
-                    password.msg(),
-                    createTimeValue,
-                    0,
-                    0,
-                    isEdit,
-                    emailValue,
-                    selfIntroductionValue,
-                    phoneValue,
-                    addressValue,
-                    birthdayValue,
-                    "",
-                ).pojo2Map()
-                map1["type"] = "1"
-                request<UserService, LinkedTreeMap<String, Int>>({ checkUserName(map1) }) {
-                    if (null != it["status"]) {
-                        if (it["status"] == 2) finish()
+                val bean = UserBean(
+                    userIdValue, nickname.msg(), account.msg(), ageValue, sex.selectedItem as String,
+                    password.msg(), createTimeValue, 0, 0, isEdit, emailValue,
+                    selfIntroductionValue, phoneValue, addressValue, birthdayValue, "",
+                )
+                request<UserService, TransferStatusBean>({ register(bean) }) {
+                    if (it.statusCode == 2) {
+                        finish()
                     } else {
                         dialog.dismiss()
                     }

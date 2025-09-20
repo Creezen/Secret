@@ -2,6 +2,7 @@ package com.jayce.vexis.business.peer
 
 import android.os.Bundle
 import android.util.Log
+import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.ThreadTool.ui

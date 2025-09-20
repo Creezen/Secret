@@ -220,7 +220,6 @@ dependencies {
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
     implementation(libs.viewpager2)
-    implementation(libs.fastjson)
     implementation(libs.glide)
     implementation(libs.jpinyin)
     implementation(libs.badgeview)
