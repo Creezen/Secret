@@ -11,6 +11,8 @@
             android:title="@string/file_station"/>
         <item android:id="@+id/MainMenuWidget"
             android:title="@string/local_tool"/>
+        <item android:id="@+id/MainMenuMap"
+            android:title="@string/map_trace"/>
         <item android:id="@+id/MainMenuFeedback"
             android:title="@string/feedback"/>
     </group>

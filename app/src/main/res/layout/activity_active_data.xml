@@ -152,14 +152,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/delete_user"
-            style="?android:buttonBarButtonStyle"/>
+            android:text="@string/delete_user"/>
         <Button
             android:id="@+id/setAdministrator"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/set_to_admin"
-            style="?android:buttonBarButtonStyle"/>
+            android:text="@string/set_to_admin"/>
     </LinearLayout>
 </RelativeLayout>

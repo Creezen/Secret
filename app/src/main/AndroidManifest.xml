@@ -7,7 +7,7 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -24,9 +24,9 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".core.Env"
@@ -80,7 +80,7 @@
             android:name=".business.kit.maze.MazeActivity"
             android:exported="false" />
         <activity
-            android:name=".business.article.paragraph.ParagraptActivity"
+            android:name=".business.article.section.SectionActivity"
             android:exported="false" />
         <activity
             android:name=".business.article.ArticleEditActivity"
@@ -128,9 +128,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <profileable android:shell="true"/>
-        <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="21d27831c4590ecd949d23e4273b56b2"/>
+
+        <profileable android:shell="true" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="21d27831c4590ecd949d23e4273b56b2" />
     </application>
 
 </manifest>

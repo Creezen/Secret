@@ -12,6 +12,7 @@ class PeerAdapter(
     val context: Context,
     val adviceList: List<PeerAdviceBean>,
 ) : RecyclerView.Adapter<PeerAdapter.ViewHolder>() {
+
     class ViewHolder(val binding: SeniorAdviceBinding) : RecyclerView.ViewHolder(binding.root) {
         val content = binding.adviceContent
         val love = binding.love

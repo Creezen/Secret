@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:layout_marginBottom="8dp">
         <ImageView
             android:id="@+id/image"
             android:layout_width="0dp"
@@ -59,8 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:text="@string/user_manage"
-        android:background="@color/Button"/>
+        android:text="@string/user_manage"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,15 +71,13 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/folllow"
-            android:gravity="center"
-            android:background="@color/Button" />
+            android:gravity="center"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/black_list"
-            android:gravity="center"
-            android:background="@color/Button"/>
+            android:gravity="center"/>
     </LinearLayout>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"

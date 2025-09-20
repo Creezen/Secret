@@ -14,7 +14,7 @@ import com.jayce.vexis.foundation.route.FeedbackService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Feedback : BaseFragment<ActivityFeedbackBinding>() {
+class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
     companion object {
         const val TAG = "Feedback"

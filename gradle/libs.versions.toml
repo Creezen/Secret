@@ -24,6 +24,7 @@ dokka = "1.9.20"
 ksp = "2.1.0-1.0.29"
 detekt = "1.23.8"
 amap = "latest.integration"
+activity = "1.8.0"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -52,6 +53,7 @@ kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref 
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
 amap = { group = "com.amap.api", name = "3dmap-location-search", version.ref = "amap" }
+activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

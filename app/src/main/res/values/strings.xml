@@ -141,4 +141,8 @@
     <string name="file_exist_open">文件已存在，是否打开?</string>
     <string name="upload_waiting">正在上传中，请稍等....</string>
     <string name="no_file_select">你还没选择文件哦！</string>
+    <string name="get_resource">获取资源</string>
+    <string name="support">点赞</string>
+    <string name="reply">回复</string>
+    <string name="map_trace">全景寻踪</string>
 </resources>

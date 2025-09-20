@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.ArticleBean
-import com.jayce.vexis.business.article.paragraph.ParagraptActivity
+import com.jayce.vexis.business.article.section.SectionActivity
 import com.jayce.vexis.databinding.ParagraphItemBinding
 
 class ArticleAdapter(
@@ -34,7 +34,7 @@ class ArticleAdapter(
         currentHolder.paragraph.text = item.title
         currentHolder.paragraph.setOnClickListener {
             context.startActivity(
-                Intent(context, ParagraptActivity::class.java)
+                Intent(context, SectionActivity::class.java)
                     .apply {
                         putExtra("articleId", item.articleId)
                     },

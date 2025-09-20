@@ -24,10 +24,11 @@ import com.creezen.tool.NetTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
-import com.jayce.vexis.business.feedback.Feedback
+import com.jayce.vexis.business.feedback.FeedbackFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.file.FileContentsFragment
+import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.peer.PeerFragment
@@ -60,12 +61,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var viewHolder: ViewHolder? = null
 
     inner class ViewHolder(
-        val feedback: Feedback,
+        val feedbackFragment: FeedbackFragment,
         val kitFragment: KitFragment,
-        val historyFragment: com.jayce.vexis.business.history.HistoryFragment,
+        val historyFragment: HistoryFragment,
         val articleFragment: ArticleFragment,
         val senior: PeerFragment,
-        val fileContentsFragment: FileContentsFragment
+        val fileContentsFragment: FileContentsFragment,
+        val mapFragment: MapFragment
     )
 
     override fun registerLauncher() {
@@ -116,8 +118,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun initPage() {
         with(binding) {
             if (null == viewHolder) {
-                viewHolder = ViewHolder(Feedback(), KitFragment(),
-                    HistoryFragment(), ArticleFragment(), PeerFragment(), FileContentsFragment())
+                viewHolder = ViewHolder(
+                    FeedbackFragment(), KitFragment(), HistoryFragment(), ArticleFragment(),
+                    PeerFragment(), FileContentsFragment(), MapFragment()
+                )
                 root.tag = viewHolder
             } else {
                 viewHolder = root.tag as ViewHolder
@@ -134,12 +138,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 drawerLayout.closeDrawers()
                 viewHolder?.apply {
                     when (item.itemId) {
-                        R.id.MainMenuFeedback -> replaceFragment(feedback, "feedback")
+                        R.id.MainMenuFeedback -> replaceFragment(feedbackFragment, "feedback")
                         R.id.MainMenuWidget -> replaceFragment(kitFragment, "kitFragment")
                         R.id.MainMenuTimeline -> replaceFragment(historyFragment, "historicalAxis")
                         R.id.MainMenuSynergy -> replaceFragment(articleFragment, "articleFragment")
                         R.id.MainMenuSenior -> replaceFragment(senior, "senior")
                         R.id.MainMenuResource -> replaceFragment(fileContentsFragment, "mediaLibrarFragment")
+                        R.id.MainMenuMap -> replaceFragment(mapFragment, "mapFragment")
                     }
                 }
                 return@setNavigationItemSelectedListener true

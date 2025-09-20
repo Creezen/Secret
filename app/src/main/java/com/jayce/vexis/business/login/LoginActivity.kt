@@ -66,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.root.fitsSystemWindows = true
         setContentView(binding.root)
-//        binding.map.onCreate(savedInstanceState)
         getNewestVersion()
         initView()
         setAnimation()

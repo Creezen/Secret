@@ -209,6 +209,7 @@ tasks.register("mergeReports") {
 dependencies {
 
     api(libs.tools)
+    implementation(libs.activity)
     ksp(libs.room.compile)
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(libs.core.ktx)

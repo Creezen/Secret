@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article.paragraph
+package com.jayce.vexis.business.article.section
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
@@ -11,12 +11,12 @@ import com.jayce.vexis.databinding.ActivityParagraphBinding
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 
-class ParagraptActivity : BaseActivity<ActivityParagraphBinding>() {
+class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
 
     private val paragraphList = arrayListOf<SectionRemarkBean>()
     private var articleId: Long = -1
     private val adapter by lazy {
-        ParaAdapter(this, this, paragraphList)
+        SectionAdapter(this, this, paragraphList)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class ParagraptActivity : BaseActivity<ActivityParagraphBinding>() {
     private fun initPage() {
         articleId = intent.getLongExtra("articleId", -1)
         with(binding) {
-            paragraphRv.layoutManager = LinearLayoutManager(this@ParagraptActivity)
+            paragraphRv.layoutManager = LinearLayoutManager(this@SectionActivity)
             paragraphRv.adapter = adapter
             adapter.setArticleId(articleId)
         }

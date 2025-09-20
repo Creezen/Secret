@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article.paragraph
+package com.jayce.vexis.business.article.section
 
 import android.app.Activity
 import android.content.Context
@@ -26,7 +26,7 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.ArticleService
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 
-class ParaAdapter(
+class SectionAdapter (
     val context: Context,
     val activity: Activity,
     private val itemList: List<SectionRemarkBean>,

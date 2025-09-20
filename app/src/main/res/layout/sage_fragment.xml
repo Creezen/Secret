@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ljw="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.jayce.vexis.foundation.view.block.DefaultSpinner
-                android:id="@+id/primary"
-                android:dropDownVerticalOffset="30dp"
-                android:spinnerMode="dropdown"
-                android:layout_width="0dp"
-                android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:prompt="@string/prompt"
-                android:background="@drawable/editview_border"
-                android:onItemSelected="@{() -> primary.onItemSelect()}"/>
-            <com.jayce.vexis.foundation.view.block.DefaultSpinner
-                android:id="@+id/secondary"
-                android:dropDownVerticalOffset="30dp"
-                android:spinnerMode="dropdown"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:prompt="@string/prompt"
-                android:background="@drawable/editview_border"
-                android:onItemSelected="@{() -> secondary.onItemSelect()}"/>
-            <com.jayce.vexis.foundation.view.block.DefaultSpinner
-                android:id="@+id/tertiary"
-                android:dropDownVerticalOffset="30dp"
-                android:spinnerMode="dropdown"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:prompt="@string/prompt"
-                android:background="@drawable/editview_border"
-                android:onItemSelected="@{() -> tertiary.onItemSelect()}"/>
+                android:orientation="horizontal">
+                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                    android:id="@+id/primary"
+                    android:dropDownVerticalOffset="30dp"
+                    android:spinnerMode="dropdown"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/prompt"
+                    android:background="@drawable/editview_border"
+                    android:onItemSelected="@{() -> primary.onItemSelect()}"/>
+                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                    android:id="@+id/secondary"
+                    android:dropDownVerticalOffset="30dp"
+                    android:spinnerMode="dropdown"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/prompt"
+                    android:background="@drawable/editview_border"
+                    android:onItemSelected="@{() -> secondary.onItemSelect()}"/>
+                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                    android:id="@+id/tertiary"
+                    android:dropDownVerticalOffset="30dp"
+                    android:spinnerMode="dropdown"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:prompt="@string/prompt"
+                    android:background="@drawable/editview_border"
+                    android:onItemSelected="@{() -> tertiary.onItemSelect()}"/>
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/adviceRv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"/>
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adviceRv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/advice"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:elevation="5dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/post_vector"/>
-    </LinearLayout>
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/advice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:elevation="5dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/post_vector"/>
+        </RelativeLayout>
+    </FrameLayout>
+
 </layout>
