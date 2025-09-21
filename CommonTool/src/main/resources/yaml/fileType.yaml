@@ -32,28 +32,20 @@ typeMap:
     - "gif"
   "49492A00":
     - "tif"
-    - "tiff"
   "4D4D002A":
     - "tif"
-    - "tiff"
   "49492B00":
     - "tif"
-    - "tiff"
   "4D4D002B":
     - "tif"
-    - "tiff"
   "FFD8FFDB":
     - "jpg"
-    - "jepg"
   "FFD8FFE000104A4649460001":
     - "jpg"
-    - "jepg"
   "FFD8FFEE":
     - "jpg"
-    - "jepg"
   "FFD8FFE1":
     - "jpg"
-    - "jepg"
   "FFD8FFE0":
     - "jpg"
   "4D5A":
