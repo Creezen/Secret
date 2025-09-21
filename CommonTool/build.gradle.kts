@@ -52,4 +52,5 @@ publishing {
 
 dependencies {
     implementation(libs.gson)
+    api(libs.snakeyaml)
 }
