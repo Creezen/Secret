@@ -1,7 +1,11 @@
 package com.creezen.tool
 
+import android.content.res.Resources
+import android.os.Build
 import android.util.Log
+import android.util.TypedValue
 import android.view.MotionEvent
+import com.creezen.tool.DataTool.dpToPx
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -67,5 +71,25 @@ object DataTool {
             return values
         }
         return null
+    }
+
+    fun Float.dpToPx(resources: Resources): Float {
+        return this * resources.displayMetrics.density
+    }
+
+    fun Float.spToPx(resources: Resources): Float {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+    }
+
+    fun Float.pxToDp(resources: Resources): Float {
+        return this / resources.displayMetrics.density
+    }
+
+    fun Float.pxToSp(resources: Resources): Float {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+        } else {
+            this / resources.displayMetrics.scaledDensity
+        }
     }
 }

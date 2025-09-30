@@ -36,21 +36,15 @@ object AndroidTool {
     }
 
     @SuppressLint("ApplySharedPref")
-    fun writePrefs(
-        func: (Editor)->Unit
-    ) {
+    fun writePrefs(func: (Editor)->Unit) {
         prefs.edit().apply {
             func(this)
             commit()
         }
     }
 
-    fun <T> readPrefs(
-        func: (SharedPreferences) -> T?
-    ): T? {
-        prefs.apply {
-            return func(this)
-        }
+    fun <T> readPrefs(func: (SharedPreferences) -> T?): T? {
+        return func(prefs)
     }
 
     fun LinearLayout.addSimpleView(

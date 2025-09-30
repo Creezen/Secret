@@ -7,10 +7,8 @@ import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.isLeapYear
-import com.creezen.commontool.toJson
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
-import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AccountCreationBinding
@@ -38,7 +36,6 @@ class RegisterActivity : BaseActivity<AccountCreationBinding>() {
         private val SEX = arrayOf("男", "女", "保密").toList() as ArrayList<String>
         private lateinit var emailProfix: ArrayList<String>
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
