@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import android.graphics.Paint
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -26,6 +28,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import java.util.Objects
+import kotlin.math.ceil
 
 object AndroidTool {
 
@@ -89,6 +93,19 @@ object AndroidTool {
         return this.msg().toInt()
     }
 
+    fun TextView.measureSize(textString: String): Pair<Float, Float> {
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        paint.textSize = textSize
+        val textWidth = ceil(paint.measureText(textString))
+        val textHeight = ceil(paint.fontMetrics.descent - paint.fontMetrics.ascent)
+        val realWidth = textWidth + paddingStart + paddingEnd
+        val realHeight = textHeight + paddingTop + paddingBottom
+        post {
+            text = textString
+        }
+        return realWidth to realHeight
+    }
+
     fun replaceFragment(
         fragmentManager: FragmentManager,
         resourceID: Int,
@@ -150,5 +167,16 @@ object AndroidTool {
 
     fun View.unregisterSwipeEvent(viewId: String, handle: ClickHandle) {
         handle.unregisterSwipeEvent(viewId)
+    }
+
+    fun getString(resId: Int, vararg args: Any? = arrayOf()): String {
+        return env().getString(resId, *args)
+    }
+
+    fun NumberPicker.init(array: Array<String>, select: Int = 0) {
+        displayedValues = array
+        minValue = 0
+        maxValue = array.size - 1
+        value = select
     }
 }

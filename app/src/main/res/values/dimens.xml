@@ -7,4 +7,6 @@
     <dimen name="margin">4dp</dimen>
     <dimen name="viewMargin">16dp</dimen>
     <dimen name="spinner">14sp</dimen>
+    <dimen name="registerMargin">20dp</dimen>
+    <dimen name="registerTitlePadding">16dp</dimen>
 </resources>

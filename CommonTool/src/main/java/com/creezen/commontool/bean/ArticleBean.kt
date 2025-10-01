@@ -1,6 +1,5 @@
 package com.creezen.commontool.bean
 
-//TODO  article section remark
 data class ArticleBean(
     var articleId: Long = 0,
     var userId: String = "",

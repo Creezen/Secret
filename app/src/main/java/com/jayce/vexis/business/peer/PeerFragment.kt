@@ -67,20 +67,20 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
 
     private fun initView() {
         with(binding) {
-            primary.configuration(primaryList) {
+            primary.init(primaryList) {
                 primaryNum = it
                 secordNum = 0
                 tertiaryNum = 0
-                if (isFirst) return@configuration
+                if (isFirst) return@init
                 secondary.refreshData(secondaryList[it])
             }
-            secondary.configuration(secondaryList[0]) {
+            secondary.init(secondaryList[0]) {
                 secordNum = it
                 tertiaryNum = 0
-                if (isFirst) return@configuration
+                if (isFirst) return@init
                 tertiary.refreshData(tertiaryList[primary.selectedItemPosition][it])
             }
-            tertiary.configuration(tertiaryList[0][0]) {
+            tertiary.init(tertiaryList[0][0]) {
                 tertiaryNum = it
                 fetchAdvice()
                 isFirst= false

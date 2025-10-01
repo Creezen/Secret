@@ -70,7 +70,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         with(binding) {
             nickname.text = user().nickname
             id.text = user().userId
-            if (user().isAdministrator()) {
+            if (user().getAdministratorStatus()) {
                 administrator.visibility = View.VISIBLE
             }
             administrator.setOnClickListener {

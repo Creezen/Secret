@@ -2,21 +2,14 @@ package com.jayce.vexis.foundation.view.block
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Insets
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
-import android.view.View
-import android.view.WindowManager
-import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.WindowInsetsCompat
-import com.creezen.tool.DataTool.dpToPx
+import com.creezen.tool.AndroidTool.measureSize
 import com.creezen.tool.WindowTool.requestFloatWindow
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.HintTextFloatWindowBinding
@@ -32,6 +25,13 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
     private var iconText: String = ""
     private var iconMargin: Float = 0f
 
+    private var realWidth = 0
+    private var realHeight = 0
+
+    private val textView = HintTextFloatWindowBinding.inflate(LayoutInflater.from(context)).root.also {
+        it.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+    }
+
     private val iconDrawable by lazy {
         AppCompatResources.getDrawable(context, R.drawable.wrong)
     }
@@ -41,6 +41,9 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
             showIcon = it.getBoolean(R.styleable.HintView_showIcon, false)
             iconText = it.getString(R.styleable.HintView_iconText) ?: ""
             iconMargin = it.getDimension(R.styleable.HintView_iconMargin, 0f)
+            val pair = textView.measureSize(iconText)
+            realWidth = pair.first.toInt()
+            realHeight = pair.second.toInt()
         }
     }
 
@@ -57,17 +60,18 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        super.onTouchEvent(event)
         if (event == null) return true
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                if (iconText.isEmpty()) return true
+                if (!showIcon) return true
                 if (isIconClick(event.x, event.y)) {
                     val statusBarHeight = rootWindowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top
-                    val textView = HintTextFloatWindowBinding.inflate(LayoutInflater.from(context)).root
-                    textView.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
                     val intArray = IntArray(2)
                     getLocationOnScreen(intArray)
                     requestFloatWindow(context, textView, 2000) {
-                        x = intArray[0] + iconLeft - textView.measuredWidth + (textSize / 2).toInt()
+                        x = intArray[0] + iconLeft - realWidth + (textSize / 2).toInt()
                         y = intArray[1] + iconBottom - statusBarHeight
                         this
                     }
@@ -84,6 +88,9 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
 
     fun setIconHintText(hintText: String) {
         iconText = hintText
+        val pair = textView.measureSize(iconText)
+        realWidth = pair.first.toInt()
+        realHeight = pair.second.toInt()
     }
 
     private fun isIconClick(x: Float, y: Float): Boolean {

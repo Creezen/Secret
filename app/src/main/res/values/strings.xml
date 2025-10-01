@@ -25,7 +25,7 @@
     <string name="app_name">CreeZen</string>
     <string name="prompt">选择城市</string>
     <string name="all_info_check">有关键信息未正确填写，请检查！</string>
-    <string name="choose_fill">选填</string>
+    <string name="choose_fill">可选</string>
     <string name="nickname_hint">昵称长度最少一位，最长不超过八位！</string>
     <string name="register">点击注册</string>
     <string name="login_name">123456</string>
@@ -38,7 +38,7 @@
     <string name="please_select_file">请选择需要上传的文件…</string>
     <string name="resource_descript">资源描述</string>
     <string name="find_password">找回密码（暂切换字体）</string>
-    <string name="create_account">创建账号</string>
+    <string name="create_role">创建账号</string>
     <string name="login">点击登录</string>
     <string name="password">密码</string>
     <string name="account">账号</string>
@@ -88,8 +88,8 @@
     <string name="against_gain">收到的踩</string>
     <string name="number_user_report">举报人次</string>
     <string name="reported_num">被举报次数</string>
-    <string name="this_message_login_id">此信息为登录凭证，请牢记…</string>
-    <string name="user_name_exist">用户名已存在，请重试</string>
+    <string name="this_message_login_id">请牢记此登录凭证…</string>
+    <string name="role_id_exist">用户名已存在，请重试</string>
     <string name="nickname">昵称</string>
     <string name="nickname_no_blank">昵称不可包含空格！</string>
     <string name="input_password">输入密码</string>
@@ -135,8 +135,6 @@
     <string name="input_suggession">请输入你的建议…</string>
     <string name="comment">评论</string>
     <string name="leave_message">留言</string>
-    <string name="resource_description"></string>
-    <string name="resource_explain"></string>
     <string name="begin_download">开始下载</string>
     <string name="file_exist_open">文件已存在，是否打开?</string>
     <string name="upload_waiting">正在上传中，请稍等....</string>
@@ -145,4 +143,6 @@
     <string name="support">点赞</string>
     <string name="reply">回复</string>
     <string name="map_trace">全景寻踪</string>
+    <string name="max_bio_length">内容长度最长为200…</string>
+    <string name="bio_length">%d/200</string>
 </resources>

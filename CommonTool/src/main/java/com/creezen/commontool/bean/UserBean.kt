@@ -18,7 +18,7 @@ data class UserBean(
     val birthday: String = "",
     val headType: String = "",
 ) {
-    fun isAdministrator(): Boolean {
+    fun getAdministratorStatus(): Boolean {
         return administrator == 1
     }
 }

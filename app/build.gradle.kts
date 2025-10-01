@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
+    id("kotlin-kapt")
     id("kotlin-parcelize")
     id("maven-publish")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"

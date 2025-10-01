@@ -19,7 +19,7 @@ class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(co
         selectCallback?.invoke(this.selectedItemPosition)
     }
 
-    fun <T> configuration(
+    fun <T> init(
         source: List<T>,
         prompLayoutId: Int = R.layout.spinner_prompt,
         downLayoutId: Int = R.layout.spinner_dropdown,

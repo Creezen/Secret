@@ -92,4 +92,12 @@ object DataTool {
             this / resources.displayMetrics.scaledDensity
         }
     }
+
+    fun getNumberList(num: Int, offset: Int = 0): Array<String> {
+        return ArrayList<String>().apply {
+            repeat(num) {
+                add((it + offset).toString())
+            }
+        }.toTypedArray()
+    }
 }

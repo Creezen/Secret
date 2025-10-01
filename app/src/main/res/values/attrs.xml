@@ -13,4 +13,11 @@
         <attr name="iconText" format="string"/>
         <attr name="iconMargin" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="TimePicker">
+        <attr name="timeStyle" format="integer">
+            <enum name="simple" value="0"/>
+            <enum name="full" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>

@@ -18,7 +18,9 @@ import com.creezen.tool.bean.InitParam
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.ability.net.NetStatusCallback
+import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import kotlinx.coroutines.Dispatchers
+import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -38,9 +40,7 @@ class Env : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        val module = module {
-            viewModel { BaseViewModel() }
-        }
+        initViewModel()
     }
 
     override fun onCreate() {
@@ -65,6 +65,15 @@ class Env : Application() {
             val request = NetworkRequest.Builder().build()
             val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             manager.registerNetworkCallback(request, NetStatusCallback())
+        }
+    }
+
+    private fun initViewModel() {
+        val module = module {
+            viewModel { RegisterViewModel() }
+        }
+        startKoin {
+            modules(module)
         }
     }
 }

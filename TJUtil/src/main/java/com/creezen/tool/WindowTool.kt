@@ -15,6 +15,8 @@ import kotlinx.coroutines.delay
 
 object WindowTool {
 
+    private var isFloatShow: Boolean = false
+
     fun requestFloatWindow(
         context: Context,
         viewId: Int,
@@ -60,11 +62,14 @@ object WindowTool {
         adjustParam?.let{
             param = it.invoke(param)
         }
+        if (isFloatShow) return
         manager.addView(view, param)
+        isFloatShow = true
         ThreadTool.runOnMulti {
             if (dismissDelay < 0) return@runOnMulti
             delay(dismissDelay)
             manager.removeView(view)
+            isFloatShow = false
         }
     }
 }

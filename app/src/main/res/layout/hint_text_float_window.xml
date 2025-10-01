@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/hint_bubble"
-    android:text="文字长度不符合要求"
     android:textSize="15sp"
+    android:textColor="#FFFFFF"
     android:gravity="center">
 </TextView>
