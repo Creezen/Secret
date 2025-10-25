@@ -33,13 +33,13 @@ inline fun <reified T> String.toBean(): T? {
     return null
 }
 
-fun Any.toJson(): String? {
+fun Any.toJson(): String {
     runCatching {
         return Gson().toJson(this)
     }.onFailure {
        it.printStackTrace()
     }
-    return null
+    return ""
 }
 
 fun isLeapYear(year: Int) = when {

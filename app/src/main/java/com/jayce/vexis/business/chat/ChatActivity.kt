@@ -2,6 +2,9 @@ package com.jayce.vexis.business.chat
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
+import com.creezen.commontool.bean.TelecomBean
+import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.jayce.vexis.core.CoreService

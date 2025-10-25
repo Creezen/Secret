@@ -13,6 +13,8 @@ import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
+import com.creezen.commontool.bean.TelecomBean
+import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.bean.InitParam
 import com.google.gson.GsonBuilder
@@ -71,7 +73,7 @@ object NetTool {
         Glide.get(BaseTool.env()).registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(getOKHTTPClinet()))
     }
 
-    private fun reConnect(msg: String? = null) {
+    private fun reConnect(msg: TelecomBean? = null) {
         val future = CompletableFuture<Unit>()
         CoroutineScope(Dispatchers.IO).launch {
             kotlin.runCatching {
@@ -218,7 +220,7 @@ object NetTool {
         return MultipartBody.Part.createFormData(paramName, filePath, fileBody)
     }
 
-    fun sendMessage(scope: CoroutineScope, msg: String) {
+    fun sendMessage(scope: CoroutineScope, msg: TelecomBean) {
         if(onlineSocket.isOutputShutdown || onlineSocket.isClosed || socketFlag.get().not()) {
             socketFlag.set(false)
             "与服务器连接失败，请检查网络".toast()
@@ -226,11 +228,11 @@ object NetTool {
         }
         scope.launch {
             kotlin.runCatching {
-                if(msg.isEmpty()) {
+                if(msg.content.isEmpty()) {
                     return@runCatching
                 }
                 Log.d(TAG, "send message: $msg")
-                socketWriter?.write("$msg\n")
+                socketWriter?.write("${msg.toJson()}\n")
                 socketWriter?.flush()
             }.onFailure {
                 Log.d(TAG, "sendMessage error: ${it.message}")
@@ -241,19 +243,23 @@ object NetTool {
     }
 
     fun sendDefaultMessage(scope: CoroutineScope, msg: String) {
-        sendMessage(scope,"$EVENT_TYPE_DEFAULT#$msg")
+        val message = TelecomBean(EVENT_TYPE_DEFAULT, content = msg)
+        sendMessage(scope, message)
     }
 
     fun sendChatMessage(scope: CoroutineScope, msg: String) {
-        sendMessage(scope, "$EVENT_TYPE_MESSAGE#$msg")
+        val message = TelecomBean(EVENT_TYPE_MESSAGE, content = msg)
+        sendMessage(scope, message)
     }
 
     fun sendNotifyMessage(scope: CoroutineScope, msg: String) {
-        sendMessage(scope, "$EVENT_TYPE_NOTIFY#$msg")
+        val message = TelecomBean(EVENT_TYPE_NOTIFY, content = msg)
+        sendMessage(scope, message)
     }
 
     fun sendGameMessage(scope: CoroutineScope, msg: String) {
-        sendMessage(scope, "$EVENT_TYPE_GAME#$msg")
+        val message = TelecomBean(EVENT_TYPE_GAME, content = msg)
+        sendMessage(scope, message)
     }
 
     fun sendAckMessage(
