@@ -7,8 +7,7 @@ import android.util.Log
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.writePrefs
-import com.creezen.tool.DataTool.toJson
+import com.jayce.vexis.foundation.ability.EventHandle.saveChatMessage
 
 class CoreReceiver : BroadcastReceiver() {
 
@@ -29,11 +28,7 @@ class CoreReceiver : BroadcastReceiver() {
             }
             Intent.ACTION_CLOSE_SYSTEM_DIALOGS -> {
                 Log.d(TAG, "write message")
-                writePrefs {
-                    CoreService.getBackupContent().toJson()?.let { str ->
-                        it.putString(CoreService.CACHE_MESSAGE, str)
-                    }
-                }
+                saveChatMessage()
             }
         }
     }

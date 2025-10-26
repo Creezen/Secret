@@ -16,8 +16,8 @@ import com.creezen.tool.BaseTool.setFont
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.bean.InitParam
 import com.jayce.vexis.BuildConfig
-import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.ability.net.NetStatusCallback
+import com.jayce.vexis.foundation.ability.NetStatusCallback
+import com.jayce.vexis.foundation.viewmodel.ChatViewModel
 import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
@@ -71,6 +71,7 @@ class Env : Application() {
     private fun initViewModel() {
         val module = module {
             viewModel { RegisterViewModel() }
+            viewModel { ChatViewModel() }
         }
         startKoin {
             modules(module)

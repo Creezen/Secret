@@ -1,7 +1,13 @@
 package com.jayce.vexis.business.main
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +27,7 @@ import androidx.fragment.app.Fragment
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.BaseTool
 import com.creezen.tool.NetTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
@@ -40,6 +48,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.foundation.ability.EventHandle.getUnreadSize
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
@@ -70,6 +79,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val mapFragment: MapFragment
     )
 
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as CoreService.ConnectionBinder
+            val notification = buildNotification()
+            binder.showNotification(notification)
+        }
+        override fun onServiceDisconnected(name: ComponentName?) {}
+    }
+
     override fun registerLauncher() {
         scanLauncher = getLauncher(ScanContract()){
             val resultContent = it.contents
@@ -96,12 +114,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             insets
         }
-        startService(Intent(this, CoreService::class.java))
+        bindService(Intent(this, CoreService::class.java), connection, BIND_AUTO_CREATE)
     }
 
     override fun onResume() {
         super.onResume()
-        chatBadge.badgeNumber = CoreService.getUnreadSize()
+        chatBadge.badgeNumber = getUnreadSize()
         val avatarTimestamp = readPrefs {
                 it.getLong("cursorTime", 0)
             }
@@ -112,7 +130,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             key = AvatarSignnature("key:$avatarTimestamp"),
             isCircle = true,
         )
-
     }
 
     private fun initPage() {
@@ -182,7 +199,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     override fun onDrawerStateChanged(newState: Int) {}
 
                     override fun onDrawerOpened(drawerView: View) {
-                        chatBadge.badgeNumber = CoreService.getUnreadSize()
+                        chatBadge.badgeNumber = getUnreadSize()
                         emailBadge.badgeNumber = 0
                     }
                 }
@@ -238,6 +255,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }
         return true
+    }
+
+    private fun buildNotification(): Notification {
+        getSystemService(NotificationManager::class.java).apply {
+            val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
+            createNotificationChannel(notifyChannel)
+        }
+        val notification = NotificationCompat.Builder(BaseTool.env(), "1")
+            .setSmallIcon(R.drawable.tianji)
+            .setContentTitle("登录成功通知")
+            .setContentText("欢迎您，${user().nickname}")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setOngoing(true)
+            .build()
+        return notification
     }
 
     private fun replaceFragment(fragment: Fragment, fragmentTag: String) {

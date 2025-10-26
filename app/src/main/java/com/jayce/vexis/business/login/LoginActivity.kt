@@ -19,6 +19,7 @@ import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.restartApp
+import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.createApi
 import com.creezen.tool.NetTool.setOnlineSocket
@@ -27,7 +28,6 @@ import com.creezen.tool.ThreadTool
 import com.creezen.tool.bean.BlockOption
 import com.creezen.tool.contract.LifecycleJob
 import com.creezen.tool.enum.ThreadType
-import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
@@ -119,6 +119,7 @@ class LoginActivity : AppCompatActivity() {
                             if (it.statusCode == -1) {
                                 it.data.toBean<UserBean>()?.let { user ->
                                     registerUser(user)
+                                    NetTool.setUserId(user.userId)
                                 }
                                 kotlin.runCatching {
                                     val socket = lifecycleScope.async(Dispatchers.IO) {

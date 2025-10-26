@@ -1,110 +1,47 @@
 package com.jayce.vexis.core
 
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
-import androidx.core.app.NotificationCompat
-import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool.readPrefs
-import com.creezen.tool.BaseTool
-import com.creezen.tool.DataTool.toData
-import com.creezen.tool.DataTool.toJson
-import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
-import com.jayce.vexis.R
-import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.foundation.ability.EventHandler
-import com.jayce.vexis.foundation.bean.ChatEntry
+import com.jayce.vexis.foundation.ability.EventHandle.initChatData
+import com.jayce.vexis.foundation.ability.EventHandle.notifySocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import java.util.ArrayList
-import java.util.concurrent.LinkedBlockingQueue
 
 class CoreService : Service() {
 
     companion object {
         const val TAG = "CoreService"
         const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
-        const val CACHE_MESSAGE = "CACHE_MESSAGE"
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        private val chatQueue = LinkedBlockingQueue<ChatEntry>()
-        private val backupList = ArrayList<ChatEntry>()
-
-        fun getUnreadSize() = chatQueue.size
-
-        fun getChatMessage(block: (LinkedBlockingQueue<ChatEntry>) -> Unit) {
-            block.invoke(chatQueue)
-        }
-
-        fun sendFinish() {
-            chatQueue.put(ChatEntry("", "", ""))
-        }
-
-        fun getBackupContent() = backupList
     }
+
+    private val binder = ConnectionBinder()
 
     override fun onCreate() {
-        Log.d(TAG, "onCreate")
         ThreadTool.registerScope(NAME_MESSAGE_SCOPE, scope)
-        initData()
-        sendNotification()
-        notifySocket()
-    }
-
-    private fun initData() {
-        val data = readPrefs {
-                it.getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
-            }
-        chatQueue.clear()
-        data?.toData<ArrayList<ChatEntry>>().let {
-            it?.forEach {
-                chatQueue.put(it)
-                backupList.add(it)
-            }
-        }
-    }
-
-    private fun sendNotification() {
-        val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-        val builder = NotificationCompat.Builder(BaseTool.env(), "1")
-                .setSmallIcon(R.drawable.tianji)
-                .setContentTitle("登录成功通知")
-                .setContentText("欢迎您，${user().nickname}")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(Notification.CATEGORY_SERVICE)
-                .setOngoing(true)
-                .build()
-        val manager = getSystemService(NotificationManager::class.java)
-        manager.createNotificationChannel(notifyChannel)
-        startForeground(1, builder)
+        initChatData()
+        notifySocket(this)
     }
 
     override fun onBind(intent: Intent?): IBinder? {
         Log.d(TAG, "onBind")
-        return null
-    }
-
-    private fun notifySocket() {
-        NetTool.sendAckMessage(scope, user().userId) {
-            EventHandler.dispatchEvent(it, this)
-            return@sendAckMessage true
-        }
-        ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
-            EventHandler.chatFlow.collect {
-                val item = ChatEntry(user().nickname, System.currentTimeMillis().toTime(), it)
-                backupList.add(item)
-                chatQueue.put(item)
-            }
-        }
+        return binder
     }
 
     override fun onDestroy() {
         ThreadTool.unregisterScope(NAME_MESSAGE_SCOPE)
         super.onDestroy()
+    }
+
+    inner class ConnectionBinder : Binder() {
+        fun showNotification(notification: Notification) {
+            startForeground(1, notification)
+        }
     }
 }

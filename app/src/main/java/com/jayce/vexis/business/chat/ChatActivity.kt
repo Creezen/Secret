@@ -2,19 +2,20 @@ package com.jayce.vexis.business.chat
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
-import com.creezen.commontool.bean.TelecomBean
-import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
+import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
+import com.jayce.vexis.foundation.ability.EventHandle.getChatMessage
+import com.jayce.vexis.foundation.ability.EventHandle.sendFinish
 import com.jayce.vexis.foundation.bean.ChatEntry
+import com.jayce.vexis.foundation.viewmodel.ChatViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 
 class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
@@ -25,6 +26,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
     private val scope = CoroutineScope(Dispatchers.IO)
     private val adapter by lazy { ChatAdapter(itemList) }
+    private val viewModel by inject<ChatViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     }
 
     private fun initData() {
-        CoreService.getChatMessage {
+        getChatMessage {
             val localList = arrayListOf<ChatEntry>()
             while (it.isNotEmpty()) {
                 localList.add(it.take())
@@ -48,7 +50,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     val msg = it.take()
                     if (msg.msg.isEmpty()) break
                     itemList.add(msg)
-                    withContext(Dispatchers.Main) {
+                    ui {
                         adapter.notifyItemRangeInserted(itemList.size, 1)
                         binding.edit.setText("")
                         binding.message.scrollToPosition(adapter.itemCount - 1)
@@ -72,7 +74,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     }
 
     override fun onDestroy() {
-        CoreService.sendFinish()
+        sendFinish()
         super.onDestroy()
     }
 }

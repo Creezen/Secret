@@ -59,11 +59,16 @@ object NetTool {
     private var socketPort: Int = 0
     private lateinit var baseSocketPath: String
     private lateinit var onlineSocket : Socket
+    private var userId: String? = null
     private val socketFlag = AtomicBoolean(true)
     private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
     private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
     private var socketReader: BufferedReader? = null
     private var socketWriter: BufferedWriter? = null
+
+    fun setUserId(currentUserId: String) {
+        userId = currentUserId
+    }
 
     fun init(initParam: InitParam) {
         baseUrl = initParam.baseUrl
@@ -83,6 +88,10 @@ object NetTool {
                 socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
                 socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
                 Log.d(TAG,"connection OK!")
+                val userid = userId
+                if (userid != null) {
+                    sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), userid)
+                }
                 msg?.let {
                     socketWriter?.write("$msg\n")
                     socketWriter?.flush()

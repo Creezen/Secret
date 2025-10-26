@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.ability.net
+package com.jayce.vexis.foundation.ability
 
 import android.net.ConnectivityManager
 import android.net.Network
