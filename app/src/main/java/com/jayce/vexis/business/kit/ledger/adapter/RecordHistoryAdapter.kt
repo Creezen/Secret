@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.databinding.RecordListLayoutBinding
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity
 import com.jayce.vexis.foundation.bean.RecordListEntry
@@ -52,7 +53,7 @@ class RecordHistoryAdapter(
         holder.time.text = items.time
         holder.result.text = items.result
         holder.view.setOnClickListener {
-            owner.lifecycleScope.launch(Dispatchers.IO) {
+            ThreadTool.runOnMulti(Dispatchers.IO) {
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
                 Log.e(TAG, "$userList")

@@ -3,6 +3,7 @@ package com.jayce.vexis.business.kit.ledger
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
@@ -39,7 +40,7 @@ class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
     }
 
     private fun loadData() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        ThreadTool.runOnMulti(Dispatchers.IO) {
             list.clear()
             val recordList = scoreDao.getRecordList()
             recordList.forEach {

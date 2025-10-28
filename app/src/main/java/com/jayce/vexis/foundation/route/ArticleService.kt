@@ -18,7 +18,7 @@ interface ArticleService : BaseService {
     ): Call<Boolean>
 
     @POST("/getSynergy")
-    fun getArticle(): Call<ArrayList<ArticleBean>>?
+    fun getArticle(): Call<ArrayList<ArticleBean>>
 
     @POST("/getSection")
     @FormUrlEncoded

@@ -2,16 +2,17 @@ package com.jayce.vexis.business.feedback
 
 import android.os.Bundle
 import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.AndroidTool.workInDispatch
-import com.creezen.tool.NetTool.await
-import com.creezen.tool.NetTool.create
 import com.creezen.tool.NetTool.sendNotifyMessage
-import com.creezen.tool.contract.LifecycleJob
+import com.creezen.tool.ThreadTool
+import com.creezen.tool.ability.thread.BlockOption
+import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
+import com.jayce.vexis.foundation.Util
 import com.jayce.vexis.foundation.route.FeedbackService
+import kotlinx.coroutines.Dispatchers
 
 class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
 
@@ -25,26 +26,16 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
             submit.setOnClickListener {
                 val titleMsg = title.msg()
                 val contentMsg = content.msg()
-                workInDispatch(
-                    this@FeedbackEditActivity,
-                    3000,
-                    lifecycleJob = object : LifecycleJob {
-                            override suspend fun onDispatch() {
-                                val result = create<FeedbackService>()
-                                        .sendFeedback(user().userId, titleMsg, contentMsg)
-                                        .await()
-                                if (result) {
-                                    finish()
-                                }
-                            }
-
-                            override fun onTimeoutFinish(isWorkFinished: Boolean) {
-                                if (isWorkFinished) {
-                                    sendNotifyMessage(CoreService.scope, contentMsg)
-                                }
-                            }
-                        },
-                )
+                val option = BlockOption(ThreadType.MULTI, 2000, Dispatchers.IO)
+                ThreadTool.runWithBlocking(option) {
+                    Util.request<FeedbackService, Boolean>({
+                        sendFeedback(user().userId, titleMsg, contentMsg)
+                    }) {
+                        if (it) finish()
+                    }
+                }.onComplete {
+                    sendNotifyMessage(CoreService.scope, contentMsg)
+                }
             }
         }
     }

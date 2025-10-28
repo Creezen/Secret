@@ -5,12 +5,10 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
-import com.creezen.tool.AndroidTool.toast
 import kotlinx.coroutines.delay
 
 object WindowTool {

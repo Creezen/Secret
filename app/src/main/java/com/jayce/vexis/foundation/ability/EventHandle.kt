@@ -9,12 +9,11 @@ import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.toBean
+import com.creezen.commontool.toJson
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.broadcastByAction
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.writePrefs
-import com.creezen.tool.DataTool.toData
-import com.creezen.tool.DataTool.toJson
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
@@ -73,7 +72,7 @@ object EventHandle {
             it.getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
         }
         chatQueue.clear()
-        data?.toData<ArrayList<ChatEntry>>().let {
+        data?.toBean<ArrayList<ChatEntry>>().let {
             it?.forEach {
                 chatQueue.put(it)
                 dumpMessage.add(it)

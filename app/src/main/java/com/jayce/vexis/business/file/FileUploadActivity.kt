@@ -3,17 +3,17 @@ package com.jayce.vexis.business.file
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
+import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.toTime
-import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.workInDispatch
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
-import com.creezen.tool.contract.LifecycleJob
+import com.creezen.tool.ability.thread.BlockOption
+import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
@@ -70,28 +70,21 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 val illustrate = illustrate.msg()
                 val uploadTime = System.currentTimeMillis().toTime()
                 val fileSize = file.length()
-                workInDispatch(this@FileUploadActivity,  5000L, Dispatchers.Default, object : LifecycleJob {
-                    override suspend fun onDispatch() {
-                        val filePart = buildFileMultipart(filePath, "file")
-                        val fileBean = FileBean(
-                            fileName,
-                            fileID,
-                            fileSuffix,
-                            description,
-                            illustrate,
-                            fileSize,
-                            uploadTime,
-                            ""
-                            )
-                        request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
-                            if (it == 1) {
-                                finish()
-                            } else {
-                                ui { "服务异常".toast() }
-                            }
+                val option = BlockOption(ThreadType.MULTI, 5000, Dispatchers.IO)
+                ThreadTool.runWithBlocking(option) {
+                    val filePart = buildFileMultipart(filePath, "file")
+                    val fileBean = FileBean(
+                        fileName, fileID, fileSuffix, description,
+                        illustrate, fileSize, uploadTime, ""
+                    )
+                    request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
+                        if (it == 1) {
+                            finish()
+                        } else {
+                            ui { "服务异常".toast() }
                         }
                     }
-                })
+                }
             }
         }
     }

@@ -6,9 +6,12 @@ import android.os.Bundle
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
+import com.creezen.tool.ThreadTool
+import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.foundation.Util.Extension.unParcelable
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.route.UserService
 import kotlinx.coroutines.launch
@@ -42,34 +45,30 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
                 fans.text = "${it.fans}"
                 post.text = "${it.post}"
                 setAdministrator.setOnClickListener {
-                    lifecycleScope.launch {
-                        activeBean?.let {
-                            manageUser(1, it.userID)
-                        }
+                    activeBean?.userID?.let {
+                        manageUser(1, it)
                     }
                 }
                 delete.setOnClickListener {
-                    lifecycleScope.launch {
-                        activeBean?.let {
-                            manageUser(2, it.userID)
-                        }
+                    activeBean?.userID?.let {
+                        manageUser(2, it)
                     }
                 }
             }
         }
     }
 
-    private suspend fun manageUser(
+    private fun manageUser(
         operation: Int,
         userId: String,
     ) {
         activeBean?.let {
-            lifecycleScope.launch {
-                val awaitMap = create<UserService>()
-                    .manageUser(operation, userId).await()
-                val result = awaitMap["operationResult"]
-                if (result == true) {
-                    finish()
+            ThreadTool.runOnMulti {
+                request<UserService, LinkedTreeMap<String, Boolean>>({
+                    manageUser(operation, userId)
+                }) {
+                    val result = it["operationResult"]
+                    if (result == true) finish()
                 }
             }
         }

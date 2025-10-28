@@ -1,4 +1,4 @@
-package com.creezen.tool.enum
+package com.creezen.tool.ability.thread
 
 enum class ThreadType {
     SINGLE,

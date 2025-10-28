@@ -1,6 +1,5 @@
-package com.creezen.tool.bean
+package com.creezen.tool.ability.thread
 
-import com.creezen.tool.enum.ThreadType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

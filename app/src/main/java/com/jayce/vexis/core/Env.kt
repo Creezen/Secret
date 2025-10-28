@@ -14,7 +14,6 @@ import com.creezen.tool.AndroidTool
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
 import com.creezen.tool.ThreadTool
-import com.creezen.tool.bean.InitParam
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
 import com.jayce.vexis.foundation.viewmodel.ChatViewModel
@@ -45,7 +44,7 @@ class Env : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val param = InitParam(
+        val param = BaseTool.InitParam(
             BuildConfig.socketPort,
             BuildConfig.socketUrl,
             BuildConfig.baseUrl,

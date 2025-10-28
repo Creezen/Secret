@@ -11,6 +11,7 @@ import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
 import com.jayce.vexis.business.kit.ledger.adapter.ScoreInsertAdapter
@@ -145,7 +146,7 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
     }
 
     private fun saveRecord() {
-        lifecycleScope.launch(Dispatchers.IO) {
+        ThreadTool.runOnMulti(Dispatchers.IO) {
             val recordItemEntry = RecordItemEntry(title, createTime)
             val recordId = scoreDao.insertRecord(recordItemEntry)
             val userStr = StringBuilder()

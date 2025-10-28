@@ -19,16 +19,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.BaseTool.env
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
-import com.creezen.tool.contract.LifecycleJob
+import com.creezen.tool.ability.thread.LifecycleJob
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import java.util.Objects
 import kotlin.math.ceil
 
 object AndroidTool {
@@ -133,25 +131,6 @@ object AndroidTool {
 
     fun <T> T.toast() {
         Toast.makeText(env(),"$this", Toast.LENGTH_LONG).show()
-    }
-
-    fun workInDispatch(
-        owner: LifecycleOwner,
-        delayMillis: Long = 0,
-        coroutineDispatcher: CoroutineDispatcher = Dispatchers.Default,
-        lifecycleJob: LifecycleJob
-    ) {
-        var result: Any?
-        owner.lifecycleScope.launch(coroutineDispatcher) {
-            if(delayMillis <= 0) {
-                lifecycleJob.onDispatch()
-                return@launch
-            }
-            result = withTimeoutOrNull(delayMillis) {
-                lifecycleJob.onDispatch()
-            }
-            lifecycleJob.onTimeoutFinish(result != null)
-        }
     }
 
     fun broadcastByAction(context: Context, action: String, func: ((Intent) -> Unit)? = null) {

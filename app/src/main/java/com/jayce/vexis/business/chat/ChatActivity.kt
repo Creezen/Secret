@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
@@ -35,19 +36,19 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     }
 
     private fun initData() {
-        getChatMessage {
+        getChatMessage { queue ->
             val localList = arrayListOf<ChatEntry>()
-            while (it.isNotEmpty()) {
-                localList.add(it.take())
+            while (queue.isNotEmpty()) {
+                localList.add(queue.take())
             }
             itemList.addAll(localList)
             val dataSize = localList.size
             val afterSize = itemList.size
             adapter.notifyItemRangeInserted(afterSize - dataSize, dataSize)
             binding.message.scrollToPosition(afterSize - 1)
-            scope.launch {
+            ThreadTool.runOnMulti {
                 while (true) {
-                    val msg = it.take()
+                    val msg = queue.take()
                     if (msg.msg.isEmpty()) break
                     itemList.add(msg)
                     ui {

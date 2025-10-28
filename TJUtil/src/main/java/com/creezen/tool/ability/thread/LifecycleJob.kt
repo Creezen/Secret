@@ -1,6 +1,4 @@
-package com.creezen.tool.contract
-
-import kotlinx.coroutines.CoroutineScope
+package com.creezen.tool.ability.thread
 
 interface LifecycleJob {
 

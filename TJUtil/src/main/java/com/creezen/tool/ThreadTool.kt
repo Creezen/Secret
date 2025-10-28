@@ -1,16 +1,18 @@
 package com.creezen.tool
 
 import android.util.Log
-import com.creezen.tool.bean.BlockOption
-import com.creezen.tool.contract.LifecycleJob
-import com.creezen.tool.enum.ThreadType
+import com.creezen.tool.ability.thread.BlockOption
+import com.creezen.tool.ability.thread.LifecycleJob
+import com.creezen.tool.ability.thread.ThreadStatus
+import com.creezen.tool.ability.thread.ThreadType
+import com.creezen.tool.ability.thread.ThreadWrapper
+import com.creezen.tool.ability.thread.ThreadWrapperImpl
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.time.withTimeoutOrNull
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.Executors
@@ -41,91 +43,120 @@ object ThreadTool {
         }
     }
 
+    private suspend fun runWithCatch(wrapper: ThreadStatus, func: suspend () -> Unit) {
+        kotlin.runCatching {
+            func.invoke()
+        }.onFailure {
+            wrapper.fail(it)
+        }
+    }
+
     fun runOnSingle(
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend () -> Unit
-    ) {
+        func: suspend (ThreadWrapperImpl) -> Unit
+    ): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
         singleScope.launch(dispatcher) {
-            func.invoke()
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
         }
+        return wrapper
     }
 
     fun runOnMulti(
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend () -> Unit
-    ) {
+        func: suspend (ThreadWrapperImpl) -> Unit
+    ): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
         multiScope.launch(dispatcher) {
-            func.invoke()
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
         }
+        return wrapper
     }
 
     fun runOnSpecific(
         name: String,
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend () -> Unit
-    ) {
+        func: suspend (ThreadWrapperImpl) -> Unit
+    ): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
         val scope = getScope(name)
         if(scope == null) {
             Log.w(TAG,"Scope $name not exists! You should register first")
-            return
+            return wrapper
         }
+
         scope.launch(dispatcher) {
-            func.invoke()
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
         }
+        return wrapper
     }
 
     fun runOnCurrent(
         scope: CoroutineScope,
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend () -> Unit
-    ) {
+        func: suspend (ThreadWrapperImpl) -> Unit
+    ): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
         scope.launch(dispatcher) {
-            func.invoke()
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
         }
+        return wrapper
     }
 
-    fun runWithBlocking(
-        option: BlockOption,
-        lifecycleJob: LifecycleJob
-    ) {
+    fun runWithBlocking(option: BlockOption, onDispatch: () -> Unit): ThreadWrapper {
+        val defaultWrapper = ThreadWrapperImpl()
         if (option.delayMillis <= 0) {
             Log.w(TAG, "delay time is ${option.delayMillis}, no need to block!")
-            return
+            return defaultWrapper
         }
-        when (option.type) {
+        return when (option.type) {
             ThreadType.SINGLE -> runOnSingle(option.dispatcher) {
-                blockCallback(lifecycleJob, option.delayMillis)
+                blockCallback(it, option.delayMillis, onDispatch)
             }
             ThreadType.MULTI -> runOnMulti {
-                blockCallback(lifecycleJob, option.delayMillis)
+                blockCallback(it, option.delayMillis, onDispatch)
             }
             ThreadType.NAMED -> {
                 if (option.name.isNullOrBlank()) {
                     Log.w(TAG,"name should not be null with type ${option.type}")
-                    return
+                    return defaultWrapper
                 }
                 runOnSpecific(option.name, option.dispatcher) {
-                    blockCallback(lifecycleJob, option.delayMillis)
+                    blockCallback(it, option.delayMillis, onDispatch)
                 }
             }
             ThreadType.CURRENT -> {
                 if (option.scope == null) {
                     Log.w(TAG,"scope should not be null with type ${option.type}")
-                    return
+                    return defaultWrapper
                 }
                 runOnCurrent(option.scope, option.dispatcher) {
-                    blockCallback(lifecycleJob, option.delayMillis)
+                    blockCallback(it, option.delayMillis, onDispatch)
                 }
             }
-            ThreadType.UNKNOW -> Log.d(TAG,"Unknow type, do nothing!")
+            ThreadType.UNKNOW -> {
+                Log.d(TAG,"Unknow type, do nothing!")
+                defaultWrapper
+            }
         }
     }
 
-    private suspend fun blockCallback(lifecycleJob: LifecycleJob, delayMillis: Long) {
+    private suspend fun blockCallback(wrapper: ThreadStatus, delayMillis: Long, onDispatch: () -> Unit) {
         val result = withTimeoutOrNull(delayMillis) {
-            lifecycleJob.onDispatch()
+            onDispatch.invoke()
+            wrapper.finished()
         }
-        lifecycleJob.onTimeoutFinish(result != null)
+        if (result == null) {
+            wrapper.timeOut()
+        }
     }
 
     fun registerScope(name: String, scope: CoroutineScope) {

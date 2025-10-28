@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import com.creezen.tool.bean.InitParam
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
@@ -26,9 +25,9 @@ object BaseTool {
     }
 
     fun setFont(file: String) {
+        val obj = Typeface.createFromAsset(envContext.assets, "fonts/$file.ttf")
         val field = Typeface::class.java.getField("MONOSPACE")
         field.isAccessible = true
-        val obj = Typeface.createFromAsset(envContext.assets, "fonts/$file.ttf")
         field.set(this, obj)
     }
 
@@ -40,4 +39,11 @@ object BaseTool {
             android.os.Process.killProcess(android.os.Process.myPid())
         }
     }
+
+    data class InitParam(
+        val socketPort: Int = 0,
+        val baseSocketPath: String = "",
+        val baseUrl: String = "",
+        val apiBaseUrl: String = ""
+    )
 }

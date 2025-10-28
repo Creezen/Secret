@@ -16,7 +16,6 @@ import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.bean.InitParam
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -70,7 +69,7 @@ object NetTool {
         userId = currentUserId
     }
 
-    fun init(initParam: InitParam) {
+    fun init(initParam: BaseTool.InitParam) {
         baseUrl = initParam.baseUrl
         apiBaseUri = initParam.apiBaseUrl
         baseSocketPath = initParam.baseSocketPath

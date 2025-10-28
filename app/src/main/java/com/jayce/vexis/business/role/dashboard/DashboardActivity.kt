@@ -13,6 +13,7 @@ import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.buildFileMultipart
+import com.creezen.tool.ThreadTool
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.business.role.manage.AdminActivity
@@ -111,7 +112,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         val key = cursorTime?.let {
             AvatarSignnature("key:$cursorTime")
         }
-        lifecycleScope.launch {
+        ThreadTool.runOnMulti {
             delay(delayTime)
             val old = binding.image.drawable
             NetTool.setImage(

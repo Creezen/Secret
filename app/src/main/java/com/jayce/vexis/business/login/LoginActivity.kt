@@ -25,9 +25,10 @@ import com.creezen.tool.NetTool.createApi
 import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
-import com.creezen.tool.bean.BlockOption
-import com.creezen.tool.contract.LifecycleJob
-import com.creezen.tool.enum.ThreadType
+import com.creezen.tool.ThreadTool.ui
+import com.creezen.tool.ability.thread.BlockOption
+import com.creezen.tool.ability.thread.LifecycleJob
+import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
@@ -43,8 +44,6 @@ import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.Socket
 
@@ -73,11 +72,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
-            it.apply {
-                withContext(Dispatchers.Main) {
-                    "${modifyTime.toTime()}  $versionName".toast()
-                }
-            }
+            ui { "${it.modifyTime.toTime()}  $it.versionName".toast() }
         }
     }
 
@@ -110,41 +105,33 @@ class LoginActivity : AppCompatActivity() {
                 login.isClickable = false
                 playShortSound(R.raw.click)
                 val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
-                ThreadTool.runWithBlocking(option, object : LifecycleJob {
-                    override suspend fun onDispatch() {
-                        request<UserService, TransferStatusBean>({
-                            loginSystem(name.msg(), password.msg())
-                        }) {
-                            Log.e(TAG, "return message: $it")
-                            if (it.statusCode == -1) {
-                                it.data.toBean<UserBean>()?.let { user ->
-                                    registerUser(user)
-                                    NetTool.setUserId(user.userId)
-                                }
-                                kotlin.runCatching {
-                                    val socket = lifecycleScope.async(Dispatchers.IO) {
-                                        Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                                    }.await()
-                                    setOnlineSocket(socket)
-                                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                                }.onFailure {
-                                    Log.e(TAG, "socket error: ${it.javaClass.simpleName}  $it")
-                                }
+                ThreadTool.runWithBlocking(option) {
+                    request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) {
+                        Log.e(TAG, "return message: $it")
+                        if (it.statusCode == -1) {
+                            it.data.toBean<UserBean>()?.let { user ->
+                                registerUser(user)
+                                NetTool.setUserId(user.userId)
+                            }
+                            val socket = lifecycleScope.async(Dispatchers.IO) {
+                                Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+                            }.await()
+                            setOnlineSocket(socket)
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        } else {
+                            val status = it.statusCode
+                            if (status == 0) {
+                                "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
                             } else {
-                                val status = it.statusCode
-                                if (status == 0) {
-                                    "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
-                                } else {
-                                    "账号或密码错误，请检查后再次尝试！".toast()
-                                }
+                                "账号或密码错误，请检查后再次尝试！".toast()
                             }
                         }
                     }
-
-                    override fun onTimeoutFinish(isWorkFinished: Boolean) {
-                        login.isClickable = true
-                    }
-                })
+                }.onTimedOut {
+                    login.isClickable = true
+                }.onComplete {
+                    login.isClickable = true
+                }
             }
             quickStart.setOnClickListener {
                 val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
@@ -184,7 +171,7 @@ class LoginActivity : AppCompatActivity() {
         if (chineseChar == null) {
             return
         }
-        lifecycleScope.launch {
+        ThreadTool.runOnMulti {
             kotlin.runCatching {
                 val res = createApi<ApiService>()
                         .getDictionary(chineseChar)
@@ -192,9 +179,7 @@ class LoginActivity : AppCompatActivity() {
                 val jsonObj = JSONObject(res)
                 val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
                 val realVal = data.optString("pinyin")
-                launch(Dispatchers.Main) {
-                    realVal.toast()
-                }
+                ui { realVal.toast() }
             }.onFailure {
                 "错误，请将账号换成单个汉字再试".toast()
             }

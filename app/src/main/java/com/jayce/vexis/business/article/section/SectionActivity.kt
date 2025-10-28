@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.SectionRemarkBean
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.NetTool.create
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
+import com.jayce.vexis.foundation.Util
 import com.jayce.vexis.foundation.route.ArticleService
 import kotlinx.coroutines.launch
 
@@ -35,12 +37,13 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
     }
 
     private fun initData() {
-        lifecycleScope.launch {
-            val paragraphs = create<ArticleService>()
-                    .getSection(articleId)
-                    .await()
-            paragraphList.addAll(paragraphs)
-            adapter.notifyDataSetChanged()
+        ThreadTool.runOnMulti {
+            Util.request<ArticleService, ArrayList<SectionRemarkBean>>({
+                getSection(articleId)
+            }) {
+                paragraphList.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
         }
     }
 }
