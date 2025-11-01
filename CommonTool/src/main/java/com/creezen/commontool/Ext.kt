@@ -1,6 +1,7 @@
 package com.creezen.commontool
 
 import com.creezen.commontool.Config.Constant.BASIC_LETTER
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -21,7 +22,7 @@ fun Long.toTime(formater: String = "yyyy-MM-dd HH:mm:ss"):String{
     val simpleDateFormat= SimpleDateFormat(formater, Locale.CHINA)
     simpleDateFormat.timeZone= TimeZone.getTimeZone("GMT+8")
     if (formater.isNotEmpty()) return simpleDateFormat.format(Date(this))
-    return ""
+    return EMPTY_STRING
 }
 
 inline fun <reified T> String.toBean(): T? {
@@ -39,7 +40,7 @@ fun Any.toJson(): String {
     }.onFailure {
        it.printStackTrace()
     }
-    return ""
+    return EMPTY_STRING
 }
 
 fun isLeapYear(year: Int) = when {

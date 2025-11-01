@@ -2,6 +2,7 @@ package com.jayce.vexis.business.file
 
 import android.os.Build
 import android.os.Bundle
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.commontool.bean.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
@@ -21,9 +22,9 @@ class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val item = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry("","","","","",0,"")
+            intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(EMPTY_STRING,EMPTY_STRING,EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,0,EMPTY_STRING)
         } else {
-            intent.getParcelableExtra("fileInfo") ?: FileEntry("","","","","",0,"")
+            intent.getParcelableExtra("fileInfo") ?: FileEntry(EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,0,EMPTY_STRING)
         }
         fileItem = item.unParcelable()
         initView()

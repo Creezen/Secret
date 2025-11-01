@@ -7,6 +7,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.jayce.vexis.R
 import kotlin.math.ceil
 
@@ -32,7 +33,7 @@ class MultiLineSingleCheckbox(
 
     fun selectedItem(): String {
         return if (previewSelected < 0) {
-            ""
+            EMPTY_STRING
         } else {
             strList[previewSelected]
         }

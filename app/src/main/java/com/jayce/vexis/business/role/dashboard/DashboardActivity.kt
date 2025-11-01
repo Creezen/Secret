@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.MediaTypeParam.MEDIA_TYPE_IMAGE
+import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.FileTool.getFilePathByUri
@@ -16,6 +18,7 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.ThreadTool
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.internal.LinkedTreeMap
+import com.jayce.vexis.R
 import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
@@ -24,7 +27,6 @@ import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.UserService
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
 
@@ -48,7 +50,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 if (it["status"] == true) {
                     val cursorTime = System.currentTimeMillis()
                     writePrefs {
-                        it.putLong("cursorTime", cursorTime)
+                        it.putLong(AVATAR_SAVE_TIME, cursorTime)
                     }
                     loadAvatarFromNet(0, cursorTime)
                 }
@@ -82,17 +84,17 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 val textView = TextView(this@DashboardActivity)
                 textView.gravity = Gravity.CENTER
                 textView.text = when (pos) {
-                    0 -> "基本信息"
-                    1 -> "创作动态"
-                    else -> ""
+                    0 -> getString(R.string.base_info)
+                    1 -> getString(R.string.creation_live)
+                    else -> EMPTY_STRING
                 }
                 tab.customView = textView
             }.attach()
             image.setOnClickListener {
-                imageLauncher?.launch(arrayOf("image/*"))
+                imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
             }
             val cursorTime = readPrefs {
-                    it.getLong("cursorTime", 0)
+                    it.getLong(AVATAR_SAVE_TIME, 0)
                 }
             val cacheKey = "key:$cursorTime"
             NetTool.setImage(

@@ -3,6 +3,7 @@ package com.jayce.vexis.foundation.ability
 import android.content.Context
 import android.util.Log
 import com.creezen.commontool.Config.BROAD_NOTIFY
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
@@ -46,7 +47,7 @@ object EventHandle {
     }
 
     fun sendFinish() {
-        chatQueue.put(ChatEntry("", "", ""))
+        chatQueue.put(ChatEntry(EMPTY_STRING, EMPTY_STRING, EMPTY_STRING))
     }
 
     private suspend fun dispatchEvent(context: Context, message: String) {

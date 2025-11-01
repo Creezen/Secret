@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
 import com.creezen.commontool.bean.FeedbackBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
@@ -49,7 +50,7 @@ class FeedbackAdapter(
         holder.supportCount.text = "${item.support}"
 
         val avatarTimestamp = AndroidTool.readPrefs {
-            it.getLong("cursorTime", 0)
+            it.getLong(AVATAR_SAVE_TIME, 0)
         }
         NetTool.setImage(
             context,

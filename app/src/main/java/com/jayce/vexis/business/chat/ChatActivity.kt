@@ -2,6 +2,7 @@ package com.jayce.vexis.business.chat
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.creezen.tool.ThreadTool
@@ -53,7 +54,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     itemList.add(msg)
                     ui {
                         adapter.notifyItemRangeInserted(itemList.size, 1)
-                        binding.edit.setText("")
+                        binding.edit.setText(EMPTY_STRING)
                         binding.message.scrollToPosition(adapter.itemCount - 1)
                     }
                 }

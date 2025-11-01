@@ -22,6 +22,15 @@
         <item>\@sogou.com</item>
     </string-array>
 
+    <string-array name="articleFeedback">
+        <item>表述不清</item>
+        <item>内容啰嗦</item>
+        <item>语法错误</item>
+        <item>逻辑混乱</item>
+        <item>前后矛盾</item>
+        <item>缺少佐证</item>
+    </string-array>
+
     <string name="app_name">CreeZen</string>
     <string name="prompt">选择城市</string>
     <string name="all_info_check">有关键信息未正确填写，请检查！</string>
@@ -145,4 +154,11 @@
     <string name="map_trace">全景寻踪</string>
     <string name="max_bio_length">内容长度最长为200…</string>
     <string name="bio_length">%d/200</string>
+    <string name="confirm_exit">确定退出吗？</string>
+    <string name="click_error">点错了</string>
+    <string name="begin_scan_qrcode">开始扫描二维码</string>
+    <string name="login_success_notify">登录成功通知</string>
+    <string name="welcome_user">欢迎您，%1$s</string>
+    <string name="invalid_qrcode">无效的二维码链接！！！</string>
+    <string name="service_error">服务异常</string>
 </resources>

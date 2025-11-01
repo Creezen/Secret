@@ -2,7 +2,6 @@ package com.creezen.tool
 
 import android.util.Log
 import com.creezen.tool.ability.thread.BlockOption
-import com.creezen.tool.ability.thread.LifecycleJob
 import com.creezen.tool.ability.thread.ThreadStatus
 import com.creezen.tool.ability.thread.ThreadType
 import com.creezen.tool.ability.thread.ThreadWrapper

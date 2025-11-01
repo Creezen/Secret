@@ -27,7 +27,6 @@ import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.ability.thread.BlockOption
-import com.creezen.tool.ability.thread.LifecycleJob
 import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.viewbinding.ViewBinding
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,7 @@ class TimePicker(context: Context, attr: AttributeSet): LinearLayout(context, at
     }
 
     fun formatTime(): String {
-        var timeStr = ""
+        var timeStr = EMPTY_STRING
         time().forEachIndexed { i, v ->
             if(i == 0) {
                 timeStr += v.padStart(4, '0')

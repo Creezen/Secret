@@ -2,6 +2,8 @@ package com.jayce.vexis.foundation.viewmodel
 
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.Constant.NUM_7
 import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.getRandomString
@@ -20,34 +22,34 @@ class RegisterViewModel : BaseViewModel() {
 
     val roleId = MutableLiveData<String>()
     val showRoleIdIcon = MutableLiveData(false)
-    val roleIdHint = MutableLiveData("")
+    val roleIdHint = MutableLiveData(EMPTY_STRING)
     val isRoleIdValid = MutableLiveData(false)
 
     val nickname = MutableLiveData<String>()
     val showNicknameIcon = MutableLiveData(false)
-    val nickNameHint = MutableLiveData("")
+    val nickNameHint = MutableLiveData(EMPTY_STRING)
     val isNicknameValid = MutableLiveData(false)
 
     val password = MutableLiveData<String>()
     val confirmPassword = MutableLiveData<String>()
     val showPasswordIcon = MutableLiveData(false)
     val showConfirmPasswordIcon = MutableLiveData(false)
-    val passwordHint = MutableLiveData("")
-    val confirmPasswordHint = MutableLiveData("")
+    val passwordHint = MutableLiveData(EMPTY_STRING)
+    val confirmPasswordHint = MutableLiveData(EMPTY_STRING)
 
     val birthdayYear = MutableLiveData("2000")
     val birthdayMonth = MutableLiveData("1")
     val birthdayDay = MutableLiveData("1")
 
     val sexSelectPosition = MutableLiveData(2)
-    val emailContent = MutableLiveData("")
+    val emailContent = MutableLiveData(EMPTY_STRING)
     val emailPostfixSelectPosition = MutableLiveData(0)
     val phoneNumber = MutableLiveData<String>()
     val address = MutableLiveData<String>()
 
     val bio = MutableLiveData<String>()
     val showBioIcon = MutableLiveData(false)
-    val bioHint = MutableLiveData("")
+    val bioHint = MutableLiveData(EMPTY_STRING)
 
     val isRegisterButtonClickable = MutableLiveData(false)
 
@@ -56,7 +58,7 @@ class RegisterViewModel : BaseViewModel() {
 
     fun initStatus(resources: Resources, initRoleId: String?) {
         if (!initRoleId.isNullOrEmpty()) {
-            roleId.value = initRoleId ?: ""
+            roleId.value = initRoleId ?: EMPTY_STRING
         }
         emailSuffix.addAll(resources.getStringArray(R.array.EmailProfix).toList())
     }
@@ -137,27 +139,27 @@ class RegisterViewModel : BaseViewModel() {
 
     fun registerRole(callback: (Boolean) -> Unit) {
         val currentTime = System.currentTimeMillis()
-        val userId = "${currentTime}${getRandomString(7)}"
+        val userId = "${currentTime}${getRandomString(NUM_7)}"
         val createTime = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
-        val nicknameValue = nickname.value ?: ""
-        val roleIdValue = roleId.value ?: ""
+        val nicknameValue = nickname.value ?: EMPTY_STRING
+        val roleIdValue = roleId.value ?: EMPTY_STRING
         val sexValue = sexList[sexSelectPosition.value ?: 0]
-        val passwordValue = password.value ?: ""
+        val passwordValue = password.value ?: EMPTY_STRING
         val emailSuffixValue = emailSuffix[emailPostfixSelectPosition.value ?: 0]
         val emailValue = if (emailContent.value.isNullOrEmpty()) {
-            ""
+            EMPTY_STRING
         } else {
             "${emailContent.value}${emailSuffixValue}"
         }
-        val phoneNum = phoneNumber.value ?: ""
-        val addressValue = address.value ?: ""
-        val bioValue = bio.value ?: ""
+        val phoneNum = phoneNumber.value ?: EMPTY_STRING
+        val addressValue = address.value ?: EMPTY_STRING
+        val bioValue = bio.value ?: EMPTY_STRING
         val isEdit = if (isUserProfileEdit(emailValue, phoneNum, addressValue, bioValue)) 1 else 0
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)
         val birthday = "${birthdayYear.value}-${birthdayMonth.value}-${birthdayDay.value}"
         val bean = UserBean(
             userId, nicknameValue, roleIdValue, age, sexValue, passwordValue, createTime,
-            0, 0, isEdit, emailValue, bioValue, phoneNum, addressValue, birthday, ""
+            0, 0, isEdit, emailValue, bioValue, phoneNum, addressValue, birthday, EMPTY_STRING
         )
         request<UserService, TransferStatusBean>({ register(bean) }) {
             callback.invoke(it.statusCode == 2)

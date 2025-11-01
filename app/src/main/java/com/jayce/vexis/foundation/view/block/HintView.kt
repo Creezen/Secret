@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.WindowInsetsCompat
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.AndroidTool.measureSize
 import com.creezen.tool.WindowTool.requestFloatWindow
 import com.jayce.vexis.R
@@ -22,7 +23,7 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
     private var iconTop: Int = 0
 
     private var showIcon: Boolean = false
-    private var iconText: String = ""
+    private var iconText: String = EMPTY_STRING
     private var iconMargin: Float = 0f
 
     private var realWidth = 0
@@ -39,7 +40,7 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
     init {
         context.obtainStyledAttributes(attr, R.styleable.HintView).use {
             showIcon = it.getBoolean(R.styleable.HintView_showIcon, false)
-            iconText = it.getString(R.styleable.HintView_iconText) ?: ""
+            iconText = it.getString(R.styleable.HintView_iconText) ?: EMPTY_STRING
             iconMargin = it.getDimension(R.styleable.HintView_iconMargin, 0f)
             val pair = textView.measureSize(iconText)
             realWidth = pair.first.toInt()

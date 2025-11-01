@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -14,7 +15,7 @@ class ClickHandle(private val mode: Mode) {
         const val TAG = "ClickHandle"
     }
 
-    private var _viewId = ""
+    private var _viewId = EMPTY_STRING
 
     private var pointNum = 0
     private var lastX = 0f
@@ -42,7 +43,7 @@ class ClickHandle(private val mode: Mode) {
 
     fun unregisterSwipeEvent(viewId: String) {
         isSet = false
-        _viewId = ""
+        _viewId = EMPTY_STRING
     }
 
     fun handleViewClick(viewId: String, event: MotionEvent, callback: SwipeCallback): Boolean {

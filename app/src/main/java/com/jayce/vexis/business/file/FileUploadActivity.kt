@@ -3,6 +3,8 @@ package com.jayce.vexis.business.file
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.MediaTypeParam.MEDIA_TYPE_ALL
 import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.toTime
@@ -42,7 +44,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
         with(binding) {
             activity = this@FileUploadActivity
             lifecycleOwner = this@FileUploadActivity
-            descTextLivedata.value = ""
+            descTextLivedata.value = EMPTY_STRING
             textSize = "0/100"
             descTextLivedata.observe(this@FileUploadActivity) { text ->
                 if (text.length > 100) {
@@ -53,7 +55,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 }
             }
             selectFile.setOnClickListener {
-                fileLaunch?.launch(arrayOf("*/*"))
+                fileLaunch?.launch(arrayOf(MEDIA_TYPE_ALL))
             }
             upload.setOnClickListener {
                 val filePath = selectedFilePath
@@ -75,13 +77,13 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                     val filePart = buildFileMultipart(filePath, "file")
                     val fileBean = FileBean(
                         fileName, fileID, fileSuffix, description,
-                        illustrate, fileSize, uploadTime, ""
+                        illustrate, fileSize, uploadTime, EMPTY_STRING
                     )
                     request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
                         if (it == 1) {
                             finish()
                         } else {
-                            ui { "服务异常".toast() }
+                            ui { getString(R.string.service_error).toast() }
                         }
                     }
                 }

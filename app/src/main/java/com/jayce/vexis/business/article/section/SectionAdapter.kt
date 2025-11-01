@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.commontool.Config.Constant.NUM_4
 import com.creezen.commontool.bean.SectionRemarkBean
+import com.creezen.tool.AndroidTool.getString
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
@@ -31,15 +33,14 @@ class SectionAdapter (
     val activity: Activity,
     private val itemList: List<SectionRemarkBean>,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val list = arrayListOf(
-            "表述不清", "内容啰嗦", "语法错误", "逻辑混乱", "前后矛盾", "缺少佐证"
-        )
 
+    private val list: ArrayList<String> =
+        activity.resources.getStringArray(R.array.articleFeedback).toCollection(ArrayList())
     private var articleId: Long = -1
 
     private val dialog by lazy {
         FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
-            .title(context.getString(R.string.leave_message))
+            .title(getString(R.string.leave_message))
             .flexibleView(AddCommentLayoutBinding::inflate) {
                 singleSelect.setChildLayout(list) {
                     commentContent.hint = it
@@ -112,8 +113,8 @@ class SectionAdapter (
                 }
             }
         val spanString = SpannableString("$content    ")
-        spanString.setSpan(imageSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
-        spanString.setSpan(clickSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
+        spanString.setSpan(imageSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)
+        spanString.setSpan(clickSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)
         textView.text = spanString
         textView.movementMethod = LinkMovementMethod.getInstance()
     }
@@ -145,11 +146,5 @@ class SectionAdapter (
         this.articleId = articleId
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (position % 2 ==0) {
-            1
-        } else {
-            2
-        }
-    }
+    override fun getItemViewType(position: Int) = if (position % 2 == 0) 1 else 2
 }

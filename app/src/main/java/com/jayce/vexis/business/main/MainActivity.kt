@@ -24,6 +24,15 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.Fragment
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_ARTICLE
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_FEEDBACK
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_FILE
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_HISTORY
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_KIT
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_MAP
+import com.creezen.commontool.Config.FragmentTag.FRAGMENT_SENIOR
+import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
@@ -57,10 +66,6 @@ import q.rorbin.badgeview.QBadgeView
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    companion object {
-        const val TAG = "MainActivity"
-    }
-
     private lateinit var scanLauncher: ActivityResultLauncher<ScanOptions>
     private lateinit var avatarView: ImageView
     private lateinit var emailView: ImageView
@@ -85,14 +90,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val notification = buildNotification()
             binder.showNotification(notification)
         }
-        override fun onServiceDisconnected(name: ComponentName?) {}
+        override fun onServiceDisconnected(name: ComponentName?) { /**/ }
     }
 
     override fun registerLauncher() {
         scanLauncher = getLauncher(ScanContract()){
             val resultContent = it.contents
-            if (resultContent.isNullOrBlank() || !resultContent.startsWith("https://com.jayce.vexis")) {
-                "无效的二维码链接！！！".toast()
+            if (resultContent.isNullOrBlank() || !resultContent.startsWith(URL_PREFIX)) {
+                getString(R.string.invalid_qrcode).toast()
                 return@getLauncher
             }
             resultContent.toast()
@@ -121,7 +126,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onResume()
         chatBadge.badgeNumber = getUnreadSize()
         val avatarTimestamp = readPrefs {
-                it.getLong("cursorTime", 0)
+                it.getLong(AVATAR_SAVE_TIME, 0)
             }
         NetTool.setImage(
             this@MainActivity,
@@ -149,19 +154,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 setHomeAsUpIndicator(R.drawable.open_drawer)
             }
             toolBarText.text = navigation.menu.getItem(0).title
-            replaceFragment(viewHolder!!.historyFragment, "historicalAxis")
+            replaceFragment(viewHolder!!.historyFragment, FRAGMENT_HISTORY)
             navigation.setNavigationItemSelectedListener { item ->
                 toolBarText.text = item.title
                 drawerLayout.closeDrawers()
                 viewHolder?.apply {
                     when (item.itemId) {
-                        R.id.MainMenuFeedback -> replaceFragment(feedbackFragment, "feedback")
-                        R.id.MainMenuWidget -> replaceFragment(kitFragment, "kitFragment")
-                        R.id.MainMenuTimeline -> replaceFragment(historyFragment, "historicalAxis")
-                        R.id.MainMenuSynergy -> replaceFragment(articleFragment, "articleFragment")
-                        R.id.MainMenuSenior -> replaceFragment(senior, "senior")
-                        R.id.MainMenuResource -> replaceFragment(fileContentsFragment, "mediaLibrarFragment")
-                        R.id.MainMenuMap -> replaceFragment(mapFragment, "mapFragment")
+                        R.id.MainMenuFeedback -> replaceFragment(feedbackFragment, FRAGMENT_FEEDBACK)
+                        R.id.MainMenuWidget -> replaceFragment(kitFragment, FRAGMENT_KIT)
+                        R.id.MainMenuTimeline -> replaceFragment(historyFragment, FRAGMENT_HISTORY)
+                        R.id.MainMenuSynergy -> replaceFragment(articleFragment, FRAGMENT_ARTICLE)
+                        R.id.MainMenuSenior -> replaceFragment(senior, FRAGMENT_SENIOR)
+                        R.id.MainMenuResource -> replaceFragment(fileContentsFragment, FRAGMENT_FILE)
+                        R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
                     }
                 }
                 return@setNavigationItemSelectedListener true
@@ -211,10 +216,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 override fun handleOnBackPressed() {
                     FlexibleDialog<DialogBinding>(this@MainActivity, layoutInflater)
                         .flexibleView {
-                            message.text = "确定退出吗？"
+                            message.text = getString(R.string.confirm_exit)
                         }
-                        .title("消息提醒")
-                        .positive("退出", true) {
+                        .title(getString(R.string.message_hint))
+                        .positive(getString(R.string.exist), true) {
                             return@positive 1
                         }
                         .positiveHandle{ flag,dia ->
@@ -222,7 +227,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                                 finishAll()
                             }
                         }
-                        .negative("点错了", true) {
+                        .negative(getString(R.string.click_error), true) {
                             return@negative 1
                         }
                         .show()
@@ -243,7 +248,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             R.id.scanQRCode -> {
                 scanLauncher.launch(ScanOptions().apply {
-                    setPrompt("开始扫描二维码")
+                    setPrompt(getString(R.string.begin_scan_qrcode))
                     setBeepEnabled(false)
                     setTimeout(5000)
                     setBarcodeImageEnabled(false)
@@ -264,8 +269,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         val notification = NotificationCompat.Builder(BaseTool.env(), "1")
             .setSmallIcon(R.drawable.tianji)
-            .setContentTitle("登录成功通知")
-            .setContentText("欢迎您，${user().nickname}")
+            .setContentTitle(getString(R.string.login_success_notify))
+            .setContentText(getString(R.string.welcome_user, user().nickname))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(Notification.CATEGORY_SERVICE)
             .setOngoing(true)

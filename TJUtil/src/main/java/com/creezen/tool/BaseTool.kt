@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
+import com.creezen.commontool.Config.Constant.EMPTY_STRING
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
@@ -42,8 +43,8 @@ object BaseTool {
 
     data class InitParam(
         val socketPort: Int = 0,
-        val baseSocketPath: String = "",
-        val baseUrl: String = "",
-        val apiBaseUrl: String = ""
+        val baseSocketPath: String = EMPTY_STRING,
+        val baseUrl: String = EMPTY_STRING,
+        val apiBaseUrl: String = EMPTY_STRING
     )
 }
