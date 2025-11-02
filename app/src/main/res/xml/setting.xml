@@ -2,15 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
-        android:key="dfgdfhgf"
-        android:title="perie"
-        android:summary="sdgdghrftg"/>
-    <Preference
-        android:key="aaa"
-        android:title="aaaa"
-        android:summary="vvvvv"/>
-    <Preference
-        android:key="vvvvv"
-        android:title="eewerg"
-        android:summary="gytjhjyu"/>
+        android:key="changeFont"
+        android:title="切换字体"
+        android:summary="该操作将重启应用，请保存好数据!"/>
 </PreferenceScreen>

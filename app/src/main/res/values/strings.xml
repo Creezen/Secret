@@ -46,7 +46,7 @@
     <string name="select_file">选择文件</string>
     <string name="please_select_file">请选择需要上传的文件…</string>
     <string name="resource_descript">资源描述</string>
-    <string name="find_password">找回密码（暂切换字体）</string>
+    <string name="find_password">找回密码</string>
     <string name="create_role">创建账号</string>
     <string name="login">点击登录</string>
     <string name="password">密码</string>
@@ -114,7 +114,7 @@
     <string name="input_feedback_content">请输入反馈的内容…</string>
     <string name="submit">提交</string>
     <string name="feedback_title">反馈标题</string>
-    <string name="quick_jump">快捷跳转</string>
+    <string name="jump_3d_game">跳转3D</string>
     <string name="add_symbol">+</string>
     <string name="zero">0</string>
     <string name="line">-</string>
@@ -161,4 +161,7 @@
     <string name="welcome_user">欢迎您，%1$s</string>
     <string name="invalid_qrcode">无效的二维码链接！！！</string>
     <string name="service_error">服务异常</string>
+    <string name="pinyin_search">拼音查询</string>
+    <string name="input_chinese_get_pinyin">输入文字获取拼音</string>
+    <string name="change_to_pinyi">一键转换</string>
 </resources>

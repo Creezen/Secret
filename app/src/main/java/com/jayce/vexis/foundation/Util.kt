@@ -8,6 +8,7 @@ import com.creezen.commontool.bean.UserBean
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.bean.FileEntry
@@ -29,7 +30,7 @@ object Util {
             kotlin.runCatching {
                 val result = func.invoke(NetTool.create())
                 future.complete(result.await())
-                callback(future.get())
+                ui { callback(future.get()) }
             }.onFailure {
                 Log.e(TAG, "Request network error: ${it.message}")
             }

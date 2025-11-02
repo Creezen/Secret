@@ -27,6 +27,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gomoku"/>
+            <Button
+                android:id="@+id/pinyin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pinyin_search"/>
+            <Button
+                android:id="@+id/quickStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/jump_3d_game"/>
         </LinearLayout>
     </LinearLayout>
     <com.jayce.vexis.foundation.view.animator.AnimatorView

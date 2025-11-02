@@ -328,7 +328,7 @@ naming:
     active: true
     maximumFunctionNameLength: 30
   FunctionMinLength:
-    active: true
+    active: false
     minimumFunctionNameLength: 3
   FunctionNaming:
     active: true

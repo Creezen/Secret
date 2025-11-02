@@ -41,6 +41,9 @@
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
         <activity
+            android:name=".business.kit.pinyin.PinyinActivity"
+            android:exported="false"/>
+        <activity
             android:name=".business.setting.SettingActivity"
             android:exported="false" />
         <activity
@@ -48,7 +51,9 @@
             android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
-            tools:replace="screenOrientation" />
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation"
+            tools:ignore="DiscouragedApi" />
 
         <service
             android:name=".core.CreezenAccessibility"

@@ -88,11 +88,7 @@ class LoginActivity : AppCompatActivity() {
                 login.isClickable = it.length in 6..18
             }
             findPassword.setOnClickListener {
-                AndroidTool.writePrefs {
-                    it.putString("font", "方正粗圆")
-                }
-                restartApp()
-//              getPinyinForChinese(liveData.value)
+                "暂不支持".toast()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
@@ -132,12 +128,6 @@ class LoginActivity : AppCompatActivity() {
                     login.isClickable = true
                 }
             }
-            quickStart.setOnClickListener {
-                val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
-                val intent = Intent()
-                intent.component = component
-                startActivity(intent)
-            }
             val packageInfo = packageManager.getPackageInfo(
                 packageName,
                 PackageManager.PackageInfoFlags.of(0),
@@ -163,25 +153,6 @@ class LoginActivity : AppCompatActivity() {
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             picAdapter.notifyItemRangeInserted(0, 5)
             setPageTransformer(MyCustomTransformer())
-        }
-    }
-
-    private fun getPinyinForChinese(chineseChar: String?) {
-        if (chineseChar == null) {
-            return
-        }
-        ThreadTool.runOnMulti {
-            kotlin.runCatching {
-                val res = createApi<ApiService>()
-                        .getDictionary(chineseChar)
-                        .await()
-                val jsonObj = JSONObject(res)
-                val data = jsonObj.optJSONArray("data")?.get(0) as JSONObject
-                val realVal = data.optString("pinyin")
-                ui { realVal.toast() }
-            }.onFailure {
-                "错误，请将账号换成单个汉字再试".toast()
-            }
         }
     }
 }

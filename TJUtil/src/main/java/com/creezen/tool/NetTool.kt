@@ -74,7 +74,11 @@ object NetTool {
         apiBaseUri = initParam.apiBaseUrl
         baseSocketPath = initParam.baseSocketPath
         socketPort = initParam.socketPort
-        Glide.get(BaseTool.env()).registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(getOKHTTPClinet()))
+        Glide.get(BaseTool.env()).registry.replace(
+            GlideUrl::class.java,
+            InputStream::class.java,
+            OkHttpUrlLoader.Factory(getOKHTTPClinet())
+        )
     }
 
     private fun reConnect(msg: TelecomBean? = null) {

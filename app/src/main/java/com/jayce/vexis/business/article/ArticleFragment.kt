@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.ArticleBean
-import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
-import com.jayce.vexis.foundation.Util
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.ArticleService
-import kotlinx.coroutines.Dispatchers
 
 class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
@@ -52,14 +50,11 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
     }
 
     private fun initData() {
-        ThreadTool.runOnMulti(Dispatchers.Main) {
-            Util.request<ArticleService, ArrayList<ArticleBean>>({
-                getArticle()
-            }) {
-                list.clear()
-                list.addAll(it)
-                adapter.notifyDataSetChanged()
-            }
+        request<ArticleService, ArrayList<ArticleBean>>({ getArticle() }) {
+            list.clear()
+            adapter.notifyItemRemoved(0)
+            list.addAll(it)
+            adapter.notifyItemInserted(0)
         }
     }
 }

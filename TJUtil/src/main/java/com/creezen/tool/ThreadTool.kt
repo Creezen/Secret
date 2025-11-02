@@ -34,9 +34,9 @@ object ThreadTool {
 
     private val scopeMap = HashMap<String, CoroutineScope>()
 
-    fun init() {}
+    fun init() { /**/ }
 
-    suspend fun ui(block: () -> Unit) {
+    suspend fun ui(block: suspend () -> Unit) {
         withContext(Dispatchers.Main) {
             block.invoke()
         }

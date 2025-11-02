@@ -3,6 +3,8 @@ package com.creezen.commontool
 import com.creezen.commontool.Config.Constant.BASIC_LETTER
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -27,7 +29,8 @@ fun Long.toTime(formater: String = "yyyy-MM-dd HH:mm:ss"):String{
 
 inline fun <reified T> String.toBean(): T? {
     runCatching {
-        return Gson().fromJson(this, T::class.java)
+        val type: Type = object : TypeToken<T>(){}.type
+        return Gson().fromJson(this, type)
     }.onFailure {
         it.printStackTrace()
     }
