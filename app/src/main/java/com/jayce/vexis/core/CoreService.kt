@@ -5,13 +5,18 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import android.provider.Settings
 import android.util.Log
+import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.ThreadTool
+import com.jayce.vexis.core.SessionManager.BASE_SOCKET_PATH
+import com.jayce.vexis.core.SessionManager.LOCAL_SOCKET_PORT
 import com.jayce.vexis.foundation.ability.EventHandle.initChatData
 import com.jayce.vexis.foundation.ability.EventHandle.notifySocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import java.net.Socket
 
 class CoreService : Service() {
 
@@ -26,7 +31,11 @@ class CoreService : Service() {
     override fun onCreate() {
         ThreadTool.registerScope(NAME_MESSAGE_SCOPE, scope)
         initChatData()
-        notifySocket(this)
+        ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
+            val socket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
+            setOnlineSocket(socket)
+            notifySocket(this)
+        }
     }
 
     override fun onBind(intent: Intent?): IBinder? {

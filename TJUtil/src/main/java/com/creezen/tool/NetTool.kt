@@ -13,8 +13,13 @@ import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
+import com.creezen.commontool.Config.NetworkParam.COOKIE_USER_ID
+import com.creezen.commontool.Config.NetworkParam.COOKIE_UUID
+import com.creezen.commontool.Config.SERVER_DOMAIN
 import com.creezen.commontool.bean.TelecomBean
+import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toJson
+import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.toast
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -54,84 +59,33 @@ object NetTool {
     private const val TAG = "NetTool"
 
     private lateinit var baseUrl: String
-    private lateinit var apiBaseUri: String
     private var socketPort: Int = 0
     private lateinit var baseSocketPath: String
     private lateinit var onlineSocket : Socket
-    private var userId: String? = null
+    private var user: UserBean? = null
     private val socketFlag = AtomicBoolean(true)
-    private val COOKIE_LIST:MutableList<Cookie> = mutableListOf()
-    private val COOKIE_MAP:MutableMap<String,Long> = mutableMapOf()
     private var socketReader: BufferedReader? = null
     private var socketWriter: BufferedWriter? = null
 
-    fun setUserId(currentUserId: String) {
-        userId = currentUserId
-    }
-
-    fun init(initParam: BaseTool.InitParam) {
-        baseUrl = initParam.baseUrl
-        apiBaseUri = initParam.apiBaseUrl
-        baseSocketPath = initParam.baseSocketPath
-        socketPort = initParam.socketPort
-        Glide.get(BaseTool.env()).registry.replace(
-            GlideUrl::class.java,
-            InputStream::class.java,
-            OkHttpUrlLoader.Factory(getOKHTTPClinet())
-        )
-    }
-
-    private fun reConnect(msg: TelecomBean? = null) {
-        val future = CompletableFuture<Unit>()
-        CoroutineScope(Dispatchers.IO).launch {
-            kotlin.runCatching {
-                socketReader = null
-                socketWriter = null
-                onlineSocket = Socket(baseSocketPath, socketPort)
-                socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
-                socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
-                Log.d(TAG,"connection OK!")
-                val userid = userId
-                if (userid != null) {
-                    sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), userid)
-                }
-                msg?.let {
-                    socketWriter?.write("$msg\n")
-                    socketWriter?.flush()
-                }
-                future.complete(Unit)
-            }.onFailure {
-                Log.d(TAG,"reConnect error,try again!")
-                future.complete(Unit)
-                reConnect()
-            }
-        }
-        future.get()
-    }
-
     private val cookieJar = object : CookieJar {
-        override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
-            COOKIE_LIST.removeIf { it.name() == "JSESSIONID" }
-            COOKIE_LIST.add(cookies.last { it.name() == "JSESSIONID" })
-            cookies.forEach {
-                if (!it.name().equals("JSESSIONID")) COOKIE_LIST.add(it)
-            }
-        }
+        override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) { /**/ }
 
         override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
-            if (COOKIE_MAP["firstTime"] == null) {
-                val currentTime = System.currentTimeMillis()
-                COOKIE_LIST.add(buildCookie("firstTime","${currentTime}"))
-                COOKIE_LIST.add(buildCookie("lastTime","${currentTime}"))
-                COOKIE_MAP["firstTime"] = currentTime
-                COOKIE_MAP["lastTime"] = currentTime
-            } else {
-                COOKIE_LIST.removeIf { it.name() == "lastTime" }
-                COOKIE_LIST.add(buildCookie("lastTime","${System.currentTimeMillis()}"))
+            val cookieList = arrayListOf<Cookie>()
+            user?.apply {
+                cookieList.add(buildCookie(COOKIE_USER_ID, userId))
+                cookieList.add(buildCookie(COOKIE_UUID, session))
             }
-            return COOKIE_LIST
+            return cookieList
         }
     }
+
+    private fun buildCookie(name: String, value: String) =
+        Cookie.Builder()
+            .name(name)
+            .value(value)
+            .domain(SERVER_DOMAIN)
+            .build()
 
     private val okHttp by lazy {
         OkHttpClient.Builder()
@@ -144,8 +98,6 @@ object NetTool {
             .build()
     }
 
-    fun getOKHTTPClinet() = okHttp
-
     val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -155,17 +107,22 @@ object NetTool {
             .build()
     }
 
-    val apiRetrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(apiBaseUri)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
     inline fun <reified T> create(): T = retrofit.create(T::class.java)
 
-    inline fun <reified T> createApi(): T = apiRetrofit.create(T::class.java)
+    fun setUser(currentUser: UserBean) {
+        user = currentUser
+    }
+
+    fun init(initParam: BaseTool.InitParam) {
+        baseUrl = initParam.baseUrl
+        baseSocketPath = initParam.baseSocketPath
+        socketPort = initParam.socketPort
+        Glide.get(BaseTool.env()).registry.replace(
+            GlideUrl::class.java,
+            InputStream::class.java,
+            OkHttpUrlLoader.Factory(okHttp)
+        )
+    }
 
     fun setImage(
         context: Context,
@@ -195,14 +152,6 @@ object NetTool {
         }
     }
 
-    private fun buildCookie(name:String, value:String, domain: String = "www"): Cookie {
-        return Cookie.Builder()
-            .name(name)
-            .value(value)
-            .domain(domain)
-            .build()
-    }
-
     suspend fun <T> Call<T>.await():T {
         return suspendCancellableCoroutine { continuation ->
             enqueue(object : Callback<T> {
@@ -217,7 +166,6 @@ object NetTool {
 
                 override fun onFailure(p0: Call<T>, p1: Throwable) {
                     Log.d(TAG, "net error: ${p1.message}")
-//                    "网络请求失败".toast()
                 }
             })
         }
@@ -255,23 +203,31 @@ object NetTool {
     }
 
     fun sendDefaultMessage(scope: CoroutineScope, msg: String) {
-        val message = TelecomBean(EVENT_TYPE_DEFAULT, content = msg)
-        sendMessage(scope, message)
+        user?.apply {
+            val message = buildTeleMessage(EVENT_TYPE_DEFAULT, msg, this)
+            sendMessage(scope, message)
+        }
     }
 
     fun sendChatMessage(scope: CoroutineScope, msg: String) {
-        val message = TelecomBean(EVENT_TYPE_MESSAGE, content = msg)
-        sendMessage(scope, message)
+        user?.apply {
+            val message = buildTeleMessage(EVENT_TYPE_MESSAGE, msg, this)
+            sendMessage(scope, message)
+        }
     }
 
     fun sendNotifyMessage(scope: CoroutineScope, msg: String) {
-        val message = TelecomBean(EVENT_TYPE_NOTIFY, content = msg)
-        sendMessage(scope, message)
+        user?.apply {
+            val message = buildTeleMessage(EVENT_TYPE_NOTIFY, msg, this)
+            sendMessage(scope, message)
+        }
     }
 
     fun sendGameMessage(scope: CoroutineScope, msg: String) {
-        val message = TelecomBean(EVENT_TYPE_GAME, content = msg)
-        sendMessage(scope, message)
+        user?.apply {
+            val message = buildTeleMessage(EVENT_TYPE_GAME, msg, this)
+            sendMessage(scope, message)
+        }
     }
 
     fun sendAckMessage(
@@ -310,6 +266,16 @@ object NetTool {
         }
     }
 
+    private fun buildTeleMessage(type: Int, msg: String, user: UserBean): TelecomBean {
+        return TelecomBean(
+            type,
+            content = msg,
+            userId = user.userId,
+            nickName = user.nickname,
+            session = user.session
+        )
+    }
+
     fun setOnlineSocket(socket: Socket) {
         onlineSocket = socket
         if(socketReader == null) {
@@ -324,5 +290,33 @@ object NetTool {
         if(onlineSocket.isClosed.not()) {
             onlineSocket.close()
         }
+    }
+
+    private fun reConnect(msg: TelecomBean? = null) {
+        val future = CompletableFuture<Unit>()
+        CoroutineScope(Dispatchers.IO).launch {
+            kotlin.runCatching {
+                socketReader = null
+                socketWriter = null
+                onlineSocket = Socket(baseSocketPath, socketPort)
+                socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
+                socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+                Log.d(TAG,"connection OK!")
+                val mUserid = user?.userId
+                if (mUserid != null) {
+                    sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), mUserid)
+                }
+                msg?.let {
+                    socketWriter?.write("$msg\n")
+                    socketWriter?.flush()
+                }
+                future.complete(Unit)
+            }.onFailure {
+                Log.d(TAG,"reConnect error,try again!")
+                future.complete(Unit)
+                reConnect()
+            }
+        }
+        future.get()
     }
 }

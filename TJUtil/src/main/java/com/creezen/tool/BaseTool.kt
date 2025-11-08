@@ -44,7 +44,6 @@ object BaseTool {
     data class InitParam(
         val socketPort: Int = 0,
         val baseSocketPath: String = EMPTY_STRING,
-        val baseUrl: String = EMPTY_STRING,
-        val apiBaseUrl: String = EMPTY_STRING
+        val baseUrl: String = EMPTY_STRING
     )
 }

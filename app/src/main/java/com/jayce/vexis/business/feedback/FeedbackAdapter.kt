@@ -50,7 +50,7 @@ class FeedbackAdapter(
         holder.supportCount.text = "${item.support}"
 
         val avatarTimestamp = AndroidTool.readPrefs {
-            it.getLong(AVATAR_SAVE_TIME, 0)
+            getLong(AVATAR_SAVE_TIME, 0)
         }
         NetTool.setImage(
             context,

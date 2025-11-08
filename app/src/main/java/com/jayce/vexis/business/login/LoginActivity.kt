@@ -1,28 +1,28 @@
 package com.jayce.vexis.business.login
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Intent
+import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.creezen.commontool.bean.ApkSimpleInfo
 import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
 import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.BaseTool.restartApp
+import com.creezen.tool.BaseTool
 import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.await
-import com.creezen.tool.NetTool.createApi
-import com.creezen.tool.NetTool.setOnlineSocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
@@ -31,37 +31,58 @@ import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
+import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
-import com.jayce.vexis.core.SessionManager.BASE_SOCKET_PATH
-import com.jayce.vexis.core.SessionManager.LOCAL_SOCKET_PORT
 import com.jayce.vexis.core.SessionManager.registerUser
+import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.ApiService
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import org.json.JSONObject
-import java.net.Socket
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     companion object {
         const val TAG = "LoginActivity"
     }
 
-    private lateinit var binding: ActivityLoginBinding
     private val list = arrayListOf<String>()
     private val picAdapter by lazy {
         HomePagePicAdapter(this, list)
     }
     val liveData = MutableLiveData<String>()
 
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            val binder = service as CoreService.ConnectionBinder
+            val notification = buildNotification()
+            binder.showNotification(notification)
+        }
+        override fun onServiceDisconnected(name: ComponentName?) { /**/ }
+    }
+
+    private fun buildNotification(): Notification {
+        getSystemService(NotificationManager::class.java).apply {
+            val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
+            createNotificationChannel(notifyChannel)
+        }
+        val notification = NotificationCompat.Builder(BaseTool.env(), "1")
+            .setSmallIcon(R.drawable.tianji)
+            .setContentTitle(getString(R.string.login_success_notify))
+            .setContentText(getString(R.string.welcome_user, user().nickname))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(Notification.CATEGORY_SERVICE)
+            .setOngoing(true)
+            .build()
+        return notification
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         binding.root.fitsSystemWindows = true
         setContentView(binding.root)
         getNewestVersion()
@@ -88,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
                 login.isClickable = it.length in 6..18
             }
             findPassword.setOnClickListener {
-                "暂不支持".toast()
+                getString(R.string.not_support).toast()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
@@ -99,27 +120,26 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 login.isClickable = false
                 playShortSound(R.raw.click)
+
                 val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
                 ThreadTool.runWithBlocking(option) {
                     request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) {
                         Log.e(TAG, "return message: $it")
-                        if (it.statusCode == -1) {
-                            it.data.toBean<UserBean>()?.let { user ->
-                                registerUser(user)
-                                NetTool.setUserId(user.userId)
+                        when(it.statusCode) {
+                            -1 -> {
+                                it.data.toBean<UserBean>()?.let { user ->
+                                    registerUser(user)
+                                    NetTool.setUser(user)
+                                }
+                                bindService(
+                                    Intent(this@LoginActivity, CoreService::class.java),
+                                    connection,
+                                    BIND_AUTO_CREATE
+                                )
                             }
-                            val socket = lifecycleScope.async(Dispatchers.IO) {
-                                Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
-                            }.await()
-                            setOnlineSocket(socket)
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        } else {
-                            val status = it.statusCode
-                            if (status == 0) {
-                                "账号不存在, 点击“创建账号”按钮新建一个吧~".toast()
-                            } else {
-                                "账号或密码错误，请检查后再次尝试！".toast()
-                            }
+                            0 -> getString(R.string.no_account_and_create).toast()
+                            -3 -> getString(R.string.account_login_other_device).toast()
+                            else -> getString(R.string.password_error).toast()
                         }
                     }
                 }.onTimedOut {

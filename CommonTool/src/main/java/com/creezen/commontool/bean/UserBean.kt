@@ -19,6 +19,7 @@ data class UserBean(
     val address: String = EMPTY_STRING,
     val birthday: String = EMPTY_STRING,
     val headType: String = EMPTY_STRING,
+    val session: String = EMPTY_STRING
 ) {
     fun getAdministratorStatus(): Boolean {
         return administrator == 1

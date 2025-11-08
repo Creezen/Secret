@@ -38,9 +38,7 @@ object AndroidTool {
         }
     }
 
-    fun <T> readPrefs(func: (SharedPreferences) -> T?): T? {
-        return func(prefs)
-    }
+    fun <T> readPrefs(func: SharedPreferences.() -> T): T = func(prefs)
 
     fun LinearLayout.addSimpleView(
         text: String,

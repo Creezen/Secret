@@ -2,9 +2,7 @@ package com.creezen.commontool
 
 object Config {
 
-    const val API_BASE_URL = "https://www.mxnzp.com/api/convert/"
-    const val DICTIONARY_API_APPID = "ckp9k9hlvylykswh"
-    const val DICTIONARY_API_APPSECRET = "f1pJSDJ6qIDZGPeL5Q1EUqkZXfHgQ9qA"
+    const val SERVER_DOMAIN = "xiaomiqiu.com"
     const val BROAD_LOGOUT = "com.jayce.vexis.logout.broadcast"
     const val BROAD_NOTIFY = "com.jayce.vexis.notify.broadcast"
 
@@ -38,6 +36,7 @@ object Config {
         const val EVENT_TYPE_MESSAGE = 1
         const val EVENT_TYPE_NOTIFY = 2
         const val EVENT_TYPE_GAME = 3
+        const val EVENT_TYPE_FINISH = 4
     }
 
     object FragmentTag {
@@ -61,6 +60,11 @@ object Config {
 
     object QRCodeParam {
         const val URL_PREFIX = "https://com.jayce.vexis"
+    }
+
+    object NetworkParam {
+        const val COOKIE_USER_ID = "userId"
+        const val COOKIE_UUID = "cookId"
     }
 
 }

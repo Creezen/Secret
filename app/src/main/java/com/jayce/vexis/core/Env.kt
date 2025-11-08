@@ -7,7 +7,6 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
 import com.amap.api.services.core.ServiceSettings
-import com.creezen.commontool.Config.API_BASE_URL
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool
@@ -47,15 +46,14 @@ class Env : Application() {
         val param = BaseTool.InitParam(
             BuildConfig.socketPort,
             BuildConfig.socketUrl,
-            BuildConfig.baseUrl,
-            API_BASE_URL
+            BuildConfig.baseUrl
         )
         ServiceSettings.updatePrivacyAgree(this, true)
         ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
         val font = AndroidTool.readPrefs {
-                it.getString("font", "华文行楷")
+                getString("font", "华文行楷")
             }
         setFont(font as String)
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)

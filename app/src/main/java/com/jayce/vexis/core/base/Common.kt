@@ -25,8 +25,8 @@ interface Common<K: ViewBinding> : ActivityResultCaller {
         return ActivityResultContracts.OpenDocument()
     }
 
-    fun getPermission(): ActivityResultContract<String, Boolean> {
-        return ActivityResultContracts.RequestPermission()
+    fun getPermission(): ActivityResultContract<Array<String>, Map<String, Boolean>> {
+        return ActivityResultContracts.RequestMultiplePermissions()
     }
 
     fun startActivity(): ActivityResultContract<Intent, ActivityResult> {

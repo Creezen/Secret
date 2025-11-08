@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.dokka)
     id("maven-publish")
 }
 
@@ -45,44 +44,6 @@ android {
     }
 }
 
-val processedSourcesDir = buildDir.resolve("processed-sources")
-// 自定义任务：处理 Kotlin 文件
-val processSources by tasks.register<Copy>("processSources") {
-    doFirst {
-        processedSourcesDir.mkdirs()
-    }
-    from(android.sourceSets["main"].java.srcDirs) {
-        // 处理 Kotlin 文件
-        eachFile {
-            if (file.name.endsWith(".kt")) {
-                // 获取文件的相对路径
-                val relativePath = relativePath(file.parentFile)
-                // 构建目标文件路径
-                val outputFile = processedSourcesDir.resolve(relativePath).resolve(file.name)
-                outputFile.parentFile.mkdirs()
-                outputFile.writeText(processKotlinFile(file))
-                exclude()
-            }
-        }
-    }
-    into(processedSourcesDir)
-    // 保留文件结构
-    includeEmptyDirs = false
-}
-
-// 处理 Kotlin 文件，移除方法体
-fun processKotlinFile(file: File): String {
-    val content = file.readText()
-    return content
-}
-
-val sourcesJar by tasks.register<Jar>("sourcesJar") {
-    dependsOn(tasks.named("generateMetadataFileForMavenAPublication"))
-    dependsOn(processSources)
-    archiveClassifier.set("sources")
-    from(processedSourcesDir)
-}
-
 publishing {
     publications {
         create<MavenPublication>("mavenA"){
@@ -93,7 +54,6 @@ publishing {
             afterEvaluate {
                 from(components["release"])
             }
-//            artifact(sourcesJar)
         }
     }
 }

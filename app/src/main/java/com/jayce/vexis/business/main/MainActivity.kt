@@ -1,13 +1,7 @@
 package com.jayce.vexis.business.main
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.ComponentName
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -17,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.core.app.NotificationCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -36,21 +29,19 @@ import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.BaseTool
 import com.creezen.tool.NetTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
+import com.jayce.vexis.business.file.FileContentsFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
-import com.jayce.vexis.business.file.FileContentsFragment
 import com.jayce.vexis.business.map.MapFragment
+import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
-import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.setting.SettingActivity
-import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
@@ -84,15 +75,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val mapFragment: MapFragment
     )
 
-    private val connection = object : ServiceConnection {
-        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val binder = service as CoreService.ConnectionBinder
-            val notification = buildNotification()
-            binder.showNotification(notification)
-        }
-        override fun onServiceDisconnected(name: ComponentName?) { /**/ }
-    }
-
     override fun registerLauncher() {
         scanLauncher = getLauncher(ScanContract()){
             val resultContent = it.contents
@@ -119,14 +101,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             insets
         }
-        bindService(Intent(this, CoreService::class.java), connection, BIND_AUTO_CREATE)
     }
 
     override fun onResume() {
         super.onResume()
         chatBadge.badgeNumber = getUnreadSize()
         val avatarTimestamp = readPrefs {
-                it.getLong(AVATAR_SAVE_TIME, 0)
+                getLong(AVATAR_SAVE_TIME, 0)
             }
         NetTool.setImage(
             this@MainActivity,
@@ -194,15 +175,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             drawerLayout.addDrawerListener(
                 object : DrawerListener {
-                    override fun onDrawerSlide(
-                        drawerView: View,
-                        slideOffset: Float,
-                    ) {}
-
-                    override fun onDrawerClosed(drawerView: View) {}
-
-                    override fun onDrawerStateChanged(newState: Int) {}
-
+                    override fun onDrawerSlide(drawerView: View, slideOffset: Float, ) { /**/ }
+                    override fun onDrawerClosed(drawerView: View) { /**/ }
+                    override fun onDrawerStateChanged(newState: Int) { /**/ }
                     override fun onDrawerOpened(drawerView: View) {
                         chatBadge.badgeNumber = getUnreadSize()
                         emailBadge.badgeNumber = 0
@@ -260,22 +235,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
         }
         return true
-    }
-
-    private fun buildNotification(): Notification {
-        getSystemService(NotificationManager::class.java).apply {
-            val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-            createNotificationChannel(notifyChannel)
-        }
-        val notification = NotificationCompat.Builder(BaseTool.env(), "1")
-            .setSmallIcon(R.drawable.tianji)
-            .setContentTitle(getString(R.string.login_success_notify))
-            .setContentText(getString(R.string.welcome_user, user().nickname))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setCategory(Notification.CATEGORY_SERVICE)
-            .setOngoing(true)
-            .build()
-        return notification
     }
 
     private fun replaceFragment(fragment: Fragment, fragmentTag: String) {

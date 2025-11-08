@@ -94,7 +94,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
             }
             val cursorTime = readPrefs {
-                    it.getLong(AVATAR_SAVE_TIME, 0)
+                    getLong(AVATAR_SAVE_TIME, 0)
                 }
             val cacheKey = "key:$cursorTime"
             NetTool.setImage(

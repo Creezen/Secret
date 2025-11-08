@@ -8,6 +8,7 @@ import com.creezen.tool.NetTool.sendChatMessage
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.CoreService
+import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.foundation.ability.EventHandle.getChatMessage
@@ -26,7 +27,6 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
         private val itemList = arrayListOf<ChatEntry>()
     }
 
-    private val scope = CoroutineScope(Dispatchers.IO)
     private val adapter by lazy { ChatAdapter(itemList) }
     private val viewModel by inject<ChatViewModel>()
 

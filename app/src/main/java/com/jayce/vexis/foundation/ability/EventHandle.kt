@@ -5,6 +5,7 @@ import android.util.Log
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
+import com.creezen.commontool.Config.EventType.EVENT_TYPE_FINISH
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
 import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
@@ -20,6 +21,8 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
 import com.jayce.vexis.core.CoreService.Companion.scope
 import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.base.BaseActivity
+import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.foundation.bean.ChatEntry
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,7 +33,7 @@ object EventHandle {
     private const val CACHE_MESSAGE = "cacheMessage"
     private val dumpMessage = arrayListOf<ChatEntry>()
     private val chatQueue = LinkedBlockingQueue<ChatEntry>()
-    private val chatFlow = MutableSharedFlow<String>(0, 0, BufferOverflow.SUSPEND)
+    private val chatFlow = MutableSharedFlow<TelecomBean>(0, 0, BufferOverflow.SUSPEND)
 
     fun getUnreadSize() = chatQueue.size
 
@@ -55,7 +58,7 @@ object EventHandle {
         Log.d("LJW", "type: ${telecomMsg.type}  content: ${telecomMsg.content}")
         when (telecomMsg.type) {
             EVENT_TYPE_MESSAGE -> {
-                chatFlow.emit(telecomMsg.content)
+                chatFlow.emit(telecomMsg)
             }
             EVENT_TYPE_NOTIFY -> {
                 broadcastByAction(context, BROAD_NOTIFY) {
@@ -64,13 +67,16 @@ object EventHandle {
             }
             EVENT_TYPE_DEFAULT -> {}
             EVENT_TYPE_GAME -> {}
+            EVENT_TYPE_FINISH -> {
+                finishAll()
+            }
             else -> {}
         }
     }
 
     fun initChatData() {
         val data = readPrefs {
-            it.getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
+            getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
         }
         chatQueue.clear()
         data?.toBean<ArrayList<ChatEntry>>().let {
@@ -84,7 +90,7 @@ object EventHandle {
     private fun listenToChatMessage() {
         ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
             chatFlow.collect {
-                val item = ChatEntry(user().nickname, System.currentTimeMillis().toTime(), it)
+                val item = ChatEntry(it.nickName, System.currentTimeMillis().toTime(), it.content)
                 chatQueue.put(item)
                 dumpMessage.add(item)
             }
@@ -93,9 +99,7 @@ object EventHandle {
 
     fun saveChatMessage() {
         writePrefs { sp ->
-           dumpMessage.toJson()?.let { str ->
-                sp.putString(CACHE_MESSAGE, str)
-            }
+            sp.putString(CACHE_MESSAGE, dumpMessage.toJson())
         }
     }
 }
