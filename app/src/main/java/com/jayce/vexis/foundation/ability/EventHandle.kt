@@ -19,11 +19,10 @@ import com.creezen.tool.AndroidTool.writePrefs
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
-import com.jayce.vexis.core.CoreService.Companion.scope
 import com.jayce.vexis.core.SessionManager.user
-import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.foundation.bean.ChatEntry
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import java.util.concurrent.LinkedBlockingQueue
@@ -41,7 +40,7 @@ object EventHandle {
         block.invoke(chatQueue)
     }
 
-    fun notifySocket(context: Context) {
+    fun notifySocket(scope: CoroutineScope, context: Context) {
         NetTool.sendAckMessage(scope, user().userId) {
             dispatchEvent(context, it)
             return@sendAckMessage true

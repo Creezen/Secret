@@ -4,9 +4,11 @@ import android.os.Bundle
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendNotifyMessage
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.core.CoreService
+import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
@@ -34,7 +36,9 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
                         if (it) finish()
                     }
                 }.onComplete {
-                    sendNotifyMessage(CoreService.scope, contentMsg)
+                    getScope(NAME_MESSAGE_SCOPE)?.let {
+                        sendNotifyMessage(it, contentMsg)
+                    }
                 }
             }
         }

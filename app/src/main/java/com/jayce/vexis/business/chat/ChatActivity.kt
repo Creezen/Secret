@@ -6,8 +6,10 @@ import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.CoreService
+import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
 import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
@@ -69,7 +71,9 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
             send.setOnClickListener {
                 val content = edit.msg(true)
                 if (content.isNotEmpty()) {
-                    sendChatMessage(CoreService.scope, content)
+                    getScope(NAME_MESSAGE_SCOPE)?.let {
+                        sendChatMessage(it, content)
+                    }
                 }
             }
         }

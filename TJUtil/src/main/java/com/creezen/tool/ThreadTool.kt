@@ -166,7 +166,7 @@ object ThreadTool {
         scopeMap[name] = scope
     }
 
-    private fun getScope(name: String): CoroutineScope? {
+    fun getScope(name: String): CoroutineScope? {
         return scopeMap[name]
     }
 

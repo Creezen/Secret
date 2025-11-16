@@ -5,7 +5,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.provider.Settings
 import android.util.Log
 import com.creezen.tool.NetTool.initSocket
 import com.creezen.tool.NetTool.setOnlineSocket
@@ -17,7 +16,6 @@ import com.jayce.vexis.foundation.ability.EventHandle.notifySocket
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.isActive
 import java.net.Socket
 
 class CoreService : Service() {
@@ -25,7 +23,6 @@ class CoreService : Service() {
     companion object {
         const val TAG = "CoreService"
         const val NAME_MESSAGE_SCOPE = "MSG_SCOPE"
-        val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     }
 
     private val binder = ConnectionBinder()
@@ -38,7 +35,7 @@ class CoreService : Service() {
         ThreadTool.runOnSpecific(NAME_MESSAGE_SCOPE) {
             val socket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
             setOnlineSocket(socket)
-            notifySocket(this)
+            notifySocket(mScope, this)
         }.onFailure {
             Log.d("LJW", "runOnSpecific error: ${it.message}")
         }
