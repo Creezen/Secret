@@ -50,7 +50,6 @@ abstract class  BaseActivity<K: ViewBinding> : AppCompatActivity(), Common<K> {
                     it.finish()
                 }
             }
-            destroySocket()
         }
     }
 }

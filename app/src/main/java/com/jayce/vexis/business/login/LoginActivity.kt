@@ -23,6 +23,7 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool
 import com.creezen.tool.NetTool
+import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
@@ -92,6 +93,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
+        destroySocket()
         unbindService(connection)
     }
 
