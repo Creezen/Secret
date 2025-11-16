@@ -64,6 +64,7 @@ object NetTool {
     private lateinit var onlineSocket : Socket
     private var user: UserBean? = null
     private val socketFlag = AtomicBoolean(true)
+    private val shouldReconnection = AtomicBoolean(true)
     private var socketReader: BufferedReader? = null
     private var socketWriter: BufferedWriter? = null
 
@@ -260,8 +261,10 @@ object NetTool {
                 }
             }.onFailure {
                 Log.d(TAG, "openMessageReceiver error: ${it.message}")
-                reConnect()
-                openMessageReceiver(scope, onReceiveMessage)
+                if (shouldReconnection.get()) {
+                    reConnect()
+                    openMessageReceiver(scope, onReceiveMessage)
+                }
             }
         }
     }
@@ -276,6 +279,10 @@ object NetTool {
         )
     }
 
+    fun initSocket() {
+        shouldReconnection.set(true)
+    }
+
     fun setOnlineSocket(socket: Socket) {
         onlineSocket = socket
         if(socketReader == null) {
@@ -287,12 +294,14 @@ object NetTool {
     }
 
     fun destroySocket() {
+        shouldReconnection.set(false)
         if(onlineSocket.isClosed.not()) {
             onlineSocket.close()
         }
     }
 
     private fun reConnect(msg: TelecomBean? = null) {
+        if (!shouldReconnection.get()) return
         val future = CompletableFuture<Unit>()
         CoroutineScope(Dispatchers.IO).launch {
             kotlin.runCatching {

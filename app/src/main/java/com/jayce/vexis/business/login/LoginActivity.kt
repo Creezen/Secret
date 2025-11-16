@@ -90,6 +90,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         setAnimation()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(connection)
+    }
+
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
             ui { "${it.modifyTime.toTime()}  $it.versionName".toast() }

@@ -29,6 +29,7 @@ import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.BaseTool.restartApp
 import com.creezen.tool.NetTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
@@ -218,9 +219,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.logout -> {
-                finishAll()
-            }
             R.id.scanQRCode -> {
                 scanLauncher.launch(ScanOptions().apply {
                     setPrompt(getString(R.string.begin_scan_qrcode))

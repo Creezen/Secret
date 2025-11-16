@@ -11,9 +11,4 @@
         android:icon="@drawable/setting"
         android:title="@string/setting"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/logout"
-        android:icon="@drawable/exist_vector"
-        android:title="@string/exist"
-        app:showAsAction="never"/>
 </menu>
