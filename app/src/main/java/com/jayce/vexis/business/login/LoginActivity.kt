@@ -22,11 +22,13 @@ import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool
+import com.creezen.tool.FileTool
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
+import com.creezen.tool.ability.api.KitContract
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
@@ -42,7 +44,9 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
+import dalvik.system.DexClassLoader
 import kotlinx.coroutines.Dispatchers
+import java.io.File
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -89,6 +93,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         getNewestVersion()
         initView()
         setAnimation()
+        test()
     }
 
     override fun onDestroy() {
@@ -180,6 +185,31 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             picAdapter.notifyItemRangeInserted(0, 5)
             setPageTransformer(MyCustomTransformer())
+        }
+    }
+
+    private fun test() {
+        val file = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE, this)
+        var aarFile: File? = null
+        file?.listFiles()?.forEach {
+            if (it.name.equals("1.apk")) {
+                aarFile = it
+            }
+        }
+        aarFile?.let {
+            it.setReadOnly()
+            loadAAR(it)
+        }
+    }
+
+    private fun loadAAR(file: File) {
+        val loader = DexClassLoader(file.path, null, null, classLoader)
+        kotlin.runCatching {
+            val clazz = loader.loadClass("com.jayce.vexis.dynamic.KitImpl")
+            val instance = clazz.getDeclaredConstructor().newInstance() as KitContract
+            instance.load()
+        }.onFailure {
+            it.printStackTrace()
         }
     }
 }

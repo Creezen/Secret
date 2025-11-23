@@ -25,6 +25,9 @@ ksp = "2.1.0-1.0.29"
 detekt = "1.23.8"
 amap = "latest.integration"
 activity = "1.8.0"
+junit = "4.13.2"
+junit-version = "1.1.5"
+espresso-core = "3.5.1"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -54,6 +57,9 @@ mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
 amap = { group = "com.amap.api", name = "3dmap-location-search", version.ref = "amap" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }
