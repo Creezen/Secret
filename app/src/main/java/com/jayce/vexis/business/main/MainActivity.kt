@@ -29,13 +29,13 @@ import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
 import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.BaseTool.restartApp
 import com.creezen.tool.NetTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
-import com.jayce.vexis.business.file.FileContentsFragment
+import com.jayce.vexis.business.file.FileFragment
+import com.jayce.vexis.business.file.pool.FileContentsFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.map.MapFragment
@@ -72,7 +72,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val historyFragment: HistoryFragment,
         val articleFragment: ArticleFragment,
         val senior: PeerFragment,
-        val fileContentsFragment: FileContentsFragment,
+        val fileFragment: FileFragment,
         val mapFragment: MapFragment
     )
 
@@ -124,7 +124,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (null == viewHolder) {
                 viewHolder = ViewHolder(
                     FeedbackFragment(), KitFragment(), HistoryFragment(), ArticleFragment(),
-                    PeerFragment(), FileContentsFragment(), MapFragment()
+                    PeerFragment(), FileFragment(), MapFragment()
                 )
                 root.tag = viewHolder
             } else {
@@ -147,7 +147,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         R.id.MainMenuTimeline -> replaceFragment(historyFragment, FRAGMENT_HISTORY)
                         R.id.MainMenuSynergy -> replaceFragment(articleFragment, FRAGMENT_ARTICLE)
                         R.id.MainMenuSenior -> replaceFragment(senior, FRAGMENT_SENIOR)
-                        R.id.MainMenuResource -> replaceFragment(fileContentsFragment, FRAGMENT_FILE)
+                        R.id.MainMenuResource -> replaceFragment(fileFragment, FRAGMENT_FILE)
                         R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
                     }
                 }

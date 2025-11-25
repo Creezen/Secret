@@ -103,10 +103,10 @@
             android:name=".business.feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".business.file.FileInfomationActivity"
+            android:name=".business.file.pool.FileInfomationActivity"
             android:exported="false" />
         <activity
-            android:name=".business.file.FileUploadActivity"
+            android:name=".business.file.pool.FileUploadActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.ledger.ScoreBoardActivity"
