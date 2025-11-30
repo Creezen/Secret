@@ -50,6 +50,7 @@ import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.foundation.ability.EventHandle.getUnreadSize
+import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
@@ -148,7 +149,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         R.id.MainMenuSynergy -> replaceFragment(articleFragment, FRAGMENT_ARTICLE)
                         R.id.MainMenuSenior -> replaceFragment(senior, FRAGMENT_SENIOR)
                         R.id.MainMenuResource -> replaceFragment(fileFragment, FRAGMENT_FILE)
-                        R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
+//                        R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
+                        R.id.MainMenuMap -> replaceFragment(ModuleHelper.getInstance(), FRAGMENT_MAP)
                     }
                 }
                 return@setNavigationItemSelectedListener true

@@ -1,0 +1,3 @@
+<resources>
+    <string name="hello">这是一个从动态模块来的字符串</string>
+</resources>

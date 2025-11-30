@@ -7,6 +7,8 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
@@ -28,7 +30,6 @@ import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
-import com.creezen.tool.ability.api.KitContract
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
@@ -41,6 +42,7 @@ import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
@@ -93,7 +95,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         getNewestVersion()
         initView()
         setAnimation()
-        test()
+        ModuleHelper.test(this)
     }
 
     override fun onDestroy() {
@@ -185,31 +187,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             picAdapter.notifyItemRangeInserted(0, 5)
             setPageTransformer(MyCustomTransformer())
-        }
-    }
-
-    private fun test() {
-        val file = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE, this)
-        var aarFile: File? = null
-        file?.listFiles()?.forEach {
-            if (it.name.equals("1.apk")) {
-                aarFile = it
-            }
-        }
-        aarFile?.let {
-            it.setReadOnly()
-            loadAAR(it)
-        }
-    }
-
-    private fun loadAAR(file: File) {
-        val loader = DexClassLoader(file.path, null, null, classLoader)
-        kotlin.runCatching {
-            val clazz = loader.loadClass("com.jayce.vexis.dynamic.KitImpl")
-            val instance = clazz.getDeclaredConstructor().newInstance() as KitContract
-            instance.load()
-        }.onFailure {
-            it.printStackTrace()
         }
     }
 }
