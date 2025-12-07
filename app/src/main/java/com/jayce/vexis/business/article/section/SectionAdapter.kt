@@ -2,10 +2,12 @@ package com.jayce.vexis.business.article.section
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,15 +40,14 @@ class SectionAdapter (
         activity.resources.getStringArray(R.array.articleFeedback).toCollection(ArrayList())
     private var articleId: Long = -1
 
+    private val destColor = context.getColor(R.color.BeanGreen)
+    private val xorColor by lazy {
+        val drawable = activity.window.decorView.background as ColorDrawable
+        drawable.color.xor(destColor)
+    }
+
     private val dialog by lazy {
-        FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
-            .title(getString(R.string.leave_message))
-            .flexibleView(AddCommentLayoutBinding::inflate) {
-                singleSelect.setChildLayout(list) {
-                    commentContent.hint = it
-                }
-            }
-            .cancelable(true)
+
     }
 
     class ViewHolder(val binding: ParagraphItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -81,7 +82,7 @@ class SectionAdapter (
         if (type == 1) {
             val currentHolder = holder as ViewHolder
             currentHolder.paragraph.setOnLongClickListener {
-                it.setBackgroundColor(context.resources.getColor(R.color.BeanGreen, null))
+                it.setBackgroundColor(destColor)
                 showCommentDialog(position, it)
                 true
             }
@@ -94,7 +95,6 @@ class SectionAdapter (
             val currentHolder = holder as ImageViewHolder
             NetTool.setImage(context, currentHolder.image, "${SessionManager.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
         }
-
     }
 
     override fun getItemCount() = itemList.size
@@ -119,14 +119,18 @@ class SectionAdapter (
         textView.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun showCommentDialog(
-        position: Int,
-        view: View,
-    ) {
-        dialog.apply {
-            title(context.getString(R.string.comment))
-            positive(context.getString(R.string.submit)) {
-                view.setBackgroundColor(context.resources.getColor(R.color.white, null))
+    private fun showCommentDialog(position: Int, view: View) {
+        FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
+            .flexibleView(AddCommentLayoutBinding::inflate) {
+                singleSelect.setChildLayout(list) {
+                    commentContent.hint = it
+                }
+            }
+            .cancelable(true)
+            .title(context.getString(R.string.comment))
+            .positive(context.getString(R.string.submit)) {
+                val color = (view.background as? ColorDrawable)?.color ?: destColor
+                view.setBackgroundColor(color.xor(xorColor))
                 val userId = user().userId
                 val paragraphId = itemList[position].sectionId
                 val content = commentContent.msg()
@@ -138,8 +142,11 @@ class SectionAdapter (
                 itemList[position].sectionId.toast()
                 return@positive -1
             }
-            show()
-        }
+            .onDismiss {
+                val color = (view.background as ColorDrawable).color
+                view.setBackgroundColor(color.xor(xorColor))
+            }
+            .show()
     }
 
     fun setArticleId(articleId: Long) {

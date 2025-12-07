@@ -221,6 +221,13 @@ class FlexibleDialog<T: ViewBinding>(
         return this
     }
 
+    fun onDismiss(onDismiss: FlexibleDialog<T>.() -> Unit): FlexibleDialog<T> {
+        builder.setOnDismissListener {
+            onDismiss.invoke(this)
+        }
+        return this
+    }
+
     fun dismiss() {
         dialog?.dismiss()
     }
