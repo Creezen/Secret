@@ -5,10 +5,7 @@ import androidx.viewpager2.widget.ViewPager2
 
 class MyCustomTransformer : ViewPager2.PageTransformer {
 
-    override fun transformPage(
-        page: View,
-        position: Float,
-    ) {
+    override fun transformPage(page: View, position: Float, ) {
         val width = page.width
         val height = page.height
         page.pivotX = (width / 2).toFloat()

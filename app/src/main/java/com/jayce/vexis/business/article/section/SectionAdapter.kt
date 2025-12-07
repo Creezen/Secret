@@ -7,7 +7,6 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.Config.Constant.NUM_4
 import com.creezen.commontool.bean.SectionRemarkBean
-import com.creezen.tool.AndroidTool.getString
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
@@ -44,10 +42,6 @@ class SectionAdapter (
     private val xorColor by lazy {
         val drawable = activity.window.decorView.background as ColorDrawable
         drawable.color.xor(destColor)
-    }
-
-    private val dialog by lazy {
-
     }
 
     class ViewHolder(val binding: ParagraphItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {

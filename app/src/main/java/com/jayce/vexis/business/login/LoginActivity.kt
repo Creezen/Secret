@@ -4,18 +4,23 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
+import android.content.ContentValues
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
-import android.content.res.AssetManager
-import android.content.res.Resources
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.os.IBinder
+import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.app.NotificationCompat
+import androidx.core.view.drawToBitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.creezen.commontool.bean.ApkSimpleInfo
 import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
@@ -24,7 +29,6 @@ import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool
-import com.creezen.tool.FileTool
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
@@ -46,9 +50,7 @@ import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
-import dalvik.system.DexClassLoader
 import kotlinx.coroutines.Dispatchers
-import java.io.File
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -175,6 +177,30 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
+    private fun saveToGallery(view: View) {
+        view.post {
+            val map = view.drawToBitmap(Bitmap.Config.ARGB_8888)
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, "${System.currentTimeMillis()}a.jpg")
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            }
+            val uri = contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                values
+            )
+            uri?.let {
+                kotlin.runCatching {
+                    contentResolver.openOutputStream(uri)?.use { stream ->
+                        map.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                    }
+                }.onFailure {
+                    Log.e("LJW", "save error")
+                }
+            }
+        }
+    }
+
     private fun initPicture() {
         binding.iv1.apply {
             this.adapter = picAdapter
@@ -183,10 +209,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             val childAt = getChildAt(0)
             childAt.setPadding(0, 0, 0, 0)
             clipToPadding = false
+            list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
+            list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
             picAdapter.notifyItemRangeInserted(0, 5)
             setPageTransformer(MyCustomTransformer())
+            registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    if (state == ViewPager2.SCROLL_STATE_IDLE && currentItem == 3) {
+                        setCurrentItem(1, false)
+                    }
+                    if (state == ViewPager2.SCROLL_STATE_IDLE && currentItem == 0) {
+                        setCurrentItem(2, false)
+                    }
+                }
+            })
         }
     }
 }
