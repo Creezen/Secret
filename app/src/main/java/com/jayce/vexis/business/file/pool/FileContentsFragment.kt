@@ -23,9 +23,9 @@ import java.util.LinkedHashMap
 class FileContentsFragment : BaseFragment<FileShareBinding>() {
 
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
-    private val resItemList = ArrayList<FileBean>()
+    private val fileItemList = ArrayList<FileBean>()
     private val adapter: FileEntryAdapter by lazy {
-        FileEntryAdapter(requireActivity(), requireActivity(), resItemList)
+        FileEntryAdapter(requireActivity(), fileItemList)
     }
     private var tag: Any? = null
 
@@ -62,8 +62,8 @@ class FileContentsFragment : BaseFragment<FileShareBinding>() {
             if (list.isNullOrEmpty()) {
                 return@request
             }
-            resItemList.clear()
-            resItemList.addAll(list)
+            fileItemList.clear()
+            fileItemList.addAll(list)
             ui { adapter.notifyDataSetChanged() }
         }
     }

@@ -40,9 +40,7 @@ publishing {
             artifactId = "tools"
             version = "1.0.0"
             from(components["kotlin"])
-            tasks.matching { it.name == "generateMetadataFileForMavenBPublication" }.configureEach{
-                dependsOn(tasks.named<Jar>("sourceJar"))
-            }
+            artifact(tasks.named("sourceJar"))
         }
     }
     repositories {

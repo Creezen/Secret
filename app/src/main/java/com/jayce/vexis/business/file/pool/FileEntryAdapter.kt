@@ -20,7 +20,6 @@ import okhttp3.ResponseBody
 
 class FileEntryAdapter(
     private val context: Context,
-    private val parent: LifecycleOwner,
     val list: List<FileBean>,
 ) : RecyclerView.Adapter<FileEntryAdapter.ViewHodler>() {
     companion object {
