@@ -150,7 +150,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         R.id.MainMenuSenior -> replaceFragment(senior, FRAGMENT_SENIOR)
                         R.id.MainMenuResource -> replaceFragment(fileFragment, FRAGMENT_FILE)
 //                        R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
-                        R.id.MainMenuMap -> replaceFragment(ModuleHelper.getInstance(), FRAGMENT_MAP)
+                        R.id.MainMenuMap -> {
+                            val fragment = ModuleHelper.getFragment("com.jayce.vexis.dynamic.ToolFragment")
+                                            ?: mapFragment
+                            fragment.apply {
+                                replaceFragment(fragment, FRAGMENT_MAP)
+                            }
+
+                        }
                     }
                 }
                 return@setNavigationItemSelectedListener true

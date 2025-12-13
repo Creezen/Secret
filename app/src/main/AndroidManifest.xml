@@ -40,6 +40,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         tools:targetApi="31">
+        <activity android:name=".foundation.dynamic.DynamicActivity"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.jayce.vexis.dynamic.ShellActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".business.kit.pinyin.PinyinActivity"
             android:exported="false"/>
@@ -128,7 +136,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

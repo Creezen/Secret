@@ -1,3 +1,4 @@
 <resources>
-    <string name="hello">这是一个从动态模块来的字符串</string>
+    <string name="hello">这是一个从动态模块来的字符串 hehe </string>
+    <string name="activity_string">你好，我是插件的Activity!!!</string>
 </resources>

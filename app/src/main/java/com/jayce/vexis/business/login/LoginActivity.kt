@@ -97,7 +97,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         getNewestVersion()
         initView()
         setAnimation()
-        ModuleHelper.test(this)
+        ModuleHelper.test(this, "debug-1.apk")
     }
 
     override fun onDestroy() {

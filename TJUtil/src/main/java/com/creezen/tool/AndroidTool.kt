@@ -149,4 +149,13 @@ object AndroidTool {
         maxValue = array.size - 1
         value = select
     }
+
+    fun startActivity(activityClazz: Class<*>) {
+        val intent = Intent("com.jayce.vexis.dynamic.ShellActivity")
+        intent.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            putExtra("className", activityClazz.name)
+        }
+        env().startActivity(intent)
+    }
 }
