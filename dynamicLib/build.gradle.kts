@@ -1,3 +1,5 @@
+import com.android.build.api.variant.impl.VariantOutputImpl
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -36,6 +38,14 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.filterIsInstance<VariantOutputImpl>().forEach { output ->
+            output.outputFileName = "${variant.name}-1.apk"
+        }
     }
 }
 

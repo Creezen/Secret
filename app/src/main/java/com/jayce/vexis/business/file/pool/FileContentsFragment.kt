@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.ThreadTool.ui
@@ -17,6 +18,7 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.FileService
+import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import java.util.ArrayList
 import java.util.LinkedHashMap
 

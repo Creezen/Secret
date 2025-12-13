@@ -1,3 +1,4 @@
+import com.android.build.api.variant.impl.VariantOutputImpl
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -91,6 +92,14 @@ android {
         baseline = file("lint-baseline.xml")
         abortOnError = false
         htmlOutput = file("$buildDir/reports/combined/lint-report.html")
+    }
+}
+
+androidComponents {
+    onVariants { variant ->
+        variant.outputs.filterIsInstance<VariantOutputImpl>().forEach { output ->
+            output.outputFileName = "${variant.name}-1.apk"
+        }
     }
 }
 
