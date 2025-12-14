@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentDynamicMduleBinding
 import com.jayce.vexis.foundation.bean.DynamicModuleEntry
+import com.jayce.vexis.foundation.viewmodel.FileViewModel
 
-class DynamicModuleFragment : BaseFragment<FragmentDynamicMduleBinding>() {
+class DynamicModuleFragment(
+    private val viewModel: FileViewModel
+) : BaseFragment<FragmentDynamicMduleBinding>() {
 
     private val list = arrayListOf<DynamicModuleEntry>()
     private val adapter = DynamicModuleAdapter(list)

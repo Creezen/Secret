@@ -9,7 +9,7 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import kotlinx.coroutines.Dispatchers
 
-class TimePicker(context: Context, attr: AttributeSet): LinearLayout(context, attr) {
+class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
 
     private var timeStyle: Int = 0
     private var timePicker: ITimePicker<out ViewBinding>
@@ -35,9 +35,9 @@ class TimePicker(context: Context, attr: AttributeSet): LinearLayout(context, at
     fun formatTime(): String {
         var timeStr = EMPTY_STRING
         time().forEachIndexed { i, v ->
-            if(i == 0) {
+            if (i == 0) {
                 timeStr += v.padStart(4, '0')
-            } else if(i == 6) {
+            } else if (i == 6) {
                 timeStr += v.padStart(3, '0')
             } else {
                 timeStr += v.padStart(2, '0')

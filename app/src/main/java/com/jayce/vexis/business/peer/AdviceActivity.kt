@@ -3,7 +3,6 @@ package com.jayce.vexis.business.peer
 import android.os.Bundle
 import android.util.Log
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
-import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.ThreadTool.ui
@@ -39,15 +38,15 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
             content.hint = "留下你对$primaryKey/$secondKey/${tertiaryKey}专业的同学的话吧！"
             submit.setOnClickListener {
                 val text = content.msg(true)
-                if(text.isBlank()) {
+                if (text.isBlank()) {
                     "内容不可以为空哦！".toast()
                     return@setOnClickListener
                 }
-                Log.d(TAG, "send: $primaryKey/$secondKey/${tertiaryKey}")
+                Log.d(TAG, "send: $primaryKey/$secondKey/$tertiaryKey")
                 request<PeerService, Boolean>({
                     sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
                 }) {
-                    if(it) {
+                    if (it) {
                         finish()
                         return@request
                     }
@@ -56,5 +55,4 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
             }
         }
     }
-
 }

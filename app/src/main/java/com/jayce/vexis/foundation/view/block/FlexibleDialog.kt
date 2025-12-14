@@ -1,8 +1,6 @@
 package com.jayce.vexis.foundation.view.block
 
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams
@@ -15,7 +13,6 @@ class FlexibleDialog<T: ViewBinding>(
     private val mContext: Context,
     val inflater: LayoutInflater,
     themeId: Int = R.style.Dialog,
-
 ){
     companion object {
         private const val TAG = "FlexibleDialog"
@@ -43,7 +40,10 @@ class FlexibleDialog<T: ViewBinding>(
         builder.setView(mBinding?.root)
     }
 
-    fun <K: ViewBinding> flexibleView(binding: K, func: (K.() -> Unit)? = null): FlexibleDialog<T> {
+    fun <K: ViewBinding> flexibleView(
+        binding: K,
+        func: (K.() -> Unit)? = null,
+    ): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as? DialogBinding
             bind?.apply {
@@ -59,7 +59,7 @@ class FlexibleDialog<T: ViewBinding>(
 
     fun flexibleView(
         factory: ((LayoutInflater) -> T)? = null,
-        func: (T.(FlexibleDialog<T>) -> Unit)? = null
+        func: (T.(FlexibleDialog<T>) -> Unit)? = null,
     ): FlexibleDialog<T> {
         if (factory != null) {
             mBinding = factory(inflater)
@@ -96,22 +96,38 @@ class FlexibleDialog<T: ViewBinding>(
         return this
     }
 
-    fun positive(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun positive(
+        resId: Int,
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int,
+    ): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return positive(text, autoDismiss, onclick)
     }
 
-    fun negative(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun negative(
+        resId: Int,
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int,
+    ): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return negative(text, autoDismiss, onclick)
     }
 
-    fun neutral(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun neutral(
+        resId: Int,
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int
+    ): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return neutral(text, autoDismiss, onclick)
     }
 
-    fun positive(text: String = "确定", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun positive(
+        text: String = "确定",
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int
+    ): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as DialogBinding
             bind.yes.visibility = View.VISIBLE
@@ -143,7 +159,11 @@ class FlexibleDialog<T: ViewBinding>(
         return this
     }
 
-    fun negative(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun negative(
+        text: String = "取消",
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int
+    ): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as DialogBinding
             bind.no.visibility = View.VISIBLE
@@ -176,7 +196,11 @@ class FlexibleDialog<T: ViewBinding>(
         return this
     }
 
-    fun neutral(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
+    fun neutral(
+        text: String = "取消",
+        autoDismiss: Boolean = true,
+        onclick: T.() -> Int
+    ): FlexibleDialog<T> {
         builder.setNeutralButton(text) { dia, _ ->
             mBinding?.let {
                 neutralFlag = onclick.invoke(it)

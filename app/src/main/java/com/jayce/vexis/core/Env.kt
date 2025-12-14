@@ -38,7 +38,9 @@ class Env : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
-        initViewModel()
+        startKoin {
+            modules(modules)
+        }
     }
 
     override fun onCreate() {
@@ -59,19 +61,8 @@ class Env : Application() {
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
 
         ThreadTool.runOnMulti(Dispatchers.IO) {
-            val request = NetworkRequest.Builder().build()
             val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            manager.registerNetworkCallback(request, NetStatusCallback())
-        }
-    }
-
-    private fun initViewModel() {
-        val module = module {
-            viewModel { RegisterViewModel() }
-            viewModel { ChatViewModel() }
-        }
-        startKoin {
-            modules(module)
+            manager.registerDefaultNetworkCallback(NetStatusCallback(manager))
         }
     }
 }

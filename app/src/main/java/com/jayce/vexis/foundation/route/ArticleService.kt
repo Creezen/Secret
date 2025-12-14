@@ -14,7 +14,7 @@ interface ArticleService : BaseService {
     fun postSynergy(
         @Field("articleTitle") title: String,
         @Field("paragraphs") paragraphs: List<String>,
-        @Field("userID") userID: String
+        @Field("userID") userID: String,
     ): Call<Boolean>
 
     @POST("/getSynergy")
@@ -23,7 +23,7 @@ interface ArticleService : BaseService {
     @POST("/getSection")
     @FormUrlEncoded
     fun getSection(
-        @Field("articleId") articleId: Long
+        @Field("articleId") articleId: Long,
     ): Call<ArrayList<SectionRemarkBean>>
 
     @POST("/postCommen")

@@ -27,7 +27,8 @@
             android:inputType="text"
             android:hint="@string/chat_health"
             android:paddingStart="3dp"
-            android:paddingEnd="0dp"/>
+            android:paddingEnd="0dp"
+            android:importantForAutofill="no"/>
         <Button
             android:id="@+id/send"
             android:layout_width="wrap_content"

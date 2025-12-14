@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
@@ -26,8 +25,6 @@ import com.jayce.vexis.foundation.bean.ScoreEntry
 import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
 import com.jayce.vexis.foundation.view.block.FlexibleDialog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 

@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.MutableLiveData
@@ -26,6 +28,7 @@ import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
 import com.creezen.commontool.toTime
+import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool
@@ -34,8 +37,10 @@ import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
+import com.creezen.tool.WindowTool
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
@@ -50,7 +55,13 @@ import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
 import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
+import com.jayce.vexis.foundation.view.block.DownloadButtonSheetDialog
 import kotlinx.coroutines.Dispatchers
+import org.pytorch.IValue
+import org.pytorch.Module
+import org.pytorch.Tensor
+import java.io.File
+import java.io.FileOutputStream
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -71,12 +82,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             val notification = buildNotification()
             binder.showNotification(notification)
         }
-        override fun onServiceDisconnected(name: ComponentName?) { /**/ }
+
+        override fun onServiceDisconnected(name: ComponentName?) { /**/
+        }
     }
 
     private fun buildNotification(): Notification {
         getSystemService(NotificationManager::class.java).apply {
-            val notifyChannel = NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
+            val notifyChannel =
+                NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
             createNotificationChannel(notifyChannel)
         }
         val notification = NotificationCompat.Builder(BaseTool.env(), "1")
@@ -125,7 +139,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 login.isClickable = it.length in 6..18
             }
             findPassword.setOnClickListener {
-                getString(R.string.not_support).toast()
+                aiModel()
+//                getString(R.string.not_support).toast()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
@@ -141,7 +156,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 ThreadTool.runWithBlocking(option) {
                     request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) {
                         Log.e(TAG, "return message: $it")
-                        when(it.statusCode) {
+                        when (it.statusCode) {
                             -1 -> {
                                 it.data.toBean<UserBean>()?.let { user ->
                                     registerUser(user)
@@ -175,6 +190,43 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
             initPicture()
         }
+    }
+
+    private fun aiModel() {
+        kotlin.runCatching {
+            val model = Module.load(assetFilePath(this, "model/androidModel.pt"))
+            val tensor = Tensor.fromBlob(floatArrayOf(2.5f, 1.5f), longArrayOf(1, 2))
+            val result = model.forward(IValue.from(tensor)).toTensor()
+            result.dataAsFloatArray[0].toast()
+        }.onFailure {
+            it.printStackTrace()
+        }
+    }
+
+    private fun assetFilePath(context: Context, assetName: String): String {
+        val file = File(context.getFilesDir(), assetName);
+        if (file.exists() && file.length() > 0) {
+            return file.getAbsolutePath();
+        }
+
+        if (file.exists().not()) {
+            file.parentFile?.mkdir()
+            file.createNewFile()
+        }
+
+        context.assets.open(assetName).use { ins ->
+            FileOutputStream(file).use { ous ->
+                val buffer = ByteArray(4 * 1024)
+                while (true) {
+                    val read = ins.read(buffer)
+                    if (read != -1) {
+                        ous.write(buffer, 0, read);
+                    } else break
+                }
+                ous.flush();
+            }
+        }
+        return  file.absolutePath
     }
 
     private fun saveToGallery(view: View) {

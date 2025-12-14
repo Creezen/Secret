@@ -170,4 +170,8 @@
     <string name="not_support">暂不支持</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="words_to_user">留下给大家的话....</string>
+    <string name="send_immediate">立即发送</string>
+    <string name="in_download">资源下载中…</string>
+    <string name="size_file">0 M</string>
 </resources>

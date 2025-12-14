@@ -52,7 +52,9 @@
                     android:layout_marginBottom="2dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    android:hint="@string/account"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +82,8 @@
                     android:layout_marginBottom="2dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
-                    android:importantForAutofill="no"/>
+                    android:importantForAutofill="no"
+                    android:hint="@string/password"/>
             </LinearLayout>
             <Button
                 android:id="@+id/login"
@@ -98,14 +101,16 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/create_role"
-                    android:background="@color/Button"/>
+                    android:background="@color/Button"
+                    style="@style/buttonStyle"/>
                 <Button
                     android:id="@+id/findPassword"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/find_password"
-                    android:background="@color/Button"/>
+                    android:background="@color/Button"
+                    style="@style/buttonStyle"/>
             </LinearLayout>
 
         </LinearLayout>

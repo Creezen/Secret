@@ -77,7 +77,9 @@
             android:paddingTop="3dp"
             android:gravity="start|top"
             android:layout_marginStart="8dp"
-            android:background="@drawable/corner_8"/>
+            android:background="@drawable/corner_8"
+            android:importantForAutofill="no"
+            android:inputType="text"/>
     </LinearLayout>
     <Button
         android:id="@+id/submit"

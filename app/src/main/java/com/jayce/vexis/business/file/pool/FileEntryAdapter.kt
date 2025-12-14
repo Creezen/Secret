@@ -4,29 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
-import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.FileService
-import okhttp3.ResponseBody
+import com.jayce.vexis.foundation.bean.DownloadTask
+import com.jayce.vexis.foundation.viewmodel.FileViewModel
 
 class FileEntryAdapter(
     private val context: Context,
     val list: List<FileBean>,
+    private val viewModel: FileViewModel
 ) : RecyclerView.Adapter<FileEntryAdapter.ViewHodler>() {
     companion object {
         const val TAG = "MediaElementAdapter"
     }
-
-    private var progressBar: ProgressBar? = null
 
     class ViewHodler(val binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
@@ -62,19 +57,14 @@ class FileEntryAdapter(
                 context.getString(R.string.file_exist_open).toast()
                 return@setOnClickListener
             }
-            context.getString(R.string.begin_download).toast()
-            progressBar?.progress = 0
-            val fileName = "${item.fileID}${item.fileSuffix}"
-            request<FileService, ResponseBody>({ downloadFile(fileName) }) {
-                val stream = it.byteStream()
-                progressBar?.max = item.fileSize.toInt()
-                downloadFileByNet(stream, item.fileName) { size ->
-                    progressBar?.progress = size
-                    if (size == item.fileSize.toInt()) {
-                        holder.download.setImageResource(R.drawable.open)
-                    }
-                }
-            }
+            val task = DownloadTask(
+                item.fileID,
+                "${item.fileID}${item.fileSuffix}",
+                item.fileSize,
+                System.currentTimeMillis(),
+                1
+            )
+            viewModel.pushDownloadTask(task)
         }
         holder.view.setOnClickListener {
             context.startActivity(
@@ -99,9 +89,5 @@ class FileEntryAdapter(
         val sizeNum = size / (1024.0 * 1024)
         val finalNum = "%.2f".format(sizeNum)
         return "$finalNum M"
-    }
-
-    fun setProgressBar(bar: ProgressBar) {
-        this.progressBar = bar
     }
 }

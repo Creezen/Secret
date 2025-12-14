@@ -1,11 +1,8 @@
 package com.jayce.vexis.business.role.manage
 
-import androidx.lifecycle.lifecycleScope
 import android.os.Build
 import android.os.Bundle
 import com.creezen.commontool.bean.ActiveBean
-import com.creezen.tool.NetTool.await
-import com.creezen.tool.NetTool.create
 import com.creezen.tool.ThreadTool
 import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseActivity
@@ -14,7 +11,6 @@ import com.jayce.vexis.foundation.Util.Extension.unParcelable
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.bean.ActiveEntry
 import com.jayce.vexis.foundation.route.UserService
-import kotlinx.coroutines.launch
 
 class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
 

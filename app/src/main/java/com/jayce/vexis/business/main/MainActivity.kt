@@ -91,9 +91,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPage()
-        //将顶部的间距设置为状态栏高度
-        //将底部的间距设置为导航栏的高度
-        //这样做的原因是使用了自定义的toolbar和 navigation组件
+        // 将顶部的间距设置为状态栏高度
+        // 将底部的间距设置为导航栏的高度
+        // 这样做的原因是使用了自定义的toolbar和 navigation组件
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navigationBars = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
@@ -138,6 +138,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             toolBarText.text = navigation.menu.getItem(0).title
             replaceFragment(viewHolder!!.historyFragment, FRAGMENT_HISTORY)
+//            navigation.menu.iterator().forEachRemaining {
+//                if (it.title == "建言献策") {
+//                    it.isVisible = false
+//                }
+//            }
             navigation.setNavigationItemSelectedListener { item ->
                 toolBarText.text = item.title
                 drawerLayout.closeDrawers()
@@ -149,7 +154,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         R.id.MainMenuSynergy -> replaceFragment(articleFragment, FRAGMENT_ARTICLE)
                         R.id.MainMenuSenior -> replaceFragment(senior, FRAGMENT_SENIOR)
                         R.id.MainMenuResource -> replaceFragment(fileFragment, FRAGMENT_FILE)
-//                        R.id.MainMenuMap -> replaceFragment(mapFragment, FRAGMENT_MAP)
                         R.id.MainMenuMap -> {
                             val fragment = ModuleHelper.getFragment("com.jayce.vexis.dynamic.ToolFragment")
                                             ?: mapFragment
@@ -186,8 +190,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             drawerLayout.addDrawerListener(
                 object : DrawerListener {
                     override fun onDrawerSlide(drawerView: View, slideOffset: Float, ) { /**/ }
+
                     override fun onDrawerClosed(drawerView: View) { /**/ }
+
                     override fun onDrawerStateChanged(newState: Int) { /**/ }
+
                     override fun onDrawerOpened(drawerView: View) {
                         chatBadge.badgeNumber = getUnreadSize()
                         emailBadge.badgeNumber = 0

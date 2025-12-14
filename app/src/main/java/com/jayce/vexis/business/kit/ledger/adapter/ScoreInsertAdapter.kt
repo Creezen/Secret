@@ -11,11 +11,11 @@ import java.util.ArrayList
 class ScoreInsertAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>() {
 
     private val scoreList = arrayListOf<Int>().apply {
-            repeat(list.size) {
-                add(0)
-            }
-            Log.e("ScoreInsertAdapter.", "scoreList.size:  ${this.size}")
+        repeat(list.size) {
+            add(0)
         }
+        Log.e("ScoreInsertAdapter.", "scoreList.size:  ${this.size}")
+    }
 
     class ViewHolder(val binding: AddRecordScoreBinding) : RecyclerView.ViewHolder(binding.root) {
         val userName = binding.userName

@@ -93,16 +93,16 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
 
     override fun registerLauncher() {
         fileLaunch = getLauncher(openFile()) {
-                it?.let { uri ->
-                    val filePath = getFilePathByUri(uri)
-                    if (filePath.isNullOrEmpty()) {
-                        return@let
-                    }
-                    selectedFilePath = filePath
-                    val splitIdex = filePath.lastIndexOf(SPLIT)
-                    val displayFileName = filePath.substring(splitIdex + 1)
-                    binding.selectedFile.setText(displayFileName)
+            it?.let { uri ->
+                val filePath = getFilePathByUri(uri)
+                if (filePath.isNullOrEmpty()) {
+                    return@let
                 }
+                selectedFilePath = filePath
+                val splitIdex = filePath.lastIndexOf(SPLIT)
+                val displayFileName = filePath.substring(splitIdex + 1)
+                binding.selectedFile.setText(displayFileName)
             }
+        }
     }
 }

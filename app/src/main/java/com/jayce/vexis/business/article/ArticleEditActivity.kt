@@ -34,10 +34,10 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
     private fun getParagraphList(textView: TextView): ArrayList<String> {
         val msg = textView.msg(true)
         val paragraphSequence = msg.split("\n")
-                .asSequence()
-                .filterNot {
-                    it.isEmpty()
-                }
+            .asSequence()
+            .filterNot {
+                it.isEmpty()
+            }
         val list = arrayListOf<String>()
         list.addAll(paragraphSequence.toList())
         return list

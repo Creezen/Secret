@@ -90,7 +90,7 @@ object FileTool {
     fun downloadFileByNet(
         inputStream: InputStream,
         fileName: String,
-        downloadFunc: ((Int) -> Unit)
+        downloadFunc: suspend ((Int) -> Unit)
     ) {
         val savePath = getDir(Dir.EXT_PUBLIC_DOWNLOAD)?.path
         if(savePath.isNullOrEmpty()) {
@@ -102,14 +102,16 @@ object FileTool {
         }
         file.createNewFile()
         val randomAccessFile = RandomAccessFile(file, "rw")
-        randomAccessFile.use { accessFile ->
-            val bytes = ByteArray(1024)
-            var length: Int
-            var totalByte = 0
-            while ((inputStream.read(bytes).also { length = it }) != -1) {
-                accessFile.write(bytes, 0, length)
-                totalByte += length
-                downloadFunc(totalByte)
+        ThreadTool.runOnMulti {
+            randomAccessFile.use { accessFile ->
+                val bytes = ByteArray(1024)
+                var length: Int
+                var totalByte = 0
+                while ((inputStream.read(bytes).also { length = it }) != -1) {
+                    accessFile.write(bytes, 0, length)
+                    totalByte += length
+                    downloadFunc(totalByte)
+                }
             }
         }
     }

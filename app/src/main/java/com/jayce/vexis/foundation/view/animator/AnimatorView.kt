@@ -39,13 +39,13 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
 
     private fun setBallAnimator(): ValueAnimator {
         val valueAnimator = ValueAnimator.ofObject(
-                BallEvaluator(),
-                AnimatorBallEntry(radius, height / 2f),
-                AnimatorBallEntry(width / 2f, height - radius),
-                AnimatorBallEntry(width - radius, height / 2f),
-                AnimatorBallEntry(width / 2f, radius),
-                AnimatorBallEntry(radius, height / 2f)
-            )
+            BallEvaluator(),
+            AnimatorBallEntry(radius, height / 2f),
+            AnimatorBallEntry(width / 2f, height - radius),
+            AnimatorBallEntry(width - radius, height / 2f),
+            AnimatorBallEntry(width / 2f, radius),
+            AnimatorBallEntry(radius, height / 2f)
+        )
         valueAnimator.addUpdateListener {
             ball = it.animatedValue as AnimatorBallEntry
             invalidate()
@@ -56,14 +56,14 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
 
     private fun setBackgroundAnimator(): ObjectAnimator {
         val objAnimator = ObjectAnimator.ofArgb(
-                this,
-                "backgroundColor",
-                Color.parseColor("#00ffff"),
-                Color.parseColor("#00ffff"),
-                Color.parseColor("#0000ff"),
-                Color.parseColor("#000000"),
-                Color.parseColor("#ffffff"),
-            )
+            this,
+            "backgroundColor",
+            Color.parseColor("#00ffff"),
+            Color.parseColor("#00ffff"),
+            Color.parseColor("#0000ff"),
+            Color.parseColor("#000000"),
+            Color.parseColor("#ffffff"),
+        )
         objAnimator.repeatCount = ValueAnimator.INFINITE
         return objAnimator
     }
