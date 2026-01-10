@@ -13,7 +13,7 @@ class MazeActivity : BaseActivity<ActivityMazeBinding>() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            binding.maze.setRowAndLine(50f)
+            binding.maze.setRowAndLine(20f)
             binding.maze.invalidate()
             startTime = System.currentTimeMillis()
             binding.maze.registerCallback(
