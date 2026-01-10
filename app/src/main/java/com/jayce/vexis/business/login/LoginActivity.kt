@@ -19,6 +19,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
@@ -32,6 +33,7 @@ import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool
+import com.creezen.tool.FileTool
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
@@ -139,8 +141,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 login.isClickable = it.length in 6..18
             }
             findPassword.setOnClickListener {
-                aiModel()
-//                getString(R.string.not_support).toast()
+//                installApp()
+                getString(R.string.not_support).toast()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
@@ -251,6 +253,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
             }
         }
+    }
+
+    private fun installApp() {
+        val path = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE, this)
+        val file = File("$path/game.apk")
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val fileUri = FileProvider.getUriForFile(this, "${packageName}.provider", file)
+        intent.setDataAndType(fileUri, "application/vnd.android.package-archive")
+        startActivity(intent)
     }
 
     private fun initPicture() {
