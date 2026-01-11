@@ -15,11 +15,13 @@ import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.AnimRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.creezen.tool.BaseTool.env
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
+import com.creezen.tool.bean.FragmentAnimRes
 import kotlin.math.ceil
 
 object AndroidTool {
@@ -100,9 +102,18 @@ object AndroidTool {
         resourceID: Int,
         fragment: Fragment,
         fragmentTag: String,
-        isAddToStack: Boolean = false
+        isAddToStack: Boolean = false,
+        fragmentAnim: FragmentAnimRes? = null
     ){
         val beginTransaction = fragmentManager.beginTransaction()
+        if (fragmentAnim != null) {
+            beginTransaction.setCustomAnimations(
+                fragmentAnim.enterAnim,
+                fragmentAnim.exitAnim,
+                fragmentAnim.popEnterAnim,
+                fragmentAnim.popExitAnim
+            )
+        }
         var displayFragment = fragmentManager.findFragmentByTag(fragmentTag)
         if (displayFragment == null) {
             beginTransaction.add(resourceID, fragment, fragmentTag)

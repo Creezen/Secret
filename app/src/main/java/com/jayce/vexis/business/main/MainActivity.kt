@@ -30,6 +30,7 @@ import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
+import com.creezen.tool.bean.FragmentAnimRes
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
@@ -252,6 +253,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun replaceFragment(fragment: Fragment, fragmentTag: String) {
-        replaceFragment(supportFragmentManager, R.id.frame, fragment, fragmentTag)
+        val animRes = FragmentAnimRes(
+            R.anim.fragment_enter,
+            R.anim.fragment_exit,
+            R.anim.fragment_pop_enter,
+            R.anim.fragment_pop_exit
+        )
+        replaceFragment(
+            supportFragmentManager,
+            R.id.frame,
+            fragment,
+            fragmentTag,
+            false,
+            animRes
+        )
     }
 }
