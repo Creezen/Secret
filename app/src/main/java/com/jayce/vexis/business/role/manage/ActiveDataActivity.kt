@@ -54,10 +54,7 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
         }
     }
 
-    private fun manageUser(
-        operation: Int,
-        userId: String,
-    ) {
+    private fun manageUser(operation: Int, userId: String) {
         activeBean?.let {
             ThreadTool.runOnMulti {
                 request<UserService, LinkedTreeMap<String, Boolean>>({

@@ -113,8 +113,7 @@
             android:exported="false" />
         <activity
             android:name=".business.role.manage.AdminActivity"
-            android:exported="false"
-            android:theme="@style/adminActivityTheme" />
+            android:exported="false"/>
         <activity
             android:name=".business.chat.ChatActivity"
             android:exported="false" />

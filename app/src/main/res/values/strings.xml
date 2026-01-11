@@ -66,7 +66,7 @@
     <string name="send_message">发送消息</string>
     <string name="unknow_user">未知用户</string>
     <string name="user_manage_sys">用户管理系统</string>
-    <string name="register_time">注册时间</string>
+    <string name="register_time">加入时间</string>
     <string name="user_id">用户ID</string>
     <string name="delete_user">删除该用户</string>
     <string name="fans">粉丝数</string>

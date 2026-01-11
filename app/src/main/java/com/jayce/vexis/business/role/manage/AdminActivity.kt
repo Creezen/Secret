@@ -1,7 +1,6 @@
 package com.jayce.vexis.business.role.manage
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.ActiveBean
 import com.google.gson.internal.LinkedTreeMap
@@ -39,7 +38,6 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>() {
             val remoteRes = it["userActiveData"] ?: listOf()
             val originSize = userList.size
             userList.addAll(remoteRes)
-            Log.e("AdminActivity.initData", "$userList")
             withContext(Dispatchers.Main) {
                 adapter.notifyItemRangeInserted(originSize, remoteRes.size)
             }
