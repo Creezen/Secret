@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.Config.Constant.NUM_4
 import com.creezen.commontool.bean.SectionRemarkBean
+import com.creezen.tool.AndroidTool.getThemeColor
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
@@ -26,7 +27,7 @@ import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.ArticleService
-import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
 class SectionAdapter (
     val context: Context,
@@ -38,7 +39,7 @@ class SectionAdapter (
         activity.resources.getStringArray(R.array.articleFeedback).toCollection(ArrayList())
     private var articleId: Long = -1
 
-    private val destColor = context.getColor(R.color.BeanGreen)
+    private val destColor = context.getThemeColor(R.color.vermilion)
     private val xorColor by lazy {
         val drawable = activity.window.decorView.background as ColorDrawable
         drawable.color.xor(destColor)

@@ -9,6 +9,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
+import com.example.testlib.R
 import kotlinx.coroutines.delay
 
 object WindowTool {
@@ -19,9 +21,15 @@ object WindowTool {
         context: Context,
         viewId: Int,
         dismissDelay: Long = 2000L,
+        text: String? = null,
         adjustParam: (WindowManager.LayoutParams.() -> WindowManager.LayoutParams)? = null
     ) {
         val view = LayoutInflater.from(context).inflate(viewId, null)
+        text?.apply {
+            view.findViewById<TextView>(R.id.toastContent)?.let {
+                it.text = this
+            }
+        }
         requestFloatWindow(context, view, dismissDelay, adjustParam)
     }
 

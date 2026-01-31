@@ -8,8 +8,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pocket_title"
-            android:textSize="20sp"
-            android:textColor="#ff0000"/>
+            android:textSize="20sp"/>
         <EditText
             android:id="@+id/titleEdt"
             android:layout_width="match_parent"
@@ -20,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/join_player"
-            android:textSize="20sp"
-            android:textColor="#73FF0000"/>
+            android:textSize="20sp"/>
         <LinearLayout
             android:id="@+id/itemLayout"
             android:layout_width="match_parent"

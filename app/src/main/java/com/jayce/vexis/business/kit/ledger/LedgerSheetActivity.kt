@@ -8,7 +8,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.PocketMainBinding
-import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import java.util.ArrayList
 
 class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {

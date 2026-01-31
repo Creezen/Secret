@@ -22,14 +22,10 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
     private val feedbackEntryList = arrayListOf<FeedbackBean>()
     private val feedbackAdapter by lazy {
-        FeedbackAdapter(requireActivity(), feedbackEntryList)
+        FeedBackAdapter(requireActivity(), feedbackEntryList)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()
         return binding.root
     }

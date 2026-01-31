@@ -12,7 +12,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                <com.jayce.vexis.foundation.ui.block.DefaultSpinner
                     android:id="@+id/primary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
@@ -22,7 +22,7 @@
                     android:prompt="@string/prompt"
                     android:background="@drawable/editview_border"
                     android:onItemSelected="@{() -> primary.onItemSelect()}"/>
-                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                <com.jayce.vexis.foundation.ui.block.DefaultSpinner
                     android:id="@+id/secondary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
@@ -32,7 +32,7 @@
                     android:prompt="@string/prompt"
                     android:background="@drawable/editview_border"
                     android:onItemSelected="@{() -> secondary.onItemSelect()}"/>
-                <com.jayce.vexis.foundation.view.block.DefaultSpinner
+                <com.jayce.vexis.foundation.ui.block.DefaultSpinner
                     android:id="@+id/tertiary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
@@ -54,16 +54,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp">
+            android:layout_marginEnd="@dimen/fabMargin"
+            android:layout_marginBottom="@dimen/fabMargin">
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/advice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:elevation="5dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
                 android:src="@drawable/post_vector"/>
         </RelativeLayout>
     </FrameLayout>

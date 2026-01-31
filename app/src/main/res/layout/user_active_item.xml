@@ -15,8 +15,7 @@
             android:gravity="center"
             android:textSize="30sp"
             android:paddingStart="4dp"
-            android:paddingEnd="0dp"
-            android:textColor="#83af9b"/>
+            android:paddingEnd="0dp"/>
         <TextView
             android:id="@+id/administrator"
             android:layout_width="wrap_content"
@@ -26,8 +25,7 @@
             android:layout_alignParentTop="true"
             android:paddingStart="5dp"
             android:paddingEnd="0dp"
-            android:textSize="15sp"
-            android:textColor="#cd7f32"/>
+            android:textSize="15sp"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +46,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:textColor="#E81D497E"
             android:gravity="start"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -71,7 +68,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="7"
-            android:textColor="#E81D497E"
             android:gravity="start"
             android:textSize="15sp"/>
     </LinearLayout>

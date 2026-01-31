@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <!--白色-->
     <color name="white">#FFFFFFFF</color>
-    <color name="InformationLabel">#77555555</color>
-    <color name="Button">#33543D28</color>
-    <color name="BeanGreen">#C7EDCC</color>
-    <color name="TowelBlanket">#E9EBFE</color>
-    <color name="SeaSkyBlue">#DCE2F1</color>
-    <color name="Lawn">#D0D971</color>
-    <color name="Carminum">#FDE6E0</color>
-    <color name="BurlyWood">#33DEB887</color>
-    <color name="hint">#809E9E9E</color>
-    <color name="label">#BF0000FF</color>
-    <color name="hintText">#A6FF0000</color>
+    <!--黑色-->
+    <color name="black">#FF000000</color>
+    <!--朱砂红-->
+    <color name="vermilion">#A63636</color>
+    <!--黛蓝色-->
+    <color name="indigo">#2C3A45</color>
+    <!--墨黑色-->
+    <color name="inkyBlack">#333333</color>
+    <!--灰褐色-->
+    <color name="taupe">#888888</color>
+    <!--淡云灰-->
+    <color name="paleGray">#F9F7F2</color>
+    <!--浅香槟  边框-->
+    <color name="paleChampagne">#E5DED0</color>
+    <!--圣旨金-->
+    <color name="metallicGold">#D4AF37</color>
 </resources>

@@ -23,7 +23,7 @@ import com.jayce.vexis.foundation.bean.RecordEntry
 import com.jayce.vexis.foundation.bean.RecordItemEntry
 import com.jayce.vexis.foundation.bean.ScoreEntry
 import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
-import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import kotlinx.coroutines.Dispatchers
 
 class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {

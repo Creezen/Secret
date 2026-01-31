@@ -5,7 +5,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.BirthdaySelectorBinding
 import com.jayce.vexis.databinding.CreateRoleLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
-import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import org.koin.android.ext.android.inject
 
@@ -23,21 +23,11 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
         val owner = this
         registerViewModel.apply {
             initStatus(resources, intent.getStringExtra("intentAccount"))
-            roleId.observe(owner) {
-                handleRoleId(it)
-            }
-            nickname.observe(owner) {
-                handleNickName(it)
-            }
-            password.observe(owner) {
-                handlePassword(it)
-            }
-            confirmPassword.observe(owner) {
-                handleConfirmPassword(it)
-            }
-            bio.observe(owner) {
-                handleBio(it)
-            }
+            roleId.observe(owner) { handleRoleId(it) }
+            nickname.observe(owner) { handleNickName(it) }
+            password.observe(owner) { handlePassword(it) }
+            confirmPassword.observe(owner) { handleConfirmPassword(it) }
+            bio.observe(owner) {handleBio(it) }
         }
     }
 

@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.AndroidTool.toastX
+import com.jayce.vexis.R
 import com.jayce.vexis.databinding.SeniorAdviceBinding
 
 class PeerAdapter(
@@ -37,11 +39,21 @@ class PeerAdapter(
         holder.reply.setOnClickListener {
             "点我回复".toast()
         }
-        holder.resource.setOnClickListener {
-            "点我获取资源".toast()
+        if (position % 2 == 0) {
+            holder.resource.setImageResource(R.drawable.file_resource)
+            holder.resource.setOnClickListener {
+                "点我获取资源".toast()
+            }
+
+            holder.love.setImageResource(R.drawable.support_blank_clicked)
+        } else {
+            holder.resource.isClickable = false
+            holder.resource.setImageResource(R.drawable.file_resource_unable)
+
+            holder.love.setImageResource(R.drawable.support_blank)
         }
         holder.love.setOnClickListener {
-            "点我给作者点赞".toast()
+            "谢谢你的喜欢".toastX()
         }
     }
 

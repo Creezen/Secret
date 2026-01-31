@@ -26,6 +26,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>() {
 
     private fun initPage() {
         with(binding) {
+            adapter.cardPadding = 6
             listRV.layoutManager = LinearLayoutManager(this@AdminActivity)
             listRV.adapter = adapter
         }

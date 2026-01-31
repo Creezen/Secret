@@ -33,7 +33,6 @@ class HomePagePicAdapter(
         position: Int,
     ) {
         val item = list[position]
-
         Glide.with(context)
             .load(item)
             .placeholder(R.drawable.loading)

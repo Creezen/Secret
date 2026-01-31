@@ -5,18 +5,13 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.creezen.commontool.Config.Constant.NUM_2
-import com.creezen.commontool.Config.Constant.NUM_4
 import com.creezen.tool.ThreadTool
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,9 +20,8 @@ import com.jayce.vexis.business.file.pool.FileContentsFragment
 import com.jayce.vexis.business.file.submodule.DynamicModuleFragment
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
-import com.jayce.vexis.foundation.view.block.DownloadButtonSheetDialog
+import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
 import com.jayce.vexis.foundation.viewmodel.FileViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 

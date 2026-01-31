@@ -26,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:textColor="#ff0000"
             android:text="@string/please_select_file"/>
         <TextView
             android:layout_width="match_parent"
@@ -51,7 +50,6 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:text="@{textSize}"
-            android:textColor="#ff0000"
             android:gravity="right"
             tools:ignore="RtlHardcoded" />
         <TextView

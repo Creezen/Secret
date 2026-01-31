@@ -15,7 +15,6 @@
             android:layout_margin="15dp"
             android:gravity="center"
             android:text="@string/message_hint"
-            android:textColor="#38ADFF"
             android:textSize="16sp" />
         <LinearLayout
             android:id="@+id/replaceLayout"
@@ -49,7 +48,6 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/no"
-                android:textColor="#7D7D7D"
                 android:textSize="16sp"
                 android:visibility="gone"/>
             <View
@@ -66,7 +64,6 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="@string/yes"
-                android:textColor="#38ADFF"
                 android:textSize="16sp"
                 android:visibility="gone"/>
         </LinearLayout>

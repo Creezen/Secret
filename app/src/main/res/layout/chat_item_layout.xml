@@ -15,8 +15,7 @@
             android:id="@+id/nickname"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="15sp"
-            android:textColor="#A0A040"/>
+            android:textSize="15sp"/>
         <TextView
             android:id="@+id/time"
             android:layout_width="0dp"
@@ -24,13 +23,11 @@
             android:layout_weight="1"
             android:layout_marginStart="6dp"
             android:gravity="bottom|start"
-            android:textSize="9sp"
-            android:textColor="#88C0C0C0"/>
+            android:textSize="9sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#80DD80"/>
+        android:textSize="20sp"/>
 </LinearLayout>

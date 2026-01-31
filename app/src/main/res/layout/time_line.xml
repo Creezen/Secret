@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.jayce.vexis.foundation.view.block.ScalableScrollView
+    <com.jayce.vexis.foundation.ui.block.ScalableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -11,36 +11,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.jayce.vexis.foundation.view.block.TimeView
+            <com.jayce.vexis.foundation.ui.block.TimeView
                 android:id="@+id/left"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/Carminum"
-                android:orientation="vertical"/>
+                android:orientation="vertical"
+                android:background="@color/paleGray"/>
             <TextView
                 android:id="@+id/center"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@color/BurlyWood"
                 android:layout_gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/metallicGold">
             </TextView>
-            <com.jayce.vexis.foundation.view.block.TimeView
+            <com.jayce.vexis.foundation.ui.block.TimeView
                 android:id="@+id/right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/Carminum"
-                android:orientation="vertical"/>
+                android:orientation="vertical"
+                android:background="@color/paleGray"/>
         </LinearLayout>
-    </com.jayce.vexis.foundation.view.block.ScalableScrollView>
+    </com.jayce.vexis.foundation.ui.block.ScalableScrollView>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginEnd="@dimen/fabMargin"
+        android:layout_marginBottom="@dimen/fabMargin">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingBtn"
             android:layout_width="wrap_content"

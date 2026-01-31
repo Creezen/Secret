@@ -9,22 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.result.ActivityResultLauncher
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.FileBean
-import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.route.FileService
-import com.jayce.vexis.foundation.view.block.DownloadButtonSheetDialog
 import com.jayce.vexis.foundation.viewmodel.FileViewModel
 
 class FileContentsFragment(

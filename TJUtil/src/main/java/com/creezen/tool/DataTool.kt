@@ -1,6 +1,5 @@
 package com.creezen.tool
 
-import android.content.res.Resources
 import android.os.Build
 import android.util.TypedValue
 import android.view.MotionEvent
@@ -39,19 +38,23 @@ object DataTool {
         return null
     }
 
-    fun Float.dpToPx(resources: Resources): Float {
+    fun Float.dpToPx(): Float {
+        val resources = BaseTool.env().resources
         return this * resources.displayMetrics.density
     }
 
-    fun Float.spToPx(resources: Resources): Float {
+    fun Float.spToPx(): Float {
+        val resources = BaseTool.env().resources
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
     }
 
-    fun Float.pxToDp(resources: Resources): Float {
+    fun Float.pxToDp(): Float {
+        val resources = BaseTool.env().resources
         return this / resources.displayMetrics.density
     }
 
-    fun Float.pxToSp(resources: Resources): Float {
+    fun Float.pxToSp(): Float {
+        val resources = BaseTool.env().resources
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
         } else {

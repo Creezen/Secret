@@ -17,7 +17,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
@@ -29,9 +28,9 @@ import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
 import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.AndroidTool.toastX
 import com.creezen.tool.BaseTool
 import com.creezen.tool.FileTool
 import com.creezen.tool.NetTool
@@ -39,10 +38,8 @@ import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
-import com.creezen.tool.WindowTool
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jayce.vexis.R
 import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
@@ -56,8 +53,7 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.route.PackageService
 import com.jayce.vexis.foundation.route.UserService
-import com.jayce.vexis.foundation.view.animator.MyCustomTransformer
-import com.jayce.vexis.foundation.view.block.DownloadButtonSheetDialog
+import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import org.pytorch.IValue
 import org.pytorch.Module
@@ -85,8 +81,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             binder.showNotification(notification)
         }
 
-        override fun onServiceDisconnected(name: ComponentName?) { /**/
-        }
+        override fun onServiceDisconnected(name: ComponentName?) { /**/ }
     }
 
     private fun buildNotification(): Notification {
@@ -124,7 +119,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
-            ui { "${it.modifyTime.toTime()}  $it.versionName".toast() }
+            ui { "${it.modifyTime.toTime()}  $it.versionName".toastX() }
         }
     }
 
@@ -142,7 +137,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
             findPassword.setOnClickListener {
 //                installApp()
-                getString(R.string.not_support).toast()
+                getString(R.string.not_support).toastX()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)
@@ -269,24 +264,32 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun initPicture() {
         binding.iv1.apply {
             this.adapter = picAdapter
-            offscreenPageLimit = 3
+            offscreenPageLimit = 2
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             val childAt = getChildAt(0)
             childAt.setPadding(0, 0, 0, 0)
             clipToPadding = false
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+            list.add("${BASE_FILE_PATH}hXklnq1757767353397.jpg")
+            list.add("${BASE_FILE_PATH}GsMmcS1748872115532.jpg")
             list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
             list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
-            picAdapter.notifyItemRangeInserted(0, 5)
+            picAdapter.notifyItemRangeInserted(0, list.size)
+            setCurrentItem(1, false)
             setPageTransformer(MyCustomTransformer())
             registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
-                    if (state == ViewPager2.SCROLL_STATE_IDLE && currentItem == 3) {
-                        setCurrentItem(1, false)
+                    if (state != ViewPager2.SCROLL_STATE_IDLE) return
+                    if (currentItem == list.size - 1) {
+                        post {
+                            setCurrentItem(1, false)
+                        }
                     }
-                    if (state == ViewPager2.SCROLL_STATE_IDLE && currentItem == 0) {
-                        setCurrentItem(2, false)
+                    if (currentItem == 0) {
+                        post {
+                            setCurrentItem(list.size - 2, false)
+                        }
                     }
                 }
             })

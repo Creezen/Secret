@@ -20,4 +20,9 @@
             <enum name="full" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="BasicInformationCard">
+        <attr name="cardDescription" format="string"/>
+        <attr name="cardText" format="string"/>
+    </declare-styleable>
 </resources>

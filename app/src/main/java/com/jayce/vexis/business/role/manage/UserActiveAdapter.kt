@@ -5,19 +5,24 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
+import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
-import com.jayce.vexis.foundation.view.block.TrackPopupMenu
+import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
+import com.jayce.vexis.foundation.view.CardAdapter
 
 class UserActiveAdapter(
     private val context: Context,
     private val userList: List<ActiveBean>,
-) : RecyclerView.Adapter<UserActiveAdapter.ViewHolder>() {
-    class ViewHolder(val binding: UserActiveItemBinding) : RecyclerView.ViewHolder(binding.root) {
+) : CardAdapter<UserActiveItemBinding, UserActiveAdapter.ViewHolder>(userList) {
+
+    class ViewHolder(
+        containerBindig: CardItemLayoutBinding,
+        binding: UserActiveItemBinding
+    ) : CardAdapter.ViewHolder(containerBindig) {
         val view = binding.root
         val nickname = binding.nickname
         val admin = binding.administrator
@@ -25,18 +30,7 @@ class UserActiveAdapter(
         val time = binding.createTime
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): ViewHolder {
-        val binding = UserActiveItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int,
-    ) {
+    override fun bindCardViewHolder(holder: ViewHolder, position: Int, ) {
         val item = userList[position]
         val menu by lazy {
             TrackPopupMenu(holder.view.context, holder.view)
@@ -66,7 +60,14 @@ class UserActiveAdapter(
         }
     }
 
-    override fun getItemCount() = userList.size
+    override fun getChildAndHoler(
+        layoutInflater: LayoutInflater,
+        containerBinding: CardItemLayoutBinding,
+        parent: ViewGroup
+    ): Pair<UserActiveItemBinding, ViewHolder> {
+        val childBinding = UserActiveItemBinding.inflate(layoutInflater, parent,false)
+        val holder = ViewHolder(containerBinding, childBinding)
+        return childBinding to holder
+    }
 
-    override fun getItemViewType(position: Int) = position
 }

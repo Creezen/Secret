@@ -28,7 +28,6 @@
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:textColor="#0000ff"
                 android:textSize="60sp"
                 android:text="@string/unknow_user"/>
             <LinearLayout
@@ -42,7 +41,6 @@
                     android:text="@string/id"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:textColor="#CDBC54"
                     android:layout_marginEnd="3dp"
                     android:layout_marginStart="3dp"/>
                 <TextView
@@ -50,8 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="start|center"
-                    android:textSize="20sp"
-                    android:textColor="#00ff00"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -84,8 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
-        app:tabGravity="fill"
-        android:background="@color/Button"/>
+        app:tabGravity="fill"/>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/page"
         android:layout_width="match_parent"

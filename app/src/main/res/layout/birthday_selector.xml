@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.jayce.vexis.foundation.view.block.time.TimePicker
+    <com.jayce.vexis.foundation.ui.block.time.TimePicker
         android:id="@+id/birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

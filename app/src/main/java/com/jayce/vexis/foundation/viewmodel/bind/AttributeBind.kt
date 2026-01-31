@@ -1,7 +1,7 @@
 package com.jayce.vexis.foundation.viewmodel.bind
 
 import androidx.databinding.BindingAdapter
-import com.jayce.vexis.foundation.view.block.HintView
+import com.jayce.vexis.foundation.ui.block.HintView
 
 @BindingAdapter("showIcon")
 fun setIconVisible(hintView: HintView, isShow: Boolean) {

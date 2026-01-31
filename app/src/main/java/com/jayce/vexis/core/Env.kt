@@ -55,7 +55,7 @@ class Env : Application() {
         BaseTool.init(applicationContext, param)
 
         val font = AndroidTool.readPrefs {
-                getString("font", "华文行楷")
+                getString("font", "细体宋体")
             }
         setFont(font as String)
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)

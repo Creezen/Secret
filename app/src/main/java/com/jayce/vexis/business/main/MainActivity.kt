@@ -36,7 +36,6 @@ import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
 import com.jayce.vexis.business.file.FileFragment
-import com.jayce.vexis.business.file.pool.FileContentsFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.map.MapFragment
@@ -52,7 +51,7 @@ import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.foundation.ability.EventHandle.getUnreadSize
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
-import com.jayce.vexis.foundation.view.block.FlexibleDialog
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import q.rorbin.badgeview.Badge

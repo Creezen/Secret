@@ -3,7 +3,6 @@
     android:id="@+id/parentNodeName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="#336D82"
     android:textStyle="bold"
     android:textSize="15.4sp"
     android:gravity="start"

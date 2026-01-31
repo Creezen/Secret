@@ -42,7 +42,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters.add("armeabi-v7a")
             abiFilters.add("arm64-v8a")
         }
     }
@@ -92,6 +91,10 @@ android {
         baseline = file("lint-baseline.xml")
         abortOnError = false
         htmlOutput = file("$buildDir/reports/combined/lint-report.html")
+    }
+
+    sourceSets["main"].res {
+        srcDirs("src/main/res", "src/main/res_stander")
     }
 }
 

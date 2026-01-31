@@ -39,7 +39,7 @@
                 android:text="@string/jump_3d_game"/>
         </LinearLayout>
     </LinearLayout>
-    <com.jayce.vexis.foundation.view.animator.AnimatorView
+    <com.jayce.vexis.foundation.ui.animator.AnimatorView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

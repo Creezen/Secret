@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.graphics.Paint
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,11 @@ import androidx.annotation.AnimRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.creezen.tool.BaseTool.env
+import com.creezen.tool.DataTool.dpToPx
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.bean.FragmentAnimRes
+import com.example.testlib.R
 import kotlin.math.ceil
 
 object AndroidTool {
@@ -135,6 +138,16 @@ object AndroidTool {
         Toast.makeText(env(),"$this", Toast.LENGTH_LONG).show()
     }
 
+    fun <T> T.toastX(location: Float = 56f, delay: Long = 2000) {
+        val content = " $this "
+        WindowTool.requestFloatWindow(env(), R.layout.snake_border, delay, content) {
+            apply {
+                gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                y = location.dpToPx().toInt()
+            }
+        }
+    }
+
     fun broadcastByAction(context: Context, action: String, func: ((Intent) -> Unit)? = null) {
         context.sendBroadcast(Intent(action).also {
             it.`package` = env().packageName
@@ -168,5 +181,11 @@ object AndroidTool {
             putExtra("className", activityClazz.name)
         }
         env().startActivity(intent)
+    }
+
+    fun Context.getThemeColor(resourceID: Int): Int {
+        val typeValue = TypedValue()
+        theme.resolveAttribute(resourceID, typeValue, true)
+        return typeValue.data
     }
 }

@@ -4,6 +4,5 @@
     android:layout_height="wrap_content"
     android:background="@drawable/hint_bubble"
     android:textSize="15sp"
-    android:textColor="#FFFFFF"
     android:gravity="center">
 </TextView>

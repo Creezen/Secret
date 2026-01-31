@@ -1,0 +1,3 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="window_default_toast">你好啊，欢迎来到我的世界！</string>
+</resources>

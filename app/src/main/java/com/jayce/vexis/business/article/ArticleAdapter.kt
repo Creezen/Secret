@@ -4,43 +4,39 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.ArticleBean
 import com.jayce.vexis.business.article.section.SectionActivity
+import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemBinding
+import com.jayce.vexis.foundation.view.CardAdapter
 
 class ArticleAdapter(
     val context: Context,
     val itemList: List<ArticleBean>,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    class ViewHolder(val binding: ParagraphItemBinding) : RecyclerView.ViewHolder(binding.root) {
+) : CardAdapter<ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList) {
+
+    class ViewHolder(container: CardItemLayoutBinding, binding: ParagraphItemBinding) : CardAdapter.ViewHolder(container) {
         val paragraph = binding.paragraph
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): RecyclerView.ViewHolder {
-        val binding = ParagraphItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-    ) {
+    override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-        val currentHolder = holder as ViewHolder
-        currentHolder.paragraph.text = item.title
-        currentHolder.paragraph.setOnClickListener {
-            context.startActivity(
-                Intent(context, SectionActivity::class.java)
-                    .apply {
-                        putExtra("articleId", item.articleId)
-                    },
-            )
+        holder.paragraph.text = item.title
+        val intent = Intent(context, SectionActivity::class.java).apply {
+            putExtra("articleId", item.articleId)
+        }
+        holder.paragraph.setOnClickListener {
+            context.startActivity(intent)
         }
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getChildAndHoler(
+        layoutInflater: LayoutInflater,
+        containerBinding: CardItemLayoutBinding,
+        parent: ViewGroup
+    ): Pair<ParagraphItemBinding, ViewHolder> {
+        val child = ParagraphItemBinding.inflate(layoutInflater, parent, false)
+        val holder = ViewHolder(containerBinding, child)
+        return child to holder
+    }
 }
