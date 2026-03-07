@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.creezen.commontool.bean.ApkSimpleInfo
@@ -30,7 +31,6 @@ import com.creezen.commontool.toBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.toastX
 import com.creezen.tool.BaseTool
 import com.creezen.tool.FileTool
 import com.creezen.tool.NetTool
@@ -119,7 +119,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
-            ui { "${it.modifyTime.toTime()}  $it.versionName".toastX() }
+            ui { "${it.modifyTime.toTime()}  $it.versionName".toast() }
         }
     }
 
@@ -137,7 +137,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             }
             findPassword.setOnClickListener {
 //                installApp()
-                getString(R.string.not_support).toastX()
+                getString(R.string.not_support).toast()
             }
             createAccount.setOnClickListener {
                 playShortSound(R.raw.delete)

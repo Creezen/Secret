@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.toastX
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.SeniorAdviceBinding
 
@@ -53,7 +52,7 @@ class PeerAdapter(
             holder.love.setImageResource(R.drawable.support_blank)
         }
         holder.love.setOnClickListener {
-            "谢谢你的喜欢".toastX()
+            "谢谢你的喜欢".toast()
         }
     }
 

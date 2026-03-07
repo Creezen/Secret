@@ -2,6 +2,8 @@ package com.jayce.vexis.foundation.ui.block
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.view.menu.MenuPopupHelper
@@ -30,6 +32,7 @@ class TrackPopupMenu(context: Context, private val view: View) : PopupMenu(conte
         field.isAccessible = true
         val obj = field.get(this) as MenuPopupHelper
         obj.show(clickX, clickY - view.height)
+        obj.gravity = Gravity.CENTER
         obj.setForceShowIcon(true)
     }
 }

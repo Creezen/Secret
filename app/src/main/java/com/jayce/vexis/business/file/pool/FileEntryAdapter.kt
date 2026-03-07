@@ -18,12 +18,12 @@ class FileEntryAdapter(
     private val context: Context,
     val list: List<FileBean>,
     private val viewModel: FileViewModel
-) : RecyclerView.Adapter<FileEntryAdapter.ViewHodler>() {
+) : RecyclerView.Adapter<FileEntryAdapter.ViewHolder>() {
     companion object {
         const val TAG = "MediaElementAdapter"
     }
 
-    class ViewHodler(val binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val name = binding.name
         val size = binding.size
@@ -31,18 +31,12 @@ class FileEntryAdapter(
         val download = binding.download
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): ViewHodler {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ResItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHodler(binding)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHodler,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.view.isSelected = true
         holder.name.text = item.fileName

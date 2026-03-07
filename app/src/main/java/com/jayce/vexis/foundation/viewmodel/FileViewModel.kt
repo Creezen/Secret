@@ -44,13 +44,14 @@ class FileViewModel : BaseViewModel() {
                         _flow.emit(it)
                         if (it >= totalSize) {
                             semaphore.release()
-                            _flow.emit(0)
+//                            _flow.emit(0)
                         }
-                        if (taskQueue.size <= 0) {
-                            _taskStateFlow.emit(DownloadTask("", "所有任务下载完成", -1, -1, 0))
-                        }
+
                     }
                 }
+//                if (taskQueue.size < 1) {
+//                    _taskStateFlow.emit(DownloadTask("", "所有任务下载完成", -1, -1, 0))
+//                }
                 semaphore.acquire()
             }
         }
