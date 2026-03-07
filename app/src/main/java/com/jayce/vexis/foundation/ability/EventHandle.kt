@@ -14,8 +14,8 @@ import com.creezen.commontool.toBean
 import com.creezen.commontool.toJson
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.broadcastByAction
-import com.creezen.tool.AndroidTool.readPrefs
-import com.creezen.tool.AndroidTool.writePrefs
+import com.creezen.tool.AndroidTool.getDataAsync
+import com.creezen.tool.AndroidTool.putDataAsync
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
@@ -74,14 +74,13 @@ object EventHandle {
     }
 
     fun initChatData() {
-        val data = readPrefs {
-            getString(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson())
-        }
-        chatQueue.clear()
-        data?.toBean<ArrayList<ChatEntry>>().let {
-            it?.forEach {
-                chatQueue.put(it)
-                dumpMessage.add(it)
+        getDataAsync(CACHE_MESSAGE, ArrayList<ChatEntry>().toJson()) {
+            chatQueue.clear()
+            it.toBean<ArrayList<ChatEntry>>().let {  data ->
+                data?.forEach {
+                    chatQueue.put(it)
+                    dumpMessage.add(it)
+                }
             }
         }
     }
@@ -97,8 +96,6 @@ object EventHandle {
     }
 
     fun saveChatMessage() {
-        writePrefs { sp ->
-            sp.putString(CACHE_MESSAGE, dumpMessage.toJson())
-        }
+        putDataAsync(CACHE_MESSAGE, dumpMessage.toJson()) {}
     }
 }

@@ -19,7 +19,6 @@ import com.creezen.commontool.Config.SERVER_DOMAIN
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toJson
-import com.creezen.tool.AndroidTool.readPrefs
 import com.creezen.tool.AndroidTool.toast
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope

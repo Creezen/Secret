@@ -17,6 +17,17 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.AnimRes
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.byteArrayPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.creezen.tool.BaseTool.env
@@ -25,6 +36,12 @@ import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.bean.FragmentAnimRes
 import com.example.testlib.R
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlin.math.ceil
 
 object AndroidTool {
@@ -35,15 +52,51 @@ object AndroidTool {
         env().getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
     }
 
-    @SuppressLint("ApplySharedPref")
-    fun writePrefs(func: (Editor)->Unit) {
-        prefs.edit().apply {
-            func(this)
-            commit()
+    private val Context.datastore: DataStore<Preferences> by preferencesDataStore("creezen")
+
+    @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
+    suspend fun <T> getData(key: String, default: T): T {
+        return env().datastore.data.map { data ->
+            when (default) {
+                is Int -> data[intPreferencesKey(key)] ?: default
+                is Double -> data[doublePreferencesKey(key)] ?: default
+                is String -> data[stringPreferencesKey(key)] ?: default
+                is Boolean -> data[booleanPreferencesKey(key)] ?: default
+                is Float -> data[floatPreferencesKey(key)] ?: default
+                is Long -> data[longPreferencesKey(key)] ?: default
+                is ByteArray -> data[byteArrayPreferencesKey(key)] ?: default
+                else -> default
+            } as T
+        }.firstOrNull() ?: default
+    }
+
+    fun <T> getDataAsync(key: String, default: T, block: suspend (T) -> Unit) {
+        ThreadTool.runOnMulti(Dispatchers.IO) {
+            block(getData(key, default))
         }
     }
 
-    fun <T> readPrefs(func: SharedPreferences.() -> T): T = func(prefs)
+    suspend fun <T> putData(key: String, value: T) {
+        env().datastore.edit { data ->
+            when (value) {
+                is Int -> data[intPreferencesKey(key)] = value
+                is Double -> data[doublePreferencesKey(key)] = value
+                is String -> data[stringPreferencesKey(key)] = value
+                is Boolean -> data[booleanPreferencesKey(key)] = value
+                is Float -> data[floatPreferencesKey(key)] = value
+                is Long -> data[longPreferencesKey(key)] = value
+                is ByteArray -> data[byteArrayPreferencesKey(key)] = value
+                else -> {}
+            }
+        }
+    }
+
+    fun <T> putDataAsync(key: String, value: T, block: () -> Unit) {
+        ThreadTool.runOnMulti(Dispatchers.IO) {
+            putData(key, value)
+            block.invoke()
+        }
+    }
 
     fun LinearLayout.addSimpleView(
         text: String,

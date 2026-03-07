@@ -16,10 +16,9 @@ class SettingFragment: PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             "changeFont" -> {
-                AndroidTool.writePrefs {
-                    it.putString("font", "方正粗圆")
+                AndroidTool.putDataAsync("font", "方正粗圆") {
+                    restartApp()
                 }
-                restartApp()
             }
         }
         return super.onPreferenceTreeClick(preference)

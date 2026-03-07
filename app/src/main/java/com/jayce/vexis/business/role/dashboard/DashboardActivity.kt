@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.commontool.Config.MediaTypeParam.MEDIA_TYPE_IMAGE
 import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
-import com.creezen.tool.AndroidTool.readPrefs
-import com.creezen.tool.AndroidTool.writePrefs
+import com.creezen.tool.AndroidTool.getDataAsync
+import com.creezen.tool.AndroidTool.putData
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.buildFileMultipart
@@ -49,9 +49,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             }) {
                 if (it["status"] == true) {
                     val cursorTime = System.currentTimeMillis()
-                    writePrefs {
-                        it.putLong(AVATAR_SAVE_TIME, cursorTime)
-                    }
+                    putData(AVATAR_SAVE_TIME, cursorTime)
                     loadAvatarFromNet(0, cursorTime)
                 }
             }
@@ -93,17 +91,17 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             image.setOnClickListener {
                 imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
             }
-            val cursorTime = readPrefs {
-                    getLong(AVATAR_SAVE_TIME, 0)
+            getDataAsync(AVATAR_SAVE_TIME, 0L) {
+                ThreadTool.ui {
+                    NetTool.setImage(
+                        this@DashboardActivity,
+                        image,
+                        "${BASE_FILE_PATH}head/${user().userId}.png",
+                        key = AvatarSignnature("key:$it"),
+                    )
+                    loadAvatarFromNet(300, it)
                 }
-            val cacheKey = "key:$cursorTime"
-            NetTool.setImage(
-                this@DashboardActivity,
-                image,
-                "${BASE_FILE_PATH}head/${user().userId}.png",
-                key = AvatarSignnature(cacheKey),
-            )
-            loadAvatarFromNet(300, cursorTime)
+            }
         }
     }
 

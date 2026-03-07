@@ -8,6 +8,7 @@ import com.creezen.commontool.bean.FeedbackBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.NetTool
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.user
@@ -43,16 +44,18 @@ class FeedBackAdapter(
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
 
-        val avatarTimestamp = AndroidTool.readPrefs {
-            getLong(AVATAR_SAVE_TIME, 0)
+        AndroidTool.getDataAsync(AVATAR_SAVE_TIME, 0L) {
+            ThreadTool.ui {
+                NetTool.setImage(
+                    context,
+                    holder.head,
+                    "${BASE_FILE_PATH}head/${user().userId}.png",
+                    key = AvatarSignnature("key:$it"),
+                    isCircle = true
+                )
+            }
+
         }
-        NetTool.setImage(
-            context,
-            holder.head,
-            "${BASE_FILE_PATH}head/${user().userId}.png",
-            key = AvatarSignnature("key:$avatarTimestamp"),
-            isCircle = true
-        )
     }
 
     override fun getChildAndHoler(

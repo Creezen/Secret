@@ -75,4 +75,5 @@ dependencies {
     implementation(libs.snakeyaml)
     implementation(libs.glide.okhttp3.integration)
     implementation(libs.common.tools)
+    implementation(libs.datastore)
 }

@@ -2,6 +2,7 @@ package com.jayce.vexis.business.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -26,10 +27,11 @@ import com.creezen.commontool.Config.FragmentTag.FRAGMENT_MAP
 import com.creezen.commontool.Config.FragmentTag.FRAGMENT_SENIOR
 import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
 import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
-import com.creezen.tool.AndroidTool.readPrefs
+import com.creezen.tool.AndroidTool.getDataAsync
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.bean.FragmentAnimRes
 import com.jayce.vexis.R
 import com.jayce.vexis.business.article.ArticleFragment
@@ -108,16 +110,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         chatBadge.badgeNumber = getUnreadSize()
-        val avatarTimestamp = readPrefs {
-                getLong(AVATAR_SAVE_TIME, 0)
+        getDataAsync(AVATAR_SAVE_TIME, 0L) {
+            val imageUrl = "${BASE_FILE_PATH}head/${user().userId}.png"
+            ThreadTool.ui {
+                NetTool.setImage(
+                    this@MainActivity,
+                    avatarView,
+                    imageUrl,
+                    key = AvatarSignnature("key:$it"),
+                    isCircle = true,
+                )
             }
-        NetTool.setImage(
-            this@MainActivity,
-            avatarView,
-            "${BASE_FILE_PATH}head/${user().userId}.png",
-            key = AvatarSignnature("key:$avatarTimestamp"),
-            isCircle = true,
-        )
+
+
+        }
     }
 
     private fun initPage() {

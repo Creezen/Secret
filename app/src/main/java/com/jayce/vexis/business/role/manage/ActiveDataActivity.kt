@@ -38,29 +38,31 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
 
     private fun initPage() {
         with(binding) {
-            activeBean?.let {
-                val avatarTimestamp = AndroidTool.readPrefs {
-                    getLong(AVATAR_SAVE_TIME, 0)
-                }
-                NetTool.setImage(
-                    this@ActiveDataActivity,
-                    avata,
-                    "${BASE_FILE_PATH}head/${it.userID}.png",
-                    placeHolder = ContextCompat.getDrawable(this@ActiveDataActivity, R.drawable.default_head),
-                    key = AvatarSignnature("key:$avatarTimestamp"),
-                    isCircle = true
-                )
+            activeBean?.let { bean ->
+                AndroidTool.getDataAsync(AVATAR_SAVE_TIME, 0L) {
+                    ThreadTool.ui {
+                        NetTool.setImage(
+                            this@ActiveDataActivity,
+                            avata,
+                            "${BASE_FILE_PATH}head/${bean.userID}.png",
+                            placeHolder = ContextCompat.getDrawable(this@ActiveDataActivity, R.drawable.default_head),
+                            key = AvatarSignnature("key:$it"),
+                            isCircle = true
+                        )
+                    }
 
-                nickname.text = it.nickname
-                userID.text = it.userID
-                createTime.text = it.createTime
-                support.cardText = "${it.support}"
-                against.cardText = "${it.against}"
-                inform.cardText = "${it.inform}"
-                reported.cardText = "${it.reported}"
-                follow.cardText = "${it.follow}"
-                fans.cardText = "${it.fans}"
-                post.cardText = "${it.post}"
+                }
+
+                nickname.text = bean.nickname
+                userID.text = bean.userID
+                createTime.text = bean.createTime
+                support.cardText = "${bean.support}"
+                against.cardText = "${bean.against}"
+                inform.cardText = "${bean.inform}"
+                reported.cardText = "${bean.reported}"
+                follow.cardText = "${bean.follow}"
+                fans.cardText = "${bean.fans}"
+                post.cardText = "${bean.post}"
                 setAdministrator.setOnClickListener {
                     activeBean?.userID?.let {
                         manageUser(1, it)

@@ -54,10 +54,10 @@ class Env : Application() {
         ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
-        val font = AndroidTool.readPrefs {
-                getString("font", "细体宋体")
-            }
-        setFont(font as String)
+        AndroidTool.getDataAsync("font", "细体宋体") {
+            setFont(it)
+        }
+
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
 
         ThreadTool.runOnMulti(Dispatchers.IO) {
