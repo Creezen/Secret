@@ -1,7 +1,7 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import com.jayce.vexis.foundation.bean.GridUnit
-import com.jayce.vexis.foundation.bean.PointEntry
+import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.bean.PointEntry
 import java.util.ArrayList
 import java.util.Stack
 

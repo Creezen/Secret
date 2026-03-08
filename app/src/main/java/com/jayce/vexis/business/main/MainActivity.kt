@@ -46,7 +46,7 @@ import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.setting.SettingActivity
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
@@ -111,7 +111,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onResume()
         chatBadge.badgeNumber = getUnreadSize()
         getDataAsync(AVATAR_SAVE_TIME, 0L) {
-            val imageUrl = "${BASE_FILE_PATH}head/${user().userId}.png"
+            val imageUrl = "${BASE_FILE_PATH}head/${liveUser.userId}.png"
             ThreadTool.ui {
                 NetTool.setImage(
                     this@MainActivity,

@@ -11,7 +11,7 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.foundation.view.CardAdapter
@@ -49,7 +49,7 @@ class FeedBackAdapter(
                 NetTool.setImage(
                     context,
                     holder.head,
-                    "${BASE_FILE_PATH}head/${user().userId}.png",
+                    "${BASE_FILE_PATH}head/${liveUser.userId}.png",
                     key = AvatarSignnature("key:$it"),
                     isCircle = true
                 )

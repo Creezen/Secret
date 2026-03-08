@@ -16,8 +16,8 @@ import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.FileService
-import com.jayce.vexis.foundation.viewmodel.FileViewModel
+import com.jayce.vexis.domain.route.FileService
+import com.jayce.vexis.domain.viewmodel.FileViewModel
 
 class FileContentsFragment(
     private val viewModel: FileViewModel

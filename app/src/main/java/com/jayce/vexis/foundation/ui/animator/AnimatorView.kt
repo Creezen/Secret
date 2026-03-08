@@ -9,7 +9,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import com.jayce.vexis.foundation.bean.AnimatorBallEntry
+import com.jayce.vexis.domain.bean.AnimatorBallEntry
 
 class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 

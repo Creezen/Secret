@@ -7,7 +7,7 @@ import com.creezen.commontool.bean.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.foundation.Util.Extension.unParcelable
-import com.jayce.vexis.foundation.bean.FileEntry
+import com.jayce.vexis.domain.bean.FileEntry
 
 class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
 

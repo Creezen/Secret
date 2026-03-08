@@ -15,7 +15,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.ArticleService
+import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.ui.animator.RecycleItemAnimator
 
 class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {

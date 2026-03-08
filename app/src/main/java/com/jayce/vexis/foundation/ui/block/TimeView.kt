@@ -10,7 +10,7 @@ import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.creezen.commontool.bean.HistoryBean
 import com.jayce.vexis.R
-import com.jayce.vexis.foundation.bean.TraceEntry
+import com.jayce.vexis.domain.bean.TraceEntry
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 

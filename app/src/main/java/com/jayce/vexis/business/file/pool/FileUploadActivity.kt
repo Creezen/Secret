@@ -20,7 +20,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.FileService
+import com.jayce.vexis.domain.route.FileService
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 

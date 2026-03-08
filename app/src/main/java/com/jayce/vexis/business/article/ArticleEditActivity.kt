@@ -3,12 +3,11 @@ package com.jayce.vexis.business.article
 import android.os.Bundle
 import android.widget.TextView
 import com.creezen.tool.AndroidTool.msg
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.ArticleService
-import java.util.ArrayList
+import com.jayce.vexis.domain.route.ArticleService
 
 class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
 
@@ -22,7 +21,7 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
             val title = binding.title.msg(true)
             val paragraphs = getParagraphList(binding.content)
             request<ArticleService, Boolean>({
-                postSynergy(title, paragraphs, user().userId)
+                postSynergy(title, paragraphs, liveUser.userId)
             }) {
                 if (it) {
                     finish()

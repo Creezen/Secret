@@ -11,8 +11,8 @@ import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ResItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
-import com.jayce.vexis.foundation.bean.DownloadTask
-import com.jayce.vexis.foundation.viewmodel.FileViewModel
+import com.jayce.vexis.domain.bean.DownloadTask
+import com.jayce.vexis.domain.viewmodel.FileViewModel
 
 class FileEntryAdapter(
     private val context: Context,

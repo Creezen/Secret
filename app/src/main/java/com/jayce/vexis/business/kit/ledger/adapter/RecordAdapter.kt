@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.jayce.vexis.databinding.RecordItemLayoutBinding
-import com.jayce.vexis.foundation.bean.RecordEntry
+import com.jayce.vexis.domain.bean.RecordEntry
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.HEIGHT
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.WIDTH
 

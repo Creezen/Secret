@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.databinding.DynamicModuleItemLayoutBinding
-import com.jayce.vexis.foundation.bean.DynamicModuleEntry
+import com.jayce.vexis.domain.bean.DynamicModuleEntry
 
 class DynamicModuleAdapter(val list: List<DynamicModuleEntry>) : RecyclerView.Adapter<DynamicModuleAdapter.ViewHolder>() {
 

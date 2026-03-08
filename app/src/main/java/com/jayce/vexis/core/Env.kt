@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.net.NetworkRequest
 import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
@@ -15,12 +14,8 @@ import com.creezen.tool.BaseTool.setFont
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
-import com.jayce.vexis.foundation.viewmodel.ChatViewModel
-import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
-import org.koin.core.module.dsl.viewModel
-import org.koin.dsl.module
 
 class Env : Application() {
 

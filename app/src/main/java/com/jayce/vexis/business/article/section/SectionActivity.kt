@@ -10,8 +10,7 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
 import com.jayce.vexis.foundation.Util
-import com.jayce.vexis.foundation.route.ArticleService
-import kotlinx.coroutines.launch
+import com.jayce.vexis.domain.route.ArticleService
 
 class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
 

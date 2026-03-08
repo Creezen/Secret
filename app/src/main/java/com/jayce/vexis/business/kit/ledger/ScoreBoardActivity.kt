@@ -19,10 +19,10 @@ import com.jayce.vexis.databinding.AddRecordDialogBinding
 import com.jayce.vexis.databinding.AddRecordUserBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.NewPocketRecordBinding
-import com.jayce.vexis.foundation.bean.RecordEntry
-import com.jayce.vexis.foundation.bean.RecordItemEntry
-import com.jayce.vexis.foundation.bean.ScoreEntry
-import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
+import com.jayce.vexis.domain.bean.RecordEntry
+import com.jayce.vexis.domain.bean.RecordItemEntry
+import com.jayce.vexis.domain.bean.ScoreEntry
+import com.jayce.vexis.domain.database.ledger.ScoreDatabase
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import kotlinx.coroutines.Dispatchers
 

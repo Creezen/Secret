@@ -9,7 +9,7 @@ import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdviceBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.PeerService
+import com.jayce.vexis.domain.route.PeerService
 
 class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
 

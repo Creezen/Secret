@@ -3,7 +3,7 @@ package com.jayce.vexis.business.kit.maze
 import android.util.Log
 import com.jayce.vexis.business.kit.maze.generator.IMazeGenerator
 import com.jayce.vexis.business.kit.maze.enums.MazeType
-import com.jayce.vexis.foundation.bean.GridUnit
+import com.jayce.vexis.domain.bean.GridUnit
 
 class MazeManager {
 

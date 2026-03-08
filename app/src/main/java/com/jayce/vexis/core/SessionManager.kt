@@ -12,9 +12,10 @@ object SessionManager {
 
     private var onlineUserEntry = AtomicReference(UserBean())
 
+    val liveUser: UserBean
+        get() = onlineUserEntry.get()
+
     fun registerUser(userBean: UserBean) {
         onlineUserEntry.set(userBean)
     }
-
-    fun user() = onlineUserEntry.get()
 }

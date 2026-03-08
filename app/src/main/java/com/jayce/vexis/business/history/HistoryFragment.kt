@@ -16,7 +16,7 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.HistoryService
+import com.jayce.vexis.domain.route.HistoryService
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
 class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {

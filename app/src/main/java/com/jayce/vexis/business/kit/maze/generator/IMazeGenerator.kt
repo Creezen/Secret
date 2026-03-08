@@ -1,7 +1,6 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import android.util.Log
-import com.jayce.vexis.foundation.bean.GridUnit
+import com.jayce.vexis.domain.bean.GridUnit
 
 abstract class IMazeGenerator {
 

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ import com.jayce.vexis.business.file.submodule.DynamicModuleFragment
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
 import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
-import com.jayce.vexis.foundation.viewmodel.FileViewModel
+import com.jayce.vexis.domain.viewmodel.FileViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 

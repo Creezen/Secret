@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
-import com.jayce.vexis.foundation.bean.ChatEntry
+import com.jayce.vexis.domain.bean.ChatEntry
 
 class ChatAdapter(private val msgList: List<ChatEntry>) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 

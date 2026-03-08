@@ -7,13 +7,12 @@ import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
-import com.jayce.vexis.core.CoreService
-import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.foundation.Util
-import com.jayce.vexis.foundation.route.FeedbackService
+import com.jayce.vexis.foundation.ability.EventHandle.NAME_MESSAGE_SCOPE
+import com.jayce.vexis.domain.route.FeedbackService
 import kotlinx.coroutines.Dispatchers
 
 class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
@@ -31,7 +30,7 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
                 val option = BlockOption(ThreadType.MULTI, 2000, Dispatchers.IO)
                 ThreadTool.runWithBlocking(option) {
                     Util.request<FeedbackService, Boolean>({
-                        sendFeedback(user().userId, titleMsg, contentMsg)
+                        sendFeedback(liveUser.userId, titleMsg, contentMsg)
                     }) {
                         if (it) finish()
                     }

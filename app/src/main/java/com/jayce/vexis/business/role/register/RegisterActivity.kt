@@ -6,7 +6,7 @@ import com.jayce.vexis.databinding.BirthdaySelectorBinding
 import com.jayce.vexis.databinding.CreateRoleLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
-import com.jayce.vexis.foundation.viewmodel.RegisterViewModel
+import com.jayce.vexis.domain.viewmodel.RegisterViewModel
 import org.koin.android.ext.android.inject
 
 class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {

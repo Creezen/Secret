@@ -23,7 +23,6 @@ import com.creezen.tool.AndroidTool.toast
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Cookie
 import okhttp3.CookieJar
@@ -186,89 +185,78 @@ object NetTool {
             "与服务器连接失败，请检查网络".toast()
             return
         }
-        scope.launch {
-            kotlin.runCatching {
-                if(msg.content.isEmpty()) {
-                    return@runCatching
-                }
-                Log.d(TAG, "send message: $msg")
-                socketWriter?.write("${msg.toJson()}\n")
-                socketWriter?.flush()
-            }.onFailure {
-                Log.d(TAG, "sendMessage error: ${it.message}")
-                destroySocket()
-                reConnect(msg)
+        ThreadTool.runOnCurrent(scope) {
+            if(msg.content.isEmpty()) {
+                return@runOnCurrent
             }
+            Log.d(TAG, "send message: $msg")
+            socketWriter?.write("${msg.toJson()}\n")
+            socketWriter?.flush()
+        }.onFailure {
+            Log.d(TAG, "sendMessage error: ${it.message}")
+            destroySocket()
+            reconnectSocket(msg)
         }
     }
 
     fun sendDefaultMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTeleMessage(EVENT_TYPE_DEFAULT, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_DEFAULT, msg, this)
             sendMessage(scope, message)
         }
     }
 
     fun sendChatMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTeleMessage(EVENT_TYPE_MESSAGE, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_MESSAGE, msg, this)
             sendMessage(scope, message)
         }
     }
 
     fun sendNotifyMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTeleMessage(EVENT_TYPE_NOTIFY, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_NOTIFY, msg, this)
             sendMessage(scope, message)
         }
     }
 
     fun sendGameMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTeleMessage(EVENT_TYPE_GAME, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_GAME, msg, this)
             sendMessage(scope, message)
         }
     }
 
-    fun sendAckMessage(
-        scope: CoroutineScope,
-        msg: String,
-        onReceiveMessage: suspend (String) -> Boolean
-    ) {
+    fun connect(scope: CoroutineScope, msg: String, onReceiveMessage: suspend (String) -> Boolean) {
         sendDefaultMessage(scope, msg)
-        openMessageReceiver(scope, onReceiveMessage)
+        receive(scope, onReceiveMessage)
     }
 
-    private fun openMessageReceiver(
-        scope: CoroutineScope,
-        onReceiveMessage: suspend (String) -> Boolean
-    ) {
-        scope.launch {
-            kotlin.runCatching {
-                while(true) {
-                    val line = socketReader?.readLine()
-                    if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
-                        socketFlag.set(false)
-                        Log.e("ChatActivity.initSocket","服务器错误")
-                        break
-                    }
-                    if(onReceiveMessage(line).not()) {
-                        socketFlag.set(false)
-                        destroySocket()
-                        break
-                    }
+    private fun receive(scope: CoroutineScope, onReceiveMessage: suspend (String) -> Boolean) {
+        ThreadTool.runOnCurrent(scope) {
+            while(true) {
+                val line = socketReader?.readLine()
+                if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
+                    socketFlag.set(false)
+                    Log.e(TAG,"服务器错误")
+                    break
                 }
-            }.onFailure {
-                Log.d(TAG, "openMessageReceiver error: ${it.message}")
-                if (shouldReconnection.get()) {
-                    reConnect()
-                    openMessageReceiver(scope, onReceiveMessage)
+                if(onReceiveMessage(line).not()) {
+                    socketFlag.set(false)
+                    destroySocket()
+                    break
                 }
+            }
+        }.onFailure {
+            Log.d(TAG, "receive error: ${it.message}")
+            if (shouldReconnection.get()) {
+                reconnectSocket()
+                receive(scope, onReceiveMessage)
             }
         }
     }
 
-    private fun buildTeleMessage(type: Int, msg: String, user: UserBean): TelecomBean {
+    private fun buildTelecomMessage(type: Int, msg: String, user: UserBean): TelecomBean {
         return TelecomBean(
             type,
             content = msg,
@@ -278,11 +266,8 @@ object NetTool {
         )
     }
 
-    fun initSocket() {
-        shouldReconnection.set(true)
-    }
-
-    fun setOnlineSocket(socket: Socket) {
+    fun registerSocket(socket: Socket, shouldReconnect: Boolean = true) {
+        shouldReconnection.set(shouldReconnect)
         onlineSocket = socket
         if(socketReader == null) {
             socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
@@ -299,31 +284,29 @@ object NetTool {
         }
     }
 
-    private fun reConnect(msg: TelecomBean? = null) {
+    private fun reconnectSocket(msg: TelecomBean? = null) {
         if (!shouldReconnection.get()) return
         val future = CompletableFuture<Unit>()
-        CoroutineScope(Dispatchers.IO).launch {
-            kotlin.runCatching {
-                socketReader = null
-                socketWriter = null
-                onlineSocket = Socket(baseSocketPath, socketPort)
-                socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
-                socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
-                Log.d(TAG,"connection OK!")
-                val mUserid = user?.userId
-                if (mUserid != null) {
-                    sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), mUserid)
-                }
-                msg?.let {
-                    socketWriter?.write("$msg\n")
-                    socketWriter?.flush()
-                }
-                future.complete(Unit)
-            }.onFailure {
-                Log.d(TAG,"reConnect error,try again!")
-                future.complete(Unit)
-                reConnect()
+        ThreadTool.runOnMulti(Dispatchers.IO) {
+            socketReader = null
+            socketWriter = null
+            onlineSocket = Socket(baseSocketPath, socketPort)
+            socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
+            socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
+            Log.d(TAG,"connection OK!")
+            val mUserid = user?.userId
+            if (mUserid != null) {
+                sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), mUserid)
             }
+            msg?.let {
+                socketWriter?.write("$msg\n")
+                socketWriter?.flush()
+            }
+            future.complete(Unit)
+        }.onFailure {
+            Log.d(TAG,"reConnect error,try again!")
+            future.complete(Unit)
+            reconnectSocket()
         }
         future.get()
     }

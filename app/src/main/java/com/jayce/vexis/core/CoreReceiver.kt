@@ -15,10 +15,7 @@ class CoreReceiver : BroadcastReceiver() {
         const val TAG = "CoreReceiver"
     }
 
-    override fun onReceive(
-        context: Context?,
-        intent: Intent?,
-    ) {
+    override fun onReceive(context: Context?, intent: Intent?) {
         if (intent == null) return
         when (intent.action) {
             BROAD_LOGOUT -> "logout".toast()

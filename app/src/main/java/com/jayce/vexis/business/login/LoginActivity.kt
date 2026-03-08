@@ -45,14 +45,14 @@ import com.jayce.vexis.business.main.MainActivity
 import com.jayce.vexis.business.role.register.RegisterActivity
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.SessionManager.registerUser
-import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
-import com.jayce.vexis.foundation.route.PackageService
-import com.jayce.vexis.foundation.route.UserService
+import com.jayce.vexis.domain.route.PackageService
+import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import org.pytorch.IValue
@@ -93,7 +93,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         val notification = NotificationCompat.Builder(BaseTool.env(), "1")
             .setSmallIcon(R.drawable.tianji)
             .setContentTitle(getString(R.string.login_success_notify))
-            .setContentText(getString(R.string.welcome_user, user().nickname))
+            .setContentText(getString(R.string.welcome_user, liveUser.nickname))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(Notification.CATEGORY_SERVICE)
             .setOngoing(true)

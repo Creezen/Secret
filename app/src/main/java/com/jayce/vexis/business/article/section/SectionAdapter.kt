@@ -21,12 +21,12 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.ArticleService
+import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
 class SectionAdapter (
@@ -126,7 +126,7 @@ class SectionAdapter (
             .positive(context.getString(R.string.submit)) {
                 val color = (view.background as? ColorDrawable)?.color ?: destColor
                 view.setBackgroundColor(color.xor(xorColor))
-                val userId = user().userId
+                val userId = liveUser.userId
                 val paragraphId = itemList[position].sectionId
                 val content = commentContent.msg()
                 request<ArticleService, Boolean>({

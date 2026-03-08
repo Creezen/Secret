@@ -21,11 +21,11 @@ import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.UserService
+import com.jayce.vexis.domain.route.UserService
 import kotlinx.coroutines.delay
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
@@ -45,7 +45,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             if (it == null) return@getLauncher
             val filePath = getFilePathByUri(it) ?: return@getLauncher
             request<UserService, LinkedTreeMap<String, Boolean>>({
-                uploadAvatar(user().userId, buildFileMultipart(filePath, "file"))
+                uploadAvatar(liveUser.userId, buildFileMultipart(filePath, "file"))
             }) {
                 if (it["status"] == true) {
                     val cursorTime = System.currentTimeMillis()
@@ -69,9 +69,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
 
     private fun initPage() {
         with(binding) {
-            nickname.text = user().nickname
-            id.text = user().userId
-            if (user().getAdministratorStatus()) {
+            nickname.text = liveUser.nickname
+            id.text = liveUser.userId
+            if (liveUser.getAdministratorStatus()) {
                 administrator.visibility = View.VISIBLE
             }
             administrator.setOnClickListener {
@@ -96,7 +96,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                     NetTool.setImage(
                         this@DashboardActivity,
                         image,
-                        "${BASE_FILE_PATH}head/${user().userId}.png",
+                        "${BASE_FILE_PATH}head/${liveUser.userId}.png",
                         key = AvatarSignnature("key:$it"),
                     )
                     loadAvatarFromNet(300, it)
@@ -118,7 +118,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             NetTool.setImage(
                 this@DashboardActivity,
                 binding.image,
-                "${BASE_FILE_PATH}head/${user().userId}.png",
+                "${BASE_FILE_PATH}head/${liveUser.userId}.png",
                 old,
                 key = key
             )

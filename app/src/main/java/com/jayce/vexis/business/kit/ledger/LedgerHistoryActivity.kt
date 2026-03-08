@@ -7,10 +7,9 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityRecordHistoryBinding
-import com.jayce.vexis.foundation.bean.RecordListEntry
-import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
+import com.jayce.vexis.domain.bean.RecordListEntry
+import com.jayce.vexis.domain.database.ledger.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
 

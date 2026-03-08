@@ -1,7 +1,7 @@
 package com.jayce.vexis.foundation.ui.animator
 
 import android.animation.TypeEvaluator
-import com.jayce.vexis.foundation.bean.AnimatorBallEntry
+import com.jayce.vexis.domain.bean.AnimatorBallEntry
 
 class BallEvaluator : TypeEvaluator<AnimatorBallEntry> {
 

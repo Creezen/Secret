@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity
 import com.jayce.vexis.databinding.RecordListLayoutBinding
-import com.jayce.vexis.foundation.bean.RecordListEntry
-import com.jayce.vexis.foundation.database.ledger.ScoreDatabase
+import com.jayce.vexis.domain.bean.RecordListEntry
+import com.jayce.vexis.domain.database.ledger.ScoreDatabase
 import kotlinx.coroutines.Dispatchers
 
 class RecordHistoryAdapter(

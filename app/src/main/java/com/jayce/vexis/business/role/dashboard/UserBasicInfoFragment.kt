@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jayce.vexis.core.SessionManager.user
+import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
 
@@ -21,7 +21,7 @@ class UserBasicInfoFragment : BaseFragment<UserBasicInfoBinding>() {
 
     private fun initView() {
         with(binding) {
-            user().let {
+            liveUser.let {
                 createTime.text = it.createTime
                 sex.text = it.sex
                 age.text = "${it.age}"

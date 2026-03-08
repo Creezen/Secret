@@ -4,15 +4,17 @@ import android.util.Log
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.commontool.bean.FileBean
+import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.foundation.bean.ActiveEntry
-import com.jayce.vexis.foundation.bean.FileEntry
-import com.jayce.vexis.foundation.bean.UserEntry
+import com.jayce.vexis.domain.bean.ActiveEntry
+import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.domain.bean.FileEntry
+import com.jayce.vexis.domain.bean.UserEntry
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import java.util.concurrent.CompletableFuture
@@ -72,6 +74,14 @@ object Util {
                 userID, nickname, createTime, administrator, support, against,
                 inform, reported, follow, fans, post
             )
+        }
+
+        fun TelecomBean.room(): EventEntry {
+            return EventEntry(type, userId, nickName, session, msgId, content)
+        }
+
+        fun EventEntry.telecom(): TelecomBean {
+            return TelecomBean(type, userId, nickName, session, msgId, content)
         }
     }
 }

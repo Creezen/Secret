@@ -1,6 +1,7 @@
 package com.jayce.vexis.business.chat
 
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.AndroidTool.msg
@@ -8,17 +9,14 @@ import com.creezen.tool.NetTool.sendChatMessage
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ThreadTool.ui
-import com.jayce.vexis.core.CoreService
-import com.jayce.vexis.core.CoreService.Companion.NAME_MESSAGE_SCOPE
-import com.jayce.vexis.core.SessionManager.user
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
+import com.jayce.vexis.domain.bean.ChatEntry
+import com.jayce.vexis.domain.viewmodel.ChatViewModel
+import com.jayce.vexis.foundation.ability.EventHandle.NAME_MESSAGE_SCOPE
 import com.jayce.vexis.foundation.ability.EventHandle.getChatMessage
 import com.jayce.vexis.foundation.ability.EventHandle.sendFinish
-import com.jayce.vexis.foundation.bean.ChatEntry
-import com.jayce.vexis.foundation.viewmodel.ChatViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 

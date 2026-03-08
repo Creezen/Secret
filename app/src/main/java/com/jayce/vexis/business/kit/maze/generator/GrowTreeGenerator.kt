@@ -2,7 +2,7 @@ package com.jayce.vexis.business.kit.maze.generator
 
 import android.util.Log
 import com.jayce.vexis.business.kit.maze.enums.MazeDirection
-import com.jayce.vexis.foundation.bean.GridUnit
+import com.jayce.vexis.domain.bean.GridUnit
 import kotlin.random.Random
 
 class GrowTreeGenerator : IMazeGenerator() {

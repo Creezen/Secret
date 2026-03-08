@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.creezen.tool.NetTool.destroySocket
-import java.util.ArrayList
 
 abstract class  BaseActivity<K: ViewBinding> : AppCompatActivity(), Common<K> {
 

@@ -7,7 +7,7 @@ import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.route.UserService
+import com.jayce.vexis.domain.route.UserService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
