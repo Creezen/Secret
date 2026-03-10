@@ -53,6 +53,7 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.domain.route.PackageService
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
 import org.pytorch.IValue
@@ -101,6 +102,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         return notification
     }
 
+    @Logger(a = "hello")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.root.fitsSystemWindows = true

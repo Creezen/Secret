@@ -7,6 +7,7 @@ pluginManagement {
             url = java.net.URI("https://jitpack.io")
         }
     }
+    includeBuild("CreezenAnnotation")
 }
 
 rootProject.name = "Secret"

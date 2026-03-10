@@ -13,6 +13,7 @@ plugins {
     id("kotlin-parcelize")
     id("maven-publish")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+    id("com.jayce.vexis.annotation")
 }
 
 apply("${rootProject.projectDir}/config.gradle")
@@ -230,6 +231,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.constraintlayout)
     implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.retrofit.converter.scalars)
