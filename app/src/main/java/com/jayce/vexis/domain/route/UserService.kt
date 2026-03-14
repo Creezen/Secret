@@ -3,7 +3,6 @@ package com.jayce.vexis.domain.route
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.commontool.bean.TransferStatusBean
 import com.creezen.commontool.bean.UserBean
-import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.core.base.BaseService
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -19,37 +18,24 @@ interface UserService : BaseService {
 
     @POST("register")
     @Headers("Content-Type: application/json")
-    fun register(
-        @Body requestUser: UserBean,
-    ): Call<TransferStatusBean>
+    fun register(@Body requestUser: UserBean): Call<TransferStatusBean>
 
     @POST("checkInfo")
     @FormUrlEncoded
-    fun checkInfo(
-        @Field("userName") userName: String,
-    ): Call<Boolean>
+    fun checkInfo(@Field("userName") userName: String): Call<Boolean>
 
     @POST("/login")
     @FormUrlEncoded
-    fun loginSystem(
-        @Field("unique") unique: String,
-        @Field("password") password: String,
-    ): Call<TransferStatusBean>
+    fun loginSystem(@Field("unique") unique: String, @Field("password") password: String): Call<TransferStatusBean>
 
     @POST("/postAvatar")
     @Multipart
-    fun uploadAvatar(
-        @Part("userID") userId: String,
-        @Part filePart: MultipartBody.Part,
-    ): Call<LinkedTreeMap<String, Boolean>>
+    fun uploadAvatar(@Part("userID") userId: String, @Part filePart: MultipartBody.Part): Call<Boolean>
 
     @POST("/getAllUser")
-    fun getAllUser(): Call<LinkedTreeMap<String, List<ActiveBean>>>
+    fun getAllUser(): Call<List<ActiveBean>>
 
     @POST("/managerUser")
     @FormUrlEncoded
-    fun manageUser(
-        @Field("operation") operation: Int,
-        @Field("userId") userId: String,
-    ): Call<LinkedTreeMap<String, Boolean>>
+    fun manageUser(@Field("operation") operation: Int, @Field("userId") userId: String): Call<Boolean>
 }

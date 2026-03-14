@@ -6,19 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
-import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
+import com.jayce.vexis.foundation.Util.Extension.chat
 import com.jayce.vexis.foundation.ability.EventHandle.NAME_MESSAGE_SCOPE
-import com.jayce.vexis.foundation.ability.EventHandle.getChatMessage
-import com.jayce.vexis.foundation.ability.EventHandle.sendFinish
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.future.await
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.CompletableFuture
 
 class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
@@ -28,7 +27,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     }
 
     private val adapter by lazy { ChatAdapter(itemList) }
-    private val viewModel by inject<ChatViewModel>()
+    private val viewModel by viewModel<ChatViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,21 +36,15 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     }
 
     private fun initData() {
-        getChatMessage { queue ->
-            val localList = arrayListOf<ChatEntry>()
-            while (queue.isNotEmpty()) {
-                localList.add(queue.take())
-            }
-            itemList.addAll(localList)
-            val dataSize = localList.size
-            val afterSize = itemList.size
-            adapter.notifyItemRangeInserted(afterSize - dataSize, dataSize)
-            binding.message.scrollToPosition(afterSize - 1)
-            ThreadTool.runOnMulti {
-                while (true) {
-                    val msg = queue.take()
-                    if (msg.msg.isEmpty()) break
-                    itemList.add(msg)
+        lifecycleScope.launch {
+            val ready = CompletableFuture<Unit>()
+            launch {
+                val oldSize = itemList.size
+                itemList.clear()
+                adapter.notifyItemRangeRemoved(0, oldSize)
+                ready.complete(Unit)
+                viewModel.eventFlow.collect {
+                    itemList.add(it.chat())
                     ui {
                         adapter.notifyItemRangeInserted(itemList.size, 1)
                         binding.edit.setText(EMPTY_STRING)
@@ -59,6 +52,8 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                     }
                 }
             }
+            ready.await()
+            viewModel.collect()
         }
     }
 
@@ -75,10 +70,5 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        sendFinish()
-        super.onDestroy()
     }
 }

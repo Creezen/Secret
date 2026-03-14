@@ -17,7 +17,6 @@ class AnnoMethodVisitor(
 
     override fun visitAnnotation(descriptor: String?, visible: Boolean): AnnotationVisitor {
         val va = super.visitAnnotation(descriptor, visible)
-        println("descriptor: $descriptor")
         if (descriptor == "Lcom/jayce/vexis/foundation/ability/Logger;") {
             return object : AnnotationVisitor(api, va) {
                 override fun visit(name: String?, value: Any?) {

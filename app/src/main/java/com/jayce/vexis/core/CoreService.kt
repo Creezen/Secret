@@ -10,14 +10,10 @@ import com.jayce.vexis.foundation.ability.EventHandle.releaseEventSystem
 
 class CoreService : Service() {
 
-    companion object {
-        const val TAG = "CoreService"
-    }
-
     private val binder = ConnectionBinder()
 
     override fun onCreate() {
-        initEventSystem(this)
+        initEventSystem()
     }
 
     override fun onBind(intent: Intent?): IBinder? {

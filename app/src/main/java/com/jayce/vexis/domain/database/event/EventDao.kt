@@ -14,4 +14,10 @@ interface EventDao {
 
     @Query("select * from eventEntry")
     fun getAllEvent(): Flow<List<EventEntry>>
+
+    @Query("select * from eventEntry where id = :eventId")
+    fun getEventById(eventId: Long): EventEntry
+
+    @Query("select * from eventEntry where type IN (:type)")
+    fun getEventListByType(type: List<Int>): Flow<List<EventEntry>>
 }

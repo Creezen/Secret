@@ -42,7 +42,6 @@ import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.peer.PeerFragment
-import com.jayce.vexis.business.role.dashboard.AvatarSignnature
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.setting.SettingActivity
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
@@ -51,7 +50,6 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
-import com.jayce.vexis.foundation.ability.EventHandle.getUnreadSize
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
@@ -109,15 +107,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
-        chatBadge.badgeNumber = getUnreadSize()
+//        chatBadge.badgeNumber = getUnreadSize()
         getDataAsync(AVATAR_SAVE_TIME, 0L) {
-            val imageUrl = "${BASE_FILE_PATH}head/${liveUser.userId}.png"
+            val imageUrl = "${liveUser.userId}.png"
             ThreadTool.ui {
                 NetTool.setImage(
                     this@MainActivity,
                     avatarView,
                     imageUrl,
-                    key = AvatarSignnature("key:$it"),
+                    placeHolder = null,
+                    key = it.toString(),
                     isCircle = true,
                 )
             }
@@ -202,7 +201,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     override fun onDrawerStateChanged(newState: Int) { /**/ }
 
                     override fun onDrawerOpened(drawerView: View) {
-                        chatBadge.badgeNumber = getUnreadSize()
+//                        chatBadge.badgeNumber = getUnreadSize()
                         emailBadge.badgeNumber = 0
                     }
                 }

@@ -88,7 +88,7 @@ class SectionAdapter (
             displayComment(position, holder.paragraph)
         } else {
             val currentHolder = holder as ImageViewHolder
-            NetTool.setImage(context, currentHolder.image, "${SessionManager.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+//            NetTool.setImage(context, currentHolder.image, "${SessionManager.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
         }
     }
 

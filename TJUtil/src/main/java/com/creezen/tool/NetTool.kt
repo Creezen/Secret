@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.Key
@@ -20,6 +21,7 @@ import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.ability.net.AvatarSignature
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -127,11 +129,27 @@ object NetTool {
         context: Context,
         image: ImageView,
         url: String,
-        placeHolder: Drawable? = null,
-        key: Key? = null,
+        placeHolderId: Int? = null,
+        key: String? = null,
         isCircle: Boolean = false
     ) {
-        val load = Glide.with(context).load(url)
+        var placeHolderDrawable: Drawable? = null
+        if (placeHolderId != null) {
+            placeHolderDrawable = ContextCompat.getDrawable(context, placeHolderId)
+        }
+        setImage(context, image, url, placeHolderDrawable, key, isCircle)
+    }
+
+    fun setImage(
+        context: Context,
+        image: ImageView,
+        url: String,
+        placeHolder: Drawable? = null,
+        key: String? = null,
+        isCircle: Boolean = false
+    ) {
+        val fileUrl = "${baseUrl}/FileSystem/head/$url"
+        val load = Glide.with(context).load(fileUrl)
         var holderBuilder = load
         if (placeHolder != null) {
             holderBuilder = load.placeholder(placeHolder)
@@ -140,7 +158,8 @@ object NetTool {
             holderBuilder.into(image)
             return
         }
-        holderBuilder.apply(getRequestOptions(key, isCircle)).into(image)
+        val signature = AvatarSignature("key:$key")
+        holderBuilder.apply(getRequestOptions(signature, isCircle)).into(image)
     }
 
     private fun getRequestOptions(key: Key, isCircle: Boolean = false): RequestOptions {

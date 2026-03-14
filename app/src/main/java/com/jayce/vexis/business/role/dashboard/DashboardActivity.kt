@@ -17,15 +17,14 @@ import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.ThreadTool
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.gson.internal.LinkedTreeMap
 import com.jayce.vexis.R
 import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.delay
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
@@ -44,10 +43,10 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         imageLauncher = getLauncher(openFile()) {
             if (it == null) return@getLauncher
             val filePath = getFilePathByUri(it) ?: return@getLauncher
-            request<UserService, LinkedTreeMap<String, Boolean>>({
-                uploadAvatar(liveUser.userId, buildFileMultipart(filePath, "file"))
-            }) {
-                if (it["status"] == true) {
+            val id = liveUser.userId
+            val part = buildFileMultipart(filePath, "file")
+            request<UserService, Boolean>({ uploadAvatar(id, part) }) { result ->
+                if (result) {
                     val cursorTime = System.currentTimeMillis()
                     putData(AVATAR_SAVE_TIME, cursorTime)
                     loadAvatarFromNet(0, cursorTime)
@@ -96,8 +95,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                     NetTool.setImage(
                         this@DashboardActivity,
                         image,
-                        "${BASE_FILE_PATH}head/${liveUser.userId}.png",
-                        key = AvatarSignnature("key:$it"),
+                        url="${liveUser.userId}.png",
+                        placeHolder = null,
+                        key = it.toString(),
                     )
                     loadAvatarFromNet(300, it)
                 }
@@ -105,22 +105,16 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         }
     }
 
-    private fun loadAvatarFromNet(
-        delayTime: Long = 0,
-        cursorTime: Long? = null,
-    ) {
-        val key = cursorTime?.let {
-            AvatarSignnature("key:$cursorTime")
-        }
+    private fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
         ThreadTool.runOnMulti {
             delay(delayTime)
             val old = binding.image.drawable
             NetTool.setImage(
                 this@DashboardActivity,
                 binding.image,
-                "${BASE_FILE_PATH}head/${liveUser.userId}.png",
-                old,
-                key = key
+                "${liveUser.userId}.png",
+                placeHolder = old,
+                key = cursorTime.toString()
             )
         }
     }

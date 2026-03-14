@@ -6,12 +6,14 @@ import com.creezen.commontool.bean.ActiveBean
 import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
+import com.creezen.commontool.toTime
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.domain.bean.ActiveEntry
+import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.bean.EventEntry
 import com.jayce.vexis.domain.bean.FileEntry
 import com.jayce.vexis.domain.bean.UserEntry
@@ -82,6 +84,10 @@ object Util {
 
         fun EventEntry.telecom(): TelecomBean {
             return TelecomBean(type, userId, nickName, session, msgId, content)
+        }
+
+        fun EventEntry.chat(): ChatEntry {
+            return ChatEntry(nickName, System.currentTimeMillis().toTime(), content)
         }
     }
 }
