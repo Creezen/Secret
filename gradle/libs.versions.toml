@@ -30,6 +30,7 @@ junit-version = "1.1.5"
 espresso-core = "3.5.1"
 pytorch = "1.13.1"
 datastore = "1.2.0"
+websocket = "1.6.0"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -66,6 +67,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 pytorch-android = { group = "org.pytorch", name = "pytorch_android", version.ref = "pytorch" }
 pytorch-android-torchvision = { group = "org.pytorch", name = "pytorch_android_torchvision", version.ref = "pytorch" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

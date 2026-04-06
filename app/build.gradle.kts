@@ -246,4 +246,5 @@ dependencies {
     implementation(libs.amap)
     implementation(libs.pytorch.android)
     implementation(libs.pytorch.android.torchvision)
+    implementation(libs.websocket)
 }

@@ -40,6 +40,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <provider
             android:authorities="com.jayce.vexis.provider"
