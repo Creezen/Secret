@@ -9,7 +9,6 @@ import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
-import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding

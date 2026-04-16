@@ -27,9 +27,9 @@ object BaseTool {
 
     fun setFont(file: String) {
         val obj = Typeface.createFromAsset(envContext.assets, "fonts/$file.ttf")
-        val field = Typeface::class.java.getField("MONOSPACE")
+        val field = Typeface::class.java.getDeclaredField("MONOSPACE")
         field.isAccessible = true
-        field.set(this, obj)
+        field.set(null, obj)
     }
 
     fun restartApp() {

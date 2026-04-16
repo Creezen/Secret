@@ -2,7 +2,7 @@ package com.jayce.vexis.business.kit.maze
 
 import com.jayce.vexis.business.kit.maze.generator.DFSGenerator
 import com.jayce.vexis.business.kit.maze.generator.IMazeGenerator
-import com.jayce.vexis.business.kit.maze.enums.MazeType
+import com.jayce.vexis.domain.enums.MazeType
 import com.jayce.vexis.business.kit.maze.generator.GrowTreeGenerator
 import com.jayce.vexis.business.kit.maze.generator.WilsonGenerator
 

@@ -10,6 +10,7 @@ import com.jayce.vexis.business.kit.gomoku.GomokuActivity
 import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.pinyin.PinyinActivity
+import com.jayce.vexis.business.kit.poker.PokerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
 
@@ -29,6 +30,9 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
             }
             gomoku.setOnClickListener {
                 startActivity(Intent(context, GomokuActivity::class.java))
+            }
+            poker.setOnClickListener {
+                startActivity(Intent(context, PokerActivity::class.java))
             }
             pinyin.setOnClickListener {
                 startActivity(Intent(context, PinyinActivity::class.java))

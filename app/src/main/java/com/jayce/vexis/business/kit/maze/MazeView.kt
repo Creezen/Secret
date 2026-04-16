@@ -9,7 +9,7 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.jayce.vexis.business.kit.maze.enums.MazeType
+import com.jayce.vexis.domain.enums.MazeType
 import com.jayce.vexis.domain.bean.GridUnit
 import kotlin.math.absoluteValue
 

@@ -7,6 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
+import com.jayce.vexis.domain.enums.TimePickerType
 import kotlinx.coroutines.Dispatchers
 
 class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
