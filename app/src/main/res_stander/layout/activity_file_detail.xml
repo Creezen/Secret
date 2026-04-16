@@ -57,5 +57,6 @@
         android:layout_height="wrap_content"
         android:groupIndicator="@null"
         android:dividerHeight="5dp"
+        android:divider="@null"
         android:childDivider="@android:color/transparent"/>
 </LinearLayout>

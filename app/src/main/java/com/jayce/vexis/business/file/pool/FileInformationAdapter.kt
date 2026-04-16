@@ -13,30 +13,22 @@ class FileInformationAdapter(
     private val parentList: List<String>,
     private val childList: List<List<String>>,
 ) : BaseExpandableListAdapter() {
+
     override fun getGroupCount() = parentList.size
 
     override fun getChildrenCount(groupPosition: Int) = childList[groupPosition].size
 
     override fun getGroup(groupPosition: Int) = parentList[groupPosition]
 
-    override fun getChild(
-        groupPosition: Int,
-        childPosition: Int,
-    ) = childList[groupPosition][childPosition]
+    override fun getChild(groupPosition: Int, childPosition: Int) = childList[groupPosition][childPosition]
 
     override fun getGroupId(groupPosition: Int) = groupPosition.toLong()
 
-    override fun getChildId(
-        groupPosition: Int,
-        childPosition: Int,
-    ) = childPosition.toLong()
+    override fun getChildId(groupPosition: Int, childPosition: Int) = childPosition.toLong()
 
     override fun hasStableIds() = true
 
-    override fun isChildSelectable(
-        groupPosition: Int,
-        childPosition: Int,
-    ) = true
+    override fun isChildSelectable(groupPosition: Int, childPosition: Int) = true
 
     override fun getGroupView(
         groupPosition: Int,
@@ -76,6 +68,4 @@ class FileInformationAdapter(
         binding.childNodeName.text = childList[groupPosition][childPosition]
         return view
     }
-
-    // TODO SpannableStringBuilder
 }
