@@ -1,14 +1,19 @@
 package com.jayce.vexis.business.role.manage
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams
+import android.widget.PopupWindow
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
+import com.jayce.vexis.databinding.PoupWindowBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
@@ -30,19 +35,9 @@ class UserActiveAdapter(
         val time = binding.createTime
     }
 
-    override fun bindCardViewHolder(holder: ViewHolder, position: Int, ) {
+    override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = userList[position]
-        val menu by lazy {
-            TrackPopupMenu(holder.view.context, holder.view)
-        }
-        menu.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.delete -> "删除${item.nickname}".toast()
-                R.id.setAdministrator -> "${item.nickname}已成为管理员".toast()
-            }
-            true
-        }
-        menu.menuInflater.inflate(R.menu.popup_member_manage, menu.menu)
+        val window = initPopupWindow(holder.view, item)
         holder.nickname.text = item.nickname
         holder.admin.visibility = if (item.administrator == 0) View.GONE else View.VISIBLE
         holder.id.text = item.userID
@@ -55,7 +50,7 @@ class UserActiveAdapter(
             )
         }
         holder.view.setOnLongClickListener {
-            menu.show()
+            window.show()
             true
         }
     }
@@ -70,4 +65,17 @@ class UserActiveAdapter(
         return childBinding to holder
     }
 
+    private fun initPopupWindow(view: View, activeItem: ActiveBean): TrackPopupMenu {
+        val bind = PoupWindowBinding.inflate((context as Activity).layoutInflater)
+        val window = TrackPopupMenu(bind.root, view)
+        bind.setAdmin.setOnClickListener {
+            "${activeItem.nickname}已成为管理员".toast()
+            window.dismiss()
+        }
+        bind.deleteUser.setOnClickListener {
+            "删除${activeItem.nickname}".toast()
+            window.dismiss()
+        }
+        return window
+    }
 }
