@@ -1,11 +1,17 @@
 package com.jayce.vexis.business.kit
 
+import android.Manifest
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import com.jayce.vexis.business.kit.gomoku.GomokuActivity
 import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
@@ -13,6 +19,7 @@ import com.jayce.vexis.business.kit.pinyin.PinyinActivity
 import com.jayce.vexis.business.kit.poker.PokerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
+import java.util.Locale
 
 class KitFragment : BaseFragment<WidgetsBinding>() {
 
@@ -21,6 +28,12 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        initView()
+        showLocation()
+        return binding.root
+    }
+
+    private fun initView() {
         with(binding) {
             ledger.setOnClickListener {
                 startActivity(Intent(context, LedgerSheetActivity::class.java))
@@ -44,6 +57,32 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
                 startActivity(intent)
             }
         }
-        return binding.root
     }
+
+    private fun showLocation() {
+        if (ActivityCompat.checkSelfPermission(activity as Context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            activity?.requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            return
+        }
+        val locationManager = context?.getSystemService(LocationManager::class.java)
+        locationManager?.requestLocationUpdates(
+            LocationManager.NETWORK_PROVIDER,
+            0,
+            0f
+        ) { location ->
+            val latitude = location.latitude
+            val longitude = location.longitude
+            val geocoder = Geocoder(activity as Context, Locale.CHINA)
+            geocoder.getFromLocation(latitude, longitude, 1) {
+                val address = it[0]
+                val info = "${longitude}\n" +
+                        "${latitude}\n" +
+                        "${address.getAddressLine(0)}\n" +
+                        "${address.getAddressLine(1)}\n" +
+                        "${address.getAddressLine(2)}"
+                binding.location.text = info
+            }
+        }
+    }
+
 }
