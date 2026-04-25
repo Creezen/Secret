@@ -23,11 +23,7 @@ import java.util.Locale
 
 class KitFragment : BaseFragment<WidgetsBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()
         showLocation()
         return binding.root
@@ -84,5 +80,4 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
             }
         }
     }
-
 }
