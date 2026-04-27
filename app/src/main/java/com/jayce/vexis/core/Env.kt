@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import com.amap.api.services.core.ServiceSettings
+//import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool
@@ -45,8 +45,8 @@ class Env : Application() {
             BuildConfig.socketUrl,
             BuildConfig.baseUrl
         )
-        ServiceSettings.updatePrivacyAgree(this, true)
-        ServiceSettings.updatePrivacyShow(this, true, true)
+//        ServiceSettings.updatePrivacyAgree(this, true)
+//        ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
         AndroidTool.getDataAsync("font", "细体宋体") {

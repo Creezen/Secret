@@ -97,6 +97,11 @@ android {
     sourceSets["main"].res {
         srcDirs("src/main/res", "src/main/res_stander")
     }
+
+    aaptOptions {
+        noCompress.add("js")
+        noCompress.add("wasm")
+    }
 }
 
 androidComponents {
@@ -243,8 +248,8 @@ dependencies {
     implementation(libs.preference.ktx)
     implementation(libs.koin.android)
     implementation(libs.common.tools)
-    implementation(libs.amap)
-    implementation(libs.pytorch.android)
-    implementation(libs.pytorch.android.torchvision)
+//    implementation(libs.amap)
+//    implementation(libs.pytorch.android)
+//    implementation(libs.pytorch.android.torchvision)
     implementation(libs.websocket)
 }

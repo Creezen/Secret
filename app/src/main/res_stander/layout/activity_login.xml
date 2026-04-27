@@ -107,6 +107,10 @@
                     android:text="@string/find_password"
                     style="@style/buttonStyle"/>
             </LinearLayout>
+            <com.jayce.vexis.foundation.ui.block.CodeView
+                android:id="@+id/codeBlock"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

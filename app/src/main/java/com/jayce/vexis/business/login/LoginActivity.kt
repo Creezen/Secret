@@ -61,9 +61,10 @@ import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
-import org.pytorch.IValue
-import org.pytorch.Module
-import org.pytorch.Tensor
+import kotlinx.coroutines.delay
+//import org.pytorch.IValue
+//import org.pytorch.Module
+//import org.pytorch.Tensor
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -198,46 +199,52 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             liveData.value = getString(R.string.login_name)
             password.setText(R.string.login_password)
 
+            val codeContent = """
+                fun main() {
+                    Log.d("TAG", "Hello world")
+                }
+            """.trimIndent()
+            codeBlock.code(codeContent)
             initPicture()
         }
     }
 
-    private fun aiModel() {
-        kotlin.runCatching {
-            val model = Module.load(assetFilePath(this, "model/androidModel.pt"))
-            val tensor = Tensor.fromBlob(floatArrayOf(2.5f, 1.5f), longArrayOf(1, 2))
-            val result = model.forward(IValue.from(tensor)).toTensor()
-            result.dataAsFloatArray[0].toast()
-        }.onFailure {
-            it.printStackTrace()
-        }
-    }
+//    private fun aiModel() {
+//        kotlin.runCatching {
+//            val model = Module.load(assetFilePath(this, "model/androidModel.pt"))
+//            val tensor = Tensor.fromBlob(floatArrayOf(2.5f, 1.5f), longArrayOf(1, 2))
+//            val result = model.forward(IValue.from(tensor)).toTensor()
+//            result.dataAsFloatArray[0].toast()
+//        }.onFailure {
+//            it.printStackTrace()
+//        }
+//    }
 
-    private fun assetFilePath(context: Context, assetName: String): String {
-        val file = File(context.getFilesDir(), assetName);
-        if (file.exists() && file.length() > 0) {
-            return file.getAbsolutePath();
-        }
-
-        if (file.exists().not()) {
-            file.parentFile?.mkdir()
-            file.createNewFile()
-        }
-
-        context.assets.open(assetName).use { ins ->
-            FileOutputStream(file).use { ous ->
-                val buffer = ByteArray(4 * 1024)
-                while (true) {
-                    val read = ins.read(buffer)
-                    if (read != -1) {
-                        ous.write(buffer, 0, read);
-                    } else break
-                }
-                ous.flush();
-            }
-        }
-        return  file.absolutePath
-    }
+//    private fun assetFilePath(context: Context, assetName: String): String {
+//        val file = File(context.getFilesDir(), assetName);
+//        if (file.exists() && file.length() > 0) {
+//            return file.getAbsolutePath();
+//        }
+//
+//        if (file.exists().not()) {
+//            file.parentFile?.mkdir()
+//            file.createNewFile()
+//        }
+//
+//        context.assets.open(assetName).use { ins ->
+//            FileOutputStream(file).use { ous ->
+//                val buffer = ByteArray(4 * 1024)
+//                while (true) {
+//                    val read = ins.read(buffer)
+//                    if (read != -1) {
+//                        ous.write(buffer, 0, read);
+//                    } else break
+//                }
+//                ous.flush();
+//            }
+//        }
+//        return  file.absolutePath
+//    }
 
     private fun saveToGallery(view: View) {
         view.post {

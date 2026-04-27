@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; background: #1e1e1e; color: #fff; }
+        pre { padding: 12px; margin: 0; font-family: 'monospace'; font-size: 14px; overflow: auto; }
+        .shiki { background-color: transparent !important; }
+    </style>
+    <script src="./shiki/shiki-bundle.js" charset="utf-8"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    let highlighter;
+
+    async function init() {
+        if (!window.shiki) {
+            console.error("window.shiki为空！");
+            return;
+        }
+        try {
+            highlighter = await window.shiki.createHighlighter({
+                themes: ['github-dark', 'github-light'],
+                langs: ['kotlin', 'java', 'xml', 'python', 'javascript'],
+                paths: {
+                    themes: './themes/',
+                    languages: './languages/'
+                },
+                wasmLoader: async () => {
+                    const res = await fetch('shiki/onig.wasm');
+                    return await res.arrayBuffer();
+                }
+            });
+            if(window.Android) window.Android.onReady();
+        } catch (e) {
+            console.error("初始化失败: " + e.message);
+        }
+    }
+
+    window.renderCode = (code, lang, theme) => {
+        if (!highlighter)  return
+        try {
+            const html = highlighter.codeToHtml(code, {
+                lang: lang || 'kotlin',
+                theme: theme || 'github-dark'
+            });
+            document.getElementById('container').innerHTML = html;
+        } catch (e) {
+             console.error("渲染失败: " + e.message);
+        }
+    };
+    window.onload = init;
+</script>
+</body>
+</html>
