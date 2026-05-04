@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.creezen.tool.ThreadTool
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
@@ -27,8 +29,11 @@ import org.koin.android.ext.android.inject
 
 class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
 
+    private var selectedPosition: Int = 0
     private val list = arrayListOf<Fragment>()
     private var fileAdapter: FileAdapter? = null
+    private lateinit var fileContentsFragment: FileContentsFragment
+    private lateinit var dynamicModuleFragment: DynamicModuleFragment
 
     private val viewModel by inject<FileViewModel>()
 
@@ -40,11 +45,20 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
     }
 
     private fun initData() {
-        val fileContentsFragment = FileContentsFragment(viewModel)
-        val dynamicModuleFragment = DynamicModuleFragment(viewModel)
+        fileContentsFragment = FileContentsFragment(viewModel)
+        dynamicModuleFragment = DynamicModuleFragment(viewModel)
         list.add(fileContentsFragment)
         list.add(dynamicModuleFragment)
         viewModel.fetchAndHandleTask()
+    }
+
+    override fun onGetData(firstInit: Boolean) {
+        super.onGetData(firstInit)
+        if (firstInit) return
+        when (selectedPosition) {
+            0 -> fileContentsFragment.updateData()
+            1 -> dynamicModuleFragment.updateData()
+        }
     }
 
     private fun initView() {
@@ -66,6 +80,16 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
                 }
                 tab.customView = textView
             }.attach()
+
+            page.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    when (position) {
+                        0 -> fileContentsFragment.updateData()
+                        1 -> dynamicModuleFragment.updateData()
+                    }
+                }
+            })
 
             progress.setOnClickListener { bottomSheetDialog ->
                 val dialog = DownloadButtonSheetDialog {

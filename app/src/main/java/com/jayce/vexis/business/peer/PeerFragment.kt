@@ -2,7 +2,6 @@ package com.jayce.vexis.business.peer
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,15 +47,13 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
         return binding.root
     }
 
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if (!hidden) {
-            fetchAdvice()
-        }
+    override fun onGetData(firstInit: Boolean) {
+        super.onGetData(firstInit)
+        ThreadTool.runOnMulti(Dispatchers.Main) { fetchAdvice() }
     }
 
     private fun initData() {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti(Dispatchers.Main) {
             val subjectTableEntry = DataTool.loadDataFromYAML<SubjectTableEntry>("SubjectTable") ?: return@runOnMulti
             primaryList = subjectTableEntry.discipline
             secondaryList = subjectTableEntry.category
@@ -82,7 +79,6 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
             }
             tertiary.init(tertiaryList[0][0]) {
                 tertiaryNum = it
-                fetchAdvice()
                 isFirst= false
             }
             advice.setOnClickListener {
@@ -98,9 +94,8 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     }
 
     private fun fetchAdvice() {
-        Log.d(TAG, "fetchAdvice ${primary()}  ${secondary()}  ${teriary()}")
         request<PeerService, List<PeerAdviceBean>>({
-            getAdvice(primary(),secondary(), teriary())
+            getAdvice(primary(),secondary(), tertiary())
         }) {
             val count = list.size
             list.clear()
@@ -120,7 +115,7 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
         return secondaryList[primaryNum][secordNum]
     }
 
-    private fun teriary(): String {
+    private fun tertiary(): String {
         return tertiaryList[primaryNum][secordNum][tertiaryNum]
     }
 }

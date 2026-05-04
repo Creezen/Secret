@@ -1,6 +1,7 @@
 package com.jayce.vexis.business.history
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,16 +51,9 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onGetData(firstInit: Boolean) {
+        super.onGetData(firstInit)
         queryList()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if(!hidden) {
-            queryList()
-        }
     }
 
     override fun onDestroyView() {
@@ -70,9 +64,7 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
     private fun queryList() {
         request<HistoryService, List<HistoryBean>>({ queryAllEvent() }) {
             eventList.addAll(it)
-            binding.left.addTraceCell(
-                it.filter { it.isValid() }
-            )
+            binding.left.addTraceCell(it.filter { it.isValid() })
         }
     }
 

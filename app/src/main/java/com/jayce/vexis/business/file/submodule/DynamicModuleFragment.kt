@@ -23,6 +23,8 @@ class DynamicModuleFragment(
         return binding.root
     }
 
+    fun updateData() {}
+
     private fun initData() {
         (0 .. 4).forEach {
             list.add(DynamicModuleEntry("下载模块$it", "$it"))

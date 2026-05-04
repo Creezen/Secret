@@ -30,16 +30,9 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onGetData(firstInit: Boolean) {
+        super.onGetData(firstInit)
         updateData()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        if(!hidden) {
-            updateData()
-        }
     }
 
     private fun initView() {

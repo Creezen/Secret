@@ -42,18 +42,15 @@ class FileContentsFragment(
         savedInstanceState: Bundle?,
     ): View {
         if (tag != null) {
-            initData()
             return tag as View
         }
         initPage()
-        initData()
         return binding.root.also {
             tag = it
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    fun updateData() {
         initData()
     }
 
