@@ -4,6 +4,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 
+fun buildDir(): String {
+    return layout.buildDirectory.get().asFile.path
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -91,7 +95,7 @@ android {
         enable.add("HardcodedText")
         baseline = file("lint-baseline.xml")
         abortOnError = false
-        htmlOutput = file("$buildDir/reports/combined/lint-report.html")
+        htmlOutput = file("${buildDir()}/reports/combined/lint-report.html")
     }
 
     sourceSets["main"].res {
@@ -124,8 +128,8 @@ tasks.register<DefaultTask>("kt-lint") {
     group = "verification"
     dependsOn("ktlintCheck")
     doLast {
-        val sourceDir = file("$buildDir/reports/ktlint")
-        val outputFile = file("$buildDir/reports/combined/kt-report.html")
+        val sourceDir = file("${buildDir()}/reports/ktlint")
+        val outputFile = file("${buildDir()}/reports/combined/kt-report.html")
 
         if (!outputFile.parentFile.exists()) {
             outputFile.parentFile.mkdirs() // 递归创建目录
@@ -198,8 +202,8 @@ tasks.register("mergeReports") {
     dependsOn("detekt")
 
     dependsOn("lint", "kt-lint").doLast {
-        delete("$buildDir/reports/ktlint")
-        val file = fileTree("$buildDir/reports/")
+        delete("${buildDir()}/reports/ktlint")
+        val file = fileTree("${buildDir()}/reports/")
         file.forEach {
             if (it.name.contains("lint-result")) {
                 delete(it)
@@ -208,12 +212,12 @@ tasks.register("mergeReports") {
     }
 
     doLast {
-        val outputDir = file("$buildDir/reports/combined")
+        val outputDir = file("${buildDir()}/reports/combined")
         outputDir.mkdirs()
         val mergedReport = File(outputDir, "merged-report.html")
 
-        val ktlintDoc = Jsoup.parse(file("$buildDir/reports/combined/kt-report.html").readText())
-        val lintDoc = Jsoup.parse(file("$buildDir/reports/combined/lint-report.html").readText())
+        val ktlintDoc = Jsoup.parse(file("${buildDir()}/reports/combined/kt-report.html").readText())
+        val lintDoc = Jsoup.parse(file("${buildDir()}/reports/combined/lint-report.html").readText())
 
         lintDoc.body()
             .select("main.mdl-layout__content div.mdl-layout__tab-panel.is-active")
@@ -252,4 +256,6 @@ dependencies {
 //    implementation(libs.pytorch.android)
 //    implementation(libs.pytorch.android.torchvision)
     implementation(libs.websocket)
+    implementation(libs.swipe.refresh)
+    implementation(libs.lottie)
 }

@@ -31,6 +31,8 @@ espresso-core = "3.5.1"
 pytorch = "1.13.1"
 datastore = "1.2.0"
 websocket = "1.6.0"
+swiper-refresh = "1.2.0"
+lottie = "6.7.1"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -68,6 +70,8 @@ pytorch-android = { group = "org.pytorch", name = "pytorch_android", version.ref
 pytorch-android-torchvision = { group = "org.pytorch", name = "pytorch_android_torchvision", version.ref = "pytorch" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
+swipe-refresh = { group = "androidx.swiperefreshlayout", name="swiperefreshlayout", version.ref = "swiper-refresh" }
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

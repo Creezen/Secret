@@ -25,4 +25,11 @@
         <attr name="cardDescription" format="string"/>
         <attr name="cardText" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="SwiperRecycleView">
+        <attr name="refreshType" format="integer">
+            <enum name="circle" value="0"/>
+            <enum name="horizon" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>

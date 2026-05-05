@@ -2,15 +2,17 @@ package com.jayce.vexis.business.feedback
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.FeedbackBean
+import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.FeedbackService
+import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -40,18 +42,28 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
             floatingBtn.setOnClickListener {
                 startActivity(Intent(activity, FeedbackEditActivity::class.java))
             }
-            recycleView.layoutManager = LinearLayoutManager(context)
-            recycleView.adapter = feedbackAdapter
+
+            refreshLayout.setLoadingColors(R.color.metallicGold, R.color.vermilion)
+            refreshLayout.setMaxOffset(100)
+//            refreshLayout.setLoadingBackground()
+            refreshLayout.setTriggerDistance(300)
+            refreshLayout.setOnRefreshListener {
+                updateData()
+            }
+            refreshLayout.layoutManager = LinearLayoutManager(context)
+            refreshLayout.adapter = feedbackAdapter
         }
     }
 
     private fun updateData() {
+        Log.d("LJW", "updateData feedback")
         request<FeedbackService, LinkedHashMap<String, ArrayList<FeedbackBean>>>({ getFeedback() }) {
             withContext(Dispatchers.Main) {
                 val list = it["items"] ?: arrayListOf()
                 feedbackEntryList.clear()
                 feedbackEntryList.addAll(list)
                 feedbackAdapter.notifyItemRangeChanged(0, list.size)
+                binding.refreshLayout.isRefreshing = false
             }
         }
     }
