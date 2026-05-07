@@ -1,15 +1,16 @@
-package com.jayce.vexis.foundation.view
+package com.jayce.vexis.foundation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.creezen.tool.DataTool.dpToPx
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 
-abstract class CardAdapter<T: ViewBinding, H: CardAdapter.ViewHolder>(
-    private val list: List<Any>
-) : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+abstract class CardAdapter<D, T: ViewBinding, H: CardAdapter.ViewHolder>(
+    private val list: List<D>
+) : BaseAdapter<D, CardAdapter.ViewHolder>() {
 
     var elevation: Float = -1f
         set(value) {
@@ -41,8 +42,6 @@ abstract class CardAdapter<T: ViewBinding, H: CardAdapter.ViewHolder>(
     }
 
     override fun getItemViewType(position: Int) = position
-
-    final override fun getItemCount() = list.size
 
     final override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cardView = holder.binding.base

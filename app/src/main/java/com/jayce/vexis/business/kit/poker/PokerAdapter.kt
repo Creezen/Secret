@@ -8,12 +8,11 @@ import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.PokerItemBinding
 import com.jayce.vexis.domain.bean.PokerEntry
-import com.jayce.vexis.domain.enums.PokerSuit
-import com.jayce.vexis.foundation.view.CardAdapter
+import com.jayce.vexis.foundation.ui.CardAdapter
 
 class PokerAdapter(
-    private val list: List<PokerEntry>
-) : CardAdapter<PokerItemBinding, PokerAdapter.ViewHolder>(list) {
+    private var list: List<PokerEntry>
+) : CardAdapter<PokerEntry, PokerItemBinding, PokerAdapter.ViewHolder>(list) {
 
     class ViewHolder(
         containBnding: CardItemLayoutBinding,
@@ -23,6 +22,14 @@ class PokerAdapter(
         val bottom = binding.bottom
         val view = binding.root
         val bind = containBnding
+    }
+
+    override fun getItemCount() = list.size
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<PokerEntry>) {
+        list = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {

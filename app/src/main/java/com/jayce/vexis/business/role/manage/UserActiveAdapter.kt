@@ -3,26 +3,22 @@ package com.jayce.vexis.business.role.manage
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams
-import android.widget.PopupWindow
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.toast
-import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.PoupWindowBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
-import com.jayce.vexis.foundation.view.CardAdapter
+import com.jayce.vexis.foundation.ui.CardAdapter
 
 class UserActiveAdapter(
     private val context: Context,
-    private val userList: List<ActiveBean>,
-) : CardAdapter<UserActiveItemBinding, UserActiveAdapter.ViewHolder>(userList) {
+    private var userList: List<ActiveBean>,
+) : CardAdapter<ActiveBean, UserActiveItemBinding, UserActiveAdapter.ViewHolder>(userList) {
 
     class ViewHolder(
         containerBindig: CardItemLayoutBinding,
@@ -33,6 +29,14 @@ class UserActiveAdapter(
         val admin = binding.administrator
         val id = binding.userID
         val time = binding.createTime
+    }
+
+    override fun getItemCount() = userList.size
+
+    override fun getAttachedList() = userList
+
+    override fun updateAttachedList(newList: List<ActiveBean>) {
+        userList = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {

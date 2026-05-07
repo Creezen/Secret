@@ -19,5 +19,5 @@ interface FeedbackService : BaseService {
     ): Call<Boolean>
 
     @GET("/getFeedback")
-    fun getFeedback(): Call<LinkedHashMap<String, ArrayList<FeedbackBean>>>
+    fun getFeedback(): Call<ArrayList<FeedbackBean>>
 }

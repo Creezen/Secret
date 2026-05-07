@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.RecordListLayoutBinding
 import com.jayce.vexis.domain.bean.RecordListEntry
 import com.jayce.vexis.domain.database.ledger.ScoreDatabase
@@ -16,15 +17,21 @@ import kotlinx.coroutines.Dispatchers
 
 class RecordHistoryAdapter(
     private val context: Context,
-    private val list: List<RecordListEntry>,
+    private var list: List<RecordListEntry>,
     private val owner: LifecycleOwner,
-) : RecyclerView.Adapter<RecordHistoryAdapter.ViewHolder>() {
+) : BaseAdapter<RecordListEntry, RecordHistoryAdapter.ViewHolder>() {
     companion object {
         const val TAG = "RecordHistoryAdapter"
     }
 
     private val scoreDao by lazy {
         ScoreDatabase.getDatabase(context).recordDao()
+    }
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<RecordListEntry>) {
+        list = newList
     }
 
     class ViewHolder(val binding: RecordListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {

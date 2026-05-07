@@ -8,15 +8,23 @@ import com.creezen.commontool.bean.ArticleBean
 import com.jayce.vexis.business.article.section.SectionActivity
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemBinding
-import com.jayce.vexis.foundation.view.CardAdapter
+import com.jayce.vexis.foundation.ui.CardAdapter
 
 class ArticleAdapter(
     val context: Context,
-    val itemList: List<ArticleBean>,
-) : CardAdapter<ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList) {
+    private var itemList: List<ArticleBean>,
+) : CardAdapter<ArticleBean, ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList) {
 
     class ViewHolder(container: CardItemLayoutBinding, binding: ParagraphItemBinding) : CardAdapter.ViewHolder(container) {
         val paragraph = binding.paragraph
+    }
+
+    override fun getItemCount() = itemList.size
+
+    override fun getAttachedList() = itemList
+
+    override fun updateAttachedList(newList: List<ArticleBean>) {
+        itemList = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {

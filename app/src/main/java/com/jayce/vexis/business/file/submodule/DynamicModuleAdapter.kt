@@ -2,17 +2,25 @@ package com.jayce.vexis.business.file.submodule
 
 import android.graphics.RenderEffect
 import android.graphics.Shader
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.DynamicModuleItemLayoutBinding
 import com.jayce.vexis.domain.bean.DynamicModuleEntry
 
-class DynamicModuleAdapter(val list: List<DynamicModuleEntry>) : RecyclerView.Adapter<DynamicModuleAdapter.ViewHolder>() {
+class DynamicModuleAdapter(
+    var list: List<DynamicModuleEntry>
+) : BaseAdapter<DynamicModuleEntry, DynamicModuleAdapter.ViewHolder>() {
 
     private val effect = RenderEffect.createBlurEffect(15f, 15f, Shader.TileMode.MIRROR)
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<DynamicModuleEntry>) {
+        list = newList
+    }
 
     class ViewHolder(val binding: DynamicModuleItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.itemRoot

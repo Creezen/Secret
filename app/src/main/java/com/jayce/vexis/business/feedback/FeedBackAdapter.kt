@@ -12,12 +12,12 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
-import com.jayce.vexis.foundation.view.CardAdapter
+import com.jayce.vexis.foundation.ui.CardAdapter
 
 class FeedBackAdapter(
     private val context: Context,
-    private val feedbackEntryList: List<FeedbackBean>
-) : CardAdapter<FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackEntryList) {
+    private var feedbackEntryList: List<FeedbackBean>
+) : CardAdapter<FeedbackBean, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackEntryList) {
 
     class ViewHolder(
         containerBinding: CardItemLayoutBinding,
@@ -32,6 +32,14 @@ class FeedBackAdapter(
         val support = binding.support
         val supportCount = binding.supportCount
         val against = binding.against
+    }
+
+    override fun getItemCount() = feedbackEntryList.size
+
+    override fun getAttachedList() = feedbackEntryList
+
+    override fun updateAttachedList(newList: List<FeedbackBean>) {
+        feedbackEntryList = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {

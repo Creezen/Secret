@@ -8,11 +8,18 @@ import com.jayce.vexis.databinding.RecordItemLayoutBinding
 import com.jayce.vexis.domain.bean.RecordEntry
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.HEIGHT
 import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.WIDTH
+import com.jayce.vexis.core.base.BaseAdapter
 
-class RecordAdapter(private val recordList: List<RecordEntry>) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+class RecordAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<RecordEntry, RecordAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: RecordItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.itemLayout
+    }
+
+    override fun getAttachedList() = recordList
+
+    override fun updateAttachedList(newList: List<RecordEntry>) {
+        recordList = newList
     }
 
     override fun onCreateViewHolder(

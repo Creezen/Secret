@@ -9,6 +9,7 @@ import com.creezen.commontool.bean.FileBean
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ResItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.domain.bean.DownloadTask
@@ -16,19 +17,25 @@ import com.jayce.vexis.domain.viewmodel.FileViewModel
 
 class FileEntryAdapter(
     private val context: Context,
-    val list: List<FileBean>,
+    var list: List<FileBean>,
     private val viewModel: FileViewModel
-) : RecyclerView.Adapter<FileEntryAdapter.ViewHolder>() {
+) : BaseAdapter<FileBean, FileEntryAdapter.ViewHolder>() {
     companion object {
         const val TAG = "MediaElementAdapter"
     }
 
-    class ViewHolder(val binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(var binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val name = binding.name
         val size = binding.size
         val time = binding.uploadTime
         val download = binding.download
+    }
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<FileBean>) {
+        list = newList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

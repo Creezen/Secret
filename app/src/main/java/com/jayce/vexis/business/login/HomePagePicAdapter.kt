@@ -6,18 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jayce.vexis.R
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.HomePagePicLayoutBinding
 
 class HomePagePicAdapter(
     private val context: Context,
-    private val list: List<String>,
-) : RecyclerView.Adapter<HomePagePicAdapter.ViewHolder>() {
+    private var list: List<String>,
+) : BaseAdapter<String, HomePagePicAdapter.ViewHolder>() {
     companion object {
         const val TAG = "HomePagePicAdapter"
     }
 
     class ViewHolder(val binding: HomePagePicLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.view
+    }
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<String>) {
+        list = newList
     }
 
     override fun onCreateViewHolder(

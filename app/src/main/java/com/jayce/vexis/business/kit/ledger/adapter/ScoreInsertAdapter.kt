@@ -5,16 +5,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.intMsg
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddRecordScoreBinding
 import java.util.ArrayList
 
-class ScoreInsertAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<ScoreInsertAdapter.ViewHolder>() {
+class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, ScoreInsertAdapter.ViewHolder>() {
 
     private val scoreList = arrayListOf<Int>().apply {
         repeat(list.size) {
             add(0)
         }
         Log.e("ScoreInsertAdapter.", "scoreList.size:  ${this.size}")
+    }
+
+    override fun getAttachedList() = list
+
+    override fun updateAttachedList(newList: List<String>) {
+        list = newList
     }
 
     class ViewHolder(val binding: AddRecordScoreBinding) : RecyclerView.ViewHolder(binding.root) {

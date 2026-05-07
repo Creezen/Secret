@@ -2,7 +2,6 @@ package com.jayce.vexis.business.feedback
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
             refreshLayout.setLoadingColors(R.color.metallicGold, R.color.vermilion)
             refreshLayout.setMaxOffset(100)
-//            refreshLayout.setLoadingBackground()
             refreshLayout.setTriggerDistance(300)
             refreshLayout.setOnRefreshListener {
                 updateData()
@@ -56,13 +54,9 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
     }
 
     private fun updateData() {
-        Log.d("LJW", "updateData feedback")
-        request<FeedbackService, LinkedHashMap<String, ArrayList<FeedbackBean>>>({ getFeedback() }) {
+        request<FeedbackService, ArrayList<FeedbackBean>>({ getFeedback() }) {
             withContext(Dispatchers.Main) {
-                val list = it["items"] ?: arrayListOf()
-                feedbackEntryList.clear()
-                feedbackEntryList.addAll(list)
-                feedbackAdapter.notifyItemRangeChanged(0, list.size)
+                feedbackAdapter.notifyDataChange(it)
                 binding.refreshLayout.isRefreshing = false
             }
         }

@@ -7,18 +7,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.bean.PeerAdviceBean
 import com.creezen.tool.AndroidTool.toast
 import com.jayce.vexis.R
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.SeniorAdviceBinding
 
 class PeerAdapter(
     val context: Context,
-    val adviceList: List<PeerAdviceBean>,
-) : RecyclerView.Adapter<PeerAdapter.ViewHolder>() {
+    private var adviceList: List<PeerAdviceBean>,
+) : BaseAdapter<PeerAdviceBean, PeerAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: SeniorAdviceBinding) : RecyclerView.ViewHolder(binding.root) {
         val content = binding.adviceContent
         val love = binding.love
         val resource = binding.resource
         val reply = binding.reply
+    }
+
+    override fun getAttachedList() = adviceList
+
+    override fun updateAttachedList(newList: List<PeerAdviceBean>) {
+        adviceList = newList
     }
 
     override fun onCreateViewHolder(

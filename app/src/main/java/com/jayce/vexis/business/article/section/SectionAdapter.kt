@@ -22,6 +22,7 @@ import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
 import com.jayce.vexis.core.SessionManager
 import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
@@ -32,8 +33,8 @@ import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 class SectionAdapter (
     val context: Context,
     val activity: Activity,
-    private val itemList: List<SectionRemarkBean>,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var itemList: List<SectionRemarkBean>,
+) : BaseAdapter<SectionRemarkBean, RecyclerView.ViewHolder>() {
 
     private val list: ArrayList<String> =
         activity.resources.getStringArray(R.array.articleFeedback).toCollection(ArrayList())
@@ -51,6 +52,12 @@ class SectionAdapter (
 
     class ImageViewHolder(val binding: ArticleImageBinding) : RecyclerView.ViewHolder(binding.root) {
         val image = binding.img
+    }
+
+    override fun getAttachedList() = itemList
+
+    override fun updateAttachedList(newList: List<SectionRemarkBean>) {
+        itemList = newList
     }
 
     override fun onCreateViewHolder(

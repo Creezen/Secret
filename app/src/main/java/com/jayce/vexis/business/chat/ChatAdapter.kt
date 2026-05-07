@@ -3,15 +3,22 @@ package com.jayce.vexis.business.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
 import com.jayce.vexis.domain.bean.ChatEntry
 
-class ChatAdapter(private val msgList: List<ChatEntry>) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter(private var msgList: List<ChatEntry>) : BaseAdapter<ChatEntry, ChatAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ChatItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val nickname = binding.nickname
         val time = binding.time
         val msg = binding.msg
+    }
+
+    override fun getAttachedList() = msgList
+
+    override fun updateAttachedList(newList: List<ChatEntry>) {
+        msgList = newList
     }
 
     override fun onCreateViewHolder(
