@@ -26,6 +26,7 @@ repositories {
     google()
     mavenCentral()
     mavenLocal()
+    maven { url = uri("https://jitpack.io") }
 }
 
 detekt {
@@ -258,4 +259,5 @@ dependencies {
     implementation(libs.websocket)
     implementation(libs.swipe.refresh)
     implementation(libs.lottie)
+    implementation(libs.mpAndroidChart)
 }

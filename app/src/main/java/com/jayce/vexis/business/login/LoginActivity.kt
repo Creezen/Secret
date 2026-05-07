@@ -1,12 +1,14 @@
 package com.jayce.vexis.business.login
 
+//import org.pytorch.IValue
+//import org.pytorch.Module
+//import org.pytorch.Tensor
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
@@ -26,7 +28,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
 import androidx.lifecycle.MutableLiveData
-import androidx.recyclerview.widget.DiffUtil
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.creezen.commontool.bean.ApkSimpleInfo
@@ -54,17 +55,13 @@ import com.jayce.vexis.core.SessionManager.liveUser
 import com.jayce.vexis.core.SessionManager.registerUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
-import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.domain.route.PackageService
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.Logger
+import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-//import org.pytorch.IValue
-//import org.pytorch.Module
-//import org.pytorch.Tensor
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -132,7 +129,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
-            ui { "${it.modifyTime.toTime()}  $it.versionName".toast() }
+            ui { "${it.modifyTime.toTime()}  ${it.versionName}".toast() }
         }
     }
 
@@ -254,18 +251,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
                 put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
             }
-            val uri = contentResolver.insert(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                values
-            )
-            uri?.let {
-                kotlin.runCatching {
-                    contentResolver.openOutputStream(uri)?.use { stream ->
-                        map.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                    }
-                }.onFailure {
-                    Log.e("LJW", "save error")
+            val url = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            val uri = contentResolver.insert(url, values) ?: return@post
+            kotlin.runCatching {
+                contentResolver.openOutputStream(uri)?.use { stream ->
+                    map.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                 }
+            }.onFailure {
+                Log.e("LJW", "save error")
             }
         }
     }

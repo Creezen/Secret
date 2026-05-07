@@ -51,11 +51,7 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
     private fun fetchData() {
         request<ArticleService, ArrayList<ArticleBean>>({ getArticle() }) {
-            val oldSize = list.size
-            list.clear()
-            adapter.notifyItemRangeRemoved(0, oldSize)
-            list.addAll(it)
-            adapter.notifyItemRangeInserted(0, list.size)
+            adapter.notifyDataChange(it)
         }
     }
 }

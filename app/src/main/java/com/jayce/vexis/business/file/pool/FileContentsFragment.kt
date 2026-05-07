@@ -55,14 +55,8 @@ class FileContentsFragment(
     }
 
     private fun initData() {
-        request<FileService, LinkedHashMap<String, List<FileBean>>>({ fetchFile() }) {
-            val list = it["items"]
-            if (list.isNullOrEmpty()) {
-                return@request
-            }
-            fileItemList.clear()
-            fileItemList.addAll(list)
-            ui { adapter.notifyDataSetChanged() }
+        request<FileService, List<FileBean>>({ fetchFile() }) {
+            adapter.notifyDataChange(it)
         }
     }
 

@@ -33,6 +33,7 @@ datastore = "1.2.0"
 websocket = "1.6.0"
 swiper-refresh = "1.2.0"
 lottie = "6.7.1"
+mpAndroidChart = "v3.1.0"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -72,6 +73,7 @@ datastore = { group = "androidx.datastore", name = "datastore-preferences", vers
 websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
 swipe-refresh = { group = "androidx.swiperefreshlayout", name="swiperefreshlayout", version.ref = "swiper-refresh" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+mpAndroidChart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpAndroidChart" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

@@ -21,7 +21,7 @@ interface FileService : BaseService {
     ): Call<Int>
 
     @POST("/fileFetch")
-    fun fetchFile(): Call<LinkedHashMap<String, List<FileBean>>>
+    fun fetchFile(): Call<List<FileBean>>
 
     @Streaming
     @GET("FileSystem/{fileName}")

@@ -27,11 +27,18 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     private var secordNum = 0
     private var tertiaryNum = 0
 
-    private var isFirst: Boolean = true
-
     private lateinit var primaryList: List<String>
     private lateinit var secondaryList: List<List<String>>
     private lateinit var tertiaryList: List<List<List<String>>>
+
+    private val primaryItem
+        get() = primaryList[primaryNum]
+    private val secondItem
+        get() = secondaryList[primaryNum][secordNum]
+    private val tertiaryItem
+        get() = tertiaryList[primaryNum][secordNum][tertiaryNum]
+
+    private var isFirst: Boolean = true
 
     private val list = arrayListOf<PeerAdviceBean>()
     private val adapter by lazy {
@@ -79,7 +86,8 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
             }
             tertiary.init(tertiaryList[0][0]) {
                 tertiaryNum = it
-                isFirst= false
+                fetchAdvice()
+                isFirst = false
             }
             advice.setOnClickListener {
                 val intent = Intent(context, AdviceActivity::class.java)
@@ -94,28 +102,10 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     }
 
     private fun fetchAdvice() {
-        request<PeerService, List<PeerAdviceBean>>({
-            getAdvice(primary(),secondary(), tertiary())
-        }) {
-            val count = list.size
-            list.clear()
-            list.addAll(it)
-            ui {
-                adapter.notifyItemRangeRemoved(0, count)
-                adapter.notifyItemRangeInserted(0, it.size)
-            }
+        request<PeerService, List<PeerAdviceBean>>(
+            { getAdvice(primaryItem, secondItem, tertiaryItem) }
+        ) {
+            adapter.notifyDataChange(it)
         }
-    }
-
-    private fun primary(): String {
-        return primaryList[primaryNum]
-    }
-
-    private fun secondary(): String {
-        return secondaryList[primaryNum][secordNum]
-    }
-
-    private fun tertiary(): String {
-        return tertiaryList[primaryNum][secordNum][tertiaryNum]
     }
 }
