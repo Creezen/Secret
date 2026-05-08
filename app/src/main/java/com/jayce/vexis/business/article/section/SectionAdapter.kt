@@ -17,11 +17,9 @@ import com.creezen.commontool.bean.SectionRemarkBean
 import com.creezen.tool.AndroidTool.getThemeColor
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
-import com.jayce.vexis.core.SessionManager
-import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
@@ -122,7 +120,7 @@ class SectionAdapter (
     }
 
     private fun showCommentDialog(position: Int, view: View) {
-        FlexibleDialog<AddCommentLayoutBinding>(context, activity.layoutInflater)
+        FlexibleDialog<AddCommentLayoutBinding>(context)
             .flexibleView(AddCommentLayoutBinding::inflate) {
                 singleSelect.setChildLayout(list) {
                     commentContent.hint = it

@@ -1,12 +1,9 @@
 package com.jayce.vexis.foundation.dynamic
 
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.AssetManager
 import android.content.res.Resources
-import android.os.Bundle
-import android.view.View
 import com.creezen.tool.FileTool
 import com.creezen.tool.ability.api.IActivity
 import com.creezen.tool.ability.api.IFragment

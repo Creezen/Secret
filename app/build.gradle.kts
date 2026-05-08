@@ -254,8 +254,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.common.tools)
 //    implementation(libs.amap)
-//    implementation(libs.pytorch.android)
-//    implementation(libs.pytorch.android.torchvision)
     implementation(libs.websocket)
     implementation(libs.swipe.refresh)
     implementation(libs.lottie)

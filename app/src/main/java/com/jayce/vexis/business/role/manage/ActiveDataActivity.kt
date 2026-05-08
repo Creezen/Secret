@@ -2,7 +2,6 @@ package com.jayce.vexis.business.role.manage
 
 import android.os.Build
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool
@@ -10,7 +9,6 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.core.SessionManager.BASE_FILE_PATH
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.domain.bean.ActiveEntry

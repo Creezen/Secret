@@ -5,9 +5,9 @@ import com.creezen.commontool.toBean
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.registerSocket
 import com.creezen.tool.ThreadTool
-import com.jayce.vexis.core.SessionManager.BASE_SOCKET_PATH
-import com.jayce.vexis.core.SessionManager.LOCAL_SOCKET_PORT
-import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.StatusManager.BASE_SOCKET_PATH
+import com.jayce.vexis.StatusManager.LOCAL_SOCKET_PORT
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.domain.EventRepository
 import com.jayce.vexis.domain.bean.EventEntry
 import kotlinx.coroutines.CoroutineScope

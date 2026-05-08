@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
 

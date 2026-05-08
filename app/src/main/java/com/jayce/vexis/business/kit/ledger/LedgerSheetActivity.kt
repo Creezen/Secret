@@ -29,7 +29,7 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
     private fun initView() {
         with(binding) {
             create.setOnClickListener {
-                FlexibleDialog<DialogBinding>(this@LedgerSheetActivity, layoutInflater)
+                FlexibleDialog<DialogBinding>(this@LedgerSheetActivity)
                     .flexibleView(AddPocketRecordLayoutBinding.inflate(layoutInflater)) {
                         userBinding = this
                         dialogInit()

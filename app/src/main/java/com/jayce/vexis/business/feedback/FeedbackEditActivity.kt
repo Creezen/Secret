@@ -7,7 +7,7 @@ import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
-import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.foundation.Util

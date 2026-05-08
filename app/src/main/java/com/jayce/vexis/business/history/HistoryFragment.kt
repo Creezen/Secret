@@ -76,7 +76,7 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
             }
             floatingBtn.setOnClickListener {
                 val ctx = activity ?: return@setOnClickListener
-                FlexibleDialog<DialogTimelineBinding>(ctx, layoutInflater)
+                FlexibleDialog<DialogTimelineBinding>(ctx)
                     .flexibleView(DialogTimelineBinding::inflate)
                     .positive {
                         request<HistoryService, Boolean>({ sendEventData(

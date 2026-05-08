@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.Log
 import com.creezen.tool.BaseTool.env
 import java.io.File
 import java.io.InputStream
@@ -151,6 +150,21 @@ object FileTool {
      * PRIVATE: 表示使用应用私有的目录，必须传入context
      * @param context 应用私有目录必须传入context
      * @param userDir 带有USER的表示目录路径可以自定义，必须给userDir设参数
+     *
+     * |类型|路径|
+     * |:---------|:---|
+     * |LOC_PUBLIC_DATA         | /data |
+     * |LOC_PUBLIC_DATACACHE    | /data/cache |
+     * |LOC_PUBLIC_SYS          | /system |
+     * |LOC_PRIVATE_CACHE       | /data/user/0/com.example.tianji/cache |
+     * |LOC_PRIVATE_FILE        | /data/user/0/com.example.tianji/files |
+     * |LOC_PRIVATE_USER        | /data/user/0/com.example.tianji/app_LJW |
+     * |EXT_PUBLIC_ROOT         | /storage/emulated/0 |
+     * |EXT_PUBLIC_PIC          | /storage/emulated/0/Pictures |
+     * |EXT_PUBLIC_DOWNLOAD     | /storage/emulated/0/Download |
+     * |EXT_PRIVATE_FILE        | /storage/emulated/0/Android/data/com.example.tianji/files |
+     * |EXT_PRIVATE_CACHE       | /storage/emulated/0/Android/data/com.example.tianji/cache |
+     * |EXT_PRIVATE_FILEUSER    | /storage/emulated/0/Android/data/com.example.tianji/files/TianJi |
      */
     fun getDir(dirType: Dir, context: Context? = null, userDir: String? = null) = when(dirType) {
         Dir.LOC_PUBLIC_DATA -> Environment.getDataDirectory()
@@ -165,39 +179,5 @@ object FileTool {
         Dir.EXT_PRIVATE_FILE -> context?.getExternalFilesDir(null)
         Dir.EXT_PRIVATE_CACHE -> context?.getExternalCacheDir()
         Dir.EXT_PRIVATE_FILEUSER -> context?.getExternalFilesDir(userDir)
-    }
-
-    private fun guide(context: Context) {
-        //   /data
-        e(Environment.getDataDirectory())
-        //   /data/cache
-        e(Environment.getDownloadCacheDirectory())
-        //   /system
-        e(Environment.getRootDirectory())
-
-        //   /data/user/0/com.example.tianji/cache
-        e(context.getCacheDir())
-        //   /data/user/0/com.example.tianji/files
-        e(context.getFilesDir())
-        //   /data/user/0/com.example.tianji/app_LJW
-        e(context.getDir("LJW", Context.MODE_PRIVATE))
-
-        //   /storage/emulated/0
-        e(Environment.getExternalStorageDirectory())
-        //   /storage/emulated/0/Pictures
-        e(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))
-        //   /storage/emulated/0/Download
-        e(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS))
-
-        //   /storage/emulated/0/Android/data/com.example.tianji/files
-        e(context.getExternalFilesDir(null))
-        //   /storage/emulated/0/Android/data/com.example.tianji/cache
-        e(context.getExternalCacheDir())
-        //   /storage/emulated/0/Android/data/com.example.tianji/files/TianJi
-        e(context.getExternalFilesDir("TianJi"))
-    }
-
-    private fun e(file: File?) {
-        Log.e("file", "$file")
     }
 }

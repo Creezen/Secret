@@ -80,11 +80,8 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                         illustrate, fileSize, uploadTime, EMPTY_STRING
                     )
                     request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
-                        if (it == 1) {
-                            finish()
-                        } else {
-                            ui { getString(R.string.service_error).toast() }
-                        }
+                        if (it == 1) finish()
+                        else ui { getString(R.string.service_error).toast() }
                     }
                 }
             }

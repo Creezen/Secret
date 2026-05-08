@@ -9,14 +9,7 @@ import androidx.viewbinding.ViewBinding
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.DialogBinding
 
-class FlexibleDialog<T: ViewBinding>(
-    private val mContext: Context,
-    val inflater: LayoutInflater,
-    themeId: Int = R.style.Dialog,
-){
-    companion object {
-        private const val TAG = "FlexibleDialog"
-    }
+class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int = R.style.Dialog) {
 
     private var positiveFlag: Int = -1
     private var negativeFlag: Int = -1
@@ -24,6 +17,7 @@ class FlexibleDialog<T: ViewBinding>(
     private var positiveCallback: ((Int, FlexibleDialog<T>) -> Unit)? = null
     private var negativeCallback: ((Int, FlexibleDialog<T>) -> Unit)? = null
     private var neutralCallback: ((Int, FlexibleDialog<T>) -> Unit)? = null
+    private val inflater = LayoutInflater.from(mContext)
     private var dialog: AlertDialog? = null
     private var mBinding: T? = null
     private val builder: AlertDialog.Builder = AlertDialog.Builder(mContext, themeId)
@@ -40,10 +34,7 @@ class FlexibleDialog<T: ViewBinding>(
         builder.setView(mBinding?.root)
     }
 
-    fun <K: ViewBinding> flexibleView(
-        binding: K,
-        func: (K.() -> Unit)? = null,
-    ): FlexibleDialog<T> {
+    fun <K: ViewBinding> flexibleView(binding: K, func: (K.() -> Unit)? = null): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as? DialogBinding
             bind?.apply {
@@ -236,10 +227,11 @@ class FlexibleDialog<T: ViewBinding>(
         }
         dialog?.show()
         dialog?.window?.apply {
+            setBackgroundDrawableResource(android.R.color.transparent)
             if (flexibleSize != null) {
                 setLayout(flexibleSize.width, LayoutParams.WRAP_CONTENT)
             } else {
-                setLayout(defaultSize.width, LayoutParams.WRAP_CONTENT)
+                setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
             }
         }
         return this

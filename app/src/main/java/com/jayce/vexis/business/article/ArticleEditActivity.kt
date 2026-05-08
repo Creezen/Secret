@@ -3,7 +3,7 @@ package com.jayce.vexis.business.article
 import android.os.Bundle
 import android.widget.TextView
 import com.creezen.tool.AndroidTool.msg
-import com.jayce.vexis.core.SessionManager.liveUser
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.foundation.Util.request

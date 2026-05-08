@@ -1,11 +1,16 @@
 package com.creezen.tool
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import android.graphics.Bitmap
 import android.graphics.Paint
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -17,6 +22,8 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.AnimRes
+import androidx.core.content.FileProvider
+import androidx.core.view.drawToBitmap
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -42,6 +49,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import java.io.File
 import kotlin.math.ceil
 
 object AndroidTool {
@@ -240,5 +248,36 @@ object AndroidTool {
         val typeValue = TypedValue()
         theme.resolveAttribute(resourceID, typeValue, true)
         return typeValue.data
+    }
+
+    fun installApp(context: Context) {
+        val path = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE, context)
+        val file = File("$path/game.apk")
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val fileUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+        intent.setDataAndType(fileUri, "application/vnd.android.package-archive")
+        context.startActivity(intent)
+    }
+
+    fun saveToGallery(context: Context, view: View) {
+        view.post {
+            val map = view.drawToBitmap(Bitmap.Config.ARGB_8888)
+            val values = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, "${System.currentTimeMillis()}a.jpg")
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+            }
+            val url = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            val uri = context.contentResolver.insert(url, values) ?: return@post
+            kotlin.runCatching {
+                context.contentResolver.openOutputStream(uri)?.use { stream ->
+                    map.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                }
+            }.onFailure {
+                Log.e("LJW", "save error")
+            }
+        }
     }
 }

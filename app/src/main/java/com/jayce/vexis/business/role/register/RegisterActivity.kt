@@ -36,10 +36,7 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             lifecycleOwner = this@RegisterActivity
             vm = registerViewModel
             birthdayLayout.setOnClickListener {
-                FlexibleDialog<BirthdaySelectorBinding>(
-                    this@RegisterActivity,
-                    layoutInflater
-                )
+                FlexibleDialog<BirthdaySelectorBinding>(this@RegisterActivity)
                 .flexibleView(BirthdaySelectorBinding::inflate)
                 .title("选择您的出生日期")
                 .positive("确定") {
@@ -50,19 +47,15 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             sex.init(registerViewModel.sexList)
             emailPostfix.init(registerViewModel.emailSuffix)
             registerBtn.setOnClickListener {
-                val dialog = FlexibleDialog<DialogBinding>(
-                    this@RegisterActivity,
-                    layoutInflater
-                )
+                val dialog = FlexibleDialog<DialogBinding>(this@RegisterActivity)
                 .title("提示")
-                .flexibleView {
-                    message.text = "注册中，请稍后..."
-                }.show()
+                .flexibleView { message.text = "注册中，请稍后..." }
+                .show()
+
                 registerViewModel.registerRole { result ->
-                    if (result) {
-                        finish()
-                    } else {
-                        dialog.dismiss()
+                    when (result) {
+                        true -> finish()
+                        false -> dialog.dismiss()
                     }
                 }
             }
