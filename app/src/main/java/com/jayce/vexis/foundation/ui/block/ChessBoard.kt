@@ -22,16 +22,23 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     private var yMargin: Float = 0f
     private var isInit: Boolean = false
 
-    private var isBlackPlayer: Boolean = true
+    private var onStonePlace: ((Int, Int) -> Unit)? = null
+
+    fun setOnStonePlace(placeStone: (Int, Int) -> Unit) {
+        onStonePlace = placeStone
+    }
+
+    fun placeStone(x: Int, y: Int, isBlackPlayer: Boolean) {
+        positionArray[x][y] = if (isBlackPlayer) 1 else 2
+        invalidate()
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (isInit) {
-            drawBoard(canvas)
-            drawChess(canvas)
-        } else {
-            drawBoard(canvas)
-            isInit = true
+        drawBoard(canvas)
+        when (isInit) {
+            true -> drawChess(canvas)
+            false -> isInit = true
         }
     }
 
@@ -67,8 +74,7 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         if ((boardY % cellWidth) > (cellWidth / 2.0f)) yCell += 1
         if (xCell < 0 || xCell > 15 || yCell < 0 || yCell > 15) return
         if (positionArray[xCell][yCell] > 0) return
-        positionArray[xCell][yCell] = if (isBlackPlayer) 1 else 2
-        isBlackPlayer = !isBlackPlayer
+        onStonePlace?.invoke(xCell, yCell)
         invalidate()
     }
 

@@ -34,6 +34,7 @@ websocket = "1.6.0"
 swiper-refresh = "1.2.0"
 lottie = "6.7.1"
 mpAndroidChart = "v3.1.0"
+navigation = "2.9.8"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -74,6 +75,8 @@ websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref
 swipe-refresh = { group = "androidx.swiperefreshlayout", name="swiperefreshlayout", version.ref = "swiper-refresh" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 mpAndroidChart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpAndroidChart" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/gomoku_dialog_nav"
+    app:startDestination="@id/firstNav">
+    <fragment
+        android:id="@+id/firstNav"
+        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuFirstPageFragment"
+        android:label="gomokuDialogFirstPage">
+        <action
+            android:id="@+id/first2Second"
+            app:destination="@+id/secondNav"/>
+        <action
+            android:id="@+id/first2Third"
+            app:destination="@+id/thirdNav"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondNav"
+        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuSecondPageFragment"
+        android:label="gomokuDialogSecondPage"/>
+
+    <fragment
+        android:id="@+id/thirdNav"
+        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuThirdPageFragment"
+        android:label="gomokuDialogThirdPage">
+        <argument
+            android:name="ipAddress"
+            app:argType="string"/>
+    </fragment>
+</navigation>

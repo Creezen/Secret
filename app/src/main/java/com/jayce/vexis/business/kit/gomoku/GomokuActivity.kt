@@ -2,89 +2,129 @@ package com.jayce.vexis.business.kit.gomoku
 
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.ThreadTool
+import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityGomokuBinding
-import org.java_websocket.WebSocket
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.handshake.ClientHandshake
-import org.java_websocket.handshake.ServerHandshake
-import org.java_websocket.server.WebSocketServer
-import java.net.InetSocketAddress
-import java.net.URI
+import com.jayce.vexis.databinding.GomokuDialogBinding
+import com.jayce.vexis.domain.viewmodel.GomokuViewModel
+import com.jayce.vexis.domain.viewmodel.GomokuViewModel.Companion.FIRST_TO_SECOND
+import com.jayce.vexis.domain.viewmodel.GomokuViewModel.Companion.FIRST_TO_THIRD
+import com.jayce.vexis.domain.viewmodel.GomokuViewModel.Companion.SECOND_BACK_FIRST
+import com.jayce.vexis.domain.viewmodel.GomokuViewModel.Companion.THIRD_BACK_FIRST
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class GomokuActivity : BaseActivity<ActivityGomokuBinding>() {
 
-    private var serverSocket: WebSocketServer? = null
-    private var clientSocket: WebSocketClient? = null
+    private var dialog: FlexibleDialog<GomokuDialogBinding>? = null
+    private var dialogBinding: GomokuDialogBinding? = null
+    private var dialogNavController: NavController? = null
+    private val viewModel by viewModel<GomokuViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPage()
+        showDialog()
     }
 
     private fun initPage() {
-        binding.server.setOnClickListener {
-            launch()
-        }
-        binding.client.setOnClickListener {
-            val manager = getSystemService(WifiManager::class.java)
-            if (!manager.isWifiEnabled) {
-                "请先开启WLAN".toast()
-            }
-            connect()
-        }
-        binding.message.setOnClickListener {
-            clientSocket?.send("hello world")
+        binding.playerBoard.setOnStonePlace { x, y ->
+            viewModel.placeChess(x, y, viewModel.isServer)
+            binding.playerBoard.placeStone(x, y, viewModel.isServer)
         }
     }
 
-    private fun launch() {
-        serverSocket = object : WebSocketServer(InetSocketAddress(8887)) {
-            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-                Log.d("LJW", "onOpen1")
+    private fun showDialog() {
+        dialog = FlexibleDialog<GomokuDialogBinding>(this)
+            .flexibleView(GomokuDialogBinding::inflate) {
+                dialogBinding = this
+                root.post {
+                    val fragment = supportFragmentManager.findFragmentById(R.id.dialogNavigation)
+                    dialogNavController = (fragment as NavHostFragment).navController
+                }
+                initDialogView()
             }
-
-            override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-                Log.d("LJW", "onClose1")
-            }
-
-            override fun onMessage(conn: WebSocket?, message: String?) {
-                conn?.send("receive OK")
-                Log.d("LJW", "message1: $message")
-            }
-
-            override fun onError(conn: WebSocket?, ex: Exception?) {
-                Log.d("LJW", "onError1")
-            }
-
-            override fun onStart() {
-                Log.d("LJW", "onStart1")
-            }
-        }
-        serverSocket?.start()
+            .cancelable(false)
+            .show(FlexibleDialog.FlexibleSize(256, -1))
     }
 
-    private fun connect() {
-        val uri = URI("ws://192.168.3.14:8887")
-        clientSocket = object : WebSocketClient(uri) {
-            override fun onOpen(handshakedata: ServerHandshake?) {
-                Log.d("LJW", "onOpen2")
-            }
-
-            override fun onMessage(message: String?) {
-                Log.d("LJW", "message2: $message")
-            }
-
-            override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                Log.d("LJW", "onClose2")
-            }
-
-            override fun onError(ex: Exception?) {
-                Log.d("LJW", "onError2")
+    private fun initDialogView() {
+        dialogBinding?.apply {
+            confirm.text = "开启监听"
+            cancle.setOnClickListener { finish() }
+            confirm.setOnClickListener {
+                ThreadTool.runOnMulti {
+                    if (viewModel.shouldCheckWifiStatus()) {
+                        val manager = getSystemService(WifiManager::class.java)
+                        viewModel.isWifiEnabled = manager.isWifiEnabled
+                    }
+                    viewModel.updateButtonStatus()
+                }
             }
         }
-        clientSocket?.connect()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        lifecycleScope.launch {
+            viewModel.buttonTextFlow.collect {
+                val cancelText = it.first
+                val confirmText = it.second
+                dialogBinding?.apply {
+                    if (cancelText.isEmpty()) {
+                        cancle.visibility = View.GONE
+                    } else {
+                        cancle.visibility = View.VISIBLE
+                        cancle.text = cancelText
+                    }
+                    if (confirmText.isEmpty()) {
+                        confirm.visibility = View.GONE
+                    } else {
+                        confirm.visibility = View.VISIBLE
+                        confirm.text = confirmText
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.toastFlow.collect { it.toast() }
+        }
+
+        lifecycleScope.launch {
+            viewModel.pageFlow.collect {
+                val navController = dialogNavController ?: return@collect
+                when (it) {
+                    FIRST_TO_SECOND -> navController.navigate(R.id.first2Second)
+                    SECOND_BACK_FIRST -> navController.popBackStack(R.id.firstNav, false)
+                    FIRST_TO_THIRD -> {
+                        val bundle = Bundle()
+                        bundle.putString("ipAddress", viewModel.ipInput)
+                        navController.navigate(R.id.first2Third, bundle)
+                    }
+                    THIRD_BACK_FIRST -> navController.popBackStack(R.id.firstNav, false)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.dialogFlow.collect {
+                dialog?.dismiss()
+                dialog = null
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.chessFlow.collect {
+                binding.playerBoard.placeStone(it.first, it.second, it.third)
+            }
+        }
     }
 }

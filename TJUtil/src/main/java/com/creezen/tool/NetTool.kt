@@ -2,6 +2,7 @@ package com.creezen.tool
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -46,6 +47,7 @@ import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import java.net.Inet4Address
 import java.net.Socket
 import java.util.Arrays
 import java.util.concurrent.CompletableFuture
@@ -328,5 +330,21 @@ object NetTool {
             reconnectSocket()
         }
         future.get()
+    }
+
+    fun getDeviceIP(context: Context): List<String> {
+        val manager = context.getSystemService(ConnectivityManager::class.java)
+        val activeNetwork = manager.activeNetwork ?: return listOf()
+        val linkProperties = manager.getLinkProperties(activeNetwork) ?: return listOf()
+        val ipv4Address = linkProperties.linkAddresses
+            .filter { it.address is Inet4Address }
+            .map { it.address }
+        if (ipv4Address.isEmpty()) return listOf()
+        val ipv4HostAddress = ipv4Address.map {
+            it.hostAddress
+        }.filter {
+            it.isNullOrEmpty().not()
+        } as List<String>
+        return ipv4HostAddress
     }
 }

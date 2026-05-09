@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.viewbinding.ViewBinding
+import com.creezen.tool.DataTool.dpToPx
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.DialogBinding
 
@@ -87,38 +89,22 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
         return this
     }
 
-    fun positive(
-        resId: Int,
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int,
-    ): FlexibleDialog<T> {
+    fun positive(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int, ): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return positive(text, autoDismiss, onclick)
     }
 
-    fun negative(
-        resId: Int,
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int,
-    ): FlexibleDialog<T> {
+    fun negative(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int, ): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return negative(text, autoDismiss, onclick)
     }
 
-    fun neutral(
-        resId: Int,
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int
-    ): FlexibleDialog<T> {
+    fun neutral(resId: Int, autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return neutral(text, autoDismiss, onclick)
     }
 
-    fun positive(
-        text: String = "确定",
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int
-    ): FlexibleDialog<T> {
+    fun positive(text: String = "确定", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as DialogBinding
             bind.yes.visibility = View.VISIBLE
@@ -130,9 +116,7 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
                 if (positiveFlag > 0) {
                     positiveCallback?.invoke(positiveFlag, this)
                 }
-                if (autoDismiss) {
-                    dismiss()
-                }
+                if (autoDismiss) { dismiss() }
             }
         } else {
             builder.setPositiveButton(text) { _, _ ->
@@ -142,19 +126,13 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
                 if (positiveFlag > 0) {
                     positiveCallback?.invoke(positiveFlag, this)
                 }
-                if (autoDismiss) {
-                    dismiss()
-                }
+                if (autoDismiss) { dismiss() }
             }
         }
         return this
     }
 
-    fun negative(
-        text: String = "取消",
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int
-    ): FlexibleDialog<T> {
+    fun negative(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
         if (mBinding is DialogBinding) {
             val bind = mBinding as DialogBinding
             bind.no.visibility = View.VISIBLE
@@ -166,9 +144,7 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
                 if (negativeFlag > 0) {
                     negativeCallback?.invoke(negativeFlag, this)
                 }
-                if (autoDismiss) {
-                    dismiss()
-                }
+                if (autoDismiss) { dismiss() }
             }
         } else {
             builder.setNegativeButton(text) { dialog, _ ->
@@ -178,20 +154,13 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
                 if (negativeFlag > 0) {
                     negativeCallback?.invoke(negativeFlag, this)
                 }
-                if (autoDismiss) {
-                    dismiss()
-                }
+                if (autoDismiss) { dismiss() }
             }
         }
-
         return this
     }
 
-    fun neutral(
-        text: String = "取消",
-        autoDismiss: Boolean = true,
-        onclick: T.() -> Int
-    ): FlexibleDialog<T> {
+    fun neutral(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Int): FlexibleDialog<T> {
         builder.setNeutralButton(text) { dia, _ ->
             mBinding?.let {
                 neutralFlag = onclick.invoke(it)
@@ -199,9 +168,7 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
             if (neutralFlag > 0) {
                 neutralCallback?.invoke(neutralFlag, this)
             }
-            if (autoDismiss) {
-                dismiss()
-            }
+            if (autoDismiss) { dismiss() }
         }
         return this
     }
@@ -227,9 +194,11 @@ class FlexibleDialog<T: ViewBinding>(private val mContext: Context, themeId: Int
         }
         dialog?.show()
         dialog?.window?.apply {
-            setBackgroundDrawableResource(android.R.color.transparent)
+            //清除不准获取焦点的flag，（否则输入框会获取不到焦点，导致不弹出输入法）
+            clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
+            setBackgroundDrawableResource(R.drawable.corner_24)
             if (flexibleSize != null) {
-                setLayout(flexibleSize.width, LayoutParams.WRAP_CONTENT)
+                setLayout(flexibleSize.width.toFloat().dpToPx().toInt(), LayoutParams.WRAP_CONTENT)
             } else {
                 setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
             }

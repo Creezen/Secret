@@ -258,4 +258,6 @@ dependencies {
     implementation(libs.swipe.refresh)
     implementation(libs.lottie)
     implementation(libs.mpAndroidChart)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
 }

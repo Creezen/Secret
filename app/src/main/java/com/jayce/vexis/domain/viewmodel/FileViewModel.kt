@@ -24,7 +24,7 @@ class FileViewModel : BaseViewModel() {
 
     private val semaphore = Semaphore(1, 1)
 
-    val taskQueue = LinkedBlockingQueue<DownloadTask>()
+    private val taskQueue = LinkedBlockingQueue<DownloadTask>()
 
     fun pushDownloadTask(value: DownloadTask) {
         taskQueue.put(value)

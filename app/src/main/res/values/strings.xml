@@ -175,4 +175,9 @@
     <string name="in_download">资源下载中…</string>
     <string name="size_file">0 M</string>
     <string name="poker">扑克牌</string>
+    <string name="this_is_server">我是主机</string>
+    <string name="join_server">我要加入</string>
+    <string name="input_server_ipv4">请输入服务端IP地址</string>
+    <string name="exit">退出</string>
+    <string name="confirm">确认</string>
 </resources>
