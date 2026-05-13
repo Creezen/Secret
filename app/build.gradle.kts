@@ -260,4 +260,7 @@ dependencies {
     implementation(libs.mpAndroidChart)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.media.player)
+    implementation(libs.media.ui)
+    implementation(libs.media.sesison)
 }

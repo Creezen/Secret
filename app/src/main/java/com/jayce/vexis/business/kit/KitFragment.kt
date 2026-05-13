@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.pinyin.PinyinActivity
 import com.jayce.vexis.business.kit.poker.PokerActivity
+import com.jayce.vexis.business.kit.video.VideoPlayerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
 import java.util.Locale
@@ -51,6 +53,9 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
                 val intent = Intent()
                 intent.component = component
                 startActivity(intent)
+            }
+            videoPlayer.setOnClickListener {
+                startActivity(Intent(context, VideoPlayerActivity::class.java))
             }
         }
     }

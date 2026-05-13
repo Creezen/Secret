@@ -21,15 +21,15 @@
         tools:ignore="ScopedStorage" />
     <uses-permission
         android:name="android.permission.MANAGE_MEDIA"
-        tools:ignore="ProtectedPermissions"/>
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".core.Env"
@@ -44,42 +44,52 @@
         android:theme="@style/Theme.Secret"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name=".business.kit.poker.PokerActivity"
+        <activity
+            android:name=".business.kit.video.VideoPlayerActivity"
             android:exported="false"
             android:screenOrientation="landscape"
             tools:ignore="DiscouragedApi"/>
-        <provider
-            android:authorities="com.jayce.vexis.provider"
-            android:name="androidx.core.content.FileProvider"
+        <activity
+            android:name=".business.kit.poker.PokerActivity"
             android:exported="false"
+            android:screenOrientation="landscape"
+            tools:ignore="DiscouragedApi" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.jayce.vexis.provider"
             android:enabled="true"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".foundation.dynamic.DynamicActivity"
-            android:exported="true"
-            android:enabled="true">
+
+        <activity
+            android:name=".foundation.dynamic.DynamicActivity"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.jayce.vexis.dynamic.ShellActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.jayce.vexis.dynamic.ShellActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".business.kit.pinyin.PinyinActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.setting.SettingActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.peer.AdviceActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"
-            tools:replace="screenOrientation"
-            tools:ignore="DiscouragedApi"/>
+            tools:ignore="DiscouragedApi"
+            tools:replace="screenOrientation" />
 
         <service
             android:name=".core.CreezenAccessibility"
@@ -92,61 +102,62 @@
 
             <meta-data
                 android:name="android.accessibilityservice"
-                android:resource="@xml/accessibilityservice"/>
+                android:resource="@xml/accessibilityservice" />
         </service>
         <service
             android:name=".core.CoreService"
             android:enabled="true"
             android:exported="false"
-            android:foregroundServiceType="dataSync"/>
+            android:foregroundServiceType="dataSync" />
 
         <activity
             android:name=".business.kit.ledger.LedgerHistoryActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.kit.gomoku.GomokuActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.kit.maze.MazeActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.article.section.SectionActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.article.ArticleEditActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.role.manage.ActiveDataActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.role.manage.AdminActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.chat.ChatActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.feedback.FeedbackEditActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.file.pool.FileInfomationActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.file.pool.FileUploadActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.kit.ledger.ScoreBoardActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.role.dashboard.DashboardActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.kit.ledger.LedgerSheetActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".business.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -155,8 +166,7 @@
             android:exported="false" />
         <activity
             android:name=".business.login.LoginActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
 
         <profileable android:shell="true" />
 
