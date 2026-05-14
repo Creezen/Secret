@@ -63,8 +63,8 @@ class RecordHistoryAdapter(
                 val userList = scoreList.userList.split("$")
                 Log.e(TAG, "$userList")
                 val intent = Intent(context, ScoreBoardActivity::class.java).also {
-                        it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
-                    }
+                    it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
+                }
                 context.startActivity(intent)
 //                Log.e(TAG,"${scoreList.scoreList} ${scoreList.userList}  " +
 //                        "${scoreList.totalStr}  ")

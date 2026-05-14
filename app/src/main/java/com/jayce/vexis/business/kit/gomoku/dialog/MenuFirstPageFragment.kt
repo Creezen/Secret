@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.GomokuDialogFirstLayoutBinding
 import com.jayce.vexis.domain.viewmodel.GomokuViewModel
-import kotlinx.coroutines.launch
 
 class MenuFirstPageFragment : BaseFragment<GomokuDialogFirstLayoutBinding>(), TextWatcher {
 

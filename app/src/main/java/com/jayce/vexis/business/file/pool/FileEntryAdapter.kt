@@ -11,9 +11,9 @@ import com.creezen.tool.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ResItemBinding
-import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.domain.bean.DownloadTask
 import com.jayce.vexis.domain.viewmodel.FileViewModel
+import com.jayce.vexis.foundation.Util.Extension.parcelable
 
 class FileEntryAdapter(
     private val context: Context,
@@ -69,7 +69,7 @@ class FileEntryAdapter(
         }
         holder.view.setOnClickListener {
             context.startActivity(
-                Intent(context, FileInfomationActivity::class.java).apply {
+                Intent(context, FileInformationActivity::class.java).apply {
                     putExtra("fileInfo", item.parcelable())
                 },
             )

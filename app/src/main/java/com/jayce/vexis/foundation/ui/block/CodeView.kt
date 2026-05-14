@@ -1,5 +1,6 @@
 package com.jayce.vexis.foundation.ui.block
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
@@ -10,6 +11,7 @@ import android.webkit.WebChromeClient
 import android.widget.FrameLayout
 import com.jayce.vexis.databinding.CodeLayoutBinding
 
+@SuppressLint("SetJavaScriptEnabled")
 class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr) {
 
     private val bind by lazy {

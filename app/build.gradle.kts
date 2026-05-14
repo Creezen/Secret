@@ -37,10 +37,9 @@ android {
     namespace = "com.jayce.vexis"
     compileSdk = 35
 
-
     defaultConfig {
         applicationId = "com.jayce.vexis"
-        minSdk = 30
+        minSdk = 33
         targetSdk = 35
         versionCode = 1000000
         versionName = "1.0.0"

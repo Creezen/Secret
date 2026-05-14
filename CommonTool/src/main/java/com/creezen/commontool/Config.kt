@@ -27,6 +27,7 @@ object Config {
         const val LONG_7 = 7L
         const val LONG_8 = 8L
         const val LONG_9 = 9L
+        // nil
         const val EMPTY_STRING = ""
         const val BASIC_LETTER = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     }

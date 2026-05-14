@@ -38,7 +38,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if(contentList.isEmpty()) return
+        if (contentList.isEmpty()) return
         contentList.forEach {
             drawTrace(canvas, it)
         }
@@ -68,18 +68,18 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if(event == null) return true
+        if (event == null) return true
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 val itemList = contentList.reversed().filter {
                     it.isClicked(event.x, event.y)
                 }
-                if(itemList.isNotEmpty()) {
+                if (itemList.isNotEmpty()) {
                     onItemClick.invoke(itemList.first())
                 }
                 return true
             }
-            else -> { return false }
+            else -> return false
         }
     }
 }

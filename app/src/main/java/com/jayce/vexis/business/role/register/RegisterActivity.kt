@@ -5,8 +5,8 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.BirthdaySelectorBinding
 import com.jayce.vexis.databinding.CreateRoleLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
-import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.domain.viewmodel.RegisterViewModel
+import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import org.koin.android.ext.android.inject
 
 class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
@@ -27,7 +27,7 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             nickname.observe(owner) { handleNickName(it) }
             password.observe(owner) { handlePassword(it) }
             confirmPassword.observe(owner) { handleConfirmPassword(it) }
-            bio.observe(owner) {handleBio(it) }
+            bio.observe(owner) { handleBio(it) }
         }
     }
 
@@ -37,20 +37,21 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             vm = registerViewModel
             birthdayLayout.setOnClickListener {
                 FlexibleDialog<BirthdaySelectorBinding>(this@RegisterActivity)
-                .flexibleView(BirthdaySelectorBinding::inflate)
-                .title("选择您的出生日期")
-                .positive("确定") {
-                    registerViewModel.handleBirthday(birthday.time())
-                    return@positive 1
-                }.show()
+                    .flexibleView(BirthdaySelectorBinding::inflate)
+                    .title("选择您的出生日期")
+                    .positive("确定") {
+                        registerViewModel.handleBirthday(birthday.time())
+                        return@positive 1
+                    }
+                    .show()
             }
             sex.init(registerViewModel.sexList)
             emailPostfix.init(registerViewModel.emailSuffix)
             registerBtn.setOnClickListener {
                 val dialog = FlexibleDialog<DialogBinding>(this@RegisterActivity)
-                .title("提示")
-                .flexibleView { message.text = "注册中，请稍后..." }
-                .show()
+                    .title("提示")
+                    .flexibleView { message.text = "注册中，请稍后..." }
+                    .show()
 
                 registerViewModel.registerRole { result ->
                     when (result) {

@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 
-interface ITimePicker <T: ViewBinding> {
+interface ITimePicker<T : ViewBinding> {
 
     val binding: T
 

@@ -19,8 +19,8 @@ import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.FileService
+import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 
@@ -76,12 +76,20 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 ThreadTool.runWithBlocking(option) {
                     val filePart = buildFileMultipart(filePath, "file")
                     val fileBean = FileBean(
-                        fileName, fileID, fileSuffix, description,
-                        illustrate, fileSize, uploadTime, EMPTY_STRING
+                        fileName,
+                        fileID,
+                        fileSuffix,
+                        description,
+                        illustrate,
+                        fileSize,
+                        uploadTime,
+                        EMPTY_STRING
                     )
                     request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
-                        if (it == 1) finish()
-                        else ui { getString(R.string.service_error).toast() }
+                        when (it) {
+                            1 -> finish()
+                            else -> ui { getString(R.string.service_error).toast() }
+                        }
                     }
                 }
             }

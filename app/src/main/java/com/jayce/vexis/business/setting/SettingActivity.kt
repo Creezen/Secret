@@ -21,5 +21,4 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
             "MainSetting"
         )
     }
-
 }

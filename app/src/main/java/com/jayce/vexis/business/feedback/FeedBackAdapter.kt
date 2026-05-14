@@ -61,7 +61,6 @@ class FeedBackAdapter(
                     isCircle = true
                 )
             }
-
         }
     }
 
@@ -70,7 +69,7 @@ class FeedBackAdapter(
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup
     ): Pair<FeedbackItemBinding, ViewHolder> {
-        val childBinding = FeedbackItemBinding.inflate(layoutInflater, parent,false)
+        val childBinding = FeedbackItemBinding.inflate(layoutInflater, parent, false)
         val holder = ViewHolder(containerBinding, childBinding)
         return childBinding to holder
     }

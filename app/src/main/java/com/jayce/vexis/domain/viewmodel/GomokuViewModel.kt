@@ -38,24 +38,24 @@ class GomokuViewModel : BaseViewModel() {
     private var isClientConnected: Boolean = false
     private var clientList: ArrayList<WebSocket> = arrayListOf()
 
-    private val _buttonTextFlow: MutableSharedFlow<Pair<String, String>>
-        = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _buttonTextFlow: MutableSharedFlow<Pair<String, String>> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val buttonTextFlow = _buttonTextFlow.asSharedFlow()
 
-    private val _toastFlow: MutableSharedFlow<String>
-            = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _toastFlow: MutableSharedFlow<String> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val toastFlow = _toastFlow.asSharedFlow()
 
-    private val _pageFlow: MutableSharedFlow<Int>
-            = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _pageFlow: MutableSharedFlow<Int> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val pageFlow = _pageFlow.asSharedFlow()
 
-    private val _dialogFlow: MutableSharedFlow<Boolean>
-            = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _dialogFlow: MutableSharedFlow<Boolean> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val dialogFlow = _dialogFlow.asSharedFlow()
 
-    private val _chessFlow: MutableSharedFlow<Triple<Int, Int, Boolean>>
-            = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _chessFlow: MutableSharedFlow<Triple<Int, Int, Boolean>> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val chessFlow = _chessFlow.asSharedFlow()
 
     private var clientSocket: WebSocketClient? = null
@@ -80,7 +80,7 @@ class GomokuViewModel : BaseViewModel() {
             override fun onMessage(conn: WebSocket?, message: String?) {
                 if (message == null) return
                 Log.d("LJW", "message1: $message")
-                ThreadTool.runOnMulti {  _chessFlow.emit(parsePosition(message)) }
+                ThreadTool.runOnMulti { _chessFlow.emit(parsePosition(message)) }
                 clientList.forEach { it.send(message) }
             }
 
@@ -122,7 +122,7 @@ class GomokuViewModel : BaseViewModel() {
 
     private fun connect(ip: String) {
         clientSocket?.close()
-        val uri = URI("ws://${ip}:$PORT")
+        val uri = URI("ws://$ip:$PORT")
         clientSocket = object : WebSocketClient(uri) {
             override fun onOpen(handshakedata: ServerHandshake?) {
                 isServer = false
@@ -132,7 +132,7 @@ class GomokuViewModel : BaseViewModel() {
 
             override fun onMessage(message: String?) {
                 if (message == null) return
-                ThreadTool.runOnMulti {  _chessFlow.emit(parsePosition(message)) }
+                ThreadTool.runOnMulti { _chessFlow.emit(parsePosition(message)) }
                 Log.d("LJW", "message2: $message")
             }
 
@@ -213,9 +213,9 @@ class GomokuViewModel : BaseViewModel() {
     }
 
     fun shouldCheckWifiStatus(): Boolean {
-        val isFirstPage = stage == NO_JUMP
-                          || stage == SECOND_BACK_FIRST
-                          || stage == THIRD_BACK_FIRST
+        val isFirstPage = stage == NO_JUMP ||
+                stage == SECOND_BACK_FIRST ||
+                stage == THIRD_BACK_FIRST
         return !isServerChecked && isFirstPage
     }
 

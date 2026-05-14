@@ -3,9 +3,9 @@ package com.jayce.vexis.domain.viewmodel
 import com.creezen.tool.FileTool.downloadFileByNet
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.bean.DownloadTask
 import com.jayce.vexis.domain.route.FileService
+import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -16,7 +16,8 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class FileViewModel : BaseViewModel() {
 
-    private val _flow: MutableSharedFlow<Int> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _flow: MutableSharedFlow<Int> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val progressFlow = _flow.asSharedFlow()
 
     private val _taskStateFlow: MutableSharedFlow<DownloadTask> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
@@ -45,7 +46,6 @@ class FileViewModel : BaseViewModel() {
                             semaphore.release()
 //                            _flow.emit(0)
                         }
-
                     }
                 }
 //                if (taskQueue.size < 1) {

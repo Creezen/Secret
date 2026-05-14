@@ -13,7 +13,7 @@ import java.lang.reflect.ParameterizedType
 
 interface Common<K : ViewBinding> : ActivityResultCaller {
 
-    fun <K: ViewBinding> getBind() : K {
+    fun <K : ViewBinding> getBind(): K {
         val type = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<K>
         val method = type.getMethod("inflate", LayoutInflater::class.java)
         return method.invoke(null, getLayoutInflate()) as K

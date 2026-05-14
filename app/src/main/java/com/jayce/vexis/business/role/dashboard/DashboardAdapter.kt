@@ -9,7 +9,7 @@ class DashboardAdapter(
     manager: FragmentManager,
     lifecycle: Lifecycle,
     val list: List<Fragment>
-) : FragmentStateAdapter(manager, lifecycle){
+) : FragmentStateAdapter(manager, lifecycle) {
 
     override fun getItemCount() = list.size
 

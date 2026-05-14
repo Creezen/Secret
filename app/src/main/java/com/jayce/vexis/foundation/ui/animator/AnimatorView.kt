@@ -16,6 +16,7 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var ball: AnimatorBallEntry = AnimatorBallEntry(-1f, -1f)
     private val radius = 100f
+    private val animatorSet = AnimatorSet()
 
     init {
         paint.color = Color.GREEN
@@ -31,7 +32,7 @@ class AnimatorView(context: Context, attrs: AttributeSet) : View(context, attrs)
         canvas.drawCircle(radius, height / 2f, radius, paint)
         val valueAnimator = setBallAnimator()
         val objectAnimator = setBackgroundAnimator()
-        val animatorSet = AnimatorSet()
+        animatorSet.end()
         animatorSet.play(valueAnimator).with(objectAnimator)
         animatorSet.setDuration(8000L)
         animatorSet.start()

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +21,8 @@ import com.jayce.vexis.business.file.pool.FileContentsFragment
 import com.jayce.vexis.business.file.submodule.DynamicModuleFragment
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
-import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
 import com.jayce.vexis.domain.viewmodel.FileViewModel
+import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -63,7 +62,7 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
 
     private fun initView() {
         if (fileAdapter == null) {
-            val manager =  if (isAdded) parentFragmentManager else null
+            val manager = if (isAdded) parentFragmentManager else null
             if (manager == null) return
             fileAdapter = FileAdapter(manager, lifecycle, list)
         }
@@ -133,7 +132,7 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
     }
 
     private fun getSpannerString(content: String, count: Int): SpannableString {
-        val showString = "$content  (${count})"
+        val showString = "$content  ($count)"
         val span = ForegroundColorSpan(Color.GRAY)
         val spanString = SpannableString(showString)
         val originLength = content.length

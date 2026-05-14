@@ -12,8 +12,8 @@ import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.PoupWindowBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
-import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
 import com.jayce.vexis.foundation.ui.CardAdapter
+import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
 
 class UserActiveAdapter(
     private val context: Context,
@@ -64,7 +64,7 @@ class UserActiveAdapter(
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup
     ): Pair<UserActiveItemBinding, ViewHolder> {
-        val childBinding = UserActiveItemBinding.inflate(layoutInflater, parent,false)
+        val childBinding = UserActiveItemBinding.inflate(layoutInflater, parent, false)
         val holder = ViewHolder(containerBinding, childBinding)
         return childBinding to holder
     }

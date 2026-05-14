@@ -11,7 +11,7 @@ class DownloadButtonSheetDialog(
     private val callback: BottomSheetDialog.() -> Unit
 ) : BottomSheetDialogFragment() {
 
-    private var dismissCallback: (() -> Unit)?  = null
+    private var dismissCallback: (() -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -29,5 +29,4 @@ class DownloadButtonSheetDialog(
     fun onDismiss(callback: () -> Unit) {
         dismissCallback = callback
     }
-
 }

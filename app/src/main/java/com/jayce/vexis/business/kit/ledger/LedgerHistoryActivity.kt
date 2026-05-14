@@ -1,7 +1,6 @@
 package com.jayce.vexis.business.kit.ledger
 
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.business.kit.ledger.adapter.RecordHistoryAdapter
@@ -46,7 +45,6 @@ class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
                 list.add(RecordListEntry(it.title, it.time, "this is rank!", it.id))
             }
             adapter.notifyDataSetChanged()
-
         }
     }
 }

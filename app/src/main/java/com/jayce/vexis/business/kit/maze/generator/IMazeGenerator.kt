@@ -28,7 +28,7 @@ abstract class IMazeGenerator {
         return mazeMatrix
     }
 
-    fun isValidGrid(x: Int, y: Int, ): Boolean {
+    fun isValidGrid(x: Int, y: Int): Boolean {
         return isCoordinateValid(x, y) && !mazeMatrix[x][y].visit
     }
 

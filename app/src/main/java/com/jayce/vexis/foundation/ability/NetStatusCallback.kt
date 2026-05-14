@@ -35,5 +35,4 @@ class NetStatusCallback(private val manager: ConnectivityManager) : Connectivity
         "网络已断开".toast()
         type = 0
     }
-
 }

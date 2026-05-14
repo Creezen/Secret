@@ -8,8 +8,8 @@ import com.jayce.vexis.databinding.DefaultSwiperRecycleLayoutBinding
 
 class DefaultSwiperRecycle(context: Context, parent: ViewGroup) : ISwiper {
 
-    override val binding: DefaultSwiperRecycleLayoutBinding
-        = DefaultSwiperRecycleLayoutBinding.inflate(LayoutInflater.from(context), parent, true)
+    override val binding: DefaultSwiperRecycleLayoutBinding =
+        DefaultSwiperRecycleLayoutBinding.inflate(LayoutInflater.from(context), parent, true)
 
     override val payload: RecyclerView
         get() = binding.recycleView

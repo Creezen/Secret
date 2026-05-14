@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.creezen.tool.AndroidTool.msg
-import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity.Companion.INIT_USER_COUNT
+import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 
 class ScoreInsertEntryView(
     context: Context,
@@ -20,10 +20,10 @@ class ScoreInsertEntryView(
 
     init {
         binding = PocketUsernameItemLayoutBinding.inflate(
-                LayoutInflater.from(context),
-                this,
-                true,
-            )
+            LayoutInflater.from(context),
+            this,
+            true,
+        )
         binding.baseRoot = this
     }
 
@@ -45,6 +45,6 @@ class ScoreInsertEntryView(
         this.position = position
         if (position < INIT_USER_COUNT) {
             binding.delBtn.visibility = View.INVISIBLE
-        } 
+        }
     }
 }

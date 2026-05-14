@@ -95,7 +95,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     }
 
     override fun registerLauncher() {
-        scanLauncher = getLauncher(ScanContract()){
+        scanLauncher = getLauncher(ScanContract()) {
             val resultContent = it.contents
             if (resultContent.isNullOrBlank() || !resultContent.startsWith(URL_PREFIX)) {
                 getString(R.string.invalid_qrcode).toast()
@@ -124,9 +124,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     }
 
     /**
-     * 将顶部的间距设置为状态栏高度
-     * 将底部的间距设置为导航栏的高度
-     * 这样做的原因是使用了自定义的toolbar和 navigation组件
+     * 将顶部的间距设置为状态栏高度;
+     * 将底部的间距设置为导航栏的高度;
+     * 这样做的原因是使用了自定义的toolbar和 navigation组件;
      */
     private fun adjustWindowMargin() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
@@ -232,12 +232,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.scanQRCode -> {
-                scanLauncher.launch(ScanOptions().apply {
+                val options = ScanOptions().apply {
                     setPrompt(getString(R.string.begin_scan_qrcode))
                     setBeepEnabled(false)
                     setTimeout(5000)
                     setBarcodeImageEnabled(false)
-                })
+                }
+                scanLauncher.launch(options)
             }
             R.id.setting -> {
                 startActivity(Intent(this, SettingActivity::class.java))

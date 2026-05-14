@@ -12,8 +12,8 @@ import com.creezen.tool.AndroidTool.getString
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.request
 
 class RegisterViewModel : BaseViewModel() {
 
@@ -64,7 +64,7 @@ class RegisterViewModel : BaseViewModel() {
     }
 
     fun handleRoleId(string: String) {
-        val isValid = string.length in 6 .. 18
+        val isValid = string.length in 6..18
         if (!isValid) {
             showRoleIdIcon.value = true
             roleIdHint.value = getString(R.string.from_6_to_18)
@@ -72,7 +72,7 @@ class RegisterViewModel : BaseViewModel() {
             checkRegisterButtonStatus()
         } else {
             showRoleIdIcon.value = false
-            request<UserService, Boolean>({ checkInfo(string) }){ status ->
+            request<UserService, Boolean>({ checkInfo(string) }) { status ->
                 ui {
                     showRoleIdIcon.value = status.not()
                     isRoleIdValid.value = status
@@ -93,7 +93,7 @@ class RegisterViewModel : BaseViewModel() {
             checkRegisterButtonStatus()
             return
         }
-        val isLengthValid = nickname.length in 1 .. 8
+        val isLengthValid = nickname.length in 1..8
         isNicknameValid.value = isLengthValid
         showNicknameIcon.value = isLengthValid.not()
         if (!isLengthValid) {
@@ -149,7 +149,7 @@ class RegisterViewModel : BaseViewModel() {
         val emailValue = if (emailContent.value.isNullOrEmpty()) {
             EMPTY_STRING
         } else {
-            "${emailContent.value}${emailSuffixValue}"
+            "${emailContent.value}$emailSuffixValue"
         }
         val phoneNum = phoneNumber.value ?: EMPTY_STRING
         val addressValue = address.value ?: EMPTY_STRING
@@ -172,17 +172,17 @@ class RegisterViewModel : BaseViewModel() {
         addressValue: String,
         bioValue: String
     ): Boolean {
-        return emailValue.isNotEmpty()
-                && phoneNum.isNotEmpty()
-                && addressValue.isNotEmpty()
-                && bioValue.isNotEmpty()
+        return emailValue.isNotEmpty() &&
+                phoneNum.isNotEmpty() &&
+                addressValue.isNotEmpty() &&
+                bioValue.isNotEmpty()
     }
 
     private fun checkRegisterButtonStatus() {
         isRegisterButtonClickable.value =
-            isRoleIdValid.value ?: false
-            && isNicknameValid.value ?: false
-            && isPasswordValid
-            && isConfirmPasswordValid
+            isRoleIdValid.value ?: false &&
+            isNicknameValid.value ?: false &&
+            isPasswordValid &&
+            isConfirmPasswordValid
     }
 }

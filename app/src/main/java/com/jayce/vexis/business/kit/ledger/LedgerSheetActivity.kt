@@ -72,10 +72,10 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                 it.binding.nameEdt.setText(userList[position])
                 it.setPositon(position)
                 it.setOnButtonClick { _, pos ->
-                        userBinding.itemLayout.removeViewAt(pos)
-                        userList.removeAt(pos)
-                        refreshItem(pos)
-                    }
+                    userBinding.itemLayout.removeViewAt(pos)
+                    userList.removeAt(pos)
+                    refreshItem(pos)
+                }
                 it.setTextChange { pos, value ->
                     userList[pos] = value
                 }

@@ -24,8 +24,8 @@ import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.ArticleService
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
 class SectionAdapter (
@@ -107,11 +107,11 @@ class SectionAdapter (
         val contentLength = content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
         val clickSpan = object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    val contentList = itemList[position].list
-                    contentList[0].cotent.toast()
-                }
+            override fun onClick(widget: View) {
+                val contentList = itemList[position].list
+                contentList[0].cotent.toast()
             }
+        }
         val spanString = SpannableString("$content    ")
         spanString.setSpan(imageSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)
         spanString.setSpan(clickSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)

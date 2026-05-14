@@ -95,6 +95,6 @@ class HintView(context: Context, attr: AttributeSet) : AppCompatEditText(context
     }
 
     private fun isIconClick(x: Float, y: Float): Boolean {
-        return Rect(iconLeft, iconTop, iconRight,iconBottom).contains(x.toInt(), y.toInt())
+        return Rect(iconLeft, iconTop, iconRight, iconBottom).contains(x.toInt(), y.toInt())
     }
 }

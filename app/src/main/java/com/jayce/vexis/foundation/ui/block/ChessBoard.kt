@@ -79,8 +79,8 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     private fun drawChess(canvas: Canvas) {
-        positionArray.forEachIndexed index1@ { xIndex, rowArray ->
-            rowArray.forEachIndexed index2@ { yIndex, column ->
+        positionArray.forEachIndexed index1@{ xIndex, rowArray ->
+            rowArray.forEachIndexed index2@{ yIndex, column ->
                 if (column <= 0) return@index2
                 drawChessPiece(canvas, xIndex, yIndex, column < 2)
             }
@@ -95,12 +95,14 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         val lightX = x - chessWidth * 0.2f
         val lightY = y - chessWidth * 0.2f
         val gradientColor = if (isBlackPlayer) {
-            intArrayOf(Color.rgb(200, 200,  200), Color.BLACK, Color.DKGRAY)
+            intArrayOf(Color.rgb(200, 200, 200), Color.BLACK, Color.DKGRAY)
         } else {
             intArrayOf(Color.WHITE, Color.LTGRAY, Color.GRAY)
         }
         val gradient = RadialGradient(
-            lightX, lightY, chessWidth,
+            lightX,
+            lightY,
+            chessWidth,
             gradientColor,
             floatArrayOf(0f, 0.6f, 1f),
             Shader.TileMode.CLAMP

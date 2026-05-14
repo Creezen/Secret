@@ -7,7 +7,7 @@ enum class TimePickerType {
     FULL;
 
     companion object {
-        fun getType(num: Int) = when(num) {
+        fun getType(num: Int) = when (num) {
             0 -> SIMPLE
             1 -> FULL
             else -> FULL

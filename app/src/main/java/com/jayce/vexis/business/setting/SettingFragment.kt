@@ -7,7 +7,7 @@ import com.creezen.tool.AndroidTool
 import com.creezen.tool.BaseTool.restartApp
 import com.jayce.vexis.R
 
-class SettingFragment: PreferenceFragmentCompat() {
+class SettingFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.setting)

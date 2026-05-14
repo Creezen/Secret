@@ -29,7 +29,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/default_head"/>
+                android:src="@drawable/default_head"
+                android:importantForAccessibility="no"/>
             <TextView
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
@@ -134,7 +135,6 @@
             android:layout_marginEnd="12dp"
             android:layout_marginTop="8dp"
             app:cardDescription="@string/against_gain"/>
-
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/inform"
             android:layout_width="0dp"

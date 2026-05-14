@@ -9,10 +9,8 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 import com.jayce.vexis.R
-import kotlin.math.ceil
-
 import com.jayce.vexis.databinding.TextCheckBoxBinding
-import java.util.ArrayList
+import kotlin.math.ceil
 
 class MultiLineSingleCheckbox(
     private val context: Context,
@@ -77,7 +75,7 @@ class MultiLineSingleCheckbox(
             child.layoutParams = LayoutParams(0, MATCH_PARENT, 1f)
             child.setOnClickListener {
                 setClickAction(i)
-                val str = if(previewSelected < 0) {
+                val str = if (previewSelected < 0) {
                     "请输入你的建议..."
                 } else {
                     "请描述你认为${strList[i]}的理由..."

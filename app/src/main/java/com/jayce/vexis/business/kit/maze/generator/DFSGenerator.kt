@@ -66,5 +66,4 @@ class DFSGenerator : IMazeGenerator() {
             mazeMatrix[x][y - 1].hasRight = false
         }
     }
-
 }

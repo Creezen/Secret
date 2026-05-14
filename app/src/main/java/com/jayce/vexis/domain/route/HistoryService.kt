@@ -18,5 +18,4 @@ interface HistoryService : BaseService {
 
     @POST("/queryAllEvent")
     fun queryAllEvent(): Call<List<HistoryBean>>
-
 }

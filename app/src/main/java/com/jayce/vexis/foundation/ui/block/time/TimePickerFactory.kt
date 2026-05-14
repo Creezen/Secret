@@ -15,9 +15,8 @@ class TimePickerFactory {
         val millsList by lazy { getNumberList(1000, 0) }
     }
 
-    fun getTimePicker(type: TimePickerType) = when(type) {
+    fun getTimePicker(type: TimePickerType) = when (type) {
         TimePickerType.SIMPLE -> SimpleTimePicker()
         TimePickerType.FULL -> FullTimePicker()
     }
-
 }

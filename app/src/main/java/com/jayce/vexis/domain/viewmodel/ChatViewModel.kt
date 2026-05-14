@@ -32,7 +32,7 @@ class ChatViewModel(private val repository: EventRepository) : BaseViewModel() {
             val ready = CompletableFuture<Unit>()
             launch {
                 ready.complete(Unit)
-                repository.flow.collect collect1@ {
+                repository.flow.collect collect1@{
                     countDownLatch.await()
                     val isEventHandled = it.id <= eventId
                     eventId = it.id

@@ -57,8 +57,8 @@ object ModuleHelper {
             val instance = clazz.getDeclaredConstructor().newInstance()
             val ctx = createPluginContext(context, file.path)
             when (instance) {
-                is IFragment -> { instance.injectContext(ctx) }
-                is IActivity -> { instance.injectContext(ctx) }
+                is IFragment -> instance.injectContext(ctx)
+                is IActivity -> instance.injectContext(ctx)
             }
             classMap[className] = instance
         }.onFailure {

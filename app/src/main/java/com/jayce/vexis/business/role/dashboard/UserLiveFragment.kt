@@ -13,5 +13,4 @@ class UserLiveFragment : BaseFragment<UserLiveBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ) = binding.root
-
 }

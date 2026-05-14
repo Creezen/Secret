@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/tianji"/>
+            android:src="@drawable/tianji"
+            android:importantForAccessibility="no"/>
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"

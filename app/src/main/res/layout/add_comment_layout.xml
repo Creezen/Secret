@@ -16,5 +16,7 @@
         android:lines="3"
         android:textSize="15sp"
         android:hint="@string/input_suggession"
-        android:gravity="start|top"/>
+        android:gravity="start|top"
+        android:importantForAutofill="no"
+        android:inputType="text"/>
 </LinearLayout>

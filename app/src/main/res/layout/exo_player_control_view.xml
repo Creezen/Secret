@@ -13,7 +13,10 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="PrivateResource">
 
   <!-- 0dp dimensions are used to prevent this view from influencing the size of
        the parent view if it uses "wrap_content". It is expanded to occupy the
@@ -61,25 +64,32 @@
         android:layoutDirection="ltr">
 
       <ImageButton android:id="@id/exo_vr"
-          style="@style/ExoStyledControls.Button.Bottom.VR"/>
+          style="@style/ExoStyledControls.Button.Bottom.VR"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_shuffle"
-          style="@style/ExoStyledControls.Button.Bottom.Shuffle"/>
+          style="@style/ExoStyledControls.Button.Bottom.Shuffle"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_repeat_toggle"
-          style="@style/ExoStyledControls.Button.Bottom.RepeatToggle"/>
+          style="@style/ExoStyledControls.Button.Bottom.RepeatToggle"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_subtitle"
-          style="@style/ExoStyledControls.Button.Bottom.CC"/>
+          style="@style/ExoStyledControls.Button.Bottom.CC"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_settings"
-          style="@style/ExoStyledControls.Button.Bottom.Settings"/>
+          style="@style/ExoStyledControls.Button.Bottom.Settings"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_fullscreen"
-          style="@style/ExoStyledControls.Button.Bottom.FullScreen"/>
+          style="@style/ExoStyledControls.Button.Bottom.FullScreen"
+          android:importantForAccessibility="no"/>
 
       <ImageButton android:id="@id/exo_overflow_show"
-          style="@style/ExoStyledControls.Button.Bottom.OverflowShow"/>
+          style="@style/ExoStyledControls.Button.Bottom.OverflowShow"
+          android:importantForAccessibility="no"/>
 
     </LinearLayout>
 
@@ -95,7 +105,8 @@
           android:layoutDirection="ltr">
 
         <ImageButton android:id="@id/exo_overflow_hide"
-            style="@style/ExoStyledControls.Button.Bottom.OverflowHide"/>
+            style="@style/ExoStyledControls.Button.Bottom.OverflowHide"
+            android:importantForAccessibility="no"/>
 
       </LinearLayout>
 
@@ -119,7 +130,8 @@
       android:layoutDirection="ltr">
 
     <ImageButton android:id="@id/exo_minimal_fullscreen"
-        style="@style/ExoStyledControls.Button.Bottom.FullScreen"/>
+        style="@style/ExoStyledControls.Button.Bottom.FullScreen"
+        android:importantForAccessibility="no"/>
 
   </LinearLayout>
 
@@ -136,19 +148,22 @@
 
     <ImageButton android:id="@id/exo_prev"
         android:background="#000000"
-        style="@style/ExoStyledControls.Button.Center.Previous"/>
+        style="@style/ExoStyledControls.Button.Center.Previous"
+        android:importantForAccessibility="no"/>
 
     <include layout="@layout/exo_player_control_rewind_button" />
 
     <ImageButton android:id="@id/exo_play_pause"
         android:background="#00ff00"
-        style="@style/ExoStyledControls.Button.Center.PlayPause"/>
+        style="@style/ExoStyledControls.Button.Center.PlayPause"
+        android:importantForAccessibility="no"/>
 
     <include layout="@layout/exo_player_control_ffwd_button" />
 
     <ImageButton android:id="@id/exo_next"
         android:background="#ff00ff"
-        style="@style/ExoStyledControls.Button.Center.Next"/>
+        style="@style/ExoStyledControls.Button.Center.Next"
+        android:importantForAccessibility="no"/>
 
   </LinearLayout>
 

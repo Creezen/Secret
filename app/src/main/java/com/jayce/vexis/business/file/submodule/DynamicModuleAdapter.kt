@@ -44,7 +44,7 @@ class DynamicModuleAdapter(
         val item = list[position]
         holder.title.text = item.title
 //        holder.image.setImageURI(Uri.parse(item.image))
-        holder.download.setOnClickListener{
+        holder.download.setOnClickListener {
             "开始下载模块".toast()
         }
         holder.image.setRenderEffect(effect)

@@ -2,6 +2,8 @@ package com.jayce.vexis.business.kit.poker
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.DataTool.dpToPx
 import com.jayce.vexis.R
@@ -54,7 +56,7 @@ class PokerAdapter(
         parent: ViewGroup
     ): Pair<PokerItemBinding, ViewHolder> {
         containerBinding.base.setBackgroundResource(R.drawable.poker)
-        containerBinding.base.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        containerBinding.base.layoutParams = ViewGroup.LayoutParams(WRAP_CONTENT, MATCH_PARENT)
         val childBind = PokerItemBinding.inflate(layoutInflater, parent, false)
         val holder = ViewHolder(containerBinding, childBind)
         return childBind to holder

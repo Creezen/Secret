@@ -18,7 +18,7 @@ class SimpleTimePicker : ITimePicker<TimePickerYearMonthDayBinding> {
     }
 
     override fun initUI() {
-        binding.apply{
+        binding.apply {
             year.init(yearList, 2025)
             month.init(monthList)
             day.init(dayList)
@@ -26,7 +26,7 @@ class SimpleTimePicker : ITimePicker<TimePickerYearMonthDayBinding> {
     }
 
     override fun getTime(): List<String> {
-        return binding.let{
+        return binding.let {
             ArrayList<String>().apply {
                 add(yearList[it.year.value])
                 add(monthList[it.month.value])

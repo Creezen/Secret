@@ -1,11 +1,11 @@
 package com.jayce.vexis.core
 
+//import com.amap.api.services.core.ServiceSettings
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-//import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool

@@ -34,5 +34,4 @@ class BasicInformationCard(context: Context, attr: AttributeSet) : CardView(cont
             cardDescription = it.getString(R.styleable.BasicInformationCard_cardDescription) ?: ""
         }
     }
-
 }

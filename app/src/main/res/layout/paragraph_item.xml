@@ -7,7 +7,8 @@
         android:id="@+id/scroll"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/scroll"/>
+        android:src="@drawable/scroll"
+        android:importantForAccessibility="no"/>
     <TextView
         android:id="@+id/paragraph"
         android:layout_width="match_parent"

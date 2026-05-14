@@ -1,7 +1,6 @@
 package com.jayce.vexis.business.history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,8 @@ import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.TimeLineBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.HistoryService
+import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
 class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
@@ -79,12 +78,9 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
                 FlexibleDialog<DialogTimelineBinding>(ctx)
                     .flexibleView(DialogTimelineBinding::inflate)
                     .positive {
-                        request<HistoryService, Boolean>({ sendEventData(
-                            picker.formatTime(),
-                            content.msg()
-                        ) }) {
-                            ui { it.toast() }
-                        }
+                        request<HistoryService, Boolean>({
+                            sendEventData(picker.formatTime(), content.msg())
+                        }) { ui { it.toast() } }
                         return@positive -1
                     }
                     .show()

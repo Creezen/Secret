@@ -36,7 +36,7 @@ class MenuSecondPageFragment : BaseFragment<GomokuDialogSecordLayoutBinding>(), 
         if (startTime == 0L) {
             startTime = frameTimeNanos
         } else {
-            val ellipse = (frameTimeNanos - startTime)/1000000
+            val ellipse = (frameTimeNanos - startTime) / 1000000
             binding.countTimer.text = viewModel.formatElapsed(ellipse)
         }
         Choreographer.getInstance().postFrameCallback(this)

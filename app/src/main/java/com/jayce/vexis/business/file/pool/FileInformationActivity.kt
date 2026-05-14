@@ -9,7 +9,7 @@ import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.foundation.Util.Extension.unParcelable
 import com.jayce.vexis.domain.bean.FileEntry
 
-class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
+class FileInformationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
     private lateinit var fileItem: FileBean
     private val parentNode = arrayListOf("资源描述", "资源说明")
@@ -21,11 +21,7 @@ class FileInfomationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val item = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(EMPTY_STRING,EMPTY_STRING,EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,0,EMPTY_STRING)
-        } else {
-            intent.getParcelableExtra("fileInfo") ?: FileEntry(EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,EMPTY_STRING,0,EMPTY_STRING)
-        }
+        val item = intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,0, EMPTY_STRING)
         fileItem = item.unParcelable()
         initView()
         initData()

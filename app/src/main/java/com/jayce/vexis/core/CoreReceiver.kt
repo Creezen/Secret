@@ -7,7 +7,6 @@ import android.util.Log
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool.toast
-//import com.jayce.vexis.foundation.ability.EventHandle.saveChatMessage
 
 class CoreReceiver : BroadcastReceiver() {
 
