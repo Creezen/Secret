@@ -41,7 +41,6 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
                     .title("选择您的出生日期")
                     .positive("确定") {
                         registerViewModel.handleBirthday(birthday.time())
-                        return@positive 1
                     }
                     .show()
             }

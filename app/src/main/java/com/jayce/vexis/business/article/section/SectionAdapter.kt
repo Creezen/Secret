@@ -140,7 +140,6 @@ class SectionAdapter (
                     ui { it.toast() }
                 }
                 itemList[position].sectionId.toast()
-                return@positive -1
             }
             .onDismiss {
                 val color = (view.background as ColorDrawable).color

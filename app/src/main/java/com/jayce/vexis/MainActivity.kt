@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.main
+package com.jayce.vexis
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -46,7 +46,6 @@ import com.creezen.tool.NetTool.setImage
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.bean.FragmentAnimRes
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
-import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.isLogin
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.StatusManager.registerUser
@@ -176,9 +175,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                     destroySocket()
                     unbindService(connection)
                     finishAll()
-                    return@positive 1
                 }
-                .negative(getString(R.string.click_error), true) { return@negative 1 }
+                .negative(getString(R.string.click_error), true) { }
                 .show()
         }
     }
@@ -252,9 +250,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                         .title("是否要登录？")
                         .positive("立即登录") {
                             loginLauncher.launch(Intent(this@MainActivity, LoginActivity::class.java))
-                            return@positive 1
                         }
-                        .negative("暂不登录") { return@negative 2 }
+                        .negative("暂不登录") {}
                         .show()
                 }
             }

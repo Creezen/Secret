@@ -45,7 +45,6 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                                 it.putExtra("time", System.currentTimeMillis())
                             },
                         )
-                        return@positive -1
                     }
                     .show()
             }

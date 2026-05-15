@@ -81,7 +81,6 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
                         request<HistoryService, Boolean>({
                             sendEventData(picker.formatTime(), content.msg())
                         }) { ui { it.toast() } }
-                        return@positive -1
                     }
                     .show()
             }

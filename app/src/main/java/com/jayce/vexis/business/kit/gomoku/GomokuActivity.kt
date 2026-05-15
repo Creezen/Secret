@@ -57,9 +57,9 @@ class GomokuActivity : BaseActivity<ActivityGomokuBinding>() {
 
     private fun initDialogView() {
         dialogBinding?.apply {
-            confirm.text = "开启监听"
-            cancle.setOnClickListener { finish() }
-            confirm.setOnClickListener {
+            button.confirm.text = "开启监听"
+            button.cancel.setOnClickListener { finish() }
+            button.confirm.setOnClickListener {
                 ThreadTool.runOnMulti {
                     if (viewModel.shouldCheckWifiStatus()) {
                         val manager = getSystemService(WifiManager::class.java)
@@ -79,16 +79,16 @@ class GomokuActivity : BaseActivity<ActivityGomokuBinding>() {
                 val confirmText = it.second
                 dialogBinding?.apply {
                     if (cancelText.isEmpty()) {
-                        cancle.visibility = View.GONE
+                        button.cancel.visibility = View.GONE
                     } else {
-                        cancle.visibility = View.VISIBLE
-                        cancle.text = cancelText
+                        button.cancel.visibility = View.VISIBLE
+                        button.cancel.text = cancelText
                     }
                     if (confirmText.isEmpty()) {
-                        confirm.visibility = View.GONE
+                        button.confirm.visibility = View.GONE
                     } else {
-                        confirm.visibility = View.VISIBLE
-                        confirm.text = confirmText
+                        button.confirm.visibility = View.VISIBLE
+                        button.confirm.text = confirmText
                     }
                 }
             }

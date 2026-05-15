@@ -2,10 +2,8 @@ package com.jayce.vexis.domain.bean
 
 import com.jayce.vexis.domain.enums.PokerSuit
 
-data class PokerEntry(
-    val suit: PokerSuit,
-    val rank: Int,
-) {
+data class PokerEntry(val suit: PokerSuit, val rank: Int) {
+
     var isSelect: Boolean = false
 
     val rankChar = when (suit) {

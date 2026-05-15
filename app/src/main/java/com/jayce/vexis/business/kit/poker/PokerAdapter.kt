@@ -1,5 +1,6 @@
 package com.jayce.vexis.business.kit.poker
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -13,6 +14,7 @@ import com.jayce.vexis.domain.bean.PokerEntry
 import com.jayce.vexis.foundation.ui.CardAdapter
 
 class PokerAdapter(
+    private val context: Context,
     private var list: List<PokerEntry>
 ) : CardAdapter<PokerEntry, PokerItemBinding, PokerAdapter.ViewHolder>(list) {
 
@@ -40,8 +42,14 @@ class PokerAdapter(
         holder.bottom.text = item.rankChar
         val size = if (item.isJoker()) 20f else 32f
         holder.top.textSize = size
+        val suit = item.suit
+        holder.top.setTextColor(context.getColor(suit.colorId))
+        holder.bottom.setTextColor(context.getColor(suit.colorId))
+        if (!item.isJoker()) {
+            holder.top.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, suit.resId)
+            holder.bottom.setCompoundDrawablesWithIntrinsicBounds(0, suit.resId, 0, 0)
+        }
         holder.bottom.textSize = size
-//        holder.view.translationZ = position.toFloat()
         holder.view.setOnClickListener {
             item.rank.toast()
             val offset = if (item.isSelect) 16f else -16f

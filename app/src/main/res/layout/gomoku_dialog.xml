@@ -13,24 +13,10 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/gomoku_dialog_nav"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-        <Button
-            android:id="@+id/cancle"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/exit"
-            android:layout_marginEnd="2dp"/>
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/confirm"
-            android:layout_marginStart="2dp"/>
-    </LinearLayout>
+            android:layout_marginTop="16dp"
+            layout="@layout/two_button_layout"/>
 </LinearLayout>

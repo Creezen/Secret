@@ -83,7 +83,7 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                 FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
                     .flexibleView(AddRecordUserBinding.inflate(layoutInflater))
                     .title("添加角色")
-                    .negative { return@negative -1 }
+                    .negative {}
                     .positive("添加") {
                         val edit = findViewById<EditText>(R.id.edit)
                         val addUserName = edit.msg()
@@ -96,7 +96,6 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                         scoreInsertAdapter.notifyUserAdded()
                         totalScoreList.add(0)
                         totalScore.addSimpleView("0", WIDTH)
-                        return@positive -1
                     }.show()
             }
             addRecord.setOnClickListener {
@@ -111,7 +110,6 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                         newList.addAll(scoreList)
                         if (newList.sum() != 0) {
                             "分数设置不合法，请检查一下哦".toast()
-                            return@positive -1
                         }
                         newList.forEachIndexed { index, value ->
                             totalScoreList[index] += value
@@ -119,7 +117,6 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                             childView.text = totalScoreList[index].toString()
                         }
                         addRecord(newList)
-                        return@positive -1
                     }.title("设置分数").show()
             }
             save.setOnClickListener {
