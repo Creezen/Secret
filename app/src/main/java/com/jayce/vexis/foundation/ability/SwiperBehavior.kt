@@ -29,7 +29,14 @@ class SwiperBehavior(context: Context, attr: AttributeSet) : CoordinatorLayout.B
         return true
     }
 
-    override fun onStartNestedScroll(layout: CoordinatorLayout, child: View, targetView: View, target: View, axes: Int, type: Int): Boolean {
+    override fun onStartNestedScroll(
+        layout: CoordinatorLayout,
+        child: View,
+        targetView: View,
+        target: View,
+        axes: Int,
+        type: Int
+    ): Boolean {
         if (::swiperCallback.isInitialized.not()) return false
         if (type != ViewCompat.TYPE_TOUCH) return false
         if (swiper.isRefreshing) return false

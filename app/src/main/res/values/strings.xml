@@ -181,4 +181,9 @@
     <string name="exit">退出</string>
     <string name="confirm">确认</string>
     <string name="play_video">视频播放</string>
+    <string name="click_to_fetch_resource">点我下载资源</string>
+    <string name="wait_connection">等待连接中....</string>
+    <string name="cheat">吹牛皮</string>
+    <string name="landload">斗地主</string>
+    <string name="run_fast">跑得快</string>
 </resources>

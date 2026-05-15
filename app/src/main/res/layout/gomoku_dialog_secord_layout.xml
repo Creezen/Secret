@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:gravity="center"
-        android:text="等待连接中...."
+        android:text="@string/wait_connection"
         android:fontFeatureSettings="tnum"/>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"

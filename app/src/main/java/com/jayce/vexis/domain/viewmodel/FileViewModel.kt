@@ -16,9 +16,9 @@ import java.util.concurrent.LinkedBlockingQueue
 
 class FileViewModel : BaseViewModel() {
 
-    private val _flow: MutableSharedFlow<Int> =
+    private val _progressFlow: MutableSharedFlow<Int> =
         MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
-    val progressFlow = _flow.asSharedFlow()
+    val progressFlow = _progressFlow.asSharedFlow()
 
     private val _taskStateFlow: MutableSharedFlow<DownloadTask> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val taskStateFlow = _taskStateFlow.asSharedFlow()
@@ -41,7 +41,7 @@ class FileViewModel : BaseViewModel() {
                 request<FileService, ResponseBody>({ downloadFile(task.fileName) }) {
                     val stream = it.byteStream()
                     downloadFileByNet(stream, task.fileName) {
-                        _flow.emit(it)
+                        _progressFlow.emit(it)
                         if (it >= totalSize) {
                             semaphore.release()
 //                            _flow.emit(0)

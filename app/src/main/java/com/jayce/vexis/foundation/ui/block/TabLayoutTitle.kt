@@ -10,5 +10,4 @@ class TabLayoutTitle(context: Context) : AppCompatTextView(context) {
     init {
         TabTitleItemBinding.inflate(LayoutInflater.from(context))
     }
-
 }

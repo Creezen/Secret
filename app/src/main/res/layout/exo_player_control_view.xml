@@ -16,7 +16,8 @@
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="PrivateResource">
+    tools:ignore="PrivateResource"
+    tools:overrde="true">
 
   <!-- 0dp dimensions are used to prevent this view from influencing the size of
        the parent view if it uses "wrap_content". It is expanded to occupy the

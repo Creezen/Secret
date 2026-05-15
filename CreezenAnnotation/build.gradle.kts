@@ -21,6 +21,10 @@ dependencies {
     implementation(gradleApi())
     implementation("org.ow2.asm:asm:9.8")
     implementation("org.ow2.asm:asm-commons:9.8")
+
+    compileOnly("com.android.tools.lint:lint:31.10.1")
+    compileOnly("com.android.tools.lint:lint-api:31.10.1")
+    compileOnly("com.android.tools.lint:lint-checks:31.10.1")
 }
 
 gradlePlugin {
@@ -29,5 +33,13 @@ gradlePlugin {
             id = "com.jayce.vexis.annotation"
             implementationClass = "com.jayce.vexis.annotation.AnnotationPlugin"
         }
+    }
+}
+
+tasks.withType<Jar>().configureEach {
+    manifest {
+        attributes(
+            "Lint-Registry-v2" to "com.jayce.vexis.issue.XmlIssueRegistry"
+        )
     }
 }

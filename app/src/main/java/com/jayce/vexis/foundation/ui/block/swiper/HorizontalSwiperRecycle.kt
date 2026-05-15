@@ -11,7 +11,7 @@ import com.jayce.vexis.foundation.ability.SwiperBehavior
 class HorizontalSwiperRecycle(context: Context, parent: ViewGroup) : ISwiper {
 
     override val binding: HorizonSwiperRecycleLayoutBinding =
-        HorizonSwiperRecycleLayoutBinding.inflate(LayoutInflater.from(context), parent,true)
+        HorizonSwiperRecycleLayoutBinding.inflate(LayoutInflater.from(context), parent, true)
 
     override val payload: RecyclerView
         get() = binding.recycleView

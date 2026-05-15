@@ -17,7 +17,7 @@ plugins {
     id("kotlin-parcelize")
     id("maven-publish")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
-    id("com.jayce.vexis.annotation")
+//    id("com.jayce.vexis.annotation")
 }
 
 apply("${rootProject.projectDir}/config.gradle")
@@ -92,7 +92,6 @@ android {
         buildConfig = true
     }
     lint {
-        enable.add("HardcodedText")
         baseline = file("lint-baseline.xml")
         abortOnError = false
         htmlOutput = file("${buildDir()}/reports/combined/lint-report.html")
@@ -262,4 +261,6 @@ dependencies {
     implementation(libs.media.player)
     implementation(libs.media.ui)
     implementation(libs.media.sesison)
+
+    lintChecks(project(":CreezenAnnotation"))
 }

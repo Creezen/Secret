@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -77,10 +76,10 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
             geocoder.getFromLocation(latitude, longitude, 1) {
                 val address = it[0]
                 val info = "${longitude}\n" +
-                        "${latitude}\n" +
-                        "${address.getAddressLine(0)}\n" +
-                        "${address.getAddressLine(1)}\n" +
-                        "${address.getAddressLine(2)}"
+                    "${latitude}\n" +
+                    "${address.getAddressLine(0)}\n" +
+                    "${address.getAddressLine(1)}\n" +
+                    "${address.getAddressLine(2)}"
                 binding.location.text = info
             }
         }

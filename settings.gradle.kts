@@ -7,7 +7,7 @@ pluginManagement {
             url = java.net.URI("https://jitpack.io")
         }
     }
-    includeBuild("CreezenAnnotation")
+//    includeBuild("CreezenAnnotation")
 }
 
 rootProject.name = "Secret"
@@ -16,3 +16,4 @@ include(":TJUtil")
 include(":CommonTool")
 include(":nativetool")
 include(":dynamicLib")
+include(":CreezenAnnotation")

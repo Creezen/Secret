@@ -2,7 +2,7 @@ package com.jayce.vexis.domain.bean
 
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 
-data class TraceEntry (
+data class TraceEntry(
     var minX: Float = 0f,
     var maxX: Float = 0f,
     var minY: Float = 0f,
@@ -12,6 +12,6 @@ data class TraceEntry (
     val message: String = EMPTY_STRING
 ) {
     fun isClicked(x: Float, y: Float): Boolean {
-        return x in minX..maxX && y in minY.. maxY
+        return x in minX..maxX && y in minY..maxY
     }
 }

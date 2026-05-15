@@ -44,7 +44,7 @@ class EventRepository {
         val event = eventDao.getEventById(eventId)
         Log.d("LJW", "event: $event")
         when (event.type) {
-            EVENT_TYPE_MESSAGE -> { _flow.emit(event) }
+            EVENT_TYPE_MESSAGE -> _flow.emit(event)
             EVENT_TYPE_NOTIFY -> {
                 broadcastByAction(BaseTool.env(), BROAD_NOTIFY) {
                     it.putExtra("broadcastNotify", event.content)
@@ -52,7 +52,7 @@ class EventRepository {
             }
             EVENT_TYPE_DEFAULT -> {}
             EVENT_TYPE_GAME -> {}
-            EVENT_TYPE_FINISH -> { finishAll() }
+            EVENT_TYPE_FINISH -> finishAll()
             else -> {}
         }
     }

@@ -12,9 +12,9 @@ import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.bean.SubjectTableEntry
 import com.jayce.vexis.domain.route.PeerService
+import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.Dispatchers
 
 class PeerFragment : BaseFragment<SageFragmentBinding>() {

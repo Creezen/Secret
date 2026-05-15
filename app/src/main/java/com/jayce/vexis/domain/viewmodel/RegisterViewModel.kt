@@ -173,9 +173,9 @@ class RegisterViewModel : BaseViewModel() {
         bioValue: String
     ): Boolean {
         return emailValue.isNotEmpty() &&
-                phoneNum.isNotEmpty() &&
-                addressValue.isNotEmpty() &&
-                bioValue.isNotEmpty()
+            phoneNum.isNotEmpty() &&
+            addressValue.isNotEmpty() &&
+            bioValue.isNotEmpty()
     }
 
     private fun checkRegisterButtonStatus() {

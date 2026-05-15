@@ -1,6 +1,6 @@
 package com.jayce.vexis.core
 
-//import com.amap.api.services.core.ServiceSettings
+// import com.amap.api.services.core.ServiceSettings
 import android.app.Application
 import android.content.Context
 import android.content.Intent

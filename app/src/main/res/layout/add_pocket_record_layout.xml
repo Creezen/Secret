@@ -14,7 +14,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/max_length_15"
-            android:text="@string/title"/>
+            android:text="@string/title"
+            android:importantForAutofill="no"
+            android:inputType="text"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

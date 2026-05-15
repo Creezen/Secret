@@ -8,7 +8,7 @@ import com.creezen.tool.DataTool.dpToPx
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 
-abstract class CardAdapter<D, T: ViewBinding, H: CardAdapter.ViewHolder>(
+abstract class CardAdapter<D, T : ViewBinding, H : CardAdapter.ViewHolder>(
     private val list: List<D>
 ) : BaseAdapter<D, CardAdapter.ViewHolder>() {
 
@@ -66,7 +66,7 @@ abstract class CardAdapter<D, T: ViewBinding, H: CardAdapter.ViewHolder>(
         layoutInflater: LayoutInflater,
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup
-    ) : Pair<T, H>
+    ): Pair<T, H>
 
     abstract class ViewHolder(
         val binding: CardItemLayoutBinding

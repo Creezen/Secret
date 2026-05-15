@@ -214,8 +214,8 @@ class GomokuViewModel : BaseViewModel() {
 
     fun shouldCheckWifiStatus(): Boolean {
         val isFirstPage = stage == NO_JUMP ||
-                stage == SECOND_BACK_FIRST ||
-                stage == THIRD_BACK_FIRST
+            stage == SECOND_BACK_FIRST ||
+            stage == THIRD_BACK_FIRST
         return !isServerChecked && isFirstPage
     }
 

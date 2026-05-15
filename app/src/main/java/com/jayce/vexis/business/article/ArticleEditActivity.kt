@@ -6,8 +6,8 @@ import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
-import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.domain.route.ArticleService
+import com.jayce.vexis.foundation.Util.request
 
 class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
 

@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             app:title=" "
-            android:background="@drawable/toolbar" >
+            android:background="@mipmap/toolbar" >
             <TextView
                 android:id="@+id/toolBarText"
                 android:layout_width="wrap_content"
@@ -40,5 +40,5 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/main_head"
         app:menu="@menu/main"
-        android:background="@drawable/main_background"/>
+        android:background="@mipmap/main_background"/>
 </androidx.drawerlayout.widget.DrawerLayout>

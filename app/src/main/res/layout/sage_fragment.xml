@@ -62,7 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
                 android:elevation="5dp"
-                android:src="@drawable/post_vector"/>
+                android:src="@drawable/post_vector"
+                android:importantForAccessibility="no"/>
         </RelativeLayout>
     </FrameLayout>
 

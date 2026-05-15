@@ -1,8 +1,8 @@
 package com.jayce.vexis.business.kit.maze
 
 import com.jayce.vexis.business.kit.maze.generator.IMazeGenerator
-import com.jayce.vexis.domain.enums.MazeType
 import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.enums.MazeType
 
 class MazeManager {
 
@@ -85,5 +85,4 @@ class MazeManager {
     fun hitBottomWall(vertical: Float): Boolean {
         return matrix[positionX][positionY].hasBottom && vertical > 0
     }
-
 }

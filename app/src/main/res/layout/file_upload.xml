@@ -42,7 +42,9 @@
             android:hint="@string/intro_file"
             android:gravity="top"
             android:text="@={activity.descTextLivedata}"
-            android:background="@drawable/editview_border">
+            android:background="@drawable/editview_border"
+            android:importantForAutofill="no"
+            android:inputType="text">
         </EditText>
         <TextView
             android:id="@+id/descriptionLength"
@@ -66,7 +68,9 @@
             android:layout_weight="6"
             android:gravity="top"
             android:hint="@string/description_option"
-            android:background="@drawable/editview_border"/>
+            android:background="@drawable/editview_border"
+            android:importantForAutofill="no"
+            android:inputType="text"/>
         <Button
             android:id="@+id/upload"
             android:layout_width="match_parent"

@@ -11,7 +11,9 @@
         android:layout_height="wrap_content"
         android:hint="@string/input_chinese_get_pinyin"
         android:gravity="start|center_vertical"
-        android:background="@drawable/corner_16"/>
+        android:background="@drawable/corner_16"
+        android:importantForAutofill="no"
+        android:inputType="text"/>
     <Button
         android:id="@+id/convert"
         android:layout_width="match_parent"

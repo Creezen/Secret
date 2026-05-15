@@ -286,7 +286,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
             createNotificationChannel(notifyChannel)
         }
         val notification = NotificationCompat.Builder(BaseTool.env(), "1")
-            .setSmallIcon(R.drawable.tianji)
+            .setSmallIcon(R.mipmap.tianji)
             .setContentTitle(getString(R.string.login_success_notify))
             .setContentText(getString(R.string.welcome_user, liveUser.nickname))
             .setPriority(NotificationCompat.PRIORITY_HIGH)

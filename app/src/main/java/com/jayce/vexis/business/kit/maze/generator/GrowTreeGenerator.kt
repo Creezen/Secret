@@ -1,7 +1,7 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import com.jayce.vexis.domain.enums.MazeDirection
 import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.enums.MazeDirection
 import kotlin.random.Random
 
 class GrowTreeGenerator : IMazeGenerator() {
@@ -9,7 +9,7 @@ class GrowTreeGenerator : IMazeGenerator() {
     private val activeList: ArrayList<GridUnit> = arrayListOf()
 
     override fun generateMaze(x: Int, y: Int) {
-        val randomX =  Random.nextInt(0, row)
+        val randomX = Random.nextInt(0, row)
         val randomY = Random.nextInt(0, line)
         activeList.add(mazeMatrix[randomX][randomY])
         while (true) {

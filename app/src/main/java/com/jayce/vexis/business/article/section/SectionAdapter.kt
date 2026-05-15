@@ -28,7 +28,7 @@ import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
-class SectionAdapter (
+class SectionAdapter(
     val context: Context,
     val activity: Activity,
     private var itemList: List<SectionRemarkBean>,

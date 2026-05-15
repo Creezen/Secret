@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/tianji"
+            android:src="@mipmap/tianji"
             android:importantForAccessibility="no"/>
         <TextView
             android:id="@+id/title"
@@ -30,5 +30,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="点我下载资源"/>
+        android:text="@string/click_to_fetch_resource"/>
 </FrameLayout>

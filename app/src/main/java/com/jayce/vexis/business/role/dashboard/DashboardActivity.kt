@@ -18,8 +18,8 @@ import com.creezen.tool.NetTool.buildFileMultipart
 import com.creezen.tool.ThreadTool
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
-import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.domain.route.UserService
@@ -94,7 +94,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                     NetTool.setImage(
                         this@DashboardActivity,
                         image,
-                        url="${liveUser.userId}.png",
+                        url= "${liveUser.userId}.png",
                         placeHolder = null,
                         key = it.toString(),
                     )

@@ -16,5 +16,7 @@
         android:layout_weight="1"
         android:lines="3"
         android:gravity="start|top"
-        android:hint="@string/record_event"/>
+        android:hint="@string/record_event"
+        android:importantForAutofill="no"
+        android:inputType="text"/>
 </LinearLayout>

@@ -7,47 +7,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
+        <Button
+            android:id="@+id/ledger"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/pocket"/>
+        <Button
+            android:id="@+id/maze"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/ledger"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="@string/pocket"/>
-            <Button
-                android:id="@+id/maze"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/maze"/>
-            <Button
-                android:id="@+id/gomoku"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/gomoku"/>
-            <Button
-                android:id="@+id/poker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/poker"/>
-            <Button
-                android:id="@+id/pinyin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/pinyin_search"/>
-            <Button
-                android:id="@+id/quickStart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/jump_3d_game"/>
-            <Button
-                android:id="@+id/videoPlayer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/play_video"/>
-        </LinearLayout>
+            android:text="@string/maze"/>
+        <Button
+            android:id="@+id/gomoku"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/gomoku"/>
+        <Button
+            android:id="@+id/poker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/poker"/>
+        <Button
+            android:id="@+id/pinyin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pinyin_search"/>
+        <Button
+            android:id="@+id/quickStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/jump_3d_game"/>
+        <Button
+            android:id="@+id/videoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/play_video"/>
     </LinearLayout>
     <TextView
         android:id="@+id/location"

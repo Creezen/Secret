@@ -9,8 +9,8 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.jayce.vexis.domain.enums.MazeType
 import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.enums.MazeType
 import kotlin.math.absoluteValue
 
 class MazeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {

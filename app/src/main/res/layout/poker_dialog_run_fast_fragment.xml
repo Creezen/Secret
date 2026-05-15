@@ -7,6 +7,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="跑得快"
+        android:text="@string/run_fast"
         android:gravity="center"/>
 </LinearLayout>

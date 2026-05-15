@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.creezen.commontool.Config.Constant.EMPTY_STRING
 
 @Entity(tableName = "eventEntry")
-data class EventEntry (
+data class EventEntry(
     val type: Int,
     val userId: String,
     val nickName: String,

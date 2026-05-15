@@ -78,7 +78,8 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
                 it.setTextChange { pos, value ->
                     userList[pos] = value
                 }
-        })
+            }
+        )
     }
 
     private fun refreshItem(startIndex: Int) {
