@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.kit.gomoku.dialog
+package com.jayce.vexis.foundation.ui.block.connect
 
 import android.os.Bundle
 import android.text.Editable
@@ -6,15 +6,16 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.databinding.GomokuDialogFirstLayoutBinding
-import com.jayce.vexis.domain.viewmodel.GomokuViewModel
+import com.jayce.vexis.databinding.LanViewFirstLayoutBinding
+import com.jayce.vexis.foundation.ability.socket.LanManager
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MenuFirstPageFragment : BaseFragment<GomokuDialogFirstLayoutBinding>(), TextWatcher {
+class LanFirstPageFragment : BaseFragment<LanViewFirstLayoutBinding>(), TextWatcher, KoinComponent {
 
-    private val viewModel by activityViewModels<GomokuViewModel>()
+    private val manager by inject<LanManager>()
 
     override fun onCreateView(inflater: LayoutInflater, contain: ViewGroup?, instance: Bundle?): View {
         super.onCreateView(inflater, contain, instance)
@@ -24,13 +25,13 @@ class MenuFirstPageFragment : BaseFragment<GomokuDialogFirstLayoutBinding>(), Te
 
     private fun initView() {
         binding.apply {
-            viewModel.updateButtonText("取消" to "开启监听")
+            manager.updateButtonText("取消", "开启监听")
 
             server.isChecked = true
             ipAddress.visibility = View.VISIBLE
             ipInput.visibility = View.GONE
 
-            val ipInformation = viewModel.getIPInfo(requireContext())
+            val ipInformation = manager.getIPInfo(requireContext())
             ipAddress.text = ipInformation
 
             radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -38,20 +39,20 @@ class MenuFirstPageFragment : BaseFragment<GomokuDialogFirstLayoutBinding>(), Te
                     R.id.server -> {
                         ipAddress.visibility = View.VISIBLE
                         ipInput.visibility = View.GONE
-                        viewModel.isServerChecked = true
-                        viewModel.updateButtonText("取消" to "开启监听")
+                        manager.isServerChecked = true
+                        manager.updateButtonText("取消", "开启监听")
                     }
                     R.id.client -> {
                         ipAddress.visibility = View.GONE
                         ipInput.visibility = View.VISIBLE
-                        viewModel.isServerChecked = false
+                        manager.isServerChecked = false
                         ipInput.requestFocus()
-                        viewModel.updateButtonText("取消" to "立即连接")
+                        manager.updateButtonText("取消", "立即连接")
                     }
                 }
             }
 
-            ipInput.addTextChangedListener(this@MenuFirstPageFragment)
+            ipInput.addTextChangedListener(this@LanFirstPageFragment)
         }
     }
 
@@ -60,6 +61,6 @@ class MenuFirstPageFragment : BaseFragment<GomokuDialogFirstLayoutBinding>(), Te
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { /**/ }
 
     override fun afterTextChanged(s: Editable?) {
-        viewModel.ipInput = s.toString()
+        manager.ipInput = s.toString()
     }
 }

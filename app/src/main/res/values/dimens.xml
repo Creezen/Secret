@@ -10,4 +10,6 @@
     <dimen name="registerMargin">20dp</dimen>
     <dimen name="registerTitlePadding">16dp</dimen>
     <dimen name="fabMargin">8dp</dimen>
+    <dimen name="connect_dialog_padding">12dp</dimen>
+    <dimen name="flex_dialog_padding">16dp</dimen>
 </resources>

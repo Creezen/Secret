@@ -347,4 +347,23 @@ object NetTool {
         } as List<String>
         return ipv4HostAddress
     }
+
+    fun isValidIP(ip: String): Boolean {
+        val regex = Regex("^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\$")
+        val ipList = ip.split(".")
+        if (ipList.size != 4) return false
+        ipList.forEach {
+            if (!regex.matches(it)) return false
+        }
+        return true
+    }
+
+    fun formatElapsed(millis: Long): String {
+        val ms = millis % 1000
+        val totalSeconds = millis / 1000
+        val sec = totalSeconds % 60
+        val min = (totalSeconds / 60) % 60
+        val hour = totalSeconds / 3600
+        return "%02d:%02d:%02d.%03d".format(hour, min, sec, ms)
+    }
 }

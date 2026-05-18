@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.jayce.vexis.foundation.ui.block.LanView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/connect_dialog_padding"
+    android:id="@+id/dialogNavigation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>

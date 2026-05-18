@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/gomoku_dialog_nav"
     app:startDestination="@id/firstNav">
     <fragment
         android:id="@+id/firstNav"
-        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuFirstPageFragment"
-        android:label="gomokuDialogFirstPage">
+        android:name="com.jayce.vexis.foundation.ui.block.connect.LanFirstPageFragment"
+        android:label="lanViewFirstPage">
         <action
             android:id="@+id/first2Second"
             app:destination="@+id/secondNav"/>
@@ -17,13 +17,13 @@
 
     <fragment
         android:id="@+id/secondNav"
-        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuSecondPageFragment"
-        android:label="gomokuDialogSecondPage"/>
+        android:name="com.jayce.vexis.foundation.ui.block.connect.LanSecondPageFragment"
+        android:label="lanViewSecondPage"/>
 
     <fragment
         android:id="@+id/thirdNav"
-        android:name="com.jayce.vexis.business.kit.gomoku.dialog.MenuThirdPageFragment"
-        android:label="gomokuDialogThirdPage">
+        android:name="com.jayce.vexis.foundation.ui.block.connect.LanThirdPageFragment"
+        android:label="lanViewThirdPage">
         <argument
             android:name="ipAddress"
             app:argType="string"/>

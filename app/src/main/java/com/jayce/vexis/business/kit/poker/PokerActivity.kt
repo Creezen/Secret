@@ -67,10 +67,7 @@ class PokerActivity : BaseActivity<ActivityPokerBinding>() {
                     }
                     tab.customView = title
                 }.attach()
-                button.cancel.setOnClickListener { finish() }
-                button.confirm.setOnClickListener {
-                    viewModel.request()
-                }
+                lanView.addConnectionListener(viewModel)
             }
             .cancelable(false)
             .show()

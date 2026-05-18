@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="@dimen/flex_dialog_padding">
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
@@ -16,10 +16,8 @@
         android:id="@+id/page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <include
-        android:id="@+id/button"
+    <com.jayce.vexis.foundation.ui.block.LanView
+        android:id="@+id/lanView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        layout="@layout/two_button_layout"/>
+        android:layout_height="wrap_content"/>
 </LinearLayout>

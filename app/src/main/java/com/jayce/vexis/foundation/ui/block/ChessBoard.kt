@@ -9,6 +9,8 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.foundation.ability.socket.LanManager.Companion.TYPE_SERVER
 
 class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
@@ -21,6 +23,7 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     private var xMargin: Float = 0f
     private var yMargin: Float = 0f
     private var isInit: Boolean = false
+    private var previewPosition: Pair<Int, Int> = -1 to -1
 
     private var onStonePlace: ((Int, Int) -> Unit)? = null
 
@@ -28,8 +31,9 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         onStonePlace = placeStone
     }
 
-    fun placeStone(x: Int, y: Int, isBlackPlayer: Boolean) {
-        positionArray[x][y] = if (isBlackPlayer) 1 else 2
+    fun placeStone(x: Int, y: Int, type: Int) {
+        positionArray[x][y] = if (type == TYPE_SERVER) 1 else 2
+        previewPosition = x to y
         invalidate()
     }
 
@@ -85,6 +89,9 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
                 drawChessPiece(canvas, xIndex, yIndex, column < 2)
             }
         }
+        if (previewPosition.first >= 0) {
+            checkIsFinish()
+        }
     }
 
     private fun drawChessPiece(canvas: Canvas, xCell: Int, yCell: Int, isBlackPlayer: Boolean) {
@@ -110,5 +117,33 @@ class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         chessPaint.setShader(gradient)
         canvas.drawCircle(x, y, chessWidth, chessPaint)
         chessPaint.setShader(null)
+    }
+
+    private fun checkIsFinish() {
+        var lastHorizonType = 0
+        var lastVertialType = 0
+        var horizonCount = 0
+        var vertialCount = 0
+        (0..14).forEach {
+            val x = positionArray[previewPosition.first][it]
+            if (x == lastHorizonType && lastHorizonType > 0) horizonCount++
+            else horizonCount = 1
+            if (horizonCount >= 5) {
+                "game over".toast()
+                return
+            }
+            lastHorizonType = x
+        }
+
+        (0..14).forEach {
+            val y = positionArray[it][previewPosition.second]
+            if (y == lastVertialType && lastVertialType > 0) vertialCount++
+            else vertialCount = 1
+            if (vertialCount >= 5) {
+                "game over".toast()
+                return
+            }
+            lastVertialType = y
+        }
     }
 }
