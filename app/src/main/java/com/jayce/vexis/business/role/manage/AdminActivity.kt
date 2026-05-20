@@ -3,7 +3,6 @@ package com.jayce.vexis.business.role.manage
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.creezen.commontool.bean.ActiveBean
-import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.domain.route.UserService
@@ -35,12 +34,8 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>() {
     }
 
     private fun initData() {
-        request<UserService, List<ActiveBean>>({ getAllUser() }) {
-            val originSize = userList.size
-            userList.clear()
-            adapter.notifyItemRangeRemoved(0, originSize)
-            userList.addAll(it)
-            ui { adapter.notifyItemRangeInserted(0, it.size) }
+        request<UserService, _>({ getAllUser() }) {
+            adapter.notifyDataChange(it)
         }
     }
 }

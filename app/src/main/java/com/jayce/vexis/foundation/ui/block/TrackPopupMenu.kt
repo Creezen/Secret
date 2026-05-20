@@ -32,7 +32,9 @@ class TrackPopupMenu(
     }
 
     fun show() {
-        showAsDropDown(anchorView, clickX, clickY - anchorView.height - layoutView.height - 64, Gravity.START)
+        val offsetX = clickX
+        val offsetY = clickY - anchorView.height - layoutView.height - 64
+        showAsDropDown(anchorView, offsetX, offsetY, Gravity.START)
     }
 
     fun setOutsideDismiss(isDismiss: Boolean = true) {

@@ -41,17 +41,15 @@ class UserActiveAdapter(
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = userList[position]
-        val window = initPopupWindow(holder.view, item)
+        val window = bindPopupWindow(holder.view, item)
         holder.nickname.text = item.nickname
         holder.admin.visibility = if (item.administrator == 0) View.GONE else View.VISIBLE
         holder.id.text = item.userID
         holder.time.text = item.createTime
         holder.view.setOnClickListener {
-            context.startActivity(
-                Intent(context, ActiveDataActivity::class.java).also {
-                    it.putExtra("activeItem", item.parcelable())
-                },
-            )
+            val intent = Intent(context, ActiveDataActivity::class.java)
+            intent.putExtra("activeItem", item.parcelable())
+            context.startActivity(intent)
         }
         holder.view.setOnLongClickListener {
             window.show()
@@ -69,7 +67,7 @@ class UserActiveAdapter(
         return childBinding to holder
     }
 
-    private fun initPopupWindow(view: View, activeItem: ActiveBean): TrackPopupMenu {
+    private fun bindPopupWindow(view: View, activeItem: ActiveBean): TrackPopupMenu {
         val bind = PoupWindowBinding.inflate((context as Activity).layoutInflater)
         val window = TrackPopupMenu(bind.root, view)
         bind.setAdmin.setOnClickListener {

@@ -3,11 +3,14 @@ package com.jayce.vexis.foundation.ability
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.StatusManager
+import com.jayce.vexis.StatusManager.NETWORK_TYPE_CELLULAR
+import com.jayce.vexis.StatusManager.NETWORK_TYPE_INVALIDATED
+import com.jayce.vexis.StatusManager.NETWORK_TYPE_LOST
+import com.jayce.vexis.StatusManager.NETWORK_TYPE_UNKNOWN
+import com.jayce.vexis.StatusManager.NETWORK_TYPE_WIFI
 
-class NetStatusCallback(private val manager: ConnectivityManager) : ConnectivityManager.NetworkCallback() {
-
-    private var type: Int = 0
+class NetStatusCallback : ConnectivityManager.NetworkCallback() {
 
     override fun onCapabilitiesChanged(
         network: Network,
@@ -15,24 +18,20 @@ class NetStatusCallback(private val manager: ConnectivityManager) : Connectivity
     ) {
         super.onCapabilitiesChanged(network, networkCapabilities)
         if (!networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)) {
-            "当前网络无法上网".toast()
-            type = 1
+            StatusManager.networkType = NETWORK_TYPE_INVALIDATED
             return
         }
         if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-            type = 2
-            "当前可用移动网络".toast()
+            StatusManager.networkType = NETWORK_TYPE_CELLULAR
         } else if (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-            type = 3
-            "当前可用WIFI网络".toast()
+            StatusManager.networkType = NETWORK_TYPE_WIFI
         } else {
-            type = 4
+            StatusManager.networkType = NETWORK_TYPE_UNKNOWN
         }
     }
 
     override fun onLost(network: Network) {
         super.onLost(network)
-        "网络已断开".toast()
-        type = 0
+        StatusManager.networkType = NETWORK_TYPE_LOST
     }
 }

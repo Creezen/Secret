@@ -35,7 +35,11 @@ interface UserService : BaseService {
     @POST("/getAllUser")
     fun getAllUser(): Call<List<ActiveBean>>
 
-    @POST("/managerUser")
+    @POST("/setUserAsAdmin")
     @FormUrlEncoded
-    fun manageUser(@Field("operation") operation: Int, @Field("userId") userId: String): Call<Boolean>
+    fun setUserAsAdmin(@Field("userId") userId: String): Call<Boolean>
+
+    @POST("/deleteUser")
+    @FormUrlEncoded
+    fun deleteUser(@Field("userId") userId: String): Call<Boolean>
 }

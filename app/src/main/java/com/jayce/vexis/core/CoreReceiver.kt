@@ -3,7 +3,6 @@ package com.jayce.vexis.core
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
 import com.creezen.tool.AndroidTool.toast
@@ -21,10 +20,6 @@ class CoreReceiver : BroadcastReceiver() {
             BROAD_NOTIFY -> {
                 val msg = intent.getStringExtra("broadcastNotify")
                 msg?.toast()
-            }
-            Intent.ACTION_CLOSE_SYSTEM_DIALOGS -> {
-                Log.d(TAG, "write message")
-//                saveChatMessage()
             }
         }
     }

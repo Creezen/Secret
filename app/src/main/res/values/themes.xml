@@ -30,8 +30,14 @@
         <item name="preferenceStyle">@style/preferenceBase</item>
         <item name="preferenceCategoryStyle">@style/preferenceCate</item>
         <item name="checkBoxPreferenceStyle">@style/checkPre</item>
+        <item name="editTextPreferenceStyle">@style/editPreference</item>
         <item name="allowDividerAbove">false</item>
         <item name="allowDividerBelow">false</item>
+    </style>
+
+    <style name="editPreference" parent="Preference.DialogPreference.EditTextPreference.Material">
+        <item name="iconSpaceReserved">false</item>
+        <item name="icon">@null</item>
     </style>
 
     <style name="checkPre" parent="Preference.CheckBoxPreference.Material">

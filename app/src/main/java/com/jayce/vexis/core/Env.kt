@@ -3,15 +3,14 @@ package com.jayce.vexis.core
 // import com.amap.api.services.core.ServiceSettings
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import com.creezen.commontool.Config.BROAD_LOGOUT
 import com.creezen.commontool.Config.BROAD_NOTIFY
-import com.creezen.tool.AndroidTool
+import com.creezen.tool.AndroidTool.getDataAsync
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
-import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.runOnMulti
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +27,6 @@ class Env : Application() {
     private val filter = IntentFilter().apply {
         addAction(BROAD_LOGOUT)
         addAction(BROAD_NOTIFY)
-        addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -49,15 +47,15 @@ class Env : Application() {
 //        ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
-        AndroidTool.getDataAsync("font", "细体宋体") {
+        getDataAsync("font", "细体宋体") {
             setFont(it)
         }
 
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
 
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        runOnMulti(Dispatchers.IO) {
             val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            manager.registerDefaultNetworkCallback(NetStatusCallback(manager))
+            manager.registerDefaultNetworkCallback(NetStatusCallback())
         }
     }
 }

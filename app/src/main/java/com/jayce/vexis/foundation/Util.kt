@@ -9,7 +9,7 @@ import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
-import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.runOnMulti
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.domain.bean.ActiveEntry
@@ -29,12 +29,10 @@ object Util {
         crossinline func: suspend K.() -> Call<T>,
         crossinline callback: suspend (T) -> Unit
     ) {
-        val future = CompletableFuture<T>()
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        runOnMulti(Dispatchers.IO) {
             kotlin.runCatching {
-                val result = func.invoke(NetTool.create())
-                future.complete(result.await())
-                ui { callback(future.get()) }
+                val result = func.invoke(NetTool.create()).await()
+                ui { callback(result) }
             }.onFailure {
                 Log.e(TAG, "Request network error: ${it.message}")
             }
@@ -88,6 +86,16 @@ object Util {
 
         fun EventEntry.chat(): ChatEntry {
             return ChatEntry(nickName, System.currentTimeMillis().toTime(), content)
+        }
+
+        fun Boolean.onTrue(func: () -> Unit): Boolean {
+            if (this) func.invoke()
+            return this
+        }
+
+        fun Boolean.onFalse(func: () -> Unit): Boolean {
+            if (!this) func.invoke()
+            return this
         }
     }
 }

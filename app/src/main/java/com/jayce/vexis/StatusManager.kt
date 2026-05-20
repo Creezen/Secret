@@ -9,6 +9,13 @@ object StatusManager {
     val LOCAL_SOCKET_PORT = BuildConfig.socketPort
     val BASE_SOCKET_PATH = BuildConfig.socketUrl
     const val BASE_FILE_PATH = "${BuildConfig.baseUrl}/FileSystem/"
+    const val NETWORK_TYPE_UNKNOWN = 0
+    const val NETWORK_TYPE_WIFI = 0
+    const val NETWORK_TYPE_CELLULAR = 1
+    const val NETWORK_TYPE_INVALIDATED = 2
+    const val NETWORK_TYPE_LOST = 3
+
+    var networkType: Int = NETWORK_TYPE_LOST
 
     var isLogin: Boolean = false
 
