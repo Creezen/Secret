@@ -3,8 +3,8 @@ package com.jayce.vexis.business.file.pool
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
-import com.creezen.commontool.Config.MediaTypeParam.MEDIA_TYPE_ALL
+import com.creezen.commontool.Config.MEDIA_TYPE_ALL
+import com.creezen.commontool.Config.NIL
 import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.toTime
@@ -44,7 +44,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
         with(binding) {
             activity = this@FileUploadActivity
             lifecycleOwner = this@FileUploadActivity
-            descTextLivedata.value = EMPTY_STRING
+            descTextLivedata.value = NIL
             textSize = "0/100"
             descTextLivedata.observe(this@FileUploadActivity) { text ->
                 if (text.length > 100) {
@@ -83,7 +83,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                         illustrate,
                         fileSize,
                         uploadTime,
-                        EMPTY_STRING
+                        NIL
                     )
                     request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
                         when (it) {

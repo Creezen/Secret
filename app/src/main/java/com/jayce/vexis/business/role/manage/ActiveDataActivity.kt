@@ -2,17 +2,17 @@ package com.jayce.vexis.business.role.manage
 
 import android.os.Build
 import android.os.Bundle
-import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.AVATAR_SAVE_TIME
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.getDataAsync
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.NetTool
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.domain.bean.ActiveEntry
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.Extension.unParcelable
@@ -74,14 +74,9 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
 
             getDataAsync(AVATAR_SAVE_TIME, 0L) {
                 ThreadTool.ui {
-                    NetTool.setImage(
-                        this@ActiveDataActivity,
-                        avata,
-                        "${bean.userID}.png",
-                        R.drawable.default_head,
-                        it.toString(),
-                        true
-                    )
+                    val url = "${bean.userID}.png"
+                    val placeHolder = R.drawable.default_head
+                    avata.load(url, placeHolder, it.toString(), true)
                 }
             }
         }

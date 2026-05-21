@@ -75,11 +75,8 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
             val geocoder = Geocoder(activity as Context, Locale.CHINA)
             geocoder.getFromLocation(latitude, longitude, 1) {
                 val address = it[0]
-                val info = "${longitude}\n" +
-                    "${latitude}\n" +
-                    "${address.getAddressLine(0)}\n" +
-                    "${address.getAddressLine(1)}\n" +
-                    "${address.getAddressLine(2)}"
+                val info = "${longitude}\t\t\t\t${latitude}\n" +
+                    "${address.getAddressLine(0)}\n"
                 binding.location.text = info
             }
         }

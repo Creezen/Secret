@@ -3,7 +3,7 @@ package com.jayce.vexis.domain.bean
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -14,17 +14,18 @@ data class UserEntry(
     val name: String = "匿名用户",
     val age: Int = -1,
     val sex: String = "Unknow",
-    val password: String = EMPTY_STRING,
-    val createTime: String = EMPTY_STRING,
+    val password: String = NIL,
+    val createTime: String = NIL,
     val count: Long = -1,
-    val administrator: Int = -1,
+    val level: Int = 0,
+    val adminLevel: Int = 0,
     val isEdit: Int = -1,
-    val email: String = EMPTY_STRING,
-    val selfIntroduction: String = EMPTY_STRING,
-    val phone: String = EMPTY_STRING,
-    val address: String = EMPTY_STRING,
-    val birthday: String = EMPTY_STRING,
-    val headType: String = EMPTY_STRING,
+    val email: String = NIL,
+    val selfIntroduction: String = NIL,
+    val phone: String = NIL,
+    val address: String = NIL,
+    val birthday: String = NIL,
+    val headType: String = NIL,
 ) : Parcelable {
 
     @PrimaryKey

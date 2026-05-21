@@ -19,10 +19,6 @@ class HorizontalSwiperRecycle(context: Context, parent: ViewGroup) : ISwiper {
     override var isRefreshing: Boolean = false
         set(value) {
             field = value
-            if (!value) {
-                payload.stopScroll()
-                binding.appbar.setExpanded(false, true)
-            }
         }
 
     private val behavior by lazy {
@@ -44,5 +40,9 @@ class HorizontalSwiperRecycle(context: Context, parent: ViewGroup) : ISwiper {
 
     override fun setOnRefreshListener(func: () -> Unit) {
         behavior.setOnSwiperListener(func, this)
+    }
+
+    override fun finishRefresh() {
+        binding.appbar.setExpanded(false, true)
     }
 }

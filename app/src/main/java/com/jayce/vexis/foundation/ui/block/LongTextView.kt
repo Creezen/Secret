@@ -8,14 +8,14 @@ import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.jayce.vexis.R
 
 class LongTextView(context: Context, attr: AttributeSet) : View(context, attr) {
 
     private val textPaint: TextPaint = TextPaint()
     private var mCanvas: Canvas? = null
-    var longText: String = EMPTY_STRING
+    var longText: String = NIL
         set(value) {
             field = value
             drawText(mCanvas)
@@ -27,7 +27,7 @@ class LongTextView(context: Context, attr: AttributeSet) : View(context, attr) {
         textPaint.textSize = 80f
         textPaint.style = Paint.Style.FILL_AND_STROKE
         val ta = context.obtainStyledAttributes(attr, R.styleable.LongTextView)
-        longText = ta.getString(R.styleable.LongTextView_longText) ?: EMPTY_STRING
+        longText = ta.getString(R.styleable.LongTextView_longText) ?: NIL
         ta.recycle()
     }
 

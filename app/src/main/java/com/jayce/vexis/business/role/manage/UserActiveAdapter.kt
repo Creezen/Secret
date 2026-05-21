@@ -42,8 +42,9 @@ class UserActiveAdapter(
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = userList[position]
         val window = bindPopupWindow(holder.view, item)
-        holder.nickname.text = item.nickname
-        holder.admin.visibility = if (item.administrator == 0) View.GONE else View.VISIBLE
+        holder.nickname.userName = item.nickname ?: "未知用户"
+        holder.nickname.isAdmin = item.isAdministrator()
+        holder.admin.visibility = if (item.isAdministrator()) View.VISIBLE else View.GONE
         holder.id.text = item.userID
         holder.time.text = item.createTime
         holder.view.setOnClickListener {

@@ -2,14 +2,13 @@ package com.jayce.vexis.business.kit.ledger
 
 import android.content.Intent
 import android.os.Bundle
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.msg
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.AddPocketRecordLayoutBinding
 import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.databinding.PocketMainBinding
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
-import java.util.ArrayList
 
 class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
 
@@ -61,7 +60,7 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
     }
 
     private fun addView(position: Int) {
-        userList.add(EMPTY_STRING)
+        userList.add(NIL)
         userBinding.itemLayout.addView(
             ScoreInsertEntryView(
                 this,

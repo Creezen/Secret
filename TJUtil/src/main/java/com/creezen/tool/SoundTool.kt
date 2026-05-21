@@ -12,9 +12,8 @@ import android.media.MediaRecorder
 import android.media.SoundPool
 import android.os.Environment
 import android.util.Log
-import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
-import com.creezen.tool.BaseTool.env
+import com.creezen.tool.BaseTool.envContext
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -47,7 +46,7 @@ object SoundTool {
     }
 
     fun playShortSound(soundResourceId: Int) {
-        soundPool.load(env(), soundResourceId, 1)
+        soundPool.load(envContext, soundResourceId, 1)
     }
 
     fun recordSound(context: Context, activity: Activity) {

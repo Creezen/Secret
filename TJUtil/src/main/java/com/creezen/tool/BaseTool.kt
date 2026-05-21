@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
 
-    private lateinit var envContext: Context
+    lateinit var envContext: Context
 
     fun init(context: Context, initParam: InitParam) {
         envContext = context
@@ -19,10 +19,6 @@ object BaseTool {
         NetTool.init(initParam)
         SoundTool.init()
         ThreadTool.init()
-    }
-
-    fun env(): Context {
-        return envContext
     }
 
     fun setFont(file: String) {
@@ -43,7 +39,7 @@ object BaseTool {
 
     data class InitParam(
         val socketPort: Int = 0,
-        val baseSocketPath: String = EMPTY_STRING,
-        val baseUrl: String = EMPTY_STRING
+        val baseSocketPath: String = NIL,
+        val baseUrl: String = NIL
     )
 }

@@ -1,13 +1,12 @@
 package com.jayce.vexis.business.file.pool
 
-import android.os.Build
 import android.os.Bundle
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.creezen.commontool.bean.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
-import com.jayce.vexis.foundation.Util.Extension.unParcelable
 import com.jayce.vexis.domain.bean.FileEntry
+import com.jayce.vexis.foundation.Util.Extension.unParcelable
 
 class FileInformationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
@@ -21,7 +20,7 @@ class FileInformationActivity : BaseActivity<ActivityFileDetailBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val item = intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,0, EMPTY_STRING)
+        val item = intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(NIL, NIL, NIL, NIL, NIL,0, NIL)
         fileItem = item.unParcelable()
         initView()
         initData()

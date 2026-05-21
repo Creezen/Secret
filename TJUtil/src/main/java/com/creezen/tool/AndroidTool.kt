@@ -1,11 +1,8 @@
 package com.creezen.tool
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.SharedPreferences.Editor
 import android.graphics.Bitmap
 import android.graphics.Paint
 import android.os.Environment
@@ -21,7 +18,6 @@ import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.AnimRes
 import androidx.core.content.FileProvider
 import androidx.core.view.drawToBitmap
 import androidx.datastore.core.DataStore
@@ -37,16 +33,13 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.creezen.tool.BaseTool.env
+import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.DataTool.dpToPx
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.creezen.tool.bean.FragmentAnimRes
 import com.example.testlib.R
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.File
@@ -57,14 +50,14 @@ object AndroidTool {
     fun init() {}
 
     private val prefs by lazy {
-        env().getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
+        envContext.getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
     }
 
     private val Context.datastore: DataStore<Preferences> by preferencesDataStore("creezen")
 
     @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
     suspend fun <T> getData(key: String, default: T): T {
-        return env().datastore.data.map { data ->
+        return envContext.datastore.data.map { data ->
             when (default) {
                 is Int -> data[intPreferencesKey(key)] ?: default
                 is Double -> data[doublePreferencesKey(key)] ?: default
@@ -85,7 +78,7 @@ object AndroidTool {
     }
 
     suspend fun <T> putData(key: String, value: T) {
-        env().datastore.edit { data ->
+        envContext.datastore.edit { data ->
             when (value) {
                 is Int -> data[intPreferencesKey(key)] = value
                 is Double -> data[doublePreferencesKey(key)] = value
@@ -114,7 +107,7 @@ object AndroidTool {
         beInCenter: Boolean = true
     ) {
         val orientation = this.orientation
-        val textView = TextView(env()).also {
+        val textView = TextView(envContext).also {
             it.text = text
             if (orientation == LinearLayout.HORIZONTAL) {
                 it.layoutParams = ViewGroup.LayoutParams(
@@ -196,12 +189,12 @@ object AndroidTool {
     }
 
     fun <T> T.toast() {
-        Toast.makeText(env(),"$this", Toast.LENGTH_LONG).show()
+        Toast.makeText(envContext,"$this", Toast.LENGTH_LONG).show()
     }
 
     fun <T> T.toastX(location: Float = 56f, delay: Long = 2000) {
         val content = " $this "
-        WindowTool.requestFloatWindow(env(), R.layout.snake_border, delay, content) {
+        WindowTool.requestFloatWindow(envContext, R.layout.snake_border, delay, content) {
             apply {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
                 y = location.dpToPx().toInt()
@@ -209,9 +202,9 @@ object AndroidTool {
         }
     }
 
-    fun broadcastByAction(context: Context, action: String, func: ((Intent) -> Unit)? = null) {
-        context.sendBroadcast(Intent(action).also {
-            it.`package` = env().packageName
+    fun sendBroadcast(action: String, func: (Intent.() -> Unit)? = null) {
+        envContext.sendBroadcast(Intent(action).also {
+            it.`package` = envContext.packageName
             func?.invoke(it)
         })
     }
@@ -225,7 +218,7 @@ object AndroidTool {
     }
 
     fun getString(resId: Int, vararg args: Any? = arrayOf()): String {
-        return env().getString(resId, *args)
+        return envContext.getString(resId, *args)
     }
 
     fun NumberPicker.init(array: Array<String>, select: Int = 0) {
@@ -241,7 +234,7 @@ object AndroidTool {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             putExtra("className", activityClazz.name)
         }
-        env().startActivity(intent)
+        envContext.startActivity(intent)
     }
 
     fun Context.getThemeColor(resourceID: Int): Int {

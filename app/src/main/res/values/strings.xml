@@ -186,4 +186,6 @@
     <string name="cheat">吹牛皮</string>
     <string name="landload">斗地主</string>
     <string name="run_fast">跑得快</string>
+    <string name="unknown_user">未知用户</string>
+    <string name="manager">管理</string>
 </resources>

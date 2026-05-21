@@ -7,15 +7,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
-import com.creezen.commontool.Config.MediaTypeParam.MEDIA_TYPE_IMAGE
-import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.MEDIA_TYPE_IMAGE
+import com.creezen.commontool.Config.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.getDataAsync
 import com.creezen.tool.AndroidTool.putData
 import com.creezen.tool.FileTool.getFilePathByUri
-import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.buildFileMultipart
-import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.runOnMulti
+import com.creezen.tool.ThreadTool.ui
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
@@ -23,6 +23,7 @@ import com.jayce.vexis.business.role.manage.AdminActivity
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.delay
 
@@ -67,9 +68,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
 
     private fun initPage() {
         with(binding) {
-            nickname.text = liveUser.nickname
+            nickname.userName = liveUser.nickname
             id.text = liveUser.userId
-            if (liveUser.getAdministratorStatus()) {
+            if (liveUser.isAdministrator()) {
                 administrator.visibility = View.VISIBLE
             }
             administrator.setOnClickListener {
@@ -82,7 +83,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 textView.text = when (pos) {
                     0 -> getString(R.string.base_info)
                     1 -> getString(R.string.creation_live)
-                    else -> EMPTY_STRING
+                    else -> NIL
                 }
                 tab.customView = textView
             }.attach()
@@ -90,14 +91,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
             }
             getDataAsync(AVATAR_SAVE_TIME, 0L) {
-                ThreadTool.ui {
-                    NetTool.setImage(
-                        this@DashboardActivity,
-                        image,
-                        url= "${liveUser.userId}.png",
-                        placeHolder = null,
-                        key = it.toString(),
-                    )
+                ui {
+                    val url = "${liveUser.userId}.png"
+                    image.load(url, placeHolder = null, it.toString(), true)
                     loadAvatarFromNet(300, it)
                 }
             }
@@ -105,16 +101,12 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     }
 
     private fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
-        ThreadTool.runOnMulti {
+        runOnMulti {
             delay(delayTime)
             val old = binding.image.drawable
-            NetTool.setImage(
-                this@DashboardActivity,
-                binding.image,
-                "${liveUser.userId}.png",
-                placeHolder = old,
-                key = cursorTime.toString()
-            )
+            val url = "${liveUser.userId}.png"
+            val key = cursorTime.toString()
+            binding.image.load(url, old, key)
         }
     }
 }

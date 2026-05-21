@@ -2,7 +2,7 @@ package com.jayce.vexis.business.feedback
 
 import android.os.Bundle
 import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.NetTool.sendNotifyMessage
+import com.creezen.tool.NetTool.sendFeedbackMessage
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.getScope
 import com.creezen.tool.ability.thread.BlockOption
@@ -12,7 +12,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.domain.route.FeedbackService
 import com.jayce.vexis.foundation.Util
-import com.jayce.vexis.foundation.ability.EventHandle.NAME_MESSAGE_SCOPE
+import com.jayce.vexis.foundation.ability.EventRepository.Companion.MESSAGE_SCOPE
 import kotlinx.coroutines.Dispatchers
 
 class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
@@ -25,18 +25,18 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
     private fun initView() {
         with(binding) {
             submit.setOnClickListener {
-                val titleMsg = title.msg()
-                val contentMsg = content.msg()
+                val title = title.msg()
+                val content = content.msg()
                 val option = BlockOption(ThreadType.MULTI, 2000, Dispatchers.IO)
                 ThreadTool.runWithBlocking(option) {
                     Util.request<FeedbackService, Boolean>({
-                        sendFeedback(liveUser.userId, titleMsg, contentMsg)
+                        sendFeedback(liveUser.userId, title, content)
                     }) {
                         if (it) finish()
                     }
                 }.onComplete {
-                    getScope(NAME_MESSAGE_SCOPE)?.let {
-                        sendNotifyMessage(it, contentMsg)
+                    getScope(MESSAGE_SCOPE)?.let {
+                        sendFeedbackMessage(it, title)
                     }
                 }
             }

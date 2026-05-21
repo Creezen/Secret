@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.Config.Constant.NUM_4
 import com.creezen.commontool.bean.SectionRemarkBean
 import com.creezen.tool.AndroidTool.getThemeColor
 import com.creezen.tool.AndroidTool.msg
@@ -113,8 +112,8 @@ class SectionAdapter(
             }
         }
         val spanString = SpannableString("$content    ")
-        spanString.setSpan(imageSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)
-        spanString.setSpan(clickSpan, contentLength, contentLength + NUM_4, ImageSpan.ALIGN_CENTER)
+        spanString.setSpan(imageSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
+        spanString.setSpan(clickSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
         textView.text = spanString
         textView.movementMethod = LinkMovementMethod.getInstance()
     }

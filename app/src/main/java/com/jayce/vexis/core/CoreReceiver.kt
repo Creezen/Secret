@@ -3,24 +3,16 @@ package com.jayce.vexis.core
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.creezen.commontool.Config.BROAD_LOGOUT
-import com.creezen.commontool.Config.BROAD_NOTIFY
-import com.creezen.tool.AndroidTool.toast
+import com.creezen.commontool.Config.ACTION_BROADCAST_LOGOUT
+import com.creezen.commontool.Config.ACTION_BROADCAST_NOTIFY
 
 class CoreReceiver : BroadcastReceiver() {
-
-    companion object {
-        const val TAG = "CoreReceiver"
-    }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent == null) return
         when (intent.action) {
-            BROAD_LOGOUT -> "logout".toast()
-            BROAD_NOTIFY -> {
-                val msg = intent.getStringExtra("broadcastNotify")
-                msg?.toast()
-            }
+            ACTION_BROADCAST_LOGOUT -> { /**/ }
+            ACTION_BROADCAST_NOTIFY -> {  /**/ }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.creezen.tool
 import android.os.Build
 import android.util.TypedValue
 import android.view.MotionEvent
+import com.creezen.tool.BaseTool.envContext
 import org.yaml.snakeyaml.LoaderOptions
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.Constructor
@@ -30,7 +31,7 @@ object DataTool {
     inline fun <reified T> loadDataFromYAML(path: String): T? {
         kotlin.runCatching {
             val yaml = Yaml(Constructor(T::class.java, LoaderOptions()))
-            val source = BaseTool.env().resources.assets.open("yaml/$path.yaml")
+            val source = BaseTool.envContext.resources.assets.open("yaml/$path.yaml")
             val values = yaml.load<T>(source)
             source.close()
             return values
@@ -39,22 +40,22 @@ object DataTool {
     }
 
     fun Float.dpToPx(): Float {
-        val resources = BaseTool.env().resources
+        val resources = envContext.resources
         return this * resources.displayMetrics.density
     }
 
     fun Float.spToPx(): Float {
-        val resources = BaseTool.env().resources
+        val resources = envContext.resources
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
     }
 
     fun Float.pxToDp(): Float {
-        val resources = BaseTool.env().resources
+        val resources = envContext.resources
         return this / resources.displayMetrics.density
     }
 
     fun Float.pxToSp(): Float {
-        val resources = BaseTool.env().resources
+        val resources = envContext.resources
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
         } else {

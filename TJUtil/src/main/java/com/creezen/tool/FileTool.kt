@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import com.creezen.tool.BaseTool.env
+import com.creezen.tool.BaseTool.envContext
 import java.io.File
 import java.io.InputStream
 import java.io.RandomAccessFile
@@ -73,7 +73,7 @@ object FileTool {
         val column = "_data"
         val projection = arrayOf(column)
         kotlin.runCatching {
-            val cursor = env().contentResolver.query(uri, projection, selection, selectionArgs, null)
+            val cursor = envContext.contentResolver.query(uri, projection, selection, selectionArgs, null)
             cursor?.use {
                 if (it.moveToFirst()) {
                     val path = it.getString(it.getColumnIndexOrThrow(column))

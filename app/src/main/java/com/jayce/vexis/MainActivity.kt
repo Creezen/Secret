@@ -1,8 +1,6 @@
 package com.jayce.vexis
 
 import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
@@ -26,23 +24,24 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.fragment.app.Fragment
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_ARTICLE
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_FEEDBACK
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_FILE
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_HISTORY
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_KIT
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_MAP
-import com.creezen.commontool.Config.FragmentTag.FRAGMENT_SENIOR
-import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
-import com.creezen.commontool.Config.QRCodeParam.URL_PREFIX
+import com.creezen.commontool.Config.FRAGMENT_ARTICLE
+import com.creezen.commontool.Config.FRAGMENT_FEEDBACK
+import com.creezen.commontool.Config.FRAGMENT_FILE
+import com.creezen.commontool.Config.FRAGMENT_HISTORY
+import com.creezen.commontool.Config.FRAGMENT_KIT
+import com.creezen.commontool.Config.FRAGMENT_MAP
+import com.creezen.commontool.Config.FRAGMENT_SENIOR
+import com.creezen.commontool.Config.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.URL_PREFIX
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
 import com.creezen.tool.AndroidTool.getDataAsync
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.BaseTool
+import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.NetTool.setImage
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.bean.FragmentAnimRes
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
@@ -65,10 +64,14 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.foundation.Util.Extension.onFalse
+import com.jayce.vexis.foundation.Util.Extension.onTrue
+import com.jayce.vexis.foundation.ability.EventRepository
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import org.koin.android.ext.android.inject
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
 
@@ -82,6 +85,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     private lateinit var emailBadge: Badge
     private lateinit var chatBadge: Badge
     private var fragmentHolder: FragmentHolder? = null
+    private val repository by inject<EventRepository>()
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -242,9 +246,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                 startActivity(Intent(this, SettingActivity::class.java))
             }
             android.R.id.home -> {
-                if (isLogin) {
+                isLogin.onTrue {
                     binding.drawerLayout.openDrawer(GravityCompat.START)
-                } else {
+                }.onFalse {
                     FlexibleDialog<DialogBinding>(this@MainActivity)
                         .flexibleView { message.text = "登录解锁更多功能!!!" }
                         .title("是否要登录？")
@@ -260,7 +264,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     }
 
     override fun onDrawerOpened(drawerView: View) {
-        emailBadge.badgeNumber = 0
+        ThreadTool.runOnMulti {
+            emailBadge.badgeNumber = repository.getUnreadFeedbackCount()
+            chatBadge.badgeNumber = repository.getUnreadChatCount()
+        }
     }
 
     override fun onDrawerSlide(drawerView: View, slideOffset: Float) { /**/ }
@@ -280,12 +287,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     }
 
     private fun buildNotification(): Notification {
-        getSystemService(NotificationManager::class.java).apply {
-            val notifyChannel =
-                NotificationChannel("1", "login", NotificationManager.IMPORTANCE_HIGH)
-            createNotificationChannel(notifyChannel)
-        }
-        val notification = NotificationCompat.Builder(BaseTool.env(), "1")
+        val notification = NotificationCompat.Builder(envContext, "login")
             .setSmallIcon(R.mipmap.tianji)
             .setContentTitle(getString(R.string.login_success_notify))
             .setContentText(getString(R.string.welcome_user, liveUser.nickname))

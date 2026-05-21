@@ -3,7 +3,7 @@ package com.jayce.vexis.business.feedback
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.creezen.commontool.Config.PreferenceParam.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.AVATAR_SAVE_TIME
 import com.creezen.commontool.bean.FeedbackBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool
@@ -12,6 +12,7 @@ import com.creezen.tool.ThreadTool
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
+import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.ui.CardAdapter
 
 class FeedBackAdapter(
@@ -52,14 +53,8 @@ class FeedBackAdapter(
 
         AndroidTool.getDataAsync(AVATAR_SAVE_TIME, 0L) {
             ThreadTool.ui {
-                NetTool.setImage(
-                    context,
-                    holder.head,
-                    "${liveUser.userId}.png",
-                    placeHolder = null,
-                    key = it.toString(),
-                    isCircle = true
-                )
+                val url = "${liveUser.userId}.png"
+                holder.head.load(url, placeHolder = null, it.toString(), true)
             }
         }
     }

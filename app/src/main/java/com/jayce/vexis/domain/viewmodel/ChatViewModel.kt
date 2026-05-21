@@ -1,55 +1,25 @@
 package com.jayce.vexis.domain.viewmodel
 
-import androidx.lifecycle.viewModelScope
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.domain.EventRepository
+import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.foundation.Util.Extension.chat
+import com.jayce.vexis.foundation.ability.EventRepository
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.future.await
-import kotlinx.coroutines.launch
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.CountDownLatch
 
 class ChatViewModel(private val repository: EventRepository) : BaseViewModel() {
 
-    private val _eventFlow: MutableSharedFlow<EventEntry> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
-    val eventFlow: SharedFlow<EventEntry> = _eventFlow.asSharedFlow()
-
-    private val countDownLatch: CountDownLatch = CountDownLatch(1)
+    val chatFlow: SharedFlow<EventEntry> = repository.chatEventFlow
 
     private var workJob: Job? = null
 
-    @Volatile
-    private var eventId: Long = -1
-
-    fun collect() {
-        workJob = viewModelScope.launch {
-            val ready = CompletableFuture<Unit>()
-            launch {
-                ready.complete(Unit)
-                repository.flow.collect collect1@{
-                    countDownLatch.await()
-                    val isEventHandled = it.id <= eventId
-                    eventId = it.id
-                    if (isEventHandled) return@collect1
-                    _eventFlow.emit(it)
-                }
-            }
-
-            ready.await()
-
-            val list = repository.getChatEventList().first()
-            list.forEach {
-                _eventFlow.emit(it)
-                eventId = it.id
-            }
-            countDownLatch.countDown()
-        }
+    suspend fun getLocalChatList(): Pair<List<ChatEntry>, Long>{
+        val chatList = repository.getChatEvent()
+        val lastId = chatList.first().last().id
+        val entryList = chatList.first().map { it.chat() }
+        return entryList to lastId
     }
 
     override fun onCleared() {

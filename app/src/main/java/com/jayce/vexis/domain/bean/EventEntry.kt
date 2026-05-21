@@ -2,7 +2,7 @@ package com.jayce.vexis.domain.bean
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 
 @Entity(tableName = "eventEntry")
 data class EventEntry(
@@ -10,8 +10,10 @@ data class EventEntry(
     val userId: String,
     val nickName: String,
     val session: String,
+    val time: Long,
+    val isRead: Boolean = false,
     val msgId: String = "-1",
-    val content: String = EMPTY_STRING
+    val content: String = NIL
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.viewbinding.ViewBinding
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.domain.enums.TimePickerType
@@ -34,7 +34,7 @@ class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, a
     }
 
     fun formatTime(): String {
-        var timeStr = EMPTY_STRING
+        var timeStr = NIL
         time().forEachIndexed { i, v ->
             if (i == 0) {
                 timeStr += v.padStart(4, '0')

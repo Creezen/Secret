@@ -21,4 +21,6 @@ interface ISwiper {
     fun setMaxOffset(offset: Int)
 
     fun setOnRefreshListener(func: () -> Unit)
+
+    fun finishRefresh()
 }

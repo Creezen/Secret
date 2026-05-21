@@ -2,7 +2,7 @@ package com.jayce.vexis.business.peer
 
 import android.os.Bundle
 import android.util.Log
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.ThreadTool.ui
@@ -17,9 +17,9 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
         const val TAG = "AdviceActivity"
     }
 
-    private var primaryKey: String = EMPTY_STRING
-    private var secondKey: String = EMPTY_STRING
-    private var tertiaryKey: String = EMPTY_STRING
+    private var primaryKey: String = NIL
+    private var secondKey: String = NIL
+    private var tertiaryKey: String = NIL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +28,9 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
     }
 
     private fun initData() {
-        primaryKey = intent.getStringExtra("primary") ?: EMPTY_STRING
-        secondKey = intent.getStringExtra("secord") ?: EMPTY_STRING
-        tertiaryKey = intent.getStringExtra("tertiary") ?: EMPTY_STRING
+        primaryKey = intent.getStringExtra("primary") ?: NIL
+        secondKey = intent.getStringExtra("secord") ?: NIL
+        tertiaryKey = intent.getStringExtra("tertiary") ?: NIL
     }
 
     private fun initPage() {

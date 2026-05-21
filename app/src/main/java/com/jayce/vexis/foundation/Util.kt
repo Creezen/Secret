@@ -1,7 +1,9 @@
 package com.jayce.vexis.foundation
 
+import android.graphics.drawable.Drawable
 import android.util.Log
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import android.widget.ImageView
+import com.creezen.commontool.Config.NIL
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.commontool.bean.FileBean
 import com.creezen.commontool.bean.TelecomBean
@@ -19,7 +21,6 @@ import com.jayce.vexis.domain.bean.FileEntry
 import com.jayce.vexis.domain.bean.UserEntry
 import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
-import java.util.concurrent.CompletableFuture
 
 object Util {
 
@@ -41,7 +42,7 @@ object Util {
 
     object Extension {
         fun FileBean.parcelable(): FileEntry {
-            val hash = fileHash ?: EMPTY_STRING
+            val hash = fileHash ?: NIL
             return FileEntry(fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, hash)
         }
 
@@ -50,42 +51,42 @@ object Util {
 
         fun UserBean.parcelable(): UserEntry {
             return UserEntry(
-                userId, nickname, name, age, sex, password, createTime, count, administrator,
+                userId, nickname, name, age, sex, password, createTime, count, level, adminLevel,
                 isEdit, email, selfIntroduction, phone, address, birthday, headType
             )
         }
 
         fun UserEntry.unParcelable(): UserBean {
             return UserBean(
-                userId, nickname, name, age, sex, password, createTime, count, administrator,
+                userId, nickname, name, age, sex, password, createTime, count, level, adminLevel,
                 isEdit, email, selfIntroduction, phone, address, birthday, headType
             )
         }
 
         fun ActiveBean.parcelable(): ActiveEntry {
             return ActiveEntry(
-                userID, nickname, createTime, administrator, support, against,
+                userID, nickname, createTime, level, adminLevel, support, against,
                 inform, reported, follow, fans, post
             )
         }
 
         fun ActiveEntry.unParcelable(): ActiveBean {
             return ActiveBean(
-                userID, nickname, createTime, administrator, support, against,
+                userID, nickname, createTime, level, adminLevel, support, against,
                 inform, reported, follow, fans, post
             )
         }
 
         fun TelecomBean.room(): EventEntry {
-            return EventEntry(type, userId, nickName, session, msgId, content)
+            return EventEntry(type, userId, nickName, session, time,false, msgId, content)
         }
 
         fun EventEntry.telecom(): TelecomBean {
-            return TelecomBean(type, userId, nickName, session, msgId, content)
+            return TelecomBean(type, userId, nickName, session, time, msgId, content)
         }
 
         fun EventEntry.chat(): ChatEntry {
-            return ChatEntry(nickName, System.currentTimeMillis().toTime(), content)
+            return ChatEntry(nickName, time.toTime(), content)
         }
 
         fun Boolean.onTrue(func: () -> Unit): Boolean {
@@ -96,6 +97,38 @@ object Util {
         fun Boolean.onFalse(func: () -> Unit): Boolean {
             if (!this) func.invoke()
             return this
+        }
+
+        fun ImageView.load(
+            url: String,
+            placeHolderId: Int? = null,
+            key: String? = null,
+            isCircle: Boolean = false
+        ) {
+            NetTool.setImage(
+                context,
+                this,
+                url= url,
+                placeHolderId = placeHolderId,
+                key = key,
+                isCircle = isCircle
+            )
+        }
+
+        fun ImageView.load(
+            url: String,
+            placeHolder: Drawable? = null,
+            key: String? = null,
+            isCircle: Boolean = false
+        ) {
+            NetTool.setImage(
+                context,
+                this,
+                url= url,
+                placeHolder = placeHolder,
+                key = key,
+                isCircle = isCircle
+            )
         }
     }
 }

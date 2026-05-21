@@ -11,17 +11,17 @@ import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.Key
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
-import com.creezen.commontool.Config.EventType.EVENT_TYPE_DEFAULT
-import com.creezen.commontool.Config.EventType.EVENT_TYPE_GAME
-import com.creezen.commontool.Config.EventType.EVENT_TYPE_MESSAGE
-import com.creezen.commontool.Config.EventType.EVENT_TYPE_NOTIFY
-import com.creezen.commontool.Config.NetworkParam.COOKIE_USER_ID
-import com.creezen.commontool.Config.NetworkParam.COOKIE_UUID
+import com.creezen.commontool.Config.COOKIE_USER_ID
+import com.creezen.commontool.Config.COOKIE_UUID
+import com.creezen.commontool.Config.EVENT_TYPE_CHAT
+import com.creezen.commontool.Config.EVENT_TYPE_DEFAULT
+import com.creezen.commontool.Config.EVENT_TYPE_FEEDBACK
 import com.creezen.commontool.Config.SERVER_DOMAIN
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.ability.net.AvatarSignature
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -120,7 +120,7 @@ object NetTool {
         baseUrl = initParam.baseUrl
         baseSocketPath = initParam.baseSocketPath
         socketPort = initParam.socketPort
-        Glide.get(BaseTool.env()).registry.replace(
+        Glide.get(envContext).registry.replace(
             GlideUrl::class.java,
             InputStream::class.java,
             OkHttpUrlLoader.Factory(okHttp)
@@ -229,21 +229,14 @@ object NetTool {
 
     fun sendChatMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTelecomMessage(EVENT_TYPE_MESSAGE, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_CHAT, msg, this)
             sendMessage(scope, message)
         }
     }
 
-    fun sendNotifyMessage(scope: CoroutineScope, msg: String) {
+    fun sendFeedbackMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
-            val message = buildTelecomMessage(EVENT_TYPE_NOTIFY, msg, this)
-            sendMessage(scope, message)
-        }
-    }
-
-    fun sendGameMessage(scope: CoroutineScope, msg: String) {
-        user?.apply {
-            val message = buildTelecomMessage(EVENT_TYPE_GAME, msg, this)
+            val message = buildTelecomMessage(EVENT_TYPE_FEEDBACK, msg, this)
             sendMessage(scope, message)
         }
     }
@@ -278,11 +271,13 @@ object NetTool {
     }
 
     private fun buildTelecomMessage(type: Int, msg: String, user: UserBean): TelecomBean {
+        val timeStamp = System.currentTimeMillis()
         return TelecomBean(
             type,
             content = msg,
             userId = user.userId,
             nickName = user.nickname,
+            time = timeStamp,
             session = user.session
         )
     }

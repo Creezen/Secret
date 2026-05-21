@@ -1,10 +1,10 @@
 package com.jayce.vexis.domain.bean
 
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 
 data class RecordListEntry(
-    val title: String = EMPTY_STRING,
-    val time: String = EMPTY_STRING,
-    val result: String = EMPTY_STRING,
+    val title: String = NIL,
+    val time: String = NIL,
+    val result: String = NIL,
     val id: Long,
 )

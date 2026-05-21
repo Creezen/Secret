@@ -27,6 +27,7 @@ class SwiperRecycleView(context: Context, attributeSet: AttributeSet) : FrameLay
         get() = swiper.isRefreshing
         set(value) {
             swiper.isRefreshing = value
+            swiper.finishRefresh()
         }
 
     var adapter: RecyclerView.Adapter<*>

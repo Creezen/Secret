@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.bean
 
 import android.os.Parcelable
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,5 +13,5 @@ data class FileEntry(
     val illustrate: String,
     val fileSize: Long,
     val uploadTime: String,
-    val fileHash: String = EMPTY_STRING
+    val fileHash: String = NIL
 ) : Parcelable

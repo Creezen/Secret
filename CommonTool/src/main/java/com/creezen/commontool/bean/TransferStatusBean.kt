@@ -1,8 +1,8 @@
 package com.creezen.commontool.bean
 
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 
 data class TransferStatusBean(
     val statusCode: Int,
-    val data: String = EMPTY_STRING
+    val data: String = NIL
 )

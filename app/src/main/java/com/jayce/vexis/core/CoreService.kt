@@ -5,15 +5,16 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import com.jayce.vexis.foundation.ability.EventHandle.initEventSystem
-import com.jayce.vexis.foundation.ability.EventHandle.releaseEventSystem
+import com.jayce.vexis.foundation.ability.EventRepository
+import org.koin.android.ext.android.inject
 
 class CoreService : Service() {
 
     private val binder = ConnectionBinder()
+    private val repository by inject<EventRepository>()
 
     override fun onCreate() {
-        initEventSystem()
+        repository.initEventSystem()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -26,7 +27,7 @@ class CoreService : Service() {
     }
 
     override fun onDestroy() {
-        releaseEventSystem()
+        repository.releaseEventSystem()
         super.onDestroy()
     }
 

@@ -39,4 +39,6 @@ class DefaultSwiperRecycle(context: Context, parent: ViewGroup) : ISwiper {
     override fun setOnRefreshListener(func: () -> Unit) {
         binding.swiper.setOnRefreshListener { func.invoke() }
     }
+
+    override fun finishRefresh() { /**/ }
 }

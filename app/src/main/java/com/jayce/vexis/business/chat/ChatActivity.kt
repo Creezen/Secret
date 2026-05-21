@@ -1,9 +1,10 @@
 package com.jayce.vexis.business.chat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
 import com.creezen.tool.ThreadTool.getScope
@@ -13,47 +14,46 @@ import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
 import com.jayce.vexis.foundation.Util.Extension.chat
-import com.jayce.vexis.foundation.ability.EventHandle.NAME_MESSAGE_SCOPE
-import kotlinx.coroutines.future.await
+import com.jayce.vexis.foundation.ability.EventRepository.Companion.MESSAGE_SCOPE
+import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.CompletableFuture
 
 class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
-    companion object {
-        const val TAG = "ChatActivity"
-        private val itemList = arrayListOf<ChatEntry>()
-    }
-
+    private val itemList = arrayListOf<ChatEntry>()
     private val adapter by lazy { ChatAdapter(itemList) }
     private val viewModel by viewModel<ChatViewModel>()
 
+    private var lastReadId: Long = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("LJW", "onCreate")
         initView()
         initData()
     }
 
     private fun initData() {
         lifecycleScope.launch {
-            val ready = CompletableFuture<Unit>()
-            launch {
-                val oldSize = itemList.size
-                itemList.clear()
-                adapter.notifyItemRangeRemoved(0, oldSize)
-                ready.complete(Unit)
-                viewModel.eventFlow.collect {
-                    itemList.add(it.chat())
-                    ui {
-                        adapter.notifyItemRangeInserted(itemList.size, 1)
-                        binding.edit.setText(EMPTY_STRING)
-                        binding.message.scrollToPosition(adapter.itemCount - 1)
-                    }
+            viewModel.chatFlow.onSubscription {
+                Log.d("LJW", "onSubscription")
+                val chatPair = viewModel.getLocalChatList()
+                val list = chatPair.first
+                adapter.notifyDataChange(list)
+                binding.message.scrollToPosition(list.size - 1)
+                lastReadId = chatPair.second
+            }.collect {
+                Log.d("LJW", "collect")
+                ui {
+                    if (it.id <= lastReadId) return@ui
+                    adapter.getAttachedList().add(it.chat())
+                    val size = adapter.getAttachedList().size
+                    adapter.notifyItemRangeInserted(size, 1)
+                    binding.edit.setText(NIL)
+                    binding.message.scrollToPosition(size - 1)
                 }
             }
-            ready.await()
-            viewModel.collect()
         }
     }
 
@@ -64,7 +64,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
             send.setOnClickListener {
                 val content = edit.msg(true)
                 if (content.isNotEmpty()) {
-                    getScope(NAME_MESSAGE_SCOPE)?.let {
+                    getScope(MESSAGE_SCOPE)?.let {
                         sendChatMessage(it, content)
                     }
                 }

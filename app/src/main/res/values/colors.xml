@@ -20,4 +20,32 @@
     <color name="paleChampagne">#E5DED0</color>
     <!--圣旨金-->
     <color name="metallicGold">#D4AF37</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+
+    <!--用户等级颜色-->
+    <color name="level_0">#787878</color>
+    <color name="level_1">#5A7896</color>
+    <color name="level_2">#3C8CA0</color>
+    <color name="level_3">#32AA8C</color>
+    <color name="level_4">#50B450</color>
+    <color name="level_5">#B4B43C</color>
+    <color name="level_6">#E6A028</color>
+    <color name="level_7">#F0821E</color>
+    <color name="level_8">#E65A28</color>
+    <color name="level_9">#D2461E</color>
+
+    <integer-array name="levelColorArray">
+        <item>@color/level_0</item>
+        <item>@color/level_1</item>
+        <item>@color/level_2</item>
+        <item>@color/level_3</item>
+        <item>@color/level_4</item>
+        <item>@color/level_5</item>
+        <item>@color/level_6</item>
+        <item>@color/level_7</item>
+        <item>@color/level_8</item>
+        <item>@color/level_9</item>
+    </integer-array>
+
 </resources>

@@ -20,4 +20,7 @@ interface EventDao {
 
     @Query("select * from eventEntry where type IN (:type)")
     fun getEventListByType(type: List<Int>): Flow<List<EventEntry>>
+
+    @Query("select count(*) from eventEntry where type IN (:type) and isRead = false")
+    fun getEventCountByType(type: List<Int>): Int
 }

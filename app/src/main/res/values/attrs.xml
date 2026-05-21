@@ -32,4 +32,11 @@
             <enum name="horizon" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="LevelTextView">
+        <attr name="level" format="integer"/>
+        <attr name="isAdmin" format="boolean"/>
+        <attr name="size" format="float"/>
+        <attr name="userName" format="string"/>
+    </declare-styleable>
 </resources>

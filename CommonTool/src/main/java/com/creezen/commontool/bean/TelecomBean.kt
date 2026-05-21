@@ -1,12 +1,13 @@
 package com.creezen.commontool.bean
 
-import com.creezen.commontool.Config.Constant.EMPTY_STRING
+import com.creezen.commontool.Config.NIL
 
 data class TelecomBean (
     val type: Int,
     val userId: String,
     val nickName: String,
     val session: String,
+    val time: Long,
     val msgId: String = "-1",
-    val content: String = EMPTY_STRING
+    val content: String = NIL
 )
