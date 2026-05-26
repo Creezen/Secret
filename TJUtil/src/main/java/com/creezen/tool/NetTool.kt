@@ -16,6 +16,7 @@ import com.creezen.commontool.Config.COOKIE_UUID
 import com.creezen.commontool.Config.EVENT_TYPE_CHAT
 import com.creezen.commontool.Config.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.Config.EVENT_TYPE_FEEDBACK
+import com.creezen.commontool.Config.EVENT_TYPE_ROLE
 import com.creezen.commontool.Config.SERVER_DOMAIN
 import com.creezen.commontool.bean.TelecomBean
 import com.creezen.commontool.bean.UserBean
@@ -237,6 +238,13 @@ object NetTool {
     fun sendFeedbackMessage(scope: CoroutineScope, msg: String) {
         user?.apply {
             val message = buildTelecomMessage(EVENT_TYPE_FEEDBACK, msg, this)
+            sendMessage(scope, message)
+        }
+    }
+
+    fun sendManagerMessage(scope: CoroutineScope, msg: String) {
+        user?.apply {
+            val message = buildTelecomMessage(EVENT_TYPE_ROLE, msg, this)
             sendMessage(scope, message)
         }
     }

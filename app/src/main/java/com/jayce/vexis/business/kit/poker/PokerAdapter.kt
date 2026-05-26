@@ -59,6 +59,7 @@ class PokerAdapter(
     }
 
     override fun getChildAndHoler(
+        viewType: Int,
         layoutInflater: LayoutInflater,
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup

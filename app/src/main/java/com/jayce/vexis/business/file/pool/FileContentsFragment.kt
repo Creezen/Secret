@@ -56,24 +56,22 @@ class FileContentsFragment(
         }
     }
 
-    private fun initPage() {
-        with(binding) {
-            uploadFile.setOnClickListener {
-                if (Environment.isExternalStorageManager()) {
-                    startActivity(Intent(this@FileContentsFragment.activity, FileUploadActivity::class.java))
-                } else {
-                    readExternalLaunch?.launch(
-                        Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                            it.data = Uri.parse("package:" + activity?.packageName)
-                        },
-                    )
-                }
+    private fun initPage() = binding.apply {
+        uploadFile.setOnClickListener {
+            if (Environment.isExternalStorageManager()) {
+                startActivity(Intent(this@FileContentsFragment.activity, FileUploadActivity::class.java))
+            } else {
+                readExternalLaunch?.launch(
+                    Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
+                        it.data = Uri.parse("package:" + activity?.packageName)
+                    },
+                )
             }
-            refresh.setOnClickListener {
-                initData()
-            }
-            recycle.layoutManager = LinearLayoutManager(context)
-            recycle.adapter = adapter
         }
+        refresh.setOnClickListener {
+            initData()
+        }
+        recycle.layoutManager = LinearLayoutManager(context)
+        recycle.adapter = adapter
     }
 }

@@ -30,32 +30,30 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
         return binding.root
     }
 
-    private fun initView() {
-        with(binding) {
-            ledger.setOnClickListener {
-                startActivity(Intent(context, LedgerSheetActivity::class.java))
-            }
-            maze.setOnClickListener {
-                startActivity(Intent(context, MazeActivity::class.java))
-            }
-            gomoku.setOnClickListener {
-                startActivity(Intent(context, GomokuActivity::class.java))
-            }
-            poker.setOnClickListener {
-                startActivity(Intent(context, PokerActivity::class.java))
-            }
-            pinyin.setOnClickListener {
-                startActivity(Intent(context, PinyinActivity::class.java))
-            }
-            quickStart.setOnClickListener {
-                val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
-                val intent = Intent()
-                intent.component = component
-                startActivity(intent)
-            }
-            videoPlayer.setOnClickListener {
-                startActivity(Intent(context, VideoPlayerActivity::class.java))
-            }
+    private fun initView() = binding.apply {
+        ledger.setOnClickListener {
+            startActivity(Intent(context, LedgerSheetActivity::class.java))
+        }
+        maze.setOnClickListener {
+            startActivity(Intent(context, MazeActivity::class.java))
+        }
+        gomoku.setOnClickListener {
+            startActivity(Intent(context, GomokuActivity::class.java))
+        }
+        poker.setOnClickListener {
+            startActivity(Intent(context, PokerActivity::class.java))
+        }
+        pinyin.setOnClickListener {
+            startActivity(Intent(context, PinyinActivity::class.java))
+        }
+        quickStart.setOnClickListener {
+            val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
+            val intent = Intent()
+            intent.component = component
+            startActivity(intent)
+        }
+        videoPlayer.setOnClickListener {
+            startActivity(Intent(context, VideoPlayerActivity::class.java))
         }
     }
 

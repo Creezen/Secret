@@ -66,36 +66,34 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         fragmentList.add(userLiveFragment)
     }
 
-    private fun initPage() {
-        with(binding) {
-            nickname.userName = liveUser.nickname
-            id.text = liveUser.userId
-            if (liveUser.isAdministrator()) {
-                administrator.visibility = View.VISIBLE
+    private fun initPage() = binding.apply {
+        nickname.userName = liveUser.nickname
+        id.text = liveUser.userId
+        if (liveUser.isAdministrator()) {
+            administrator.visibility = View.VISIBLE
+        }
+        administrator.setOnClickListener {
+            startActivity(Intent(this@DashboardActivity, AdminActivity::class.java))
+        }
+        page.adapter = adapter
+        TabLayoutMediator(tab, page) { tab, pos ->
+            val textView = TextView(this@DashboardActivity)
+            textView.gravity = Gravity.CENTER
+            textView.text = when (pos) {
+                0 -> getString(R.string.base_info)
+                1 -> getString(R.string.creation_live)
+                else -> NIL
             }
-            administrator.setOnClickListener {
-                startActivity(Intent(this@DashboardActivity, AdminActivity::class.java))
-            }
-            page.adapter = adapter
-            TabLayoutMediator(tab, page) { tab, pos ->
-                val textView = TextView(this@DashboardActivity)
-                textView.gravity = Gravity.CENTER
-                textView.text = when (pos) {
-                    0 -> getString(R.string.base_info)
-                    1 -> getString(R.string.creation_live)
-                    else -> NIL
-                }
-                tab.customView = textView
-            }.attach()
-            image.setOnClickListener {
-                imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
-            }
-            getDataAsync(AVATAR_SAVE_TIME, 0L) {
-                ui {
-                    val url = "${liveUser.userId}.png"
-                    image.load(url, placeHolder = null, it.toString(), true)
-                    loadAvatarFromNet(300, it)
-                }
+            tab.customView = textView
+        }.attach()
+        image.setOnClickListener {
+            imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
+        }
+        getDataAsync(AVATAR_SAVE_TIME, 0L) {
+            ui {
+                val url = "${liveUser.userId}.png"
+                image.load(url, placeHolder = null, it.toString(), true)
+                loadAvatarFromNet(300, it)
             }
         }
     }

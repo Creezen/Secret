@@ -1,9 +1,9 @@
 package com.jayce.vexis.business.chat
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.NetTool.sendChatMessage
@@ -14,7 +14,7 @@ import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
 import com.jayce.vexis.foundation.Util.Extension.chat
-import com.jayce.vexis.foundation.ability.EventRepository.Companion.MESSAGE_SCOPE
+import com.jayce.vexis.foundation.ability.EventRepository.Companion.SCOPE_EVENT
 import kotlinx.coroutines.flow.onSubscription
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,11 +25,22 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     private val adapter by lazy { ChatAdapter(itemList) }
     private val viewModel by viewModel<ChatViewModel>()
 
+    private val listener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val layoutManager = recyclerView.layoutManager ?: return
+            for (i in 0 until layoutManager.childCount) {
+                val child = layoutManager.getChildAt(i) ?: continue
+                val holder = recyclerView.getChildViewHolder(child) as? ChatAdapter.ViewHolder ?: return
+                adapter.markItemReadIfNeed(holder)
+            }
+        }
+    }
+
     private var lastReadId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("LJW", "onCreate")
         initView()
         initData()
     }
@@ -37,38 +48,31 @@ class ChatActivity : BaseActivity<ActivityChatBinding>() {
     private fun initData() {
         lifecycleScope.launch {
             viewModel.chatFlow.onSubscription {
-                Log.d("LJW", "onSubscription")
                 val chatPair = viewModel.getLocalChatList()
                 val list = chatPair.first
                 adapter.notifyDataChange(list)
                 binding.message.scrollToPosition(list.size - 1)
-                lastReadId = chatPair.second
-            }.collect {
-                Log.d("LJW", "collect")
-                ui {
-                    if (it.id <= lastReadId) return@ui
-                    adapter.getAttachedList().add(it.chat())
-                    val size = adapter.getAttachedList().size
-                    adapter.notifyItemRangeInserted(size, 1)
-                    binding.edit.setText(NIL)
-                    binding.message.scrollToPosition(size - 1)
-                }
-            }
+                if (lastReadId < chatPair.second) lastReadId = chatPair.second
+            }.collect { ui {
+                if (it.id <= lastReadId) return@ui
+                adapter.getAttachedList().add(it.chat())
+                val size = adapter.getAttachedList().size
+                adapter.notifyItemRangeInserted(size, 1)
+                binding.edit.setText(NIL)
+                binding.message.scrollToPosition(size - 1)
+            } }
         }
     }
 
-    private fun initView() {
-        with(binding) {
-            message.layoutManager = LinearLayoutManager(this@ChatActivity)
-            message.adapter = adapter
-            send.setOnClickListener {
-                val content = edit.msg(true)
-                if (content.isNotEmpty()) {
-                    getScope(MESSAGE_SCOPE)?.let {
-                        sendChatMessage(it, content)
-                    }
-                }
-            }
+    private fun initView() = binding.apply {
+        message.layoutManager = LinearLayoutManager(this@ChatActivity)
+        message.adapter = adapter
+        send.setOnClickListener {
+            val content = edit.msg(true)
+            if (content.isEmpty()) return@setOnClickListener
+            val scope = getScope(SCOPE_EVENT) ?: return@setOnClickListener
+            sendChatMessage(scope, content)
         }
+        message.addOnScrollListener(listener)
     }
 }

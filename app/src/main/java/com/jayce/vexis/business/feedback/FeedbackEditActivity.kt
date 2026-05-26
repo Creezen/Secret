@@ -12,7 +12,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding
 import com.jayce.vexis.domain.route.FeedbackService
 import com.jayce.vexis.foundation.Util
-import com.jayce.vexis.foundation.ability.EventRepository.Companion.MESSAGE_SCOPE
+import com.jayce.vexis.foundation.ability.EventRepository.Companion.SCOPE_EVENT
 import kotlinx.coroutines.Dispatchers
 
 class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
@@ -22,22 +22,20 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
         initView()
     }
 
-    private fun initView() {
-        with(binding) {
-            submit.setOnClickListener {
-                val title = title.msg()
-                val content = content.msg()
-                val option = BlockOption(ThreadType.MULTI, 2000, Dispatchers.IO)
-                ThreadTool.runWithBlocking(option) {
-                    Util.request<FeedbackService, Boolean>({
-                        sendFeedback(liveUser.userId, title, content)
-                    }) {
-                        if (it) finish()
-                    }
-                }.onComplete {
-                    getScope(MESSAGE_SCOPE)?.let {
-                        sendFeedbackMessage(it, title)
-                    }
+    private fun initView() = binding.apply {
+        submit.setOnClickListener {
+            val title = title.msg()
+            val content = content.msg()
+            val option = BlockOption(ThreadType.MULTI, 2000, Dispatchers.IO)
+            ThreadTool.runWithBlocking(option) {
+                Util.request<FeedbackService, Boolean>({
+                    sendFeedback(liveUser.userId, title, content)
+                }) {
+                    if (it) finish()
+                }
+            }.onComplete {
+                getScope(SCOPE_EVENT)?.let {
+                    sendFeedbackMessage(it, title)
                 }
             }
         }

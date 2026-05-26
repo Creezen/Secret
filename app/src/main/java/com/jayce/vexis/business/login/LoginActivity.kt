@@ -61,67 +61,65 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         binding.login.startAnimation(animation)
     }
 
-    private fun initView() {
-        with(binding) {
-            lifecycleOwner = this@LoginActivity
-            env = this@LoginActivity
-            liveData.observe(this@LoginActivity) {
-                login.isClickable = it.length in 6..18
-            }
-            findPassword.setOnClickListener {
-                getString(R.string.not_support).toast()
-            }
-            createAccount.setOnClickListener {
-                playShortSound(R.raw.delete)
-                val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-                intent.putExtra("intentAccount", name.msg())
-                startActivity(intent)
-            }
-            login.setOnClickListener {
-                login.isClickable = false
-                playShortSound(R.raw.click)
+    private fun initView() = binding.apply {
+        lifecycleOwner = this@LoginActivity
+        env = this@LoginActivity
+        liveData.observe(this@LoginActivity) {
+            login.isClickable = it.length in 6..18
+        }
+        findPassword.setOnClickListener {
+            getString(R.string.not_support).toast()
+        }
+        createAccount.setOnClickListener {
+            playShortSound(R.raw.delete)
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            intent.putExtra("intentAccount", name.msg())
+            startActivity(intent)
+        }
+        login.setOnClickListener {
+            login.isClickable = false
+            playShortSound(R.raw.click)
 
-                val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
-                ThreadTool.runWithBlocking(option) {
-                    request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) { response ->
-                        when (response.statusCode) {
-                            -1 -> {
-                                val logIntent = intent.also {
-                                    it.putExtra("launchResult", true)
-                                    it.putExtra("launchValue", response.data)
-                                }
-                                setResult(RESULT_OK, logIntent)
-                                finish()
+            val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
+            ThreadTool.runWithBlocking(option) {
+                request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) { response ->
+                    when (response.statusCode) {
+                        -1 -> {
+                            val logIntent = intent.also {
+                                it.putExtra("launchResult", true)
+                                it.putExtra("launchValue", response.data)
                             }
-                            0 -> getString(R.string.no_account_and_create).toast()
-                            -3 -> getString(R.string.account_login_other_device).toast()
-                            else -> getString(R.string.password_error).toast()
+                            setResult(RESULT_OK, logIntent)
+                            finish()
                         }
+                        0 -> getString(R.string.no_account_and_create).toast()
+                        -3 -> getString(R.string.account_login_other_device).toast()
+                        else -> getString(R.string.password_error).toast()
                     }
-                }.onTimedOut {
-                    login.isClickable = true
-                }.onComplete {
-                    login.isClickable = true
                 }
+            }.onTimedOut {
+                login.isClickable = true
+            }.onComplete {
+                login.isClickable = true
             }
-            val packageInfo = packageManager.getPackageInfo(
-                packageName,
-                PackageManager.PackageInfoFlags.of(0),
-            )
-            val verMsg = "APP : v${packageInfo.versionName}  ${packageInfo.lastUpdateTime.toTime()}"
-            versionMsg.text = verMsg
-            liveData.value = getString(R.string.login_name)
-            password.setText(R.string.login_password)
+        }
+        val packageInfo = packageManager.getPackageInfo(
+            packageName,
+            PackageManager.PackageInfoFlags.of(0),
+        )
+        val verMsg = "APP : v${packageInfo.versionName}  ${packageInfo.lastUpdateTime.toTime()}"
+        versionMsg.text = verMsg
+        liveData.value = getString(R.string.login_name)
+        password.setText(R.string.login_password)
 
-            initPicture()
+        initPicture()
 
-            onBackPressedDispatcher.addCallback {
-                val logIntent = intent.also {
-                    it.putExtra("launchResult", false)
-                }
-                setResult(RESULT_OK, logIntent)
-                finish()
+        onBackPressedDispatcher.addCallback {
+            val logIntent = intent.also {
+                it.putExtra("launchResult", false)
             }
+            setResult(RESULT_OK, logIntent)
+            finish()
         }
     }
 

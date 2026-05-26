@@ -68,75 +68,72 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
         scoreInsertAdapter = ScoreInsertAdapter(userList)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun initView() {
-        with(binding) {
-            title = intent.getStringExtra("title") ?: "默认标题"
-            titleTv.text = title
-            createTime = intent.getLongExtra("time", 0).toTime()
-            timeTv.text = createTime
-            userList.forEach { name ->
-                playerName.addSimpleView(name, WIDTH)
-                totalScore.addSimpleView("0", WIDTH)
-            }
-            addUser.setOnClickListener {
-                FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
-                    .flexibleView(AddRecordUserBinding.inflate(layoutInflater))
-                    .title("添加角色")
-                    .negative {}
-                    .positive("添加") {
-                        val edit = findViewById<EditText>(R.id.edit)
-                        val addUserName = edit.msg()
-                        playerName.addSimpleView(addUserName, WIDTH)
-                        userList.add(addUserName)
-                        scoreList.forEach {
-                            it.scores.add(0)
-                        }
-                        adapter.notifyDataSetChanged()
-                        scoreInsertAdapter.notifyUserAdded()
-                        totalScoreList.add(0)
-                        totalScore.addSimpleView("0", WIDTH)
-                    }.show()
-            }
-            addRecord.setOnClickListener {
-                FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
-                    .flexibleView(AddRecordDialogBinding.inflate(layoutInflater)) {
-                        scoreRv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
-                        scoreRv.adapter = scoreInsertAdapter
-                    }
-                    .positive("添加") {
-                        val scoreList = scoreInsertAdapter.getscoreList()
-                        val newList = ArrayList<Int>()
-                        newList.addAll(scoreList)
-                        if (newList.sum() != 0) {
-                            "分数设置不合法，请检查一下哦".toast()
-                        }
-                        newList.forEachIndexed { index, value ->
-                            totalScoreList[index] += value
-                            val childView = totalScore.getChildAt(index) as TextView
-                            childView.text = totalScoreList[index].toString()
-                        }
-                        addRecord(newList)
-                    }.title("设置分数").show()
-            }
-            save.setOnClickListener {
-                saveRecord()
-            }
-            rv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
-            rv.adapter = adapter
-            rvSC.setOnScrollChangeListener { _, i, i2, _, _ ->
-                playerNameSV.scrollTo(i, i2)
-                totalScoreSV.scrollTo(i, i2)
-            }
-            rv.setOnScrollChangeListener { _, _, _, oldScrollX, oldScrollY ->
-                val scX = roundNumRV.scrollX
-                val scY = roundNumRV.scrollY
-                roundNumRV.scrollTo(scX - oldScrollX, scY - oldScrollY)
-            }
-            playerNameSV.setOnTouchListener { _, _ -> true }
-            totalScoreSV.setOnTouchListener { _, _ -> true }
-            roundNumRV.setOnTouchListener { _, _ -> true }
+    private fun initView() = binding.apply {
+        title = intent.getStringExtra("title") ?: "默认标题"
+        titleTv.text = title
+        createTime = intent.getLongExtra("time", 0).toTime()
+        timeTv.text = createTime
+        userList.forEach { name ->
+            playerName.addSimpleView(name, WIDTH)
+            totalScore.addSimpleView("0", WIDTH)
         }
+        addUser.setOnClickListener {
+            FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
+                .flexibleView(AddRecordUserBinding.inflate(layoutInflater))
+                .title("添加角色")
+                .negative {}
+                .positive("添加") {
+                    val edit = findViewById<EditText>(R.id.edit)
+                    val addUserName = edit.msg()
+                    playerName.addSimpleView(addUserName, WIDTH)
+                    userList.add(addUserName)
+                    scoreList.forEach {
+                        it.scores.add(0)
+                    }
+                    adapter.notifyDataSetChanged()
+                    scoreInsertAdapter.notifyUserAdded()
+                    totalScoreList.add(0)
+                    totalScore.addSimpleView("0", WIDTH)
+                }.show()
+        }
+        addRecord.setOnClickListener {
+            FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
+                .flexibleView(AddRecordDialogBinding.inflate(layoutInflater)) {
+                    scoreRv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
+                    scoreRv.adapter = scoreInsertAdapter
+                }
+                .positive("添加") {
+                    val scoreList = scoreInsertAdapter.getscoreList()
+                    val newList = ArrayList<Int>()
+                    newList.addAll(scoreList)
+                    if (newList.sum() != 0) {
+                        "分数设置不合法，请检查一下哦".toast()
+                    }
+                    newList.forEachIndexed { index, value ->
+                        totalScoreList[index] += value
+                        val childView = totalScore.getChildAt(index) as TextView
+                        childView.text = totalScoreList[index].toString()
+                    }
+                    addRecord(newList)
+                }.title("设置分数").show()
+        }
+        save.setOnClickListener {
+            saveRecord()
+        }
+        rv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
+        rv.adapter = adapter
+        rvSC.setOnScrollChangeListener { _, i, i2, _, _ ->
+            playerNameSV.scrollTo(i, i2)
+            totalScoreSV.scrollTo(i, i2)
+        }
+        rv.setOnScrollChangeListener { _, _, _, oldScrollX, oldScrollY ->
+            val scX = roundNumRV.scrollX
+            val scY = roundNumRV.scrollY
+            roundNumRV.scrollTo(scX - oldScrollX, scY - oldScrollY)
+        }
+        playerNameSV.setOnTouchListener { _, _ -> true }
+        totalScoreSV.setOnTouchListener { _, _ -> true }
+        roundNumRV.setOnTouchListener { _, _ -> true }
     }
 
     private fun saveRecord() {

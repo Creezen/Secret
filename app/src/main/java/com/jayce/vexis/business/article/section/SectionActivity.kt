@@ -23,13 +23,10 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
         initData()
     }
 
-    private fun initPage() {
-        articleId = intent.getLongExtra("articleId", -1)
-        with(binding) {
-            paragraphRv.layoutManager = LinearLayoutManager(this@SectionActivity)
-            paragraphRv.adapter = adapter
-            adapter.setArticleId(articleId)
-        }
+    private fun initPage() = binding.apply {
+        paragraphRv.layoutManager = LinearLayoutManager(this@SectionActivity)
+        paragraphRv.adapter = adapter
+        adapter.setArticleId(articleId)
     }
 
     private fun initData() {
@@ -41,5 +38,6 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
                 adapter.notifyDataSetChanged()
             }
         }
+        articleId = intent.getLongExtra("articleId", -1)
     }
 }

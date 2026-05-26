@@ -45,6 +45,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         android:usesCleartextTraffic="true">
+        <activity android:name=".business.mail.MailActivity"
+            android:exported="false"/>
         <activity
             android:name=".business.kit.video.VideoPlayerActivity"
             android:exported="false"

@@ -15,6 +15,13 @@ kotlin {
     }
 }
 
+repositories {
+    google()
+    mavenCentral()
+    mavenLocal()
+    maven { url = uri("https://jitpack.io") }
+}
+
 dependencies {
     compileOnly("com.android.tools.build:gradle:9.1.0")
 

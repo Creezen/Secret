@@ -30,11 +30,9 @@ class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
         loadData()
     }
 
-    private fun initPage() {
-        with(binding) {
-            historyListRv.layoutManager = LinearLayoutManager(this@LedgerHistoryActivity)
-            historyListRv.adapter = adapter
-        }
+    private fun initPage() = binding.apply {
+        historyListRv.layoutManager = LinearLayoutManager(this@LedgerHistoryActivity)
+        historyListRv.adapter = adapter
     }
 
     private fun loadData() {

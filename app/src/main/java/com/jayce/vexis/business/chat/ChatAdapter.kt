@@ -3,11 +3,18 @@ package com.jayce.vexis.business.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.creezen.tool.AndroidTool.onVisible
+import com.creezen.tool.BaseTool.envContext
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
 import com.jayce.vexis.domain.bean.ChatEntry
+import com.jayce.vexis.domain.database.event.EventDatabase
+import kotlinx.coroutines.Dispatchers
 
 class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatEntry, ChatAdapter.ViewHolder>() {
+
+    private val eventDao = EventDatabase.getDatabase(envContext).eventDao()
 
     class ViewHolder(val binding: ChatItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val nickname = binding.nickname
@@ -32,6 +39,18 @@ class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatE
         holder.nickname.text = chatItem.nickname
         holder.time.text = chatItem.time
         holder.msg.text = chatItem.msg
+    }
+
+    fun markItemReadIfNeed(holder: ViewHolder) {
+        val position = holder.absoluteAdapterPosition
+        val item = msgList[position]
+        if (item.isRead) return
+        holder.view.onVisible {
+            item.isRead = true
+            ThreadTool.runOnMulti(Dispatchers.IO) {
+                eventDao.markEventAsRead(item.id)
+            }
+        }
     }
 
     override fun getItemCount() = msgList.size

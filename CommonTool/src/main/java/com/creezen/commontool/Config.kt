@@ -11,6 +11,7 @@ object Config {
     const val EVENT_TYPE_CHAT = 1
     const val EVENT_TYPE_FEEDBACK = 2
     const val EVENT_TYPE_EXIT = 3
+    const val EVENT_TYPE_ROLE = 4
 
     const val ACTION_BROADCAST_LOGOUT = "com.jayce.vexis.broadcast.logout"
     const val ACTION_BROADCAST_NOTIFY = "com.jayce.vexis.broadcast.notify"

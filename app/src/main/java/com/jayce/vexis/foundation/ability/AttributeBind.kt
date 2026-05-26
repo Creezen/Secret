@@ -1,4 +1,4 @@
-package com.jayce.vexis.domain.viewmodel.bind
+package com.jayce.vexis.foundation.ability
 
 import androidx.databinding.BindingAdapter
 import com.jayce.vexis.foundation.ui.block.HintView

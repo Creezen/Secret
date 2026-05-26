@@ -26,21 +26,19 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
         return binding.root
     }
 
-    private fun initView() {
-        with(binding) {
-            paragraphRv.layoutManager = LinearLayoutManager(requireActivity())
-            this@ArticleFragment.context?.let {
-                paragraphRv.itemAnimator = RecycleItemAnimator(it)
-            }
-            adapter.cornerRadius = 12f
-            paragraphRv.adapter = adapter
-            post.setOnClickListener {
-                startActivity(Intent(activity, ArticleEditActivity::class.java))
-                activity?.overridePendingTransition(
-                    R.anim.edit_activity_enter,
-                    R.anim.edit_activity_close,
-                )
-            }
+    private fun initView() = binding.apply {
+        paragraphRv.layoutManager = LinearLayoutManager(requireActivity())
+        this@ArticleFragment.context?.let {
+            paragraphRv.itemAnimator = RecycleItemAnimator(it)
+        }
+        adapter.cornerRadius = 12f
+        paragraphRv.adapter = adapter
+        post.setOnClickListener {
+            startActivity(Intent(activity, ArticleEditActivity::class.java))
+            activity?.overridePendingTransition(
+                R.anim.edit_activity_enter,
+                R.anim.edit_activity_close,
+            )
         }
     }
 

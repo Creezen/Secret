@@ -7,6 +7,7 @@ import androidx.core.app.NotificationCompat
 import com.creezen.commontool.Config.EVENT_TYPE_CHAT
 import com.creezen.commontool.Config.EVENT_TYPE_DEFAULT
 import com.creezen.commontool.Config.EVENT_TYPE_FEEDBACK
+import com.creezen.commontool.Config.EVENT_TYPE_ROLE
 import com.creezen.commontool.toBean
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool
@@ -33,7 +34,7 @@ import java.net.Socket
 class EventRepository {
 
     companion object {
-        const val MESSAGE_SCOPE = "MESSAGE"
+        const val SCOPE_EVENT = "MESSAGE"
     }
 
     private val eventDao = EventDatabase.getDatabase(envContext).eventDao()
@@ -41,14 +42,22 @@ class EventRepository {
     private val _chatEventFlow: MutableSharedFlow<EventEntry> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
     val chatEventFlow: SharedFlow<EventEntry> = _chatEventFlow.asSharedFlow()
 
+    private val _mailEventFlow: MutableSharedFlow<EventEntry> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
+    val mailEventFlow: SharedFlow<EventEntry> = _mailEventFlow.asSharedFlow()
+
     private val notificationTitleMap = mapOf(
-        EVENT_TYPE_FEEDBACK to "反馈通知"
+        EVENT_TYPE_FEEDBACK to "反馈通知",
+        EVENT_TYPE_ROLE to "用户管理通知"
+
     )
+
+    private val chatTypeList = listOf(EVENT_TYPE_CHAT)
+    private val mailTypeList = listOf(EVENT_TYPE_FEEDBACK, EVENT_TYPE_ROLE)
 
     fun initEventSystem() {
         val mScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-        registerScope(MESSAGE_SCOPE, mScope)
-        runOnSpecific(MESSAGE_SCOPE) {
+        registerScope(SCOPE_EVENT, mScope)
+        runOnSpecific(SCOPE_EVENT) {
             val socket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
             registerSocket(socket, true)
             NetTool.connect(mScope, liveUser.userId) {
@@ -62,7 +71,7 @@ class EventRepository {
     }
 
     fun releaseEventSystem() {
-        ThreadTool.unregisterScope(MESSAGE_SCOPE)
+        ThreadTool.unregisterScope(SCOPE_EVENT)
     }
 
     private suspend fun insertEvent(eventEntry: EventEntry) {
@@ -75,19 +84,19 @@ class EventRepository {
     }
 
     fun getChatEvent(): Flow<List<EventEntry>> {
-        return eventDao.getEventListByType(listOf(EVENT_TYPE_CHAT))
-    }
-
-    fun getFeedbackEvent(): Flow<List<EventEntry>> {
-        return eventDao.getEventListByType(listOf(EVENT_TYPE_FEEDBACK))
-    }
-
-    fun getUnreadFeedbackCount(): Int {
-        return eventDao.getEventCountByType(listOf(EVENT_TYPE_FEEDBACK))
+        return eventDao.getEventListByType(chatTypeList)
     }
 
     fun getUnreadChatCount(): Int {
-        return eventDao.getEventCountByType(listOf(EVENT_TYPE_CHAT))
+        return eventDao.getEventCountByType(chatTypeList)
+    }
+
+    fun getMailEvent(): Flow<List<EventEntry>> {
+        return eventDao.getEventListByType(mailTypeList)
+    }
+
+    fun getUnreadMailCount(): Int {
+        return eventDao.getEventCountByType(mailTypeList)
     }
 
     private suspend fun dispatchEvent(eventId: Long) {
@@ -95,7 +104,11 @@ class EventRepository {
         Log.d("LJW", "event: $event")
         when (event.type) {
             EVENT_TYPE_CHAT -> _chatEventFlow.emit(event)
-            EVENT_TYPE_FEEDBACK -> { sendNotification(event.type, event.content) }
+            EVENT_TYPE_FEEDBACK,
+            EVENT_TYPE_ROLE -> {
+                _mailEventFlow.emit(event)
+                sendNotification(event.type, event.content)
+            }
             EVENT_TYPE_DEFAULT -> {}
             else -> {}
         }

@@ -17,6 +17,7 @@ class ChatViewModel(private val repository: EventRepository) : BaseViewModel() {
 
     suspend fun getLocalChatList(): Pair<List<ChatEntry>, Long>{
         val chatList = repository.getChatEvent()
+        if (chatList.first().isEmpty()) return listOf<ChatEntry>() to -1
         val lastId = chatList.first().last().id
         val entryList = chatList.first().map { it.chat() }
         return entryList to lastId

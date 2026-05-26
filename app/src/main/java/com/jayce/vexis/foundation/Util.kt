@@ -86,7 +86,7 @@ object Util {
         }
 
         fun EventEntry.chat(): ChatEntry {
-            return ChatEntry(nickName, time.toTime(), content)
+            return ChatEntry(nickName, time.toTime(), content, id, isRead)
         }
 
         fun Boolean.onTrue(func: () -> Unit): Boolean {

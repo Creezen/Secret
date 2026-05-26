@@ -25,31 +25,29 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
         initView()
     }
 
-    private fun initView() {
-        with(binding) {
-            create.setOnClickListener {
-                FlexibleDialog<DialogBinding>(this@LedgerSheetActivity)
-                    .flexibleView(AddPocketRecordLayoutBinding.inflate(layoutInflater)) {
-                        userBinding = this
-                        dialogInit()
-                        addBtn.setOnClickListener {
-                            addView(userBinding.itemLayout.childCount)
-                        }
+    private fun initView() = binding.apply {
+        create.setOnClickListener {
+            FlexibleDialog<DialogBinding>(this@LedgerSheetActivity)
+                .flexibleView(AddPocketRecordLayoutBinding.inflate(layoutInflater)) {
+                    userBinding = this
+                    dialogInit()
+                    addBtn.setOnClickListener {
+                        addView(userBinding.itemLayout.childCount)
                     }
-                    .positive {
-                        startActivity(
-                            Intent(this@LedgerSheetActivity, ScoreBoardActivity::class.java).also {
-                                it.putExtra("userData", userList)
-                                it.putExtra("title", userBinding.titleEdt.text.toString())
-                                it.putExtra("time", System.currentTimeMillis())
-                            },
-                        )
-                    }
-                    .show()
-            }
-            history.setOnClickListener {
-                startActivity(Intent(this@LedgerSheetActivity, LedgerHistoryActivity::class.java))
-            }
+                }
+                .positive {
+                    startActivity(
+                        Intent(this@LedgerSheetActivity, ScoreBoardActivity::class.java).also {
+                            it.putExtra("userData", userList)
+                            it.putExtra("title", userBinding.titleEdt.text.toString())
+                            it.putExtra("time", System.currentTimeMillis())
+                        },
+                    )
+                }
+                .show()
+        }
+        history.setOnClickListener {
+            startActivity(Intent(this@LedgerSheetActivity, LedgerHistoryActivity::class.java))
         }
     }
 

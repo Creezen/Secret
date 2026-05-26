@@ -24,6 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.fragment.app.Fragment
+import com.creezen.commontool.Config.AVATAR_SAVE_TIME
 import com.creezen.commontool.Config.FRAGMENT_ARTICLE
 import com.creezen.commontool.Config.FRAGMENT_FEEDBACK
 import com.creezen.commontool.Config.FRAGMENT_FILE
@@ -31,7 +32,6 @@ import com.creezen.commontool.Config.FRAGMENT_HISTORY
 import com.creezen.commontool.Config.FRAGMENT_KIT
 import com.creezen.commontool.Config.FRAGMENT_MAP
 import com.creezen.commontool.Config.FRAGMENT_SENIOR
-import com.creezen.commontool.Config.AVATAR_SAVE_TIME
 import com.creezen.commontool.Config.URL_PREFIX
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
@@ -55,6 +55,7 @@ import com.jayce.vexis.business.file.FileFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.login.LoginActivity
+import com.jayce.vexis.business.mail.MailActivity
 import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
@@ -218,6 +219,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         chatMsgView.setOnClickListener {
             startActivity(Intent(this@MainActivity, ChatActivity::class.java))
         }
+        emailView.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MailActivity::class.java))
+        }
 
         //  navigation.menu.iterator().forEachRemaining {
         //      if (it.title == "建言献策") {
@@ -265,7 +269,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
 
     override fun onDrawerOpened(drawerView: View) {
         ThreadTool.runOnMulti {
-            emailBadge.badgeNumber = repository.getUnreadFeedbackCount()
+            emailBadge.badgeNumber = repository.getUnreadMailCount()
             chatBadge.badgeNumber = repository.getUnreadChatCount()
         }
     }

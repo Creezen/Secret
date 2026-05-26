@@ -33,25 +33,23 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
         tertiaryKey = intent.getStringExtra("tertiary") ?: NIL
     }
 
-    private fun initPage() {
-        with(binding) {
-            content.hint = "留下你对$primaryKey/$secondKey/${tertiaryKey}专业的同学的话吧！"
-            submit.setOnClickListener {
-                val text = content.msg(true)
-                if (text.isBlank()) {
-                    "内容不可以为空哦！".toast()
-                    return@setOnClickListener
+    private fun initPage() = binding.apply {
+        content.hint = "留下你对$primaryKey/$secondKey/${tertiaryKey}专业的同学的话吧！"
+        submit.setOnClickListener {
+            val text = content.msg(true)
+            if (text.isBlank()) {
+                "内容不可以为空哦！".toast()
+                return@setOnClickListener
+            }
+            Log.d(TAG, "send: $primaryKey/$secondKey/$tertiaryKey")
+            request<PeerService, Boolean>({
+                sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
+            }) {
+                if (it) {
+                    finish()
+                    return@request
                 }
-                Log.d(TAG, "send: $primaryKey/$secondKey/$tertiaryKey")
-                request<PeerService, Boolean>({
-                    sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
-                }) {
-                    if (it) {
-                        finish()
-                        return@request
-                    }
-                    ui { "服务器错误，请重试!!".toast() }
-                }
+                ui { "服务器错误，请重试!!".toast() }
             }
         }
     }

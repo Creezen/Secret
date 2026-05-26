@@ -25,12 +25,10 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>() {
         initData()
     }
 
-    private fun initPage() {
-        with(binding) {
-            adapter.cardPadding = 6
-            listRV.layoutManager = LinearLayoutManager(this@AdminActivity)
-            listRV.adapter = adapter
-        }
+    private fun initPage() = binding.apply {
+        adapter.cardPadding = 6
+        listRV.layoutManager = LinearLayoutManager(this@AdminActivity)
+        listRV.adapter = adapter
     }
 
     private fun initData() {

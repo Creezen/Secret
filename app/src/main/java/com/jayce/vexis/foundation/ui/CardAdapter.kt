@@ -35,7 +35,7 @@ abstract class CardAdapter<D, T : ViewBinding, H : CardAdapter.ViewHolder>(
     final override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CardItemLayoutBinding.inflate(inflater, parent, false)
-        val pair = getChildAndHoler(inflater, binding, binding.container)
+        val pair = getChildAndHoler(viewType, inflater, binding, binding.container)
         binding.container.removeAllViews()
         binding.container.addView(pair.first.root)
         return pair.second
@@ -63,6 +63,7 @@ abstract class CardAdapter<D, T : ViewBinding, H : CardAdapter.ViewHolder>(
     abstract fun bindCardViewHolder(holder: H, position: Int)
 
     abstract fun getChildAndHoler(
+        viewType: Int,
         layoutInflater: LayoutInflater,
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup

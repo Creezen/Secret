@@ -67,23 +67,19 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
         }
     }
 
-    private fun initView() {
-        with(binding) {
-            base.registerSwipeEvent("base", eventHandle, this@HistoryFragment)
-            left.init(0, 2524608000000) {
-                it.message.toast()
-            }
-            floatingBtn.setOnClickListener {
-                val ctx = activity ?: return@setOnClickListener
-                FlexibleDialog<DialogTimelineBinding>(ctx)
-                    .flexibleView(DialogTimelineBinding::inflate)
-                    .positive {
-                        request<HistoryService, Boolean>({
-                            sendEventData(picker.formatTime(), content.msg())
-                        }) { ui { it.toast() } }
-                    }
-                    .show()
-            }
+    private fun initView() = binding.apply {
+        base.registerSwipeEvent("base", eventHandle, this@HistoryFragment)
+        left.init(0, 2524608000000) {
+            it.message.toast()
+        }
+        floatingBtn.setOnClickListener {
+            val ctx = activity ?: return@setOnClickListener
+            FlexibleDialog<DialogTimelineBinding>(ctx)
+                .flexibleView(DialogTimelineBinding::inflate)
+                .positive {
+                    request<HistoryService, _>({ sendEventData(picker.formatTime(), content.msg()) }) { ui { it.toast() } }
+                }
+                .show()
         }
     }
 

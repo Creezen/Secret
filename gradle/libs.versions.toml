@@ -53,7 +53,7 @@ viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version.ref =
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-okhttp3-integration = { group = "com.github.bumptech.glide", name = "okhttp3-integration", version.ref = "glide" }
 jpinyin = { group = "com.github.stuxuhai", name = "jpinyin", version.ref = "jpinyin" }
-badgeview = { group = "q.rorbin", name = "badgeview", version.ref = "badgeview" }
+badgeview = { group = "com.github.qstumn", name =  "BadgeView", version.ref = "badgeview" }
 zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxing-android-embedded" }
 preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference-ktx" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-android" }

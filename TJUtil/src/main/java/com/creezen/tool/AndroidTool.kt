@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Paint
+import android.graphics.Rect
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
@@ -272,5 +273,14 @@ object AndroidTool {
                 Log.e("LJW", "save error")
             }
         }
+    }
+
+    fun View.onVisible(func: () -> Unit) {
+        val rect = Rect()
+        val isInScreen = getGlobalVisibleRect(rect)
+        if (!isInScreen) return
+        if (rect.width() < measuredWidth) return
+        if (rect.height() < measuredHeight) return
+        func.invoke()
     }
 }

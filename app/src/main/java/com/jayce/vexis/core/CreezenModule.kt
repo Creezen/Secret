@@ -4,6 +4,7 @@ import com.jayce.vexis.foundation.ability.EventRepository
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 import com.jayce.vexis.domain.viewmodel.GomokuViewModel
+import com.jayce.vexis.domain.viewmodel.MailViewModel
 import com.jayce.vexis.domain.viewmodel.PokerViewModel
 import com.jayce.vexis.domain.viewmodel.RegisterViewModel
 import com.jayce.vexis.foundation.ability.socket.LanManager
@@ -17,6 +18,7 @@ val modules = module {
     viewModel { FileViewModel() }
     viewModel { GomokuViewModel() }
     viewModel { PokerViewModel() }
+    viewModel { MailViewModel(get()) }
 
     single { EventRepository() }
     single { LanManager() }

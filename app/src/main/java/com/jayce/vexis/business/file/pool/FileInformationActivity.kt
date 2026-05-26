@@ -26,17 +26,15 @@ class FileInformationActivity : BaseActivity<ActivityFileDetailBinding>() {
         initData()
     }
 
-    private fun initView() {
-        with(binding) {
-            name.text = fileItem.fileName
-            name.isSelected = true
-            fileID.text = fileItem.fileID
-            date.text = fileItem.uploadTime
-            size.text = "${fileItem.fileSize}"
-            expView.setAdapter(fileInformationAdapter)
-            expView.expandGroup(0)
-            expView.expandGroup(1)
-        }
+    private fun initView() = binding.apply {
+        name.text = fileItem.fileName
+        name.isSelected = true
+        fileID.text = fileItem.fileID
+        date.text = fileItem.uploadTime
+        size.text = "${fileItem.fileSize}"
+        expView.setAdapter(fileInformationAdapter)
+        expView.expandGroup(0)
+        expView.expandGroup(1)
     }
 
     private fun initData() {

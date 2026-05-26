@@ -22,6 +22,8 @@
     <color name="metallicGold">#D4AF37</color>
     <!--透明-->
     <color name="transparent">#00000000</color>
+    <!--玻璃绿-->
+    <color name="glassyGreen">#55F274</color>
 
     <!--用户等级颜色-->
     <color name="level_0">#787878</color>

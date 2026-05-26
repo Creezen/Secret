@@ -36,21 +36,19 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
         updateData()
     }
 
-    private fun initView() {
-        with(binding) {
-            floatingBtn.setOnClickListener {
-                startActivity(Intent(activity, FeedbackEditActivity::class.java))
-            }
-
-            refreshLayout.setLoadingColors(R.color.metallicGold, R.color.vermilion)
-            refreshLayout.setMaxOffset(100)
-            refreshLayout.setTriggerDistance(300)
-            refreshLayout.setOnRefreshListener {
-                updateData()
-            }
-            refreshLayout.layoutManager = LinearLayoutManager(context)
-            refreshLayout.adapter = feedbackAdapter
+    private fun initView() = binding.apply {
+        floatingBtn.setOnClickListener {
+            startActivity(Intent(activity, FeedbackEditActivity::class.java))
         }
+
+        refreshLayout.setLoadingColors(R.color.metallicGold, R.color.vermilion)
+        refreshLayout.setMaxOffset(100)
+        refreshLayout.setTriggerDistance(300)
+        refreshLayout.setOnRefreshListener {
+            updateData()
+        }
+        refreshLayout.layoutManager = LinearLayoutManager(context)
+        refreshLayout.adapter = feedbackAdapter
     }
 
     private fun updateData() {
