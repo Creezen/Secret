@@ -30,9 +30,7 @@ class FeedbackEditActivity : BaseActivity<ActivityFeedbackEditBinding>() {
             ThreadTool.runWithBlocking(option) {
                 Util.request<FeedbackService, Boolean>({
                     sendFeedback(liveUser.userId, title, content)
-                }) {
-                    if (it) finish()
-                }
+                }) { if (it) finish() }
             }.onComplete {
                 getScope(SCOPE_EVENT)?.let {
                     sendFeedbackMessage(it, title)

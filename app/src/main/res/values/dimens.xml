@@ -13,4 +13,5 @@
     <dimen name="connect_dialog_padding">12dp</dimen>
     <dimen name="flex_dialog_padding">16dp</dimen>
     <dimen name="corner_8">8dp</dimen>
+    <dimen name="none">0dp</dimen>
 </resources>

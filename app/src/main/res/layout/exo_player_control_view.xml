@@ -25,8 +25,8 @@
        determined. See: https://github.com/google/ExoPlayer/issues/8726.
   -->
   <View android:id="@id/exo_controls_background"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
+      android:layout_width="@dimen/none"
+      android:layout_height="@dimen/none"
       android:background="@color/exo_black_opacity_60"/>
 
   <FrameLayout android:id="@id/exo_bottom_bar"

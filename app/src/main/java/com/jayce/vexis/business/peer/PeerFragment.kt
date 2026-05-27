@@ -19,12 +19,8 @@ import kotlinx.coroutines.Dispatchers
 
 class PeerFragment : BaseFragment<SageFragmentBinding>() {
 
-    companion object {
-        const val TAG = "PeerFragment"
-    }
-
     private var primaryNum = 0
-    private var secordNum = 0
+    private var secondNum = 0
     private var tertiaryNum = 0
 
     private lateinit var primaryList: List<String>
@@ -34,9 +30,9 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     private val primaryItem
         get() = primaryList[primaryNum]
     private val secondItem
-        get() = secondaryList[primaryNum][secordNum]
+        get() = secondaryList[primaryNum][secondNum]
     private val tertiaryItem
-        get() = tertiaryList[primaryNum][secordNum][tertiaryNum]
+        get() = tertiaryList[primaryNum][secondNum][tertiaryNum]
 
     private var isFirst: Boolean = true
 
@@ -45,22 +41,18 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
         PeerAdapter(requireActivity(), list)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initData()
         return binding.root
     }
 
     override fun onGetData(firstInit: Boolean) {
         super.onGetData(firstInit)
-        ThreadTool.runOnMulti(Dispatchers.Main) { fetchAdvice() }
+        ThreadTool.runOnMulti { fetchAdvice() }
     }
 
     private fun initData() {
-        ThreadTool.runOnMulti(Dispatchers.Main) {
+        ThreadTool.runOnMulti {
             val subjectTableEntry = DataTool.loadDataFromYAML<SubjectTableEntry>("SubjectTable") ?: return@runOnMulti
             primaryList = subjectTableEntry.discipline
             secondaryList = subjectTableEntry.category
@@ -72,13 +64,13 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     private fun initView() = binding.apply {
         primary.init(primaryList) {
             primaryNum = it
-            secordNum = 0
+            secondNum = 0
             tertiaryNum = 0
             if (isFirst) return@init
             secondary.refreshData(secondaryList[it])
         }
         secondary.init(secondaryList[0]) {
-            secordNum = it
+            secondNum = it
             tertiaryNum = 0
             if (isFirst) return@init
             tertiary.refreshData(tertiaryList[primary.selectedItemPosition][it])
@@ -89,10 +81,10 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
             isFirst = false
         }
         advice.setOnClickListener {
-            val intent = Intent(context, AdviceActivity::class.java)
+            val intent = Intent(context, PeerActivity::class.java)
             intent.putExtra("primary", primaryList[primaryNum])
-            intent.putExtra("secord", secondaryList[primaryNum][secordNum])
-            intent.putExtra("tertiary", tertiaryList[primaryNum][secordNum][tertiaryNum])
+            intent.putExtra("secord", secondaryList[primaryNum][secondNum])
+            intent.putExtra("tertiary", tertiaryList[primaryNum][secondNum][tertiaryNum])
             startActivity(intent)
         }
         adviceRv.layoutManager = LinearLayoutManager(this@PeerFragment.context)
@@ -100,10 +92,8 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     }
 
     private fun fetchAdvice() {
-        request<PeerService, List<PeerAdviceBean>>(
-            { getAdvice(primaryItem, secondItem, tertiaryItem) }
-        ) {
-            adapter.notifyDataChange(it)
-        }
+        request<PeerService, _>({
+            getAdvice(primaryItem, secondItem, tertiaryItem)
+        }) { adapter.notifyDataChange(it) }
     }
 }

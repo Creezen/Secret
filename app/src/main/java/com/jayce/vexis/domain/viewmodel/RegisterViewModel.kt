@@ -9,9 +9,9 @@ import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.getRandomString
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.getString
-import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseViewModel
+import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
 
@@ -73,14 +73,12 @@ class RegisterViewModel : BaseViewModel() {
         } else {
             showRoleIdIcon.value = false
             request<UserService, Boolean>({ checkInfo(string) }) { status ->
-                ui {
-                    showRoleIdIcon.value = status.not()
-                    isRoleIdValid.value = status
-                    if (!status) {
-                        roleIdHint.value = getString(R.string.role_id_exist)
-                    }
-                    checkRegisterButtonStatus()
+                showRoleIdIcon.value = status.not()
+                isRoleIdValid.value = status
+                if (!status) {
+                    roleIdHint.value = getString(R.string.role_id_exist)
                 }
+                checkRegisterButtonStatus()
             }
         }
     }
@@ -122,10 +120,10 @@ class RegisterViewModel : BaseViewModel() {
         checkRegisterButtonStatus()
     }
 
-    fun handleBirthday(list: List<String>) {
-        birthdayYear.value = list[0]
-        birthdayMonth.value = list[1]
-        birthdayDay.value = list[2]
+    fun handleBirthday(timeUnitEntry: TimeUnitEntry) {
+        birthdayYear.value = timeUnitEntry.year.toString()
+        birthdayMonth.value = timeUnitEntry.month.toString()
+        birthdayDay.value = timeUnitEntry.day.toString()
     }
 
     fun handleBio(string: String) {
@@ -153,7 +151,6 @@ class RegisterViewModel : BaseViewModel() {
         }
         val phoneNum = phoneNumber.value ?: NIL
         val addressValue = address.value ?: NIL
-        Log.d("LJW", "emailContent.value: ${emailContent.value} addressValue: ${address.value}")
         val bioValue = bio.value ?: NIL
         val isEdit = if (isUserProfileEdit(emailValue, phoneNum, addressValue, bioValue)) 1 else 0
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)

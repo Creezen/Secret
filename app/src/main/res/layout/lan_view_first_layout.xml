@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="@dimen/none"
         android:textSize="16sp"/>
     <RadioButton
         android:id="@+id/client"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/corner_8"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginEnd="@dimen/none"
         android:textSize="16sp"
         android:hint="@string/input_server_ipv4"
         android:importantForAutofill="no"

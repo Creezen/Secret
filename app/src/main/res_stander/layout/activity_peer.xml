@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".business.peer.AdviceActivity"
+    tools:context=".business.peer.PeerActivity"
     android:orientation="vertical">
     <EditText
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"
         android:hint="@string/words_to_user"
         android:gravity="top|start"

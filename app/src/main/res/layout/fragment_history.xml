@@ -2,7 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.jayce.vexis.foundation.ui.block.ScalableScrollView
+    <com.jayce.vexis.business.history.HistoryOptionPanel
+        android:id="@+id/optionPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:background="@color/white"
+        android:visibility="gone"/>
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -11,30 +19,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <com.jayce.vexis.foundation.ui.block.TimeView
+            <com.jayce.vexis.business.history.TimeView
                 android:id="@+id/left"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/paleGray"/>
-            <TextView
+                android:orientation="vertical"/>
+            <com.jayce.vexis.business.history.TimeAxis
                 android:id="@+id/center"
-                android:layout_width="60dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
-                android:background="@color/metallicGold">
-            </TextView>
-            <com.jayce.vexis.foundation.ui.block.TimeView
+                android:background="@color/white">
+            </com.jayce.vexis.business.history.TimeAxis>
+            <com.jayce.vexis.business.history.TimeView
                 android:id="@+id/right"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/paleGray"/>
+                android:orientation="vertical"/>
         </LinearLayout>
-    </com.jayce.vexis.foundation.ui.block.ScalableScrollView>
+    </ScrollView>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

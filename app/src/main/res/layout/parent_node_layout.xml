@@ -7,4 +7,4 @@
     android:textSize="15.4sp"
     android:gravity="start"
     android:paddingStart="3dp"
-    android:paddingEnd="0dp"/>
+    android:paddingEnd="@dimen/none"/>

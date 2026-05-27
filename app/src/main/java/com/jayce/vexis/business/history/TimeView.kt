@@ -1,4 +1,4 @@
-package com.jayce.vexis.foundation.ui.block
+package com.jayce.vexis.business.history
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -14,10 +14,6 @@ import com.jayce.vexis.domain.bean.TraceEntry
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    companion object {
-        const val TAG = "TimeView"
-    }
-
     private var earliestTime: Long = 0
     private var latestTime: Long = Long.MAX_VALUE
     private val contentList = arrayListOf<TraceEntry>()
@@ -26,13 +22,11 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private val paint = Paint()
     private val bitmap by lazy {
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.goal, null)
-        var bitmap: Bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-        drawable?.let {
-            bitmap = Bitmap.createBitmap(it.intrinsicWidth, it.intrinsicHeight, Bitmap.Config.ARGB_8888)
-            val canvas = Canvas(bitmap)
-            it.setBounds(0, 0, canvas.width, canvas.height)
-            it.draw(canvas)
-        }
+            ?: return@lazy Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
         bitmap
     }
 
@@ -68,7 +62,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (event == null) return true
+        if (event == null) return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 val itemList = contentList.reversed().filter {

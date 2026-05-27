@@ -19,7 +19,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/iv1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"
             android:orientation="horizontal"/>
         <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:text="@string/account"
                     android:layout_weight="1"
@@ -41,7 +41,7 @@
                     android:textSize="20sp"/>
                 <EditText
                     android:id="@+id/name"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textSize="30sp"
@@ -62,7 +62,7 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp">
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:text="@string/password"
                     android:layout_weight="1"
@@ -70,7 +70,7 @@
                     android:textSize="20sp"/>
                 <EditText
                     android:id="@+id/password"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:textSize="30sp"
@@ -94,14 +94,14 @@
                 android:orientation="horizontal">
                 <Button
                     android:id="@+id/createAccount"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/create_role"
                     style="@style/buttonStyle"/>
                 <Button
                     android:id="@+id/findPassword"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/find_password"
@@ -110,7 +110,7 @@
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1">
             <TextView
                 android:id="@+id/versionMsg"

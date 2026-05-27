@@ -36,7 +36,7 @@ class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
     }
 
     private fun loadData() {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             list.clear()
             val recordList = scoreDao.getRecordList()
             recordList.forEach {

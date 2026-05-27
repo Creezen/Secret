@@ -188,4 +188,9 @@
     <string name="run_fast">跑得快</string>
     <string name="unknown_user">未知用户</string>
     <string name="manager">管理</string>
+    <string name="start_date_time">开始时间</string>
+    <string name="end_date_time">结束时间</string>
+    <string name="date_split">-</string>
+    <string name="time_split">:</string>
+    <string name="millis_split">.</string>
 </resources>

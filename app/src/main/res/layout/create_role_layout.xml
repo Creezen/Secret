@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             app:layout_constraintHeight_default="spread"
             app:layout_constraintTop_toBottomOf="@+id/registerTitle"
             app:layout_constraintBottom_toTopOf="@id/registerBtn">
@@ -143,7 +143,7 @@
                     app:constraint_referenced_ids="introductionTv,addressTv,phoneTv,emailTv,accountTv,nicknameTv,passwordTv,confirmPasswordTv,birthdayTv,sexTv"/>
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/roleId"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/content"
                     android:text="@={vm.roleId}"
@@ -153,7 +153,7 @@
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:inputType="text"
                     app:showIcon="@{vm.showRoleIdIcon}"
                     app:iconText="@{vm.roleIdHint}"
@@ -163,14 +163,14 @@
                     app:layout_constraintBottom_toBottomOf="@id/accountTv"/>
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/nickname"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:inputType="text"
                     android:textColor="@{vm.isNicknameValid ? 0xFF00FF00 : 0xFF000000}"
                     android:text="@={vm.nickname}"
@@ -184,14 +184,14 @@
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/password"
                     android:inputType="textPassword"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:text="@={vm.password}"
                     app:showIcon="@{vm.showPasswordIcon}"
                     app:iconText="@{vm.passwordHint}"
@@ -202,14 +202,14 @@
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/confirmPassword"
                     android:inputType="textPassword"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:text="@={vm.confirmPassword}"
                     app:showIcon="@{vm.showConfirmPasswordIcon}"
                     app:iconText="@{vm.confirmPasswordHint}"
@@ -220,14 +220,14 @@
                     app:layout_constraintBottom_toBottomOf="@+id/confirmPasswordTv"/>
                 <LinearLayout
                     android:id="@+id/birthdayLayout"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@+id/barrier"
                     app:layout_constraintEnd_toEndOf="@+id/guideLine"
                     app:layout_constraintTop_toTopOf="@+id/birthdayTv"
                     app:layout_constraintBottom_toBottomOf="@+id/birthdayTv">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/corner_16"
@@ -235,7 +235,7 @@
                         android:gravity="center"
                         android:text="@{vm.birthdayYear}"/>
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/corner_16"
@@ -245,7 +245,7 @@
                         android:gravity="center"
                         android:text="@{vm.birthdayMonth}"/>
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/corner_16"
@@ -255,7 +255,7 @@
                 </LinearLayout>
                 <com.jayce.vexis.foundation.ui.block.DefaultSpinner
                     android:id="@+id/sex"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:background="@drawable/corner_16"
                     app:layout_constraintStart_toStartOf="@+id/barrier"
@@ -265,7 +265,7 @@
                     android:selectedItemPosition="@={vm.sexSelectPosition}"/>
                 <LinearLayout
                     android:id="@+id/emailLayout"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="@+id/barrier"
@@ -274,7 +274,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/emailTv">
                     <com.jayce.vexis.foundation.ui.block.HintView
                         android:id="@+id/email"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/none"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="@string/choose_fill"
@@ -283,7 +283,7 @@
                         android:layout_marginTop="@dimen/margin"
                         android:layout_marginBottom="@dimen/margin"
                         android:paddingStart="@dimen/margin"
-                        android:paddingEnd="0dp"
+                        android:paddingEnd="@dimen/none"
                         android:layout_marginEnd="@dimen/margin"
                         android:importantForAutofill="no"
                         android:inputType="textEmailAddress"
@@ -302,14 +302,14 @@
                 </LinearLayout>
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/phone"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:hint="@string/choose_fill"
                     android:importantForAutofill="no"
                     android:inputType="phone"
@@ -320,14 +320,14 @@
                     android:text="@={vm.phoneNumber}"/>
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/address"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:hint="@string/choose_fill"
                     android:importantForAutofill="no"
                     android:inputType="none"
@@ -338,14 +338,14 @@
                     android:text="@={vm.address}"/>
                 <com.jayce.vexis.foundation.ui.block.HintView
                     android:id="@+id/bio"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_height="match_parent"
                     android:textSize="@dimen/content"
                     android:background="@drawable/corner_8"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginBottom="@dimen/margin"
                     android:paddingStart="@dimen/margin"
-                    android:paddingEnd="0dp"
+                    android:paddingEnd="@dimen/none"
                     android:gravity="top|start"
                     android:hint="@string/choose_fill"
                     android:lines="8"

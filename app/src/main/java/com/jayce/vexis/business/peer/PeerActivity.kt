@@ -7,11 +7,11 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
-import com.jayce.vexis.databinding.ActivityAdviceBinding
+import com.jayce.vexis.databinding.ActivityPeerBinding
 import com.jayce.vexis.domain.route.PeerService
 import com.jayce.vexis.foundation.Util.request
 
-class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
+class PeerActivity : BaseActivity<ActivityPeerBinding>() {
 
     companion object {
         const val TAG = "AdviceActivity"
@@ -49,7 +49,7 @@ class AdviceActivity : BaseActivity<ActivityAdviceBinding>() {
                     finish()
                     return@request
                 }
-                ui { "服务器错误，请重试!!".toast() }
+                "服务器错误，请重试!!".toast()
             }
         }
     }

@@ -73,7 +73,7 @@ object AndroidTool {
     }
 
     fun <T> getDataAsync(key: String, default: T, block: suspend (T) -> Unit) {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             block(getData(key, default))
         }
     }
@@ -94,7 +94,7 @@ object AndroidTool {
     }
 
     fun <T> putDataAsync(key: String, value: T, block: () -> Unit) {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             putData(key, value)
             block.invoke()
         }
@@ -138,7 +138,8 @@ object AndroidTool {
         }
     }
 
-    fun TextView.intMsg(): Int {
+    fun TextView.intMsg(default: Int = 0): Int {
+        if (this.msg().isEmpty()) return default
         return this.msg().toInt()
     }
 
@@ -282,5 +283,13 @@ object AndroidTool {
         if (rect.width() < measuredWidth) return
         if (rect.height() < measuredHeight) return
         func.invoke()
+    }
+
+    fun Paint.adjustTextSize(drawWidth: Float, text: String) {
+        val initSize = 5f
+        textSize = initSize
+        val measureWidth = measureText(text)
+        val realWidth = initSize * (drawWidth / measureWidth)
+        textSize = realWidth
     }
 }

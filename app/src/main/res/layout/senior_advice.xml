@@ -4,20 +4,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="8dp"
+    android:padding="4dp">
     <TextView
         android:id="@+id/adviceContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:textSize="25sp"
+        android:textSize="18sp"
         android:layout_marginBottom="4dp"
         android:layout_marginStart="4dp"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="2dp">
         <ImageView
             android:id="@+id/resource"
             android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
             android:importantForAccessibility="no"/>
         <ImageView
             android:id="@+id/love"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:src="@drawable/support_blank"

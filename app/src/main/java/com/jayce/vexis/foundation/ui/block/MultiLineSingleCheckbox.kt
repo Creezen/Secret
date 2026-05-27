@@ -7,15 +7,13 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import androidx.core.view.setPadding
 import com.creezen.commontool.Config.NIL
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.TextCheckBoxBinding
 import kotlin.math.ceil
 
-class MultiLineSingleCheckbox(
-    private val context: Context,
-    attr: AttributeSet,
-) : LinearLayout(context, attr) {
+class MultiLineSingleCheckbox(private val context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
     private var itemOneLine: Int = 1
     private var childItemCount = 0
     private val strList = arrayListOf<String>()
@@ -27,6 +25,7 @@ class MultiLineSingleCheckbox(
         val styleAttribute = context.obtainStyledAttributes(attr, R.styleable.MultiLineSingleCheckbox)
         itemOneLine = styleAttribute.getInt(R.styleable.MultiLineSingleCheckbox_itemOneLine, 1)
         styleAttribute.recycle()
+        setPadding(2)
     }
 
     fun selectedItem(): String {
@@ -55,11 +54,7 @@ class MultiLineSingleCheckbox(
         }
     }
 
-    private fun addLayout(
-        position: Int,
-        backgroundId: Int?,
-        onItemSelect: (String) -> Unit,
-    ) {
+    private fun addLayout(position: Int, backgroundId: Int?, onItemSelect: (String) -> Unit) {
         val linearLayout = LinearLayout(context)
         linearLayout.orientation = HORIZONTAL
         linearLayout.layoutParams = LayoutParams(MATCH_PARENT, WRAP_CONTENT)

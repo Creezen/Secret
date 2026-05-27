@@ -53,10 +53,8 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
     private fun updateData() {
         request<FeedbackService, ArrayList<FeedbackBean>>({ getFeedback() }) {
-            withContext(Dispatchers.Main) {
-                feedbackAdapter.notifyDataChange(it)
-                binding.refreshLayout.isRefreshing = false
-            }
+            feedbackAdapter.notifyDataChange(it)
+            binding.refreshLayout.isRefreshing = false
         }
     }
 }

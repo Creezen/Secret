@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.os.StrictMode
 import com.creezen.commontool.Config.ACTION_BROADCAST_LOGOUT
 import com.creezen.commontool.Config.ACTION_BROADCAST_NOTIFY
 import com.creezen.tool.AndroidTool.getDataAsync
@@ -58,7 +59,7 @@ class Env : Application() {
 
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
 
-        runOnMulti(Dispatchers.IO) {
+        runOnMulti {
             val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             manager.registerDefaultNetworkCallback(NetStatusCallback())
         }

@@ -30,7 +30,7 @@ import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 class SectionAdapter(
     val context: Context,
     val activity: Activity,
-    private var itemList: List<SectionRemarkBean>,
+    private var itemList: List<SectionRemarkBean>
 ) : BaseAdapter<SectionRemarkBean, RecyclerView.ViewHolder>() {
 
     private val list: ArrayList<String> =
@@ -57,10 +57,7 @@ class SectionAdapter(
         itemList = newList
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewHolder = if (viewType == 1) {
             val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             ViewHolder(binding)
@@ -68,14 +65,10 @@ class SectionAdapter(
             val binding = ArticleImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             ImageViewHolder(binding)
         }
-
         return viewHolder
     }
 
-    override fun onBindViewHolder(
-        holder: RecyclerView.ViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val type = holder.itemViewType
         val item = itemList[position]
         if (type == 1) {
@@ -98,10 +91,7 @@ class SectionAdapter(
 
     override fun getItemCount() = itemList.size
 
-    private fun displayComment(
-        position: Int,
-        textView: TextView,
-    ) {
+    private fun displayComment(position: Int, textView: TextView) {
         val content = itemList[position].content.trim()
         val contentLength = content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
@@ -111,9 +101,9 @@ class SectionAdapter(
                 contentList[0].cotent.toast()
             }
         }
-        val spanString = SpannableString("$content    ")
-        spanString.setSpan(imageSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
-        spanString.setSpan(clickSpan, contentLength, contentLength + 4, ImageSpan.ALIGN_CENTER)
+        val spanString = SpannableString("$content ")
+        spanString.setSpan(imageSpan, contentLength, contentLength + 1, ImageSpan.ALIGN_CENTER)
+        spanString.setSpan(clickSpan, contentLength, contentLength + 1, ImageSpan.ALIGN_CENTER)
         textView.text = spanString
         textView.movementMethod = LinkMovementMethod.getInstance()
     }
@@ -133,18 +123,20 @@ class SectionAdapter(
                 val userId = liveUser.userId
                 val paragraphId = itemList[position].sectionId
                 val content = commentContent.msg()
+                if (content.isEmpty()) {
+                    "评论内容不可以为空".toast()
+                    return@positive
+                }
                 request<ArticleService, Boolean>({
                     postCommen(articleId, paragraphId, userId, content)
-                }) {
-                    ui { it.toast() }
-                }
+                }) { it.toast() }
                 itemList[position].sectionId.toast()
             }
             .onDismiss {
                 val color = (view.background as ColorDrawable).color
                 view.setBackgroundColor(color.xor(xorColor))
             }
-            .show()
+            .show(FlexibleDialog.FlexibleSize(300, -1))
     }
 
     fun setArticleId(articleId: Long) {

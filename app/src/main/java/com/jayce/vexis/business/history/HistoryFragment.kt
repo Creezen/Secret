@@ -9,25 +9,18 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
-import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.ability.click.ClickHandle
 import com.creezen.tool.ability.click.SwipeCallback
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
-import com.jayce.vexis.databinding.TimeLineBinding
+import com.jayce.vexis.databinding.FragmentHistoryBinding
 import com.jayce.vexis.domain.route.HistoryService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
-class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
+class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), SwipeCallback {
 
-    companion object {
-        const val TAG = "HistoryFragment"
-    }
-
-    private val eventHandle by lazy {
-        ClickHandle(ClickHandle.Mode.LISTENER)
-    }
+    private val eventHandle = ClickHandle(ClickHandle.Mode.LISTENER)
 
     private var ratio: Float = -1f
     private var rootWidth: Int = -1
@@ -35,18 +28,9 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
 
     private val eventList: ArrayList<HistoryBean> = arrayListOf()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()
-        binding.root.apply {
-            post {
-                rootHeight = measuredHeight
-                rootWidth = width
-            }
-        }
+        updateSize()
         return binding.root
     }
 
@@ -58,6 +42,23 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.base.unregisterSwipeEvent("base", eventHandle)
+    }
+
+    fun changeOptionPanel() {
+        val panel = binding.optionPanel
+        val visibility = panel.visibility
+        panel.visibility = when (visibility) {
+            View.GONE -> View.VISIBLE
+            View.VISIBLE -> View.GONE
+            else -> View.VISIBLE
+        }
+    }
+
+    private fun updateSize() {
+        binding.root.post {
+            rootHeight = binding.root.measuredHeight
+            rootWidth = binding.root.width
+        }
     }
 
     private fun queryList() {
@@ -77,16 +78,19 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
             FlexibleDialog<DialogTimelineBinding>(ctx)
                 .flexibleView(DialogTimelineBinding::inflate)
                 .positive {
-                    request<HistoryService, _>({ sendEventData(picker.formatTime(), content.msg()) }) { ui { it.toast() } }
+                    val time = picker.formatTime()
+                    val msg = content.msg()
+                    request<HistoryService, _>({ sendEventData(time, msg) }) { it.toast() }
                 }
                 .show()
         }
+
+        scroll.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+//            Log.d("LJW", "scrollY: $scrollY  oldScrollY: $oldScrollY")
+        }
     }
 
-    override fun onPinchIn(
-        viewId: String,
-        scaleFactor: Float,
-    ): Boolean {
+    override fun onPinchIn(viewId: String, scaleFactor: Float): Boolean {
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredHeight = binding.center.height
@@ -97,10 +101,7 @@ class HistoryFragment : BaseFragment<TimeLineBinding>(), SwipeCallback {
         return super.onPinchIn(viewId, scaleFactor)
     }
 
-    override fun onPinchOut(
-        viewId: String,
-        scaleFactor: Float,
-    ): Boolean {
+    override fun onPinchOut(viewId: String, scaleFactor: Float): Boolean {
         if (viewId == "base") {
             val param = binding.center.layoutParams
             val measuredWidth = binding.center.measuredWidth

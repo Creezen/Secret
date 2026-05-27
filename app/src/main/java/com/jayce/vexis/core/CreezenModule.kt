@@ -1,5 +1,6 @@
 package com.jayce.vexis.core
 
+import com.jayce.vexis.business.history.TimeManager
 import com.jayce.vexis.foundation.ability.EventRepository
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
 import com.jayce.vexis.domain.viewmodel.FileViewModel
@@ -22,4 +23,5 @@ val modules = module {
 
     single { EventRepository() }
     single { LanManager() }
+    single { TimeManager() }
 }

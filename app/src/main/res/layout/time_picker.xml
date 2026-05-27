@@ -4,42 +4,71 @@
     android:layout_height="match_parent">
     <NumberPicker
         android:id="@+id/year"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/date_split"/>
     <NumberPicker
         android:id="@+id/month"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/date_split"/>
     <NumberPicker
         android:id="@+id/day"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants"/>
+        android:descendantFocusability="blocksDescendants"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="0dp"/>
     <NumberPicker
         android:id="@+id/hour"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants"/>
+        android:descendantFocusability="blocksDescendants"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="0dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/time_split"/>
     <NumberPicker
         android:id="@+id/minus"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/time_split" />
     <NumberPicker
         android:id="@+id/second"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="@string/millis_split"/>
     <NumberPicker
         android:id="@+id/mills"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"/>
 </merge>

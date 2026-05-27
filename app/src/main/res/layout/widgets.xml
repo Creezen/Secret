@@ -10,7 +10,7 @@
         <Button
             android:id="@+id/ledger"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"
             android:text="@string/pocket"/>
         <Button
@@ -53,6 +53,6 @@
         android:minLines="3"/>
     <com.jayce.vexis.foundation.ui.animator.AnimatorView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"/>
 </LinearLayout>

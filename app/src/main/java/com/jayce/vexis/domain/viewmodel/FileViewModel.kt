@@ -32,7 +32,7 @@ class FileViewModel : BaseViewModel() {
     }
 
     fun fetchAndHandleTask() {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             while (true) {
                 val task = taskQueue.take()
                 val totalSize = task.size

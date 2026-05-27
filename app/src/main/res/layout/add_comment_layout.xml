@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
     <com.jayce.vexis.foundation.ui.block.MultiLineSingleCheckbox
         android:id="@+id/singleSelect"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemOneLine="3"/>
+        app:itemOneLine="3"
+        android:background="@drawable/corner_16_stroke"/>
     <EditText
         android:id="@+id/commentContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="3"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:hint="@string/input_suggession"
         android:gravity="start|top"
         android:importantForAutofill="no"

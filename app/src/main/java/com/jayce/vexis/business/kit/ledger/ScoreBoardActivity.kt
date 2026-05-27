@@ -137,7 +137,7 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
     }
 
     private fun saveRecord() {
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             val recordItemEntry = RecordItemEntry(title, createTime)
             val recordId = scoreDao.insertRecord(recordItemEntry)
             val userStr = StringBuilder()

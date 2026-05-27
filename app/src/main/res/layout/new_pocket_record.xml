@@ -29,7 +29,7 @@
             android:text="@string/record"/>
         <HorizontalScrollView
             android:id="@+id/playerNameSV"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -41,7 +41,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"
         android:orientation="horizontal">
         <ScrollView
@@ -75,7 +75,7 @@
             android:text="@string/total"/>
         <HorizontalScrollView
             android:id="@+id/totalScoreSV"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
@@ -95,21 +95,21 @@
         android:background="#F5F5F5">
         <ImageView
             android:id="@+id/addUser"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/add"
             android:importantForAccessibility="no"/>
         <ImageView
             android:id="@+id/addRecord"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/payment"
             android:importantForAccessibility="no"/>
         <ImageView
             android:id="@+id/save"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/save"

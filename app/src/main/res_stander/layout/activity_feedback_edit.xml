@@ -26,7 +26,7 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/type"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"/>
@@ -44,7 +44,7 @@
             android:textSize="20sp"/>
         <EditText
             android:id="@+id/title"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:background="@drawable/corner_8"
@@ -55,7 +55,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"
         android:orientation="horizontal">
         <TextView
@@ -66,12 +66,12 @@
             android:textSize="20sp" />
         <EditText
             android:id="@+id/content"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="@string/input_feedback_content"
             android:paddingStart="3dp"
-            android:paddingEnd="0dp"
+            android:paddingEnd="@dimen/none"
             android:paddingTop="3dp"
             android:gravity="start|top"
             android:layout_marginStart="8dp"

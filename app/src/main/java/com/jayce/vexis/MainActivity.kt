@@ -40,7 +40,6 @@ import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool.destroySocket
-import com.creezen.tool.NetTool.setImage
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.bean.FragmentAnimRes
@@ -65,6 +64,7 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
 import com.jayce.vexis.databinding.DialogBinding
+import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.ability.EventRepository
@@ -149,9 +149,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         getDataAsync(AVATAR_SAVE_TIME, 0L) { time ->
             val imageUrl = "${liveUser.userId}.png"
             val key = time.toString()
-            ui {
-                setImage(this@MainActivity, avatarView, imageUrl, placeHolder = null, key, true)
-            }
+            ui { avatarView.load(imageUrl, placeHolder = null, key, true) }
         }
     }
 
@@ -190,15 +188,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         binding.apply {
             setSupportActionBar(toolBar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            toolBarText.text = navigation.menu.getItem(4).title
+            toolBarText.text = navigation.menu.getItem(0).title
             fragmentHolder?.kitFragment?.let { replaceFragment(it, FRAGMENT_KIT) }
+            toolBarText.setOnClickListener {
+                val clickId = navigation.checkedItem?.itemId
+                if (clickId != R.id.MainMenuTimeline) return@setOnClickListener
+                val fragment = fragmentHolder?.historyFragment ?: return@setOnClickListener
+                fragment.changeOptionPanel()
+            }
         }
     }
 
     private fun initNavigation() {
         val navigation = binding.navigation
         navigation.setNavigationItemSelectedListener(this@MainActivity)
-        navigation.setCheckedItem(R.id.MainMenuTimeline)
+        navigation.setCheckedItem(R.id.MainMenuWidget)
         val headView = navigation.getHeaderView(0) as LinearLayout
         avatarView = headView.findViewById(R.id.avataView)
         emailView = headView.findViewById(R.id.myEmail)

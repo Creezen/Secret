@@ -19,6 +19,7 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        articleId = intent.getLongExtra("articleId", -1)
         initPage()
         initData()
     }
@@ -38,6 +39,5 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
                 adapter.notifyDataSetChanged()
             }
         }
-        articleId = intent.getLongExtra("articleId", -1)
     }
 }

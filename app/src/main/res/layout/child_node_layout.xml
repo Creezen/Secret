@@ -5,4 +5,4 @@
     android:layout_height="wrap_content"
     android:textSize="25sp"
     android:paddingStart="3dp"
-    android:paddingEnd="0dp"/>
+    android:paddingEnd="@dimen/none"/>

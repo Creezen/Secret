@@ -8,13 +8,13 @@
     android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"
         android:orientation="vertical">
         <LinearLayout
             android:id="@+id/user"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/avata"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/none"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
                 android:layout_marginBottom="12dp">
                 <TextView
                     android:id="@+id/userID"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="start"
@@ -54,7 +54,7 @@
                     android:layout_marginEnd="6dp"/>
                 <TextView
                     android:id="@+id/createTime"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:gravity="end"
@@ -66,7 +66,7 @@
 
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/post"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
 
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/follow"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fans"
@@ -94,7 +94,7 @@
             app:cardDescription="@string/follow_person"/>
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/fans"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/follow"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +109,7 @@
 
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/support"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/against"
@@ -123,7 +123,7 @@
             app:cardDescription="@string/get_support"/>
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/against"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/support"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,7 +137,7 @@
             app:cardDescription="@string/against_gain"/>
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/inform"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/reported"
@@ -153,7 +153,7 @@
             app:cardDescription="@string/number_user_report"/>
         <com.jayce.vexis.foundation.ui.block.BasicInformationCard
             android:id="@+id/reported"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/inform"
             app:layout_constraintEnd_toEndOf="parent"
@@ -174,13 +174,13 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/delete"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/delete_user"/>
         <Button
             android:id="@+id/setAdministrator"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/set_to_admin"/>

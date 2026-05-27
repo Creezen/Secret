@@ -4,18 +4,18 @@
     android:layout_height="match_parent">
     <NumberPicker
         android:id="@+id/year"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"/>
     <NumberPicker
         android:id="@+id/month"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"/>
     <NumberPicker
         android:id="@+id/day"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"/>

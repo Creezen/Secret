@@ -24,7 +24,7 @@ object ThreadTool {
         Executors.newSingleThreadExecutor { Thread(it, "TJ-S") }.asCoroutineDispatcher()
     }
 
-    private val multi by lazy {
+    internal val multi by lazy {
         Executors.newFixedThreadPool(16) { Thread(it, "TJ-M") }.asCoroutineDispatcher()
     }
 
@@ -50,12 +50,9 @@ object ThreadTool {
         }
     }
 
-    fun runOnSingle(
-        dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend (ThreadWrapperImpl) -> Unit
-    ): ThreadWrapper {
+    fun runOnSingle(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
         val wrapper = ThreadWrapperImpl()
-        singleScope.launch(dispatcher) {
+        singleScope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }
@@ -63,12 +60,9 @@ object ThreadTool {
         return wrapper
     }
 
-    fun runOnMulti(
-        dispatcher: CoroutineDispatcher = Dispatchers.Default,
-        func: suspend (ThreadWrapperImpl) -> Unit
-    ): ThreadWrapper {
+    fun runOnMulti(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
         val wrapper = ThreadWrapperImpl()
-        multiScope.launch(dispatcher) {
+        multiScope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }
@@ -117,7 +111,7 @@ object ThreadTool {
             return defaultWrapper
         }
         return when (option.type) {
-            ThreadType.SINGLE -> runOnSingle(option.dispatcher) {
+            ThreadType.SINGLE -> runOnSingle {
                 blockCallback(it, option.delayMillis, onDispatch)
             }
             ThreadType.MULTI -> runOnMulti {

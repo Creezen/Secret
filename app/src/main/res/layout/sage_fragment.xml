@@ -11,12 +11,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
                 <com.jayce.vexis.foundation.ui.block.DefaultSpinner
                     android:id="@+id/primary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:prompt="@string/prompt"
@@ -26,7 +27,7 @@
                     android:id="@+id/secondary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:prompt="@string/prompt"
@@ -36,7 +37,7 @@
                     android:id="@+id/tertiary"
                     android:dropDownVerticalOffset="30dp"
                     android:spinnerMode="dropdown"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/none"
                     android:layout_weight="3"
                     android:layout_height="wrap_content"
                     android:prompt="@string/prompt"
@@ -46,7 +47,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/adviceRv"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/none"
                 android:layout_weight="1"
                 android:layout_marginTop="5dp"/>
         </LinearLayout>

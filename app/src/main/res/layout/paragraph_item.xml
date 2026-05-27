@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:gravity="start|center_vertical"
         android:textSize="18sp"
-        android:paddingStart="6dp"
-        android:paddingEnd="6dp">
+        android:paddingStart="2dp"
+        android:paddingEnd="@dimen/none">
     </TextView>
 </LinearLayout>

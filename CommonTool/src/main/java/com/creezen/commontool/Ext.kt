@@ -51,3 +51,12 @@ fun isLeapYear(year: Int) = when {
     year % 4 == 0 -> true
     else -> false
 }
+
+fun getMaxDayOfMonth(year: Int, month: Int): Int {
+    val isLeap = isLeapYear(year)
+    return when (month) {
+        1,3,5,7,8,10,12 -> 31
+        4,6,9,11 -> 30
+        else -> if (isLeap) 29 else 28
+    }
+}

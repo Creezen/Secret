@@ -8,9 +8,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BaseFragment<K : ViewBinding> : Fragment(), Common<K> {
 
     private var isUIDataInit: Boolean = false
-    val binding: K by lazy {
-        getBind()
-    }
+    val binding: K by lazy { getBind() }
 
     final override fun getLayoutInflate(): LayoutInflater {
         return layoutInflater

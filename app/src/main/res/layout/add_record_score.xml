@@ -5,19 +5,19 @@
     android:orientation="horizontal">
     <TextView
         android:id="@+id/userName"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"/>
     <Button
         android:id="@+id/add"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/add_symbol"/>
     <EditText
         android:id="@+id/edit"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
@@ -27,7 +27,7 @@
         android:inputType="number"/>
     <Button
         android:id="@+id/sub"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/none"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/line"/>

@@ -14,7 +14,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/page"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"/>
     <FrameLayout
         android:id="@+id/progressContainer"
@@ -35,13 +35,13 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/taskName"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="@string/in_download"
                 android:gravity="start|center_vertical"
                 android:paddingStart="8dp"
-                android:paddingEnd="0dp"/>
+                android:paddingEnd="@dimen/none"/>
             <TextView
                 android:id="@+id/fileSize"
                 android:layout_width="wrap_content"

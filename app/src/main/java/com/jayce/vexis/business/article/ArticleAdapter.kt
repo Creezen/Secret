@@ -2,6 +2,7 @@ package com.jayce.vexis.business.article
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.creezen.commontool.bean.ArticleBean

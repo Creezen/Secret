@@ -6,7 +6,7 @@ import com.jayce.vexis.domain.enums.TimePickerType
 class TimePickerFactory {
 
     companion object {
-        val yearList by lazy { getNumberList(10000) }
+        val yearList by lazy { getNumberList(10000, 1) }
         val monthList by lazy { getNumberList(12, 1) }
         val dayList by lazy { getNumberList(31, 1) }
         val hourList by lazy { getNumberList(24, 0) }

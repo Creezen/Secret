@@ -58,7 +58,7 @@ class RecordHistoryAdapter(
         holder.time.text = items.time
         holder.result.text = items.result
         holder.view.setOnClickListener {
-            ThreadTool.runOnMulti(Dispatchers.IO) {
+            ThreadTool.runOnMulti {
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
                 Log.e(TAG, "$userList")

@@ -47,7 +47,7 @@ class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatE
         if (item.isRead) return
         holder.view.onVisible {
             item.isRead = true
-            ThreadTool.runOnMulti(Dispatchers.IO) {
+            ThreadTool.runOnMulti {
                 eventDao.markEventAsRead(item.id)
             }
         }

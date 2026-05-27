@@ -1,7 +1,6 @@
 package com.jayce.vexis.foundation
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.widget.ImageView
 import com.creezen.commontool.Config.NIL
 import com.creezen.commontool.bean.ActiveBean
@@ -19,7 +18,6 @@ import com.jayce.vexis.domain.bean.ChatEntry
 import com.jayce.vexis.domain.bean.EventEntry
 import com.jayce.vexis.domain.bean.FileEntry
 import com.jayce.vexis.domain.bean.UserEntry
-import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 
 object Util {
@@ -30,12 +28,12 @@ object Util {
         crossinline func: suspend K.() -> Call<T>,
         crossinline callback: suspend (T) -> Unit
     ) {
-        runOnMulti(Dispatchers.IO) {
+        runOnMulti {
             kotlin.runCatching {
                 val result = func.invoke(NetTool.create()).await()
                 ui { callback(result) }
             }.onFailure {
-                Log.e(TAG, "Request network error: ${it.message}")
+                it.printStackTrace()
             }
         }
     }

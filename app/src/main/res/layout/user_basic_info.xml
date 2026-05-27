@@ -9,7 +9,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -17,14 +17,14 @@
             android:text="@string/register_time"/>
         <TextView
             android:id="@+id/createTime"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/isEdit"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
@@ -38,7 +38,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/sex"
@@ -46,13 +46,13 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/sex"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
             android:textSize="20sp"/>
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/age"
@@ -60,13 +60,13 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/age"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
             android:textSize="20sp"/>
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/money"
@@ -74,7 +74,7 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/count"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -86,7 +86,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -94,7 +94,7 @@
             android:text="@string/birthday"/>
         <TextView
             android:id="@+id/birthday"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
@@ -106,7 +106,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -114,7 +114,7 @@
             android:text="@string/phone_number"/>
         <TextView
             android:id="@+id/phone"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
@@ -126,7 +126,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -134,7 +134,7 @@
             android:text="@string/email"/>
         <TextView
             android:id="@+id/email"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
@@ -146,7 +146,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -154,7 +154,7 @@
             android:text="@string/address"/>
         <TextView
             android:id="@+id/address"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
@@ -166,7 +166,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
@@ -174,7 +174,7 @@
             android:text="@string/self_intro"/>
         <TextView
             android:id="@+id/selfIntroduction"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"

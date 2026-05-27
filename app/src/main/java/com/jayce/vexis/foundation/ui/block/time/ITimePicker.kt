@@ -3,6 +3,7 @@ package com.jayce.vexis.foundation.ui.block.time
 import android.content.Context
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
+import com.jayce.vexis.domain.bean.TimeUnitEntry
 
 interface ITimePicker<T : ViewBinding> {
 
@@ -12,5 +13,9 @@ interface ITimePicker<T : ViewBinding> {
 
     fun initUI()
 
-    fun getTime(): List<String>
+    fun getTime(): TimeUnitEntry
+
+    fun setOnTimePickerChange(onTimeChange: TimeUnitEntry.() -> Unit)
+
+    fun setTime(time: String)
 }

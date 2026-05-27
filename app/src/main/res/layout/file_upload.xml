@@ -18,18 +18,18 @@
         <Button
             android:id="@+id/selectFile"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"
             android:text="@string/select_file"/>
         <TextView
             android:id="@+id/selectedFile"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="0.5"
             android:text="@string/please_select_file"/>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:text="@string/resource_descript"
             android:gravity="center"
             android:layout_weight="1"
@@ -37,7 +37,7 @@
         <EditText
             android:id="@+id/description"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="6"
             android:hint="@string/intro_file"
             android:gravity="top"
@@ -49,14 +49,14 @@
         <TextView
             android:id="@+id/descriptionLength"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="0.5"
             android:text="@{textSize}"
             android:gravity="right"
             tools:ignore="RtlHardcoded" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/use_description"
@@ -64,7 +64,7 @@
         <EditText
             android:id="@+id/illustrate"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="6"
             android:gravity="top"
             android:hint="@string/description_option"
@@ -74,7 +74,7 @@
         <Button
             android:id="@+id/upload"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"
             android:text="@string/upload_file"/>
     </LinearLayout>

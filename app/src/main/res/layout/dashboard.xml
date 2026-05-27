@@ -11,16 +11,16 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="0dp">
+        android:layout_marginEnd="@dimen/none">
         <ImageView
             android:id="@+id/image"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:scaleType="centerInside"
             android:importantForAccessibility="no"/>
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
@@ -68,13 +68,13 @@
         android:orientation="horizontal"
         android:layout_marginBottom="3dp">
         <Button
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/folllow"
             android:gravity="center"/>
         <Button
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/black_list"
@@ -89,6 +89,6 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/page"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/none"
         android:layout_weight="1"/>
 </LinearLayout>

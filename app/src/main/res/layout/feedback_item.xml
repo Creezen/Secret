@@ -36,7 +36,7 @@
         </LinearLayout>
         <TextView
             android:id="@+id/time"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="end|bottom"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="@dimen/none"
             android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -63,7 +63,7 @@
             <TextView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/none"
                 android:layout_weight="1"
                 android:paddingTop="2dp"
                 android:layout_gravity="start|center_vertical"
@@ -97,7 +97,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/accept"
             android:scaleType="fitCenter"
-            android:paddingStart="0dp"
+            android:paddingStart="@dimen/none"
             android:paddingEnd="15dp"
             android:importantForAccessibility="no"/>
     </LinearLayout>

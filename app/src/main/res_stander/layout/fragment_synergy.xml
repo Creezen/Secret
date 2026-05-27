@@ -14,7 +14,7 @@
             android:background="@color/paleChampagne">
             <EditText
                 android:id="@+id/searchContent"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/none"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/corner_8"
@@ -39,7 +39,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paragraphRv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/none"
             android:layout_weight="1"/>
     </LinearLayout>
     <RelativeLayout

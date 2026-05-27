@@ -52,7 +52,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     private fun getNewestVersion() {
         request<PackageService, ApkSimpleInfo>({ getVersion() }) {
-            ui { "${it.modifyTime.toTime()}  ${it.versionName}".toast() }
+             "${it.modifyTime.toTime()}  ${it.versionName}".toast()
         }
     }
 

@@ -311,7 +311,7 @@ object NetTool {
     private fun reconnectSocket(msg: TelecomBean? = null) {
         if (!shouldReconnection.get()) return
         val future = CompletableFuture<Unit>()
-        ThreadTool.runOnMulti(Dispatchers.IO) {
+        ThreadTool.runOnMulti {
             socketReader = null
             socketWriter = null
             onlineSocket = Socket(baseSocketPath, socketPort)

@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.viewbinding.ViewBinding
-import com.creezen.commontool.Config.NIL
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
+import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.enums.TimePickerType
-import kotlinx.coroutines.Dispatchers
 
 class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
 
@@ -24,26 +23,25 @@ class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, a
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         timePicker = timePickerFactory.getTimePicker(TimePickerType.getType(timeStyle))
         timePicker.initLayout(context, this)
-        ThreadTool.runOnMulti(Dispatchers.Main) {
-            timePicker.initUI()
-        }
+        ThreadTool.runOnMulti { timePicker.initUI() }
     }
 
-    fun time(): List<String> {
+    fun time(): TimeUnitEntry {
         return timePicker.getTime()
     }
 
-    fun formatTime(): String {
-        var timeStr = NIL
-        time().forEachIndexed { i, v ->
-            if (i == 0) {
-                timeStr += v.padStart(4, '0')
-            } else if (i == 6) {
-                timeStr += v.padStart(3, '0')
-            } else {
-                timeStr += v.padStart(2, '0')
-            }
+    fun formatTime(normal: Boolean = false): String {
+        val length = if (timeStyle == 0) 3 else 7
+        return if (normal) {
+            time().formatString(length)
+        } else {
+            time().formatString('0', length)
         }
-        return timeStr
     }
+
+    fun setOnTimePickerChange(onTimeChange: TimeUnitEntry.() -> Unit) {
+        timePicker.setOnTimePickerChange(onTimeChange)
+    }
+
+    fun setTime(time: String) = timePicker.setTime(time)
 }

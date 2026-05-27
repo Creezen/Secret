@@ -22,11 +22,7 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
             val paragraphs = getParagraphList(binding.content)
             request<ArticleService, Boolean>({
                 postSynergy(title, paragraphs, liveUser.userId)
-            }) {
-                if (it) {
-                    finish()
-                }
-            }
+            }) { if (it) finish() }
         }
     }
 

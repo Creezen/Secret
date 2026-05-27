@@ -86,7 +86,7 @@
             android:name=".business.setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".business.peer.AdviceActivity"
+            android:name=".business.peer.PeerActivity"
             android:exported="false" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
