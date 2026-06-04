@@ -7,7 +7,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.os.StrictMode
 import com.creezen.commontool.Config.ACTION_BROADCAST_LOGOUT
 import com.creezen.commontool.Config.ACTION_BROADCAST_NOTIFY
 import com.creezen.tool.AndroidTool.getDataAsync
@@ -16,7 +15,6 @@ import com.creezen.tool.BaseTool.setFont
 import com.creezen.tool.ThreadTool.runOnMulti
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
-import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
 
 class Env : Application() {

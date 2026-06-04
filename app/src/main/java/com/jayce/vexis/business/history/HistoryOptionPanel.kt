@@ -12,10 +12,13 @@ import com.creezen.tool.AndroidTool.toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
+import com.jayce.vexis.business.history.api.OnOptionClickListener
+import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.business.history.panel.FindTimeFragment
 import com.jayce.vexis.business.history.panel.ScaleTimeFragment
 import com.jayce.vexis.business.history.panel.UpdateTimeFragment
 import com.jayce.vexis.databinding.HistoryOptionPanelBinding
+import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.foundation.ui.block.TabLayoutTitle
 
 class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
@@ -30,6 +33,7 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
     private val updateTimeFragment = UpdateTimeFragment()
     private val scaleTimeFragment = ScaleTimeFragment()
 
+    private var listener: OnOptionClickListener? = null
     private var selectPosition: Int = 0
 
     private val binding = HistoryOptionPanelBinding.inflate(LayoutInflater.from(context), this)
@@ -38,6 +42,10 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
         orientation = VERTICAL
         initFragment()
         initView()
+    }
+
+    fun addOnOptionClickListener(onOptionClickListener: OnOptionClickListener) {
+        listener = onOptionClickListener
     }
 
     private fun initFragment() {
@@ -66,10 +74,19 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
         button.setOnClickListener {
             when (selectPosition) {
                 0 -> {
+                    listener?.onScaleChange(scaleTimeFragment.scale)
                     "调整比例 ${scaleTimeFragment.scale}".toast()
                 }
-                1 -> "设置时间".toast()
-                2 -> "搜索跳转".toast()
+                1 -> {
+                    val start = updateTimeFragment.updatedStartTime
+                    val end = updateTimeFragment.updatedEndTime
+                    listener?.onTimeChange(start, end)
+                    "设置时间".toast()
+                }
+                2 -> {
+                    listener?.onSearch(0, "", TimeUnitEntry.zero())
+                "搜索跳转".toast()
+                }
                 else -> "".toast()
             }
             visibility = GONE

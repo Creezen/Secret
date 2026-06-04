@@ -1,28 +1,34 @@
 package com.jayce.vexis.business.history
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.creezen.commontool.bean.HistoryBean
+import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.AndroidTool.registerSwipeEvent
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.AndroidTool.unregisterSwipeEvent
+import com.creezen.tool.ThreadTool
 import com.creezen.tool.ability.click.ClickHandle
-import com.creezen.tool.ability.click.SwipeCallback
+import com.jayce.vexis.business.history.api.OnOptionClickListener
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.FragmentHistoryBinding
+import com.jayce.vexis.databinding.HistoryMomentEntryBinding
+import com.jayce.vexis.domain.bean.MomentEntry
+import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.route.HistoryService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
+import org.koin.android.ext.android.inject
 
-class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), SwipeCallback {
+class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickListener {
 
+    private val manager by inject<TimeManager>()
     private val eventHandle = ClickHandle(ClickHandle.Mode.LISTENER)
 
-    private var ratio: Float = -1f
     private var rootWidth: Int = -1
     private var rootHeight: Int = -1
 
@@ -64,14 +70,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), SwipeCallback {
     private fun queryList() {
         request<HistoryService, List<HistoryBean>>({ queryAllEvent() }) {
             eventList.addAll(it)
-            binding.left.addTraceCell(it.filter { it.isValid() })
+            binding.left.addMoment(it.filter { it.isValid() })
         }
     }
 
     private fun initView() = binding.apply {
-        base.registerSwipeEvent("base", eventHandle, this@HistoryFragment)
-        left.init(0, 2524608000000) {
-            it.message.toast()
+        optionPanel.addOnOptionClickListener(this@HistoryFragment)
+        left.setOnMomentClick {
+            showMomentDialog(it)
         }
         floatingBtn.setOnClickListener {
             val ctx = activity ?: return@setOnClickListener
@@ -88,30 +94,40 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), SwipeCallback {
         scroll.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
 //            Log.d("LJW", "scrollY: $scrollY  oldScrollY: $oldScrollY")
         }
-    }
 
-    override fun onPinchIn(viewId: String, scaleFactor: Float): Boolean {
-        if (viewId == "base") {
-            val param = binding.center.layoutParams
-            val measuredHeight = binding.center.height
-            param.height = (measuredHeight.toFloat() * scaleFactor).toInt()
-            if (param.height <= rootHeight) param.height = rootHeight
-            binding.center.layoutParams = param
+        ThreadTool.runOnMulti {
+            val pair = manager.getTime()
+            axis.updateTimePeriod(pair.first, pair.second)
         }
-        return super.onPinchIn(viewId, scaleFactor)
     }
 
-    override fun onPinchOut(viewId: String, scaleFactor: Float): Boolean {
-        if (viewId == "base") {
-            val param = binding.center.layoutParams
-            val measuredWidth = binding.center.measuredWidth
-            val measuredHeight = binding.center.measuredHeight
-            if (ratio < 0) {
-                ratio = measuredWidth.toFloat() / measuredHeight.toFloat()
+    private fun showMomentDialog(entry: MomentEntry) {
+        val context = activity as? Context ?: return
+        FlexibleDialog<HistoryMomentEntryBinding>(context)
+            .flexibleView(HistoryMomentEntryBinding::inflate) {
+                meassage.text = entry.message
+                author.text = "LJW"
+                time.text = entry.timeStamp.toTime()
             }
-            param.height = (measuredHeight.toFloat() * scaleFactor).toInt()
-            binding.center.layoutParams = param
-        }
-        return super.onPinchOut(viewId, scaleFactor)
+            .cancelable(true)
+            .show()
     }
+
+    override fun onScaleChange(factor: Int) {
+        val axis = binding.axis
+        val param = axis.layoutParams
+        param.height = rootWidth * factor
+        axis.layoutParams = param
+    }
+
+    override fun onTimeChange(start: TimeUnitEntry, end: TimeUnitEntry) {
+        binding.axis.updateTimePeriod(start, end)
+        ThreadTool.runOnIO {
+            manager.setTime(start, end)
+            binding.left.updateTime()
+            binding.left.invalidate()
+        }
+    }
+
+    override fun onSearch(type: Int, text: String, time: TimeUnitEntry) { /**/ }
 }

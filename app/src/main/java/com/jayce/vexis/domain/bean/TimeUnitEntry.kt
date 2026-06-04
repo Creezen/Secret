@@ -1,8 +1,6 @@
 package com.jayce.vexis.domain.bean
 
-import android.util.Log
 import com.creezen.commontool.getMaxDayOfMonth
-import com.creezen.commontool.isLeapYear
 import com.jayce.vexis.domain.enums.TimeLevel
 import java.time.Duration
 import java.time.LocalDateTime
@@ -20,7 +18,13 @@ data class TimeUnitEntry(
     var microSecond: Int = 0
 ) {
     companion object {
-        fun zero() = TimeUnitEntry(0, 0, 0, 0, 0, 0, 0, 0)
+        private const val TIME_OFFSET = 62167248343000L
+
+        fun totalMilliSecond(timeStamp: Long) = timeStamp + TIME_OFFSET
+
+        fun zero() = TimeUnitEntry(0, 1, 1, 0, 0, 0, 0, 0)
+
+        fun now(): TimeUnitEntry = fromLocalDateTime(LocalDateTime.now())
 
         fun fromLocalDateTime(localDateTime: LocalDateTime): TimeUnitEntry {
             val year = localDateTime.year
@@ -175,7 +179,7 @@ data class TimeUnitEntry(
         toLocalDateTime()
         .atZone(ZoneId.systemDefault())
         .toInstant()
-        .toEpochMilli()
+        .toEpochMilli() + TIME_OFFSET
 
     fun plusMicro(addMicro: Long) {
         val micro = microSecond + addMicro

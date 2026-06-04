@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.jayce.vexis.R
-import com.jayce.vexis.business.history.OnViewReady
+import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.HistoryPanelScaleTimeBinding
 import com.jayce.vexis.foundation.ui.TextSeekBar

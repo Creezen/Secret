@@ -21,8 +21,8 @@ class TimeAxis(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private var maxUnitCount: Int = 0
-    private var startTime: TimeUnitEntry = TimeUnitEntry(300, 2, 17, 12, 24, 34, 456, 43)
-    private var endTime: TimeUnitEntry = TimeUnitEntry(300, 5, 3, 7, 56, 45, 54, 5)
+    private var startTime: TimeUnitEntry = TimeUnitEntry.zero()
+    private var endTime: TimeUnitEntry = TimeUnitEntry.now()
     private var period: Pair<TimeUnitEntry, Long> = TimeUnitEntry.zero() to 0L
     private var timeLevel: TimeLevel = TimeLevel.LEVEL_TEN_MICRO_SECOND
     private var whiteSpace: Long = 0
@@ -39,7 +39,7 @@ class TimeAxis(context: Context, attributeSet: AttributeSet) : View(context, att
         style = Paint.Style.FILL
     }
 
-    fun setTimePeriod(start: TimeUnitEntry, end: TimeUnitEntry) {
+    fun updateTimePeriod(start: TimeUnitEntry, end: TimeUnitEntry) {
         startTime = start
         endTime = end
         invalidate()

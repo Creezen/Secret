@@ -13,7 +13,7 @@ interface HistoryService : BaseService {
     @FormUrlEncoded
     fun sendEventData(
         @Field("time") time: String,
-        @Field("event") event: String,
+        @Field("event") event: String
     ): Call<Boolean>
 
     @POST("/queryAllEvent")

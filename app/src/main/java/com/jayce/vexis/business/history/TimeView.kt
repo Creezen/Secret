@@ -9,71 +9,98 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.creezen.commontool.bean.HistoryBean
+import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.domain.bean.TraceEntry
+import com.jayce.vexis.domain.bean.MomentEntry
+import com.jayce.vexis.domain.bean.TimeUnitEntry
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
+class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet), KoinComponent {
 
-    private var earliestTime: Long = 0
-    private var latestTime: Long = Long.MAX_VALUE
-    private val contentList = arrayListOf<TraceEntry>()
-    private var onItemClick: (TraceEntry) -> Unit = {}
+    private val manager by inject<TimeManager>()
+
+    private lateinit var olderTime : TimeUnitEntry
+    private lateinit var laterTime: TimeUnitEntry
+    private val momentList = arrayListOf<MomentEntry>()
+    private var onMomentClick: (MomentEntry) -> Unit = {}
 
     private val paint = Paint()
-    private val bitmap by lazy {
-        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.goal, null)
-            ?: return@lazy Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        bitmap
+    private val bitmap by lazy { momentBitmap() }
+
+    init {
+        ThreadTool.runOnMain {
+            updateTime()
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        if (contentList.isEmpty()) return
-        contentList.forEach {
-            drawTrace(canvas, it)
-        }
+        if (momentList.isEmpty()) return
+        updatePercent()
+        momentList.forEach { drawMoment(canvas, it) }
     }
 
-    private fun drawTrace(canvas: Canvas, item: TraceEntry) {
-        item.minX = width * 1.0f - bitmap.width
-        item.minY = height * item.percent
-        item.maxX = width.toFloat()
-        item.maxY = item.minY + bitmap.height
-        canvas.drawBitmap(bitmap, item.minX, item.minY, paint)
+    private fun drawMoment(canvas: Canvas, item: MomentEntry) {
+        val minX = width * 1.0f - bitmap.width
+        val minY = height * item.percent
+        val maxX = width.toFloat()
+        val maxY = minY + bitmap.height
+        item.updateRect(minX, maxX, minY, maxY)
+        canvas.drawBitmap(bitmap, minX, minY, paint)
     }
 
-    fun init(earliestTime: Long, latestTime: Long, onClick: (TraceEntry) -> Unit) {
-        this.earliestTime = earliestTime
-        this.latestTime = latestTime
-        this.onItemClick = onClick
+    suspend fun updateTime() {
+        val pair = manager.getTime()
+        olderTime = pair.first
+        laterTime = pair.second
     }
 
-    fun addTraceCell(entryList: List<HistoryBean>) {
+    fun setOnMomentClick(onClick: (MomentEntry) -> Unit) {
+        this.onMomentClick = onClick
+    }
+
+    fun addMoment(entryList: List<HistoryBean>) {
+        momentList.clear()
         entryList.forEach { entry ->
-            val time = entry.millisTime()
-            val percent = (time * 1.0 / (latestTime - earliestTime)).toFloat()
-            contentList.add(TraceEntry(timeStamp = time, percent = percent, message = entry.event))
+            val moment = MomentEntry(entry.millisTime(), entry.event)
+            momentList.add(moment)
         }
         invalidate()
     }
 
+    private fun updatePercent() {
+        val olderTime = olderTime.totalMilliSecond()
+        val laterTime = laterTime.totalMilliSecond()
+        momentList.forEach {
+            val momentTime = TimeUnitEntry.totalMilliSecond(it.timeStamp)
+            if (momentTime < olderTime || momentTime > laterTime) return@forEach
+            val duration = laterTime - olderTime
+            val percent = (momentTime.toFloat() - olderTime) / duration
+            it.percent = percent
+        }
+    }
+
+    private fun momentBitmap(): Bitmap {
+        val bitmapConfig = Bitmap.Config.ARGB_8888
+        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.goal, null)
+            ?: return Bitmap.createBitmap(1, 1, bitmapConfig)
+        val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, bitmapConfig)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null) return false
-        when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-                val itemList = contentList.reversed().filter {
-                    it.isClicked(event.x, event.y)
-                }
-                if (itemList.isNotEmpty()) {
-                    onItemClick.invoke(itemList.first())
-                }
-                return true
-            }
-            else -> return false
+        if (event.actionMasked != MotionEvent.ACTION_DOWN) return false
+        val itemList = momentList.reversed().filter {
+            it.isClicked(event.x, event.y)
         }
+        if (itemList.isNotEmpty()) {
+            onMomentClick.invoke(itemList.first())
+        }
+        return true
     }
 }

@@ -23,7 +23,7 @@ class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, a
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         timePicker = timePickerFactory.getTimePicker(TimePickerType.getType(timeStyle))
         timePicker.initLayout(context, this)
-        ThreadTool.runOnMulti { timePicker.initUI() }
+        ThreadTool.runOnMain { timePicker.initUI() }
     }
 
     fun time(): TimeUnitEntry {

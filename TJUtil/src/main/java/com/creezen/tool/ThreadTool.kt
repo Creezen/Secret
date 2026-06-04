@@ -15,6 +15,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.Executors
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.SynchronousQueue
+import java.util.concurrent.ThreadFactory
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
 
 object ThreadTool {
 
@@ -25,12 +30,23 @@ object ThreadTool {
     }
 
     internal val multi by lazy {
-        Executors.newFixedThreadPool(16) { Thread(it, "TJ-M") }.asCoroutineDispatcher()
+        ThreadPoolExecutor(
+            4,
+            16,
+            30,
+            TimeUnit.SECONDS,
+            SynchronousQueue(),
+            ThreadFactory { Thread(it, "TJ-M") }
+        ).asCoroutineDispatcher()
     }
 
     private val singleScope = CoroutineScope(single)
 
     private val multiScope = CoroutineScope(multi)
+
+    private val mainScope = CoroutineScope(Dispatchers.Main)
+
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val scopeMap = HashMap<String, CoroutineScope>()
 
@@ -38,6 +54,12 @@ object ThreadTool {
 
     suspend fun ui(block: suspend () -> Unit) {
         withContext(Dispatchers.Main) {
+            block.invoke()
+        }
+    }
+
+    suspend fun io(block: suspend () -> Unit) {
+        withContext(Dispatchers.IO) {
             block.invoke()
         }
     }
@@ -63,6 +85,26 @@ object ThreadTool {
     fun runOnMulti(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
         val wrapper = ThreadWrapperImpl()
         multiScope.launch {
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
+        }
+        return wrapper
+    }
+
+    fun runOnMain(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
+        mainScope.launch {
+            runWithCatch(wrapper) {
+                func.invoke(wrapper)
+            }
+        }
+        return wrapper
+    }
+
+    fun runOnIO(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
+        ioScope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }

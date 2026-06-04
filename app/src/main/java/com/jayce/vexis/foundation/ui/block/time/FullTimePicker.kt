@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.creezen.commontool.getMaxDayOfMonth
 import com.creezen.tool.AndroidTool.init
-import com.creezen.tool.TLog
 import com.jayce.vexis.databinding.TimePickerBinding
 import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.foundation.ui.block.time.TimePickerFactory.Companion.dayList
@@ -79,7 +78,7 @@ class FullTimePicker : ITimePicker<TimePickerBinding> {
 
     override fun initUI() {
         binding.apply {
-            year.init(yearList, 2025)
+            year.init(yearList)
             month.init(monthList)
             day.init(dayList)
             hour.init(hourList)
@@ -119,7 +118,6 @@ class FullTimePicker : ITimePicker<TimePickerBinding> {
         if (time.isEmpty()) return
         val format = DateTimeFormatter.ofPattern("y-M-d  H:m:s.SSS")
         TimeUnitEntry.fromLocalDateTime(LocalDateTime.parse(time, format)).apply {
-            TLog.d("this time: $this")
             yearValue = year
             monthValue = month
             dayValue = day
