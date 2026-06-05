@@ -26,12 +26,12 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
 
     private fun initView() = binding.apply {
         create.setOnClickListener {
-            FlexibleDialog<DialogBinding>(this@LedgerSheetActivity)
-                .flexibleView(AddPocketRecordLayoutBinding.inflate(layoutInflater)) {
+            FlexibleDialog
+                .flexibleView<AddPocketRecordLayoutBinding>(this@LedgerSheetActivity) {
                     userBinding = this
                     dialogInit()
                     addBtn.setOnClickListener {
-                        addView(userBinding.itemLayout.childCount)
+                        addView(itemLayout.childCount)
                     }
                 }
                 .positive {

@@ -78,4 +78,11 @@ object WindowTool {
             isFloatShow = false
         }
     }
+
+    fun screenMetrics(context: Context): Pair<Int, Int> {
+        val metrics = context.resources.displayMetrics
+        val width = metrics.widthPixels
+        val height = metrics.heightPixels
+        return width to height
+    }
 }

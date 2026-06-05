@@ -1,6 +1,7 @@
 package com.jayce.vexis.foundation.ui.block
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup.LayoutParams
@@ -8,73 +9,78 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.viewbinding.ViewBinding
 import com.creezen.tool.DataTool.dpToPx
+import com.creezen.tool.WindowTool
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.DialogBinding
 
-class FlexibleDialog<T : ViewBinding>(private val mContext: Context, themeId: Int = R.style.Dialog) {
+class FlexibleDialog<T : ViewBinding>(
+    private val mContext: Context,
+    createChild: (LayoutInflater) -> T,
+    func: (T.(FlexibleDialog<T>) -> Unit)? = null,
+    themeId: Int = R.style.Dialog
+) {
+
+    companion object {
+        fun flexibleViewNormal(
+            context: Context,
+            themeId: Int = R.style.Dialog,
+            func: (DialogBinding.(FlexibleDialog<DialogBinding>) -> Unit)? = null
+        ): FlexibleDialog<DialogBinding> {
+            return flexibleView<DialogBinding>(context, themeId, func)
+        }
+
+        inline fun <reified U: ViewBinding> flexibleView(
+            context: Context,
+            themeId: Int = R.style.Dialog,
+            noinline func: (U.(FlexibleDialog<U>) -> Unit)? = null
+        ): FlexibleDialog<U> {
+            val createChild = { inflater: LayoutInflater ->
+                val method = U::class.java.getMethod("inflate", LayoutInflater::class.java)
+                method.invoke(null, inflater) as U
+            }
+            return FlexibleDialog(context, createChild, func, themeId)
+        }
+    }
 
     private val inflater = LayoutInflater.from(mContext)
+    private val rootBinding = DialogBinding.inflate(inflater)
+    private val binding: T = createChild(inflater)
     private var dialog: AlertDialog? = null
-    private var mBinding: T? = null
-    private val builder: AlertDialog.Builder = AlertDialog.Builder(mContext, themeId)
+    private val builder: AlertDialog.Builder
 
     private val defaultSize by lazy {
-        val metrics = mContext.resources.displayMetrics
-        val width = metrics.widthPixels
-        val height = metrics.heightPixels
-        FlexibleSize(width - 100, height * 3 / 4)
+        val metrics = WindowTool.screenMetrics(mContext)
+        FlexibleSize(metrics.first - 100, metrics.second * 3 / 4)
     }
 
     init {
-        mBinding = DialogBinding.inflate(inflater) as? T
-        builder.setView(mBinding?.root)
-    }
-
-    fun <K : ViewBinding> flexibleView(binding: K, func: (K.() -> Unit)? = null): FlexibleDialog<T> {
-        if (mBinding is DialogBinding) {
-            val bind = mBinding as? DialogBinding
-            bind?.apply {
-                replaceLayout.removeAllViews()
-                replaceLayout.addView(binding.root)
-            }
-            if (func != null) {
-                binding.func()
-            }
+        val realBind = if (binding is DialogBinding) rootBinding else binding
+        if (binding !is DialogBinding) {
+            rootBinding.replaceLayout.removeAllViews()
+            rootBinding.replaceLayout.addView(binding.root)
         }
-        return this
-    }
-
-    fun flexibleView(
-        factory: ((LayoutInflater) -> T)? = null,
-        func: (T.(FlexibleDialog<T>) -> Unit)? = null
-    ): FlexibleDialog<T> {
-        if (factory != null) {
-            mBinding = factory(inflater)
-            builder.setView(mBinding?.root)
-        }
+        builder = AlertDialog.Builder(mContext, themeId).apply { setView(rootBinding.root) }
         if (func != null) {
-            mBinding?.func(this)
+            (realBind as? T)?.func(this)
         }
-        return this
     }
 
     fun title(resId: Int): FlexibleDialog<T> {
         val text = mContext.getString(resId)
-        return this.title(text)
+        return title(text)
     }
 
     fun title(title: String): FlexibleDialog<T> {
-        if (mBinding is DialogBinding) {
-            val bind = mBinding as DialogBinding
-            bind.title.text = title
-        } else {
-            builder.setTitle(title)
-        }
+        rootBinding.titleContainer.visibility = View.VISIBLE
+        rootBinding.title.visibility = View.VISIBLE
+        rootBinding.title.text = title
         return this
     }
 
     fun title(view: View): FlexibleDialog<T> {
-        builder.setCustomTitle(view)
+        rootBinding.titleContainer.visibility = View.VISIBLE
+        rootBinding.titleContainer.removeAllViews()
+        rootBinding.titleContainer.addView(view)
         return this
     }
 
@@ -98,56 +104,39 @@ class FlexibleDialog<T : ViewBinding>(private val mContext: Context, themeId: In
         return neutral(text, autoDismiss, onclick)
     }
 
-    fun positive(text: String = "确定", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
-        if (mBinding is DialogBinding) {
-            val bind = mBinding as DialogBinding
-            bind.yes.visibility = View.VISIBLE
-            bind.yes.text = text
-            bind.yes.setOnClickListener {
-                mBinding?.let {
-                    onclick.invoke(it)
-                }
+    fun positive(label: String = "确定", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
+        rootBinding.positiveBtn.apply {
+            visibility = View.VISIBLE
+            text = label
+            setOnClickListener {
+                onclick.invoke(binding)
                 if (autoDismiss) dismiss()
             }
-        } else {
-            builder.setPositiveButton(text) { _, _ ->
-                mBinding?.let {
-                    onclick.invoke(it)
-                }
+        }
+
+        return this
+    }
+
+    fun negative(label: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
+        rootBinding.negativeBtn.apply {
+            visibility = View.VISIBLE
+            text = label
+            setOnClickListener {
+                onclick.invoke(binding)
                 if (autoDismiss) dismiss()
             }
         }
         return this
     }
 
-    fun negative(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
-        if (mBinding is DialogBinding) {
-            val bind = mBinding as DialogBinding
-            bind.no.visibility = View.VISIBLE
-            bind.no.text = text
-            bind.no.setOnClickListener {
-                mBinding?.let {
-                    onclick.invoke(it)
-                }
+    fun neutral(label: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
+        rootBinding.neuralBtn.apply {
+            visibility = View.VISIBLE
+            text = label
+            setOnClickListener {
+                onclick.invoke(binding)
                 if (autoDismiss) dismiss()
             }
-        } else {
-            builder.setNegativeButton(text) { dialog, _ ->
-                mBinding?.let {
-                    onclick.invoke(it)
-                }
-                if (autoDismiss) dismiss()
-            }
-        }
-        return this
-    }
-
-    fun neutral(text: String = "取消", autoDismiss: Boolean = true, onclick: T.() -> Unit): FlexibleDialog<T> {
-        builder.setNeutralButton(text) { dia, _ ->
-            mBinding?.let {
-                onclick.invoke(it)
-            }
-            if (autoDismiss) dismiss()
         }
         return this
     }
@@ -156,15 +145,21 @@ class FlexibleDialog<T : ViewBinding>(private val mContext: Context, themeId: In
         if (dialog == null) {
             dialog = builder.create()
         }
+        dialog?.window?.setGravity(Gravity.CENTER)
         dialog?.show()
         dialog?.window?.apply {
             // 清除不准获取焦点的flag，（否则输入框会获取不到焦点，导致不弹出输入法）
             clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
             setBackgroundDrawableResource(R.drawable.corner_24)
-            if (flexibleSize != null) {
-                setLayout(flexibleSize.width.toFloat().dpToPx().toInt(), LayoutParams.WRAP_CONTENT)
-            } else {
+
+            if (flexibleSize == null) {
                 setLayout(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+                return this@FlexibleDialog
+            }
+            if (flexibleSize.width == -1 && flexibleSize.height == -1) {
+                setLayout(defaultSize.width, defaultSize.height)
+            } else {
+                setLayout(flexibleSize.width.toFloat().dpToPx().toInt(), LayoutParams.WRAP_CONTENT)
             }
         }
         return this

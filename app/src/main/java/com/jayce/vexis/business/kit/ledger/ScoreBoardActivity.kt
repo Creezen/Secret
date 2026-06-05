@@ -76,8 +76,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
             totalScore.addSimpleView("0", WIDTH)
         }
         addUser.setOnClickListener {
-            FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
-                .flexibleView(AddRecordUserBinding.inflate(layoutInflater))
+            FlexibleDialog
+                .flexibleView<AddRecordUserBinding>(this@ScoreBoardActivity)
                 .title("添加角色")
                 .negative {}
                 .positive("添加") {
@@ -95,8 +95,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                 }.show()
         }
         addRecord.setOnClickListener {
-            FlexibleDialog<DialogBinding>(this@ScoreBoardActivity)
-                .flexibleView(AddRecordDialogBinding.inflate(layoutInflater)) {
+            FlexibleDialog
+                .flexibleView<AddRecordDialogBinding>(this@ScoreBoardActivity) {
                     scoreRv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
                     scoreRv.adapter = scoreInsertAdapter
                 }

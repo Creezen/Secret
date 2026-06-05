@@ -108,8 +108,8 @@ class SectionAdapter(
     }
 
     private fun showCommentDialog(position: Int, view: View) {
-        FlexibleDialog<AddCommentLayoutBinding>(context)
-            .flexibleView(AddCommentLayoutBinding::inflate) {
+        FlexibleDialog
+            .flexibleView<AddCommentLayoutBinding>(context) {
                 singleSelect.setChildLayout(list) {
                     commentContent.hint = it
                 }

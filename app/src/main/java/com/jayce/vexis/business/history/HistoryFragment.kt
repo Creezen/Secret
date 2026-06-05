@@ -73,8 +73,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
         }
         floatingBtn.setOnClickListener {
             val ctx = activity ?: return@setOnClickListener
-            FlexibleDialog<DialogTimelineBinding>(ctx)
-                .flexibleView(DialogTimelineBinding::inflate)
+            FlexibleDialog.flexibleView<DialogTimelineBinding>(ctx)
                 .positive {
                     val time = picker.formatTime()
                     val msg = content.msg()
@@ -95,8 +94,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
 
     private fun showMomentDialog(entry: MomentEntry) {
         val context = activity as? Context ?: return
-        FlexibleDialog<HistoryMomentEntryBinding>(context)
-            .flexibleView(HistoryMomentEntryBinding::inflate) {
+        FlexibleDialog
+            .flexibleView<HistoryMomentEntryBinding>(context) {
                 meassage.text = entry.message
                 author.text = "LJW"
                 time.text = entry.timeStamp.toTime()

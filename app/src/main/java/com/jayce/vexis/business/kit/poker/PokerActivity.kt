@@ -54,8 +54,8 @@ class PokerActivity : BaseActivity<ActivityPokerBinding>() {
     }
 
     private fun showDialog() {
-        FlexibleDialog<PokerDialogBinding>(this)
-            .flexibleView(PokerDialogBinding::inflate) {
+        FlexibleDialog
+            .flexibleView<PokerDialogBinding>(this) {
                 page.adapter = pokerDialogAdapter
                 TabLayoutMediator(tab, page) { tab, pos ->
                     val title = TabLayoutTitle(this@PokerActivity)

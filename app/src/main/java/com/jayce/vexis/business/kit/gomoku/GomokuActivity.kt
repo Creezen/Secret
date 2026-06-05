@@ -30,8 +30,8 @@ class GomokuActivity : BaseActivity<ActivityGomokuBinding>() {
     }
 
     private fun showDialog() {
-        dialog = FlexibleDialog<ConnectLanViewBinding>(this)
-            .flexibleView(ConnectLanViewBinding::inflate) {
+        dialog = FlexibleDialog
+            .flexibleView<ConnectLanViewBinding>(this){
                 dialogBinding = this
                 dialogNavigation.addConnectionListener(viewModel)
                 initViewModel()
@@ -46,7 +46,7 @@ class GomokuActivity : BaseActivity<ActivityGomokuBinding>() {
                 when (it) {
                     true -> finish()
                     false -> {
-                        dialog?.dismiss()
+//                        dialog?.dismiss()
                         dialog = null
                     }
                 }

@@ -40,6 +40,7 @@ import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool.destroySocket
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.bean.FragmentAnimRes
@@ -171,15 +172,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         refreshStatusUI()
         binding.drawerLayout.addDrawerListener(this@MainActivity)
         onBackPressedDispatcher.addCallback {
-            FlexibleDialog<DialogBinding>(this@MainActivity)
-                .flexibleView { message.text = getString(R.string.confirm_exit) }
-                .title(getString(R.string.message_hint))
-                .positive(getString(R.string.exist), true) {
+            FlexibleDialog
+                .flexibleViewNormal(this@MainActivity) {
+                    message.text = getString(R.string.confirm_exit)
+                }
+                .title(R.string.message_hint)
+                .positive(R.string.exist, true) {
                     destroySocket()
                     unbindService(connection)
                     finishAll()
                 }
-                .negative(getString(R.string.click_error), true) { }
+                .negative(R.string.click_error, true) { }
                 .show()
         }
     }
@@ -257,14 +260,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                 isLogin.onTrue {
                     binding.drawerLayout.openDrawer(GravityCompat.START)
                 }.onFalse {
-                    FlexibleDialog<DialogBinding>(this@MainActivity)
-                        .flexibleView { message.text = "登录解锁更多功能!!!" }
-                        .title("是否要登录？")
-                        .positive("立即登录") {
-                            loginLauncher.launch(Intent(this@MainActivity, LoginActivity::class.java))
-                        }
-                        .negative("暂不登录") {}
-                        .show()
+                    FlexibleDialog.flexibleView<DialogBinding>(this@MainActivity) {
+                        message.text = "登录解锁更多功能!!!"
+                    }
+                    .title("是否要登录？")
+                    .positive("立即登录") {
+                        loginLauncher.launch(Intent(this@MainActivity, LoginActivity::class.java))
+                    }
+                    .negative("暂不登录") {}
+                    .show()
                 }
             }
         }
