@@ -1,7 +1,6 @@
 package com.jayce.vexis.domain.viewmodel
 
 import android.content.res.Resources
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.creezen.commontool.Config.NIL
 import com.creezen.commontool.bean.TransferStatusBean

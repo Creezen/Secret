@@ -20,9 +20,6 @@ class FileEntryAdapter(
     var list: List<FileBean>,
     private val viewModel: FileViewModel
 ) : BaseAdapter<FileBean, FileEntryAdapter.ViewHolder>() {
-    companion object {
-        const val TAG = "MediaElementAdapter"
-    }
 
     class ViewHolder(var binding: ResItemBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root

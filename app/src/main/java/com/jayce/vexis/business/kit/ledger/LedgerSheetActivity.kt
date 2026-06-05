@@ -16,7 +16,6 @@ class LedgerSheetActivity : BaseActivity<PocketMainBinding>() {
     private val userList = ArrayList<String>()
 
     companion object {
-        const val TAG = "LedgerSheetActivity"
         const val INIT_USER_COUNT = 2
     }
 

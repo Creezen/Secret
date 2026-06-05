@@ -1,8 +1,6 @@
 package com.jayce.vexis.business.kit.ledger
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +8,7 @@ import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.addSimpleView
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
@@ -24,7 +23,6 @@ import com.jayce.vexis.domain.bean.RecordItemEntry
 import com.jayce.vexis.domain.bean.ScoreEntry
 import com.jayce.vexis.domain.database.ledger.ScoreDatabase
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
-import kotlinx.coroutines.Dispatchers
 
 class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 
@@ -55,13 +53,13 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
     private fun initData() {
         userList.clear()
         val list = intent.getStringArrayListExtra("userData")
-        Log.e("TAG", "get data: $list")
+        TLog.e("get data: $list")
         intent.getStringArrayListExtra("userData")?.let { userNames ->
             userList.addAll(
                 userNames.filter { it.isNotEmpty() }.toSet(),
             )
         }
-        Log.e("TAG", "$userList")
+        TLog.e("$userList")
         repeat(userList.size) {
             totalScoreList.add(0)
         }

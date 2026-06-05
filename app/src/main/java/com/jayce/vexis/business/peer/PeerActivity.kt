@@ -1,21 +1,15 @@
 package com.jayce.vexis.business.peer
 
 import android.os.Bundle
-import android.util.Log
 import com.creezen.commontool.Config.NIL
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityPeerBinding
 import com.jayce.vexis.domain.route.PeerService
 import com.jayce.vexis.foundation.Util.request
 
 class PeerActivity : BaseActivity<ActivityPeerBinding>() {
-
-    companion object {
-        const val TAG = "AdviceActivity"
-    }
 
     private var primaryKey: String = NIL
     private var secondKey: String = NIL
@@ -34,14 +28,14 @@ class PeerActivity : BaseActivity<ActivityPeerBinding>() {
     }
 
     private fun initPage() = binding.apply {
-        content.hint = "留下你对$primaryKey/$secondKey/${tertiaryKey}专业的同学的话吧！"
+        category.text = "TO [$primaryKey $secondKey ${tertiaryKey}] 专业的同学"
+        content.hint = "请留言"
         submit.setOnClickListener {
             val text = content.msg(true)
             if (text.isBlank()) {
                 "内容不可以为空哦！".toast()
                 return@setOnClickListener
             }
-            Log.d(TAG, "send: $primaryKey/$secondKey/$tertiaryKey")
             request<PeerService, Boolean>({
                 sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
             }) {

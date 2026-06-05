@@ -28,7 +28,6 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
 
     companion object {
         const val SPLIT = "/"
-        const val TAG = "MediaUploadActivity"
     }
 
     private var selectedFilePath: String? = null

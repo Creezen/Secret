@@ -3,12 +3,12 @@ package com.jayce.vexis.foundation.ui.block
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.widget.FrameLayout
+import com.creezen.tool.TLog
 import com.jayce.vexis.databinding.CodeLayoutBinding
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -33,7 +33,7 @@ class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr
 
             webChromeClient = object : WebChromeClient() {
                 override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-                    Log.e("LJW", "${consoleMessage?.lineNumber()} --- ${consoleMessage?.message()}")
+                    TLog.e("${consoleMessage?.lineNumber()} --- ${consoleMessage?.message()}")
                     return true
                 }
             }
@@ -81,7 +81,7 @@ class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr
 
         post {
             bind.web.evaluateJavascript(script) {
-                Log.e("LJW", "load code result: $it")
+                TLog.e("load code result: $it")
             }
         }
         isRendered = true

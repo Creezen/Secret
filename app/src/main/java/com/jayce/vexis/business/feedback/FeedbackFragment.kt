@@ -17,10 +17,6 @@ import kotlinx.coroutines.withContext
 
 class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
-    companion object {
-        const val TAG = "Feedback"
-    }
-
     private val feedbackEntryList = arrayListOf<FeedbackBean>()
     private val feedbackAdapter by lazy {
         FeedBackAdapter(requireActivity(), feedbackEntryList)

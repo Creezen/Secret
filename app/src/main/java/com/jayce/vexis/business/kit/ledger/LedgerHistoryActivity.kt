@@ -12,10 +12,6 @@ import kotlinx.coroutines.Dispatchers
 
 class LedgerHistoryActivity : BaseActivity<ActivityRecordHistoryBinding>() {
 
-    companion object {
-        const val TAG = "LedgerHistoryActivity"
-    }
-
     private val scoreDao by lazy {
         ScoreDatabase.getDatabase(this).recordDao()
     }

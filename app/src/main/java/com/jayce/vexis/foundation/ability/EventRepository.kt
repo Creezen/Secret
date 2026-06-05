@@ -2,7 +2,6 @@ package com.jayce.vexis.foundation.ability
 
 import android.app.Notification
 import android.app.NotificationManager
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.creezen.commontool.Config.EVENT_TYPE_CHAT
 import com.creezen.commontool.Config.EVENT_TYPE_DEFAULT
@@ -12,6 +11,7 @@ import com.creezen.commontool.toBean
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.registerSocket
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import com.creezen.tool.ThreadTool.registerScope
 import com.creezen.tool.ThreadTool.runOnSpecific
@@ -66,7 +66,7 @@ class EventRepository {
                 return@connect true
             }
         }.onFailure {
-            Log.d("LJW", "runOnSpecific error: ${it.message}")
+            TLog.d("runOnSpecific error: ${it.message}")
         }
     }
 
@@ -101,7 +101,7 @@ class EventRepository {
 
     private suspend fun dispatchEvent(eventId: Long) {
         val event = eventDao.getEventById(eventId)
-        Log.d("LJW", "event: $event")
+        TLog.d("event: $event")
         when (event.type) {
             EVENT_TYPE_CHAT -> _chatEventFlow.emit(event)
             EVENT_TYPE_FEEDBACK,

@@ -1,14 +1,12 @@
 package com.jayce.vexis.foundation.ui.block
 
-import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams
 import android.widget.PopupWindow
 
-@SuppressLint("ClickableViewAccessibility")
-class TrackPopupMenu(
+class ActionMenu(
     private val layoutView: View,
     private val anchorView: View,
     width: Int = LayoutParams.WRAP_CONTENT,
@@ -28,7 +26,7 @@ class TrackPopupMenu(
             false
         }
         isFocusable = true
-        setTouchInterceptor { v, event -> return@setTouchInterceptor false }
+        setTouchInterceptor { _, _ -> return@setTouchInterceptor false }
     }
 
     fun show() {
@@ -38,6 +36,6 @@ class TrackPopupMenu(
     }
 
     fun setOutsideDismiss(isDismiss: Boolean = true) {
-        setTouchInterceptor { v, event -> return@setTouchInterceptor !isDismiss }
+        setTouchInterceptor { _, _ -> return@setTouchInterceptor !isDismiss }
     }
 }

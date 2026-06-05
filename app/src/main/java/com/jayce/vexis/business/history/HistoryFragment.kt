@@ -9,9 +9,7 @@ import com.creezen.commontool.bean.HistoryBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.AndroidTool.unregisterSwipeEvent
 import com.creezen.tool.ThreadTool
-import com.creezen.tool.ability.click.ClickHandle
 import com.jayce.vexis.business.history.api.OnOptionClickListener
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
@@ -27,7 +25,6 @@ import org.koin.android.ext.android.inject
 class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickListener {
 
     private val manager by inject<TimeManager>()
-    private val eventHandle = ClickHandle(ClickHandle.Mode.LISTENER)
 
     private var rootWidth: Int = -1
     private var rootHeight: Int = -1
@@ -43,11 +40,6 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
     override fun onGetData(firstInit: Boolean) {
         super.onGetData(firstInit)
         queryList()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.base.unregisterSwipeEvent("base", eventHandle)
     }
 
     fun changeOptionPanel() {

@@ -11,7 +11,6 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.media.SoundPool
 import android.os.Environment
-import android.util.Log
 import androidx.core.content.ContextCompat
 import com.creezen.tool.BaseTool.envContext
 import java.io.File
@@ -91,7 +90,7 @@ object SoundTool {
                 }
                 val rms = sqrt(sum / (length / 2f))
                 val db = 20 * log10(rms)
-                Log.d("LJW", "db: $db")
+                TLog.d("db: $db")
             }
             fos.close()
             record.stop()

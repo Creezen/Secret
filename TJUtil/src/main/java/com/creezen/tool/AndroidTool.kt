@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -34,13 +33,13 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.creezen.commontool.Config.NIL
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.DataTool.dpToPx
-import com.creezen.tool.ability.click.ClickHandle
-import com.creezen.tool.ability.click.SwipeCallback
+import com.creezen.tool.ability.click.GestureHandle
+import com.creezen.tool.ability.click.GestureCallback
 import com.creezen.tool.bean.FragmentAnimRes
 import com.example.testlib.R
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.File
@@ -211,12 +210,24 @@ object AndroidTool {
         })
     }
 
-    fun View.registerSwipeEvent(viewId: String, handle: ClickHandle, callback: SwipeCallback) {
-        handle.registerSwipeEvent(viewId, this, callback)
+    fun View.registerGestureEvent(viewId: String = NIL, callback: GestureCallback) {
+        val handle = GestureHandle()
+        handle.registerGestureEvent(viewId, this, callback)
     }
 
-    fun View.unregisterSwipeEvent(viewId: String, handle: ClickHandle) {
-        handle.unregisterSwipeEvent(viewId)
+    fun Fragment.registerGestureEvent(viewId: String = NIL) {
+        val handle = GestureHandle()
+        val callback = this as? GestureCallback ?: return
+        val view = this.view ?: return
+        handle.registerGestureEvent(viewId, view, callback)
+    }
+
+    fun View.unregisterGestureEvent(viewId: String, handle: GestureHandle) {
+        handle.unregisterGestureEvent(viewId)
+    }
+
+    fun Fragment.unregisterGestureEvent(viewId: String, handle: GestureHandle) {
+        handle.unregisterGestureEvent(viewId)
     }
 
     fun getString(resId: Int, vararg args: Any? = arrayOf()): String {
@@ -271,7 +282,7 @@ object AndroidTool {
                     map.compress(Bitmap.CompressFormat.JPEG, 100, stream)
                 }
             }.onFailure {
-                Log.e("LJW", "save error")
+                TLog.e("save error")
             }
         }
     }

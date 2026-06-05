@@ -1,6 +1,5 @@
 package com.creezen.tool
 
-import android.util.Log
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadStatus
 import com.creezen.tool.ability.thread.ThreadType
@@ -15,15 +14,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.concurrent.Executors
-import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.SynchronousQueue
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 object ThreadTool {
-
-    private const val TAG = "ThreadTool"
 
     private val single by lazy {
         Executors.newSingleThreadExecutor { Thread(it, "TJ-S") }.asCoroutineDispatcher()
@@ -120,7 +116,7 @@ object ThreadTool {
         val wrapper = ThreadWrapperImpl()
         val scope = getScope(name)
         if(scope == null) {
-            Log.w(TAG,"Scope $name not exists! You should register first")
+            TLog.w("Scope $name not exists! You should register first")
             return wrapper
         }
 
@@ -149,7 +145,7 @@ object ThreadTool {
     fun runWithBlocking(option: BlockOption, onDispatch: () -> Unit): ThreadWrapper {
         val defaultWrapper = ThreadWrapperImpl()
         if (option.delayMillis <= 0) {
-            Log.w(TAG, "delay time is ${option.delayMillis}, no need to block!")
+            TLog.w("delay time is ${option.delayMillis}, no need to block!")
             return defaultWrapper
         }
         return when (option.type) {
@@ -161,7 +157,7 @@ object ThreadTool {
             }
             ThreadType.NAMED -> {
                 if (option.name.isNullOrBlank()) {
-                    Log.w(TAG,"name should not be null with type ${option.type}")
+                    TLog.w("name should not be null with type ${option.type}")
                     return defaultWrapper
                 }
                 runOnSpecific(option.name, option.dispatcher) {
@@ -170,7 +166,7 @@ object ThreadTool {
             }
             ThreadType.CURRENT -> {
                 if (option.scope == null) {
-                    Log.w(TAG,"scope should not be null with type ${option.type}")
+                    TLog.w("scope should not be null with type ${option.type}")
                     return defaultWrapper
                 }
                 runOnCurrent(option.scope, option.dispatcher) {
@@ -178,7 +174,7 @@ object ThreadTool {
                 }
             }
             ThreadType.UNKNOW -> {
-                Log.d(TAG,"Unknow type, do nothing!")
+                TLog.d("Unknow type, do nothing!")
                 defaultWrapper
             }
         }
@@ -196,7 +192,7 @@ object ThreadTool {
 
     fun registerScope(name: String, scope: CoroutineScope) {
         if(scopeMap.containsKey(name)) {
-            Log.w(TAG, "name: $name exists!")
+            TLog.w("name: $name exists!")
             return
         }
         scopeMap[name] = scope

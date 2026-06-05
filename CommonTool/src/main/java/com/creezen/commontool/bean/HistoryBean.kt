@@ -9,10 +9,6 @@ data class HistoryBean (
     val event: String
 ) {
 
-    companion object {
-        const val TAG = "HistoryEntry"
-    }
-
     fun isValid() = time.length == 17
 
     fun millisTime(): Long {

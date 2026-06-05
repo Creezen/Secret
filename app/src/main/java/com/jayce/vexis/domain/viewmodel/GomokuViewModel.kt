@@ -1,6 +1,6 @@
 package com.jayce.vexis.domain.viewmodel
 
-import android.util.Log
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool.runOnMulti
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.ChessEntry
@@ -38,7 +38,7 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     }
 
     override fun onServerStart() {
-        Log.d("LJW", "onServerStart")
+        TLog.d("onServerStart")
     }
 
     override fun onOpen(
@@ -53,7 +53,7 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     }
 
     override fun onClose(type: Int, conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
-        Log.d("LJW", "type: $type onClose")
+        TLog.d("type: $type onClose")
     }
 
     override fun handleMessage(type: Int, conn: WebSocket?, message: String): String {
@@ -72,7 +72,7 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     }
 
     override fun onError(type: Int, conn: WebSocket?, ex: java.lang.Exception?) {
-        Log.d("LJW", "type: $type onError")
+        TLog.d("type: $type onError")
     }
 
     override fun onCancel() {
@@ -80,6 +80,6 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     }
 
     override fun onStageChange(stage: Int) {
-        Log.d("LJW", "onStageChange: $stage")
+        TLog.d("onStageChange: $stage")
     }
 }

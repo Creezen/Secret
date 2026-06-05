@@ -12,7 +12,7 @@ class RecycleItemAnimator(val context: Context) : DefaultItemAnimator() {
 
     override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
         if (holder == null) return true
-        val animator = AnimationUtils.loadAnimation(context, R.anim.recycle_anim)
+        val animator = AnimationUtils.loadAnimation(context, R.anim.recycle_anim_add)
         animator.startOffset = holder.layoutPosition * 50L
         dispatchAddStarting(holder)
         animator.setAnimationListener(object : AnimationListener {
@@ -26,5 +26,23 @@ class RecycleItemAnimator(val context: Context) : DefaultItemAnimator() {
         })
         holder.itemView.startAnimation(animator)
         return true
+    }
+
+    override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
+        if (holder == null) return true
+        val animator = AnimationUtils.loadAnimation(context, R.anim.recycle_anim_remove)
+        animator.startOffset = 50L
+        dispatchAddStarting(holder)
+        animator.setAnimationListener(object : AnimationListener {
+            override fun onAnimationStart(animation: Animation?) { /**/ }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                dispatchAddFinished(holder)
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) { /**/ }
+        })
+        holder.itemView.startAnimation(animator)
+        return super.animateRemove(holder)
     }
 }

@@ -1,10 +1,10 @@
 package com.jayce.vexis.business.kit.ledger.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.intMsg
+import com.creezen.tool.TLog
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddRecordScoreBinding
 
@@ -14,7 +14,7 @@ class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, S
         repeat(list.size) {
             add(0)
         }
-        Log.e("ScoreInsertAdapter.", "scoreList.size:  ${this.size}")
+        TLog.e("scoreList.size:  ${this.size}")
     }
 
     override fun getAttachedList() = list
@@ -30,10 +30,7 @@ class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, S
         val edit = binding.edit
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = AddRecordScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }

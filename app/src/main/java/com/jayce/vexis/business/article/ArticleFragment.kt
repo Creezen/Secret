@@ -17,9 +17,7 @@ import com.jayce.vexis.foundation.ui.animator.RecycleItemAnimator
 class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
     private val list = arrayListOf<ArticleBean>()
-    private val adapter by lazy {
-        ArticleAdapter(requireActivity(), list)
-    }
+    private val adapter by lazy { ArticleAdapter(requireActivity(), list) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()
@@ -47,9 +45,5 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
         fetchData()
     }
 
-    private fun fetchData() {
-        request<ArticleService, ArrayList<ArticleBean>>({ getArticle() }) {
-            adapter.notifyDataChange(it)
-        }
-    }
+    private fun fetchData() = request<ArticleService, _>({ getArticle() }) { adapter.notifyDataChange(it) }
 }

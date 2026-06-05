@@ -1,9 +1,9 @@
 package com.jayce.vexis.foundation.ability.socket
 
 import android.content.Context
-import android.util.Log
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.isValidIP
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import java.net.URI
 import java.util.concurrent.TimeUnit
@@ -60,7 +60,7 @@ class LanManager {
 
     private fun tryConnect(ip: String, tryTime: Int = 5) {
         if (inConnecting) {
-            Log.e("LJW", "正在连接中...")
+            TLog.e("正在连接中...")
             return
         }
         inConnecting = true

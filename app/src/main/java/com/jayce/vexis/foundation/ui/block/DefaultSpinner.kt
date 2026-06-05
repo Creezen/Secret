@@ -8,10 +8,6 @@ import com.jayce.vexis.R
 
 class DefaultSpinner(context: Context, attr: AttributeSet) : AppCompatSpinner(context, attr) {
 
-    companion object {
-        const val TAG = "DefaultSpinner"
-    }
-
     private var selectCallback: ((Int) -> Unit)? = null
 
     fun onItemSelect() {

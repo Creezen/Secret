@@ -1,12 +1,12 @@
 package com.jayce.vexis.core
 
-// import com.amap.api.services.core.ServiceSettings
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.ACTION_BROADCAST_LOGOUT
 import com.creezen.commontool.Config.ACTION_BROADCAST_NOTIFY
 import com.creezen.tool.AndroidTool.getDataAsync
@@ -18,10 +18,6 @@ import com.jayce.vexis.foundation.ability.NetStatusCallback
 import org.koin.core.context.startKoin
 
 class Env : Application() {
-
-    companion object {
-        const val TAG = "Env"
-    }
 
     private val coreReceiver = CoreReceiver()
 
@@ -47,8 +43,8 @@ class Env : Application() {
             BuildConfig.socketUrl,
             BuildConfig.baseUrl
         )
-//        ServiceSettings.updatePrivacyAgree(this, true)
-//        ServiceSettings.updatePrivacyShow(this, true, true)
+        ServiceSettings.updatePrivacyAgree(this, true)
+        ServiceSettings.updatePrivacyShow(this, true, true)
         BaseTool.init(applicationContext, param)
 
         getDataAsync("font", "细体宋体") {

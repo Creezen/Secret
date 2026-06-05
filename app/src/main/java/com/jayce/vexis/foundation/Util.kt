@@ -22,8 +22,6 @@ import retrofit2.Call
 
 object Util {
 
-    const val TAG = "Util"
-
     inline fun <reified K : BaseService, T> request(
         crossinline func: suspend K.() -> Call<T>,
         crossinline callback: suspend (T) -> Unit

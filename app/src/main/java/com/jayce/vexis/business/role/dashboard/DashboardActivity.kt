@@ -29,10 +29,6 @@ import kotlinx.coroutines.delay
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
 
-    companion object {
-        const val TAG = "DashboardActivity"
-    }
-
     private val userBasicInfoFragment = UserBasicInfoFragment()
     private val userLiveFragment = UserLiveFragment()
     private val fragmentList = arrayListOf<Fragment>()

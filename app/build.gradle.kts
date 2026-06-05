@@ -251,7 +251,7 @@ dependencies {
     implementation(libs.preference.ktx)
     implementation(libs.koin.android)
     implementation(libs.common.tools)
-//    implementation(libs.amap)
+    implementation(libs.amap)
     implementation(libs.websocket)
     implementation(libs.swipe.refresh)
     implementation(libs.lottie)

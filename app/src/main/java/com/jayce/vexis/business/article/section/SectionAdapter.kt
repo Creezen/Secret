@@ -16,7 +16,6 @@ import com.creezen.commontool.bean.SectionRemarkBean
 import com.creezen.tool.AndroidTool.getThemeColor
 import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseAdapter

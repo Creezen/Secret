@@ -8,7 +8,7 @@ class BallEvaluator : TypeEvaluator<AnimatorBallEntry> {
     override fun evaluate(
         fraction: Float,
         start: AnimatorBallEntry?,
-        end: AnimatorBallEntry?,
+        end: AnimatorBallEntry?
     ): AnimatorBallEntry {
         if (start == null || end == null) {
             return AnimatorBallEntry(0f, 0f)

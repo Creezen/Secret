@@ -20,6 +20,7 @@ import com.jayce.vexis.business.kit.poker.PokerActivity
 import com.jayce.vexis.business.kit.video.VideoPlayerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
+import com.jayce.vexis.foundation.ui.block.image.ImageDialog
 import java.util.Locale
 
 class KitFragment : BaseFragment<WidgetsBinding>() {

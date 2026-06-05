@@ -11,11 +11,8 @@ import com.jayce.vexis.databinding.HomePagePicLayoutBinding
 
 class HomePagePicAdapter(
     private val context: Context,
-    private var list: List<String>,
+    private var list: List<String>
 ) : BaseAdapter<String, HomePagePicAdapter.ViewHolder>() {
-    companion object {
-        const val TAG = "HomePagePicAdapter"
-    }
 
     class ViewHolder(val binding: HomePagePicLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         val imageView = binding.view
@@ -27,18 +24,12 @@ class HomePagePicAdapter(
         list = newList
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HomePagePicLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         Glide.with(context)
             .load(item)

@@ -1,32 +1,31 @@
 package com.creezen.tool.ability.click
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.creezen.commontool.Config.NIL
+import com.creezen.tool.TLog
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class ClickHandle(private val mode: Mode) {
-
-    companion object {
-        const val TAG = "ClickHandle"
-    }
+class GestureHandle(private val mode: Mode = Mode.LISTENER) {
 
     private var _viewId = NIL
 
+    private var lastClick: Long = 0L
     private var pointNum = 0
     private var lastX = 0f
     private var lastY = 0f
     private var lastDist = 0f
+    private var lastMoveX = -1f
+    private var lastMoveY = -1f
     private var isSet: Boolean = false
 
     @SuppressLint("ClickableViewAccessibility")
-    fun registerSwipeEvent(viewId: String, view: View, callback: SwipeCallback) {
+    fun registerGestureEvent(viewId: String, view: View, callback: GestureCallback) {
         if(isSet) {
-            Log.e(TAG,"A handle is bind with only one view, please instantiate another handle")
+            TLog.e("A handle is bind with only one view, please instantiate another handle")
             return
         }
         _viewId = viewId
@@ -41,37 +40,56 @@ class ClickHandle(private val mode: Mode) {
         isSet = true
     }
 
-    fun unregisterSwipeEvent(viewId: String) {
+    fun unregisterGestureEvent(viewId: String) {
         isSet = false
         _viewId = NIL
     }
 
-    fun handleViewClick(viewId: String, event: MotionEvent, callback: SwipeCallback): Boolean {
-        if(_viewId != viewId || _viewId.isBlank()) {
-            return true
-        }
-        var handleFlag = true
+    private fun handleViewClick(viewId: String, event: MotionEvent, callback: GestureCallback): Boolean {
+        if(_viewId != viewId || _viewId.isBlank()) return true
+        val handleFlag: Boolean
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                val stamp = System.currentTimeMillis()
+                handleFlag = if (stamp - lastClick < 300) {
+                    callback.onDoubleClick(viewId)
+                } else {
+                    true
+                }
+                lastMoveX = event.x
+                lastMoveY = event.y
+                lastClick = stamp
                 pointNum ++
             }
             MotionEvent.ACTION_UP -> {
                 pointNum --
+                handleFlag = false
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 pointNum ++
-                lastDist = calculatePointDistance(event)
+                lastDist = calculatePointDistance(event).first
+                handleFlag = false
             }
             MotionEvent.ACTION_POINTER_UP -> {
                 pointNum --
                 lastDist = -1f
+                handleFlag = false
             }
             MotionEvent.ACTION_MOVE -> {
-                callback.onMove(viewId, pointNum)
+                val dx = event.x - lastMoveX
+                val dy = event.y - lastMoveY
+                if (lastMoveX >= 0 && lastMoveY >= 0 && pointNum == 1) {
+                    callback.onMove(viewId, pointNum, dx, dy)
+                }
+                lastMoveX = event.x
+                lastMoveY = event.y
                 handleFlag = handleEvent(viewId, event, callback)
                 if(pointNum >= 2) {
-                    lastDist = calculatePointDistance(event)
+                    lastDist = calculatePointDistance(event).first
                 }
+            }
+            else -> {
+                handleFlag = false
             }
         }
         lastX = event.x
@@ -79,7 +97,7 @@ class ClickHandle(private val mode: Mode) {
         return handleFlag
     }
 
-    private fun handleEvent(viewId: String, event: MotionEvent, callback: SwipeCallback): Boolean {
+    private fun handleEvent(viewId: String, event: MotionEvent, callback: GestureCallback): Boolean {
         var flag = true
         val deltaX = event.x - lastX
         val deltaY = event.y - lastY
@@ -92,7 +110,7 @@ class ClickHandle(private val mode: Mode) {
         return flag
     }
 
-    private fun handleOnePoint(viewId: String, deltaX: Float, deltaY: Float, callback: SwipeCallback): Boolean {
+    private fun handleOnePoint(viewId: String, deltaX: Float, deltaY: Float, callback: GestureCallback): Boolean {
         if(abs(deltaX) < 5 && abs(deltaY) < 5) return true
         val flag: Boolean
         if(abs(deltaX) > abs(deltaY)) {
@@ -109,27 +127,32 @@ class ClickHandle(private val mode: Mode) {
         return flag
     }
 
-    private fun handleMultiPoint(viewId: String, event: MotionEvent, callback: SwipeCallback): Boolean {
+    private fun handleMultiPoint(viewId: String, event: MotionEvent, callback: GestureCallback): Boolean {
         val flag: Boolean
         if(lastDist < 0) return true
-        val distance = calculatePointDistance(event)
+        val pair = calculatePointDistance(event)
+        val distance = pair.first
+        val point = pair.second
         if(abs(distance - lastDist) < 2 || distance <= 0) return true
         if(distance < lastDist)
-            flag = callback.onPinchIn(viewId, distance / lastDist)
+            flag = callback.onZoomIn(viewId, distance / lastDist, point)
         else
-            flag = callback.onPinchOut(viewId, distance / lastDist)
+            flag = callback.onZoomOut(viewId, distance / lastDist, point)
         lastDist = distance
         return flag
     }
 
-    private fun calculatePointDistance(event: MotionEvent): Float {
-        if(event.pointerCount < 2) return 0f
+    private fun calculatePointDistance(event: MotionEvent): Pair<Float, Point> {
+        if(event.pointerCount < 2) return 0f to Point(0f, 0f)
+        val centerX = (event.getX(0) + event.getX(1)) * 0.5f
+        val centerY = (event.getY(0) + event.getY(1)) * 0.5f
+        val point = Point(centerX, centerY)
         return calculateDistance(
             event.getX(0),
             event.getY(0),
             event.getX(1),
             event.getY(1)
-        )
+        ) to point
     }
 
     private fun calculateDistance(x1: Float, y1: Float, x2: Float, y2: Float): Float {

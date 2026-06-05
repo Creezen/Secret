@@ -15,7 +15,6 @@ import com.creezen.tool.AndroidTool.msg
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.SoundTool.playShortSound
 import com.creezen.tool.ThreadTool
-import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.ability.thread.BlockOption
 import com.creezen.tool.ability.thread.ThreadType
 import com.jayce.vexis.R
@@ -27,17 +26,13 @@ import com.jayce.vexis.domain.route.PackageService
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.Logger
-import com.jayce.vexis.foundation.ui.animator.MyCustomTransformer
+import com.jayce.vexis.foundation.ability.ImageTransformer
 import kotlinx.coroutines.Dispatchers
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    companion object {
-        const val TAG = "LoginActivity"
-    }
-
-    private val list = arrayListOf<String>()
-    private val picAdapter by lazy { HomePagePicAdapter(this, list) }
+    private val urlList = arrayListOf<String>()
+    private val picAdapter by lazy { HomePagePicAdapter(this, urlList) }
     val liveData = MutableLiveData<String>()
 
     @Logger(a = "hello")
@@ -131,27 +126,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             val childAt = getChildAt(0)
             childAt.setPadding(0, 0, 0, 0)
             clipToPadding = false
-            list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
-            list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
-            list.add("${BASE_FILE_PATH}hXklnq1757767353397.jpg")
-            list.add("${BASE_FILE_PATH}GsMmcS1748872115532.jpg")
-            list.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
-            list.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
-            picAdapter.notifyItemRangeInserted(0, list.size)
+            urlList.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
+            urlList.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+            urlList.add("${BASE_FILE_PATH}hXklnq1757767353397.jpg")
+            urlList.add("${BASE_FILE_PATH}GsMmcS1748872115532.jpg")
+            urlList.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
+            urlList.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+            picAdapter.notifyItemRangeInserted(0, urlList.size)
             setCurrentItem(1, false)
-            setPageTransformer(MyCustomTransformer())
+            setPageTransformer(ImageTransformer())
             registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
                     if (state != ViewPager2.SCROLL_STATE_IDLE) return
-                    if (currentItem == list.size - 1) {
-                        post {
-                            setCurrentItem(1, false)
-                        }
+                    if (currentItem == urlList.size - 1) {
+                        post { setCurrentItem(1, false) }
                     }
                     if (currentItem == 0) {
-                        post {
-                            setCurrentItem(list.size - 2, false)
-                        }
+                        post { setCurrentItem(urlList.size - 2, false) }
                     }
                 }
             })

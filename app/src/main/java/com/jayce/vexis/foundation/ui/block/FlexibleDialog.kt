@@ -46,7 +46,7 @@ class FlexibleDialog<T : ViewBinding>(private val mContext: Context, themeId: In
 
     fun flexibleView(
         factory: ((LayoutInflater) -> T)? = null,
-        func: (T.(FlexibleDialog<T>) -> Unit)? = null,
+        func: (T.(FlexibleDialog<T>) -> Unit)? = null
     ): FlexibleDialog<T> {
         if (factory != null) {
             mBinding = factory(inflater)

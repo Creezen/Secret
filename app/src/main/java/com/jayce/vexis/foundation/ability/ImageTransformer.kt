@@ -1,9 +1,9 @@
-package com.jayce.vexis.foundation.ui.animator
+package com.jayce.vexis.foundation.ability
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 
-class MyCustomTransformer : ViewPager2.PageTransformer {
+class ImageTransformer : ViewPager2.PageTransformer {
 
     override fun transformPage(page: View, position: Float) {
         val width = page.width

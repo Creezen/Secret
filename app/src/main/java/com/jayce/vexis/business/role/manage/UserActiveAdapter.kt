@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.creezen.commontool.bean.ActiveBean
 import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.databinding.ActionWindowBinding
 import com.jayce.vexis.databinding.CardItemLayoutBinding
-import com.jayce.vexis.databinding.PoupWindowBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.foundation.ui.CardAdapter
-import com.jayce.vexis.foundation.ui.block.TrackPopupMenu
+import com.jayce.vexis.foundation.ui.block.ActionMenu
 
 class UserActiveAdapter(
     private val context: Context,
@@ -69,9 +69,9 @@ class UserActiveAdapter(
         return childBinding to holder
     }
 
-    private fun bindPopupWindow(view: View, activeItem: ActiveBean): TrackPopupMenu {
-        val bind = PoupWindowBinding.inflate((context as Activity).layoutInflater)
-        val window = TrackPopupMenu(bind.root, view)
+    private fun bindPopupWindow(view: View, activeItem: ActiveBean): ActionMenu {
+        val bind = ActionWindowBinding.inflate((context as Activity).layoutInflater)
+        val window = ActionMenu(bind.root, view)
         bind.setAdmin.setOnClickListener {
             "${activeItem.nickname}已成为管理员".toast()
             window.dismiss()

@@ -3,7 +3,6 @@ package com.creezen.tool
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
-import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -58,8 +57,6 @@ import javax.net.ssl.HostnameVerifier
 import kotlin.coroutines.resume
 
 object NetTool {
-
-    private const val TAG = "NetTool"
 
     private lateinit var baseUrl: String
     private var socketPort: Int = 0
@@ -186,7 +183,7 @@ object NetTool {
                 }
 
                 override fun onFailure(p0: Call<T>, p1: Throwable) {
-                    Log.d(TAG, "net error: ${p1.message}")
+                    TLog.d("net error: ${p1.message}")
                 }
             })
         }
@@ -211,11 +208,11 @@ object NetTool {
             if(msg.content.isEmpty()) {
                 return@runOnCurrent
             }
-            Log.d(TAG, "send message: $msg")
+            TLog.d("send message: $msg")
             socketWriter?.write("${msg.toJson()}\n")
             socketWriter?.flush()
         }.onFailure {
-            Log.d(TAG, "sendMessage error: ${it.message}")
+            TLog.d("sendMessage error: ${it.message}")
             destroySocket()
             reconnectSocket(msg)
         }
@@ -260,7 +257,7 @@ object NetTool {
                 val line = socketReader?.readLine()
                 if (onlineSocket.isClosed || line.isNullOrEmpty()|| socketFlag.get().not()) {
                     socketFlag.set(false)
-                    Log.e(TAG,"服务器错误")
+                    TLog.e("服务器错误")
                     break
                 }
                 if(onReceiveMessage(line).not()) {
@@ -270,7 +267,7 @@ object NetTool {
                 }
             }
         }.onFailure {
-            Log.d(TAG, "receive error: ${it.message}")
+            TLog.d("receive error: ${it.message}")
             if (shouldReconnection.get()) {
                 reconnectSocket()
                 receive(scope, onReceiveMessage)
@@ -317,7 +314,7 @@ object NetTool {
             onlineSocket = Socket(baseSocketPath, socketPort)
             socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
             socketWriter = BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
-            Log.d(TAG,"connection OK!")
+            TLog.d("connection OK!")
             val mUserid = user?.userId
             if (mUserid != null) {
                 sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), mUserid)
@@ -328,7 +325,7 @@ object NetTool {
             }
             future.complete(Unit)
         }.onFailure {
-            Log.d(TAG,"reConnect error,try again!")
+            TLog.d("reConnect error,try again!")
             future.complete(Unit)
             reconnectSocket()
         }

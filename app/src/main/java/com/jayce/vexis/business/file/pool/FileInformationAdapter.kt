@@ -34,7 +34,7 @@ class FileInformationAdapter(
         groupPosition: Int,
         isExpanded: Boolean,
         convertView: View?,
-        parent: ViewGroup?,
+        parent: ViewGroup?
     ): View {
         val binding: ParentNodeLayoutBinding
         var view = convertView
@@ -54,7 +54,7 @@ class FileInformationAdapter(
         childPosition: Int,
         isLastChild: Boolean,
         convertView: View?,
-        parent: ViewGroup?,
+        parent: ViewGroup?
     ): View {
         val binding: ChildNodeLayoutBinding
         var view = convertView

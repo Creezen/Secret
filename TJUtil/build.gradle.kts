@@ -76,6 +76,6 @@ dependencies {
     implementation(libs.glide.okhttp3.integration)
     implementation(libs.common.tools)
     implementation(libs.datastore)
-//    implementation(libs.pytorch.android)
-//    implementation(libs.pytorch.android.torchvision)
+    implementation(libs.pytorch.android)
+    implementation(libs.pytorch.android.torchvision)
 }

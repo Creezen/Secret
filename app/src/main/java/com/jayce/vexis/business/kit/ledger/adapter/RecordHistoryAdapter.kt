@@ -2,7 +2,6 @@ package com.jayce.vexis.business.kit.ledger.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
@@ -13,16 +12,12 @@ import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.RecordListLayoutBinding
 import com.jayce.vexis.domain.bean.RecordListEntry
 import com.jayce.vexis.domain.database.ledger.ScoreDatabase
-import kotlinx.coroutines.Dispatchers
 
 class RecordHistoryAdapter(
     private val context: Context,
     private var list: List<RecordListEntry>,
     private val owner: LifecycleOwner,
 ) : BaseAdapter<RecordListEntry, RecordHistoryAdapter.ViewHolder>() {
-    companion object {
-        const val TAG = "RecordHistoryAdapter"
-    }
 
     private val scoreDao by lazy {
         ScoreDatabase.getDatabase(context).recordDao()
@@ -41,10 +36,7 @@ class RecordHistoryAdapter(
         val result = binding.result
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int,
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = RecordListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -61,7 +53,6 @@ class RecordHistoryAdapter(
             ThreadTool.runOnMulti {
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
-                Log.e(TAG, "$userList")
                 val intent = Intent(context, ScoreBoardActivity::class.java).also {
                     it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
                 }

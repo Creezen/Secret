@@ -10,7 +10,7 @@ import com.jayce.vexis.databinding.ActivityMapBinding
 class MapFragment : BaseFragment<ActivityMapBinding>() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//        binding.map.onCreate(savedInstanceState)
+        binding.map.onCreate(savedInstanceState)
         return binding.root
     }
 }
