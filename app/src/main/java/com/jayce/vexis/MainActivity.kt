@@ -260,7 +260,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                 isLogin.onTrue {
                     binding.drawerLayout.openDrawer(GravityCompat.START)
                 }.onFalse {
-                    FlexibleDialog.flexibleView<DialogBinding>(this@MainActivity) {
+                    FlexibleDialog.flexibleViewNormal(this@MainActivity) {
                         message.text = "登录解锁更多功能!!!"
                     }
                     .title("是否要登录？")

@@ -47,7 +47,7 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             emailPostfix.init(registerViewModel.emailSuffix)
             registerBtn.setOnClickListener {
                 val dialog = FlexibleDialog
-                    .flexibleView<DialogBinding>(this@RegisterActivity) { message.text = "注册中，请稍后..." }
+                    .flexibleViewNormal(this@RegisterActivity) { message.text = "注册中，请稍后..." }
                     .title("提示")
                     .show()
 
