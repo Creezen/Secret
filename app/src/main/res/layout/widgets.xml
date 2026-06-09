@@ -43,6 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/play_video"/>
+        <Button
+            android:id="@+id/mountDigger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mount_digger"/>
     </LinearLayout>
     <TextView
         android:id="@+id/location"

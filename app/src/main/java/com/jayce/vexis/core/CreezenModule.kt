@@ -3,6 +3,7 @@ package com.jayce.vexis.core
 import com.jayce.vexis.business.history.TimeManager
 import com.jayce.vexis.foundation.ability.EventRepository
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
+import com.jayce.vexis.domain.viewmodel.DiggerViewModel
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 import com.jayce.vexis.domain.viewmodel.GomokuViewModel
 import com.jayce.vexis.domain.viewmodel.MailViewModel
@@ -20,6 +21,7 @@ val modules = module {
     viewModel { GomokuViewModel() }
     viewModel { PokerViewModel() }
     viewModel { MailViewModel(get()) }
+    viewModel { DiggerViewModel() }
 
     single { EventRepository() }
     single { LanManager() }

@@ -45,6 +45,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Secret"
         android:usesCleartextTraffic="true">
+        <activity android:name=".business.kit.digger.DiggerActivity"
+            android:exported="false"/>
         <activity android:name=".business.mail.MailActivity"
             android:exported="false"/>
         <activity
@@ -114,7 +116,7 @@
             android:foregroundServiceType="dataSync" />
 
         <activity
-            android:name=".business.kit.ledger.LedgerHistoryActivity"
+            android:name=".business.kit.book.archive.ArchiveActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.gomoku.GomokuActivity"
@@ -147,13 +149,13 @@
             android:name=".business.file.pool.FileUploadActivity"
             android:exported="false" />
         <activity
-            android:name=".business.kit.ledger.ScoreBoardActivity"
+            android:name=".business.kit.book.note.LineNoteActivity"
             android:exported="false" />
         <activity
             android:name=".business.role.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".business.kit.ledger.LedgerSheetActivity"
+            android:name=".business.kit.book.BookActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

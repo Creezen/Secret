@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(foreignKeys = [ForeignKey(RecordItemEntry::class, ["id"], ["recordId"])])
-data class ScoreEntry(
+@Entity(foreignKeys = [ForeignKey(BookLineEntry::class, ["id"], ["recordId"])])
+data class BookEntry(
     @PrimaryKey
     @ColumnInfo("recordId")
     var recordId: Long = 0,

@@ -12,15 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import com.jayce.vexis.business.kit.digger.DiggerActivity
 import com.jayce.vexis.business.kit.gomoku.GomokuActivity
-import com.jayce.vexis.business.kit.ledger.LedgerSheetActivity
+import com.jayce.vexis.business.kit.book.BookActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.pinyin.PinyinActivity
 import com.jayce.vexis.business.kit.poker.PokerActivity
 import com.jayce.vexis.business.kit.video.VideoPlayerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
-import com.jayce.vexis.foundation.ui.block.image.ImageDialog
 import java.util.Locale
 
 class KitFragment : BaseFragment<WidgetsBinding>() {
@@ -33,7 +33,7 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
 
     private fun initView() = binding.apply {
         ledger.setOnClickListener {
-            startActivity(Intent(context, LedgerSheetActivity::class.java))
+            startActivity(Intent(context, BookActivity::class.java))
         }
         maze.setOnClickListener {
             startActivity(Intent(context, MazeActivity::class.java))
@@ -55,6 +55,9 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
         }
         videoPlayer.setOnClickListener {
             startActivity(Intent(context, VideoPlayerActivity::class.java))
+        }
+        mountDigger.setOnClickListener {
+            startActivity(Intent(context, DiggerActivity::class.java))
         }
     }
 

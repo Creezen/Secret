@@ -193,4 +193,5 @@
     <string name="date_split">-</string>
     <string name="time_split">:</string>
     <string name="millis_split">.</string>
+    <string name="mount_digger">愚公移山</string>
 </resources>

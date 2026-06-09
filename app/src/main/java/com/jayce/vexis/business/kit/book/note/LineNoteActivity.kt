@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.kit.ledger
+package com.jayce.vexis.business.kit.book.note
 
 import android.os.Bundle
 import android.widget.EditText
@@ -11,20 +11,17 @@ import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.business.kit.ledger.adapter.RecordAdapter
-import com.jayce.vexis.business.kit.ledger.adapter.ScoreInsertAdapter
 import com.jayce.vexis.core.base.BaseActivity
-import com.jayce.vexis.databinding.AddRecordDialogBinding
-import com.jayce.vexis.databinding.AddRecordUserBinding
-import com.jayce.vexis.databinding.DialogBinding
-import com.jayce.vexis.databinding.NewPocketRecordBinding
+import com.jayce.vexis.databinding.BookLineNoteBinding
+import com.jayce.vexis.databinding.BookNoteDialogLineBinding
+import com.jayce.vexis.databinding.BookNoteDialogUserBinding
+import com.jayce.vexis.domain.bean.BookLineEntry
 import com.jayce.vexis.domain.bean.RecordEntry
-import com.jayce.vexis.domain.bean.RecordItemEntry
-import com.jayce.vexis.domain.bean.ScoreEntry
-import com.jayce.vexis.domain.database.ledger.ScoreDatabase
+import com.jayce.vexis.domain.bean.BookEntry
+import com.jayce.vexis.domain.database.ledger.BookDatabase
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 
-class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
+class LineNoteActivity : BaseActivity<BookLineNoteBinding>() {
 
     companion object {
         const val WIDTH = 180
@@ -36,13 +33,9 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
     private val userList = ArrayList<String>()
     private val scoreList = ArrayList<RecordEntry>()
     private val totalScoreList = ArrayList<Int>()
-    private val adapter by lazy {
-        RecordAdapter(scoreList)
-    }
-    private val scoreDao by lazy {
-        ScoreDatabase.getDatabase(this).recordDao()
-    }
-    private lateinit var scoreInsertAdapter: ScoreInsertAdapter
+    private val adapter by lazy { LineAdapter(scoreList) }
+    private val scoreDao by lazy { BookDatabase.getDatabase(this).recordDao() }
+    private lateinit var noteDialogAdapter: NoteDialogAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +53,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
             )
         }
         TLog.e("$userList")
-        repeat(userList.size) {
-            totalScoreList.add(0)
-        }
-        scoreInsertAdapter = ScoreInsertAdapter(userList)
+        repeat(userList.size) { totalScoreList.add(0) }
+        noteDialogAdapter = NoteDialogAdapter(userList)
     }
 
     private fun initView() = binding.apply {
@@ -77,31 +68,29 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
         }
         addUser.setOnClickListener {
             FlexibleDialog
-                .flexibleView<AddRecordUserBinding>(this@ScoreBoardActivity)
+                .flexibleView<BookNoteDialogUserBinding>(this@LineNoteActivity)
                 .title("添加角色")
-                .negative {}
+                .negative()
                 .positive("添加") {
                     val edit = findViewById<EditText>(R.id.edit)
                     val addUserName = edit.msg()
                     playerName.addSimpleView(addUserName, WIDTH)
                     userList.add(addUserName)
-                    scoreList.forEach {
-                        it.scores.add(0)
-                    }
+                    scoreList.forEach { it.scores.add(0) }
                     adapter.notifyDataSetChanged()
-                    scoreInsertAdapter.notifyUserAdded()
+                    noteDialogAdapter.notifyUserAdded()
                     totalScoreList.add(0)
                     totalScore.addSimpleView("0", WIDTH)
                 }.show()
         }
         addRecord.setOnClickListener {
             FlexibleDialog
-                .flexibleView<AddRecordDialogBinding>(this@ScoreBoardActivity) {
-                    scoreRv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
-                    scoreRv.adapter = scoreInsertAdapter
+                .flexibleView<BookNoteDialogLineBinding>(this@LineNoteActivity) {
+                    scoreRv.layoutManager = LinearLayoutManager(this@LineNoteActivity)
+                    scoreRv.adapter = noteDialogAdapter
                 }
                 .positive("添加") {
-                    val scoreList = scoreInsertAdapter.getscoreList()
+                    val scoreList = noteDialogAdapter.getLineList()
                     val newList = ArrayList<Int>()
                     newList.addAll(scoreList)
                     if (newList.sum() != 0) {
@@ -118,7 +107,7 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
         save.setOnClickListener {
             saveRecord()
         }
-        rv.layoutManager = LinearLayoutManager(this@ScoreBoardActivity)
+        rv.layoutManager = LinearLayoutManager(this@LineNoteActivity)
         rv.adapter = adapter
         rvSC.setOnScrollChangeListener { _, i, i2, _, _ ->
             playerNameSV.scrollTo(i, i2)
@@ -136,8 +125,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
 
     private fun saveRecord() {
         ThreadTool.runOnMulti {
-            val recordItemEntry = RecordItemEntry(title, createTime)
-            val recordId = scoreDao.insertRecord(recordItemEntry)
+            val bookLineEntry = BookLineEntry(title, createTime)
+            val recordId = scoreDao.insertRecord(bookLineEntry)
             val userStr = StringBuilder()
             val scoreStr = StringBuilder()
             val totalStr = StringBuilder()
@@ -165,8 +154,8 @@ class ScoreBoardActivity : BaseActivity<NewPocketRecordBinding>() {
                     scoreStr.append("&")
                 }
             }
-            val scoreEntry = ScoreEntry(recordId, userStr.toString(), scoreStr.toString(), totalStr.toString())
-            scoreDao.insertScore(scoreEntry)
+            val bookEntry = BookEntry(recordId, userStr.toString(), scoreStr.toString(), totalStr.toString())
+            scoreDao.insertScore(bookEntry)
         }
         "保存成功".toast()
     }

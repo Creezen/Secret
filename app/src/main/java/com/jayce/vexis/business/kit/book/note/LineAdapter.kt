@@ -1,18 +1,18 @@
-package com.jayce.vexis.business.kit.ledger.adapter
+package com.jayce.vexis.business.kit.book.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.addSimpleView
-import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.HEIGHT
-import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity.Companion.WIDTH
+import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.HEIGHT
+import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.WIDTH
 import com.jayce.vexis.core.base.BaseAdapter
-import com.jayce.vexis.databinding.RecordItemLayoutBinding
+import com.jayce.vexis.databinding.BookLineBinding
 import com.jayce.vexis.domain.bean.RecordEntry
 
-class RecordAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<RecordEntry, RecordAdapter.ViewHolder>() {
+class LineAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<RecordEntry, LineAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: RecordItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: BookLineBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.itemLayout
     }
 
@@ -23,14 +23,11 @@ class RecordAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<Rec
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RecordItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = BookLineBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = recordList[position]
         holder.view.removeAllViews()
         items.scores.forEach {

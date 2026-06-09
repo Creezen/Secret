@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.kit.ledger.adapter
+package com.jayce.vexis.business.kit.book.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.AndroidTool.intMsg
 import com.creezen.tool.TLog
 import com.jayce.vexis.core.base.BaseAdapter
-import com.jayce.vexis.databinding.AddRecordScoreBinding
+import com.jayce.vexis.databinding.BookDialogLineNoteBinding
 
-class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, ScoreInsertAdapter.ViewHolder>() {
+class NoteDialogAdapter(private var list: List<String>) : BaseAdapter<String, NoteDialogAdapter.ViewHolder>() {
 
     private val scoreList = arrayListOf<Int>().apply {
-        repeat(list.size) {
-            add(0)
-        }
+        repeat(list.size) { add(0) }
         TLog.e("scoreList.size:  ${this.size}")
     }
 
@@ -23,7 +21,7 @@ class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, S
         list = newList
     }
 
-    class ViewHolder(val binding: AddRecordScoreBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: BookDialogLineNoteBinding) : RecyclerView.ViewHolder(binding.root) {
         val userName = binding.userName
         val add = binding.add
         val sub = binding.sub
@@ -31,14 +29,11 @@ class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, S
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = AddRecordScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = BookDialogLineNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int,
-    ) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = list[position]
         holder.apply {
             edit.setText("0")
@@ -56,11 +51,9 @@ class ScoreInsertAdapter(private var list: List<String>) : BaseAdapter<String, S
         }
     }
 
-    fun getscoreList() = scoreList
+    fun getLineList() = scoreList
 
-    fun notifyUserAdded() {
-        scoreList.add(0)
-    }
+    fun notifyUserAdded() { scoreList.add(0) }
 
     override fun getItemCount() = list.size
 

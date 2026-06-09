@@ -20,4 +20,8 @@ interface FeedbackService : BaseService {
 
     @GET("/getFeedback")
     fun getFeedback(): Call<ArrayList<FeedbackBean>>
+
+    @POST("/supportFeedback")
+    @FormUrlEncoded
+    fun supportFeedback(@Field("feedbackId") feedbackId: String): Call<Boolean>
 }

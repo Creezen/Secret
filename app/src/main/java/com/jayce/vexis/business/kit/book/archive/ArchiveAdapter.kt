@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.kit.ledger.adapter
+package com.jayce.vexis.business.kit.book.archive
 
 import android.content.Context
 import android.content.Intent
@@ -7,29 +7,29 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.creezen.tool.ThreadTool
-import com.jayce.vexis.business.kit.ledger.ScoreBoardActivity
+import com.jayce.vexis.business.kit.book.note.LineNoteActivity
 import com.jayce.vexis.core.base.BaseAdapter
-import com.jayce.vexis.databinding.RecordListLayoutBinding
-import com.jayce.vexis.domain.bean.RecordListEntry
-import com.jayce.vexis.domain.database.ledger.ScoreDatabase
+import com.jayce.vexis.databinding.BookArchiveBinding
+import com.jayce.vexis.domain.bean.BookArchiveEntry
+import com.jayce.vexis.domain.database.ledger.BookDatabase
 
-class RecordHistoryAdapter(
+class ArchiveAdapter(
     private val context: Context,
-    private var list: List<RecordListEntry>,
+    private var list: List<BookArchiveEntry>,
     private val owner: LifecycleOwner,
-) : BaseAdapter<RecordListEntry, RecordHistoryAdapter.ViewHolder>() {
+) : BaseAdapter<BookArchiveEntry, ArchiveAdapter.ViewHolder>() {
 
     private val scoreDao by lazy {
-        ScoreDatabase.getDatabase(context).recordDao()
+        BookDatabase.getDatabase(context).recordDao()
     }
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<RecordListEntry>) {
+    override fun updateAttachedList(newList: List<BookArchiveEntry>) {
         list = newList
     }
 
-    class ViewHolder(val binding: RecordListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: BookArchiveBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.root
         val title = binding.title
         val time = binding.time
@@ -37,7 +37,7 @@ class RecordHistoryAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RecordListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = BookArchiveBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -53,7 +53,7 @@ class RecordHistoryAdapter(
             ThreadTool.runOnMulti {
                 val scoreList = scoreDao.getScoreList(items.id)
                 val userList = scoreList.userList.split("$")
-                val intent = Intent(context, ScoreBoardActivity::class.java).also {
+                val intent = Intent(context, LineNoteActivity::class.java).also {
                     it.putExtra("userData", arrayListOf<String>().also { it.addAll(userList) })
                 }
                 context.startActivity(intent)
