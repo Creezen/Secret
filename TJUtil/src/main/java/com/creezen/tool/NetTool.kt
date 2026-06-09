@@ -23,13 +23,18 @@ import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.ability.net.AvatarSignature
+import com.creezen.tool.ability.net.NetworkEventListener
+import com.creezen.tool.ability.net.NetworkEventListenerFactory
+import com.creezen.tool.ability.net.NetworkInterceptor
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.ConnectionPool
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
@@ -58,6 +63,7 @@ import kotlin.coroutines.resume
 
 object NetTool {
 
+    private lateinit var param: BaseTool.InitParam
     private lateinit var baseUrl: String
     private var socketPort: Int = 0
     private lateinit var baseSocketPath: String
@@ -82,28 +88,29 @@ object NetTool {
     }
 
     private fun buildCookie(name: String, value: String) =
-        Cookie.Builder()
-            .name(name)
-            .value(value)
-            .domain(SERVER_DOMAIN)
-            .build()
+        Cookie.Builder().name(name).value(value).domain(SERVER_DOMAIN).build()
 
     private val okHttp by lazy {
+        val interceptor = NetworkInterceptor(param.debugNetwork)
+        val eventListenerFactory = NetworkEventListenerFactory()
         OkHttpClient.Builder()
-            .hostnameVerifier(HostnameVerifier{ _, _ ->
-                return@HostnameVerifier true
-            })
+            .eventListenerFactory(eventListenerFactory)
+            .addNetworkInterceptor(interceptor)
+            .hostnameVerifier(HostnameVerifier{ _, _ -> return@HostnameVerifier true })
             .cookieJar(cookieJar)
-            .protocols(Arrays.asList(Protocol.HTTP_1_1))
+            .protocols(listOf(Protocol.HTTP_1_1))
             .readTimeout(60000, TimeUnit.SECONDS)
             .build()
     }
 
     val retrofit by lazy {
+        val scalarsFactory = ScalarsConverterFactory.create()
+        val gson = GsonBuilder().setLenient().create()
+        val gsonFactory = GsonConverterFactory.create(gson)
         Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+            .addConverterFactory(scalarsFactory)
+            .addConverterFactory(gsonFactory)
             .client(okHttp)
             .build()
     }
@@ -115,6 +122,7 @@ object NetTool {
     }
 
     fun init(initParam: BaseTool.InitParam) {
+        param = initParam
         baseUrl = initParam.baseUrl
         baseSocketPath = initParam.baseSocketPath
         socketPort = initParam.socketPort
@@ -208,7 +216,6 @@ object NetTool {
             if(msg.content.isEmpty()) {
                 return@runOnCurrent
             }
-            TLog.d("send message: $msg")
             socketWriter?.write("${msg.toJson()}\n")
             socketWriter?.flush()
         }.onFailure {

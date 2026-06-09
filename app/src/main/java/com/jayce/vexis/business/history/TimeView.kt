@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.creezen.commontool.bean.HistoryBean
+import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
 import com.jayce.vexis.R
 import com.jayce.vexis.domain.bean.MomentEntry
@@ -29,9 +30,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private val bitmap by lazy { momentBitmap() }
 
     init {
-        ThreadTool.runOnMain {
-            updateTime()
-        }
+        ThreadTool.runOnIO { updateTime() }
     }
 
     override fun onDraw(canvas: Canvas) {

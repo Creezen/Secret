@@ -22,7 +22,7 @@ class UpdateTimeFragment : BaseFragment<HistoryPanelUpdateTimeBinding>() {
     var updatedEndTime: TimeUnitEntry = TimeUnitEntry.now()
 
     init {
-        ThreadTool.runOnMulti {
+        ThreadTool.runOnIO {
             val time = manager.getTime()
             updatedStartTime = time.first
             updatedEndTime = time.second
@@ -49,11 +49,9 @@ class UpdateTimeFragment : BaseFragment<HistoryPanelUpdateTimeBinding>() {
 
         val startValue = updatedStartTime.formatString(7)
         val endValue = updatedEndTime.formatString(7)
-        binding.startTime.text = startValue
-        binding.endTime.text = endValue
-        binding.picker.post {
-            binding.picker.setTime(startValue)
-        }
+        startTime.text = startValue
+        endTime.text = endValue
+        picker.post { picker.setTime(startValue) }
 
         startTime.setOnClickListener {
             startTime.isSelected = true

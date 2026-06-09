@@ -9,9 +9,10 @@ import android.net.ConnectivityManager
 import com.amap.api.services.core.ServiceSettings
 import com.creezen.commontool.Config.ACTION_BROADCAST_LOGOUT
 import com.creezen.commontool.Config.ACTION_BROADCAST_NOTIFY
-import com.creezen.tool.AndroidTool.getDataAsync
+import com.creezen.tool.AndroidTool.getData
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
+import com.creezen.tool.ThreadTool.runOnIO
 import com.creezen.tool.ThreadTool.runOnMulti
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
@@ -41,23 +42,18 @@ class Env : Application() {
         val param = BaseTool.InitParam(
             BuildConfig.socketPort,
             BuildConfig.socketUrl,
-            BuildConfig.baseUrl
+            BuildConfig.baseUrl,
+            debugNetwork = true,
+            debugThread = false,
+            debugImage = false
         )
+        BaseTool.init(applicationContext, param)
         ServiceSettings.updatePrivacyAgree(this, true)
         ServiceSettings.updatePrivacyShow(this, true, true)
-        BaseTool.init(applicationContext, param)
-
-        getDataAsync("font", "细体宋体") {
-            setFont(it)
-        }
-
+        runOnIO { setFont(getData("font", "细体宋体")) }
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
-
-        runOnMulti {
-            val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            manager.registerDefaultNetworkCallback(NetStatusCallback())
-        }
-
+        val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        manager.registerDefaultNetworkCallback(NetStatusCallback())
         initNotification()
     }
 

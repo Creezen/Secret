@@ -10,6 +10,7 @@ import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toTime
 import com.creezen.tool.NetTool
 import com.creezen.tool.NetTool.await
+import com.creezen.tool.ThreadTool.runOnIO
 import com.creezen.tool.ThreadTool.runOnMulti
 import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseService
@@ -26,7 +27,7 @@ object Util {
         crossinline func: suspend K.() -> Call<T>,
         crossinline callback: suspend (T) -> Unit
     ) {
-        runOnMulti {
+        runOnIO {
             kotlin.runCatching {
                 val result = func.invoke(NetTool.create()).await()
                 ui { callback(result) }

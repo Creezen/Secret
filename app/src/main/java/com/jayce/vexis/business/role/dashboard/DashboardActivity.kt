@@ -7,14 +7,14 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
-import com.creezen.commontool.Config.MEDIA_TYPE_IMAGE
 import com.creezen.commontool.Config.AVATAR_SAVE_TIME
+import com.creezen.commontool.Config.MEDIA_TYPE_IMAGE
 import com.creezen.commontool.Config.NIL
-import com.creezen.tool.AndroidTool.getDataAsync
+import com.creezen.tool.AndroidTool.getData
 import com.creezen.tool.AndroidTool.putData
 import com.creezen.tool.FileTool.getFilePathByUri
 import com.creezen.tool.NetTool.buildFileMultipart
-import com.creezen.tool.ThreadTool.runOnMulti
+import com.creezen.tool.ThreadTool.runOnIO
 import com.creezen.tool.ThreadTool.ui
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
@@ -65,9 +65,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     private fun initPage() = binding.apply {
         nickname.userName = liveUser.nickname
         id.text = liveUser.userId
-        if (liveUser.isAdministrator()) {
-            administrator.visibility = View.VISIBLE
-        }
+        if (liveUser.isAdministrator()) administrator.visibility = View.VISIBLE
         administrator.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, AdminActivity::class.java))
         }
@@ -82,25 +80,22 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             }
             tab.customView = textView
         }.attach()
-        image.setOnClickListener {
-            imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
-        }
-        getDataAsync(AVATAR_SAVE_TIME, 0L) {
+        image.setOnClickListener { imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE)) }
+        runOnIO {
+            val time = getData(AVATAR_SAVE_TIME, 0L)
+            val url = "${liveUser.userId}.png"
             ui {
-                val url = "${liveUser.userId}.png"
                 image.load(url, placeHolder = null, it.toString(), true)
-                loadAvatarFromNet(300, it)
+                loadAvatarFromNet(300, time)
             }
         }
     }
 
-    private fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
-        runOnMulti {
-            delay(delayTime)
-            val old = binding.image.drawable
-            val url = "${liveUser.userId}.png"
-            val key = cursorTime.toString()
-            binding.image.load(url, old, key)
-        }
+    private suspend fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
+        delay(delayTime)
+        val old = binding.image.drawable
+        val url = "${liveUser.userId}.png"
+        val key = cursorTime.toString()
+        binding.image.load(url, old, key, true)
     }
 }

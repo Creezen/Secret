@@ -35,13 +35,16 @@ import com.creezen.commontool.Config.FRAGMENT_SENIOR
 import com.creezen.commontool.Config.URL_PREFIX
 import com.creezen.commontool.bean.UserBean
 import com.creezen.commontool.toBean
-import com.creezen.tool.AndroidTool.getDataAsync
+import com.creezen.tool.AndroidTool.getData
 import com.creezen.tool.AndroidTool.replaceFragment
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.NetTool.destroySocket
 import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.runOnIO
+import com.creezen.tool.ThreadTool.runOnMain
+import com.creezen.tool.ThreadTool.runOnMulti
 import com.creezen.tool.ThreadTool.ui
 import com.creezen.tool.bean.FragmentAnimRes
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
@@ -147,10 +150,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
 
     override fun onResume() {
         super.onResume()
-        getDataAsync(AVATAR_SAVE_TIME, 0L) { time ->
+        if (!isLogin) return
+        runOnMain {
+            val time = getData(AVATAR_SAVE_TIME, 0L)
             val imageUrl = "${liveUser.userId}.png"
             val key = time.toString()
-            ui { avatarView.load(imageUrl, placeHolder = null, key, true) }
+            avatarView.load(imageUrl, placeHolder = null, key, true)
         }
     }
 
@@ -276,9 +281,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
     }
 
     override fun onDrawerOpened(drawerView: View) {
-        ThreadTool.runOnMulti {
-            emailBadge.badgeNumber = repository.getUnreadMailCount()
-            chatBadge.badgeNumber = repository.getUnreadChatCount()
+        runOnIO {
+            val emailNumber = repository.getUnreadMailCount()
+            val chatNumber = repository.getUnreadChatCount()
+            ui {
+                emailBadge.badgeNumber = emailNumber
+                chatBadge.badgeNumber = chatNumber
+            }
+        }.onFailure {
+            TLog.d("onDrawerOpened failed: ${it.message}")
         }
     }
 

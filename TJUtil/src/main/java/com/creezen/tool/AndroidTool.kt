@@ -71,12 +71,6 @@ object AndroidTool {
         }.firstOrNull() ?: default
     }
 
-    fun <T> getDataAsync(key: String, default: T, block: suspend (T) -> Unit) {
-        ThreadTool.runOnMulti {
-            block(getData(key, default))
-        }
-    }
-
     suspend fun <T> putData(key: String, value: T) {
         envContext.datastore.edit { data ->
             when (value) {
@@ -89,13 +83,6 @@ object AndroidTool {
                 is ByteArray -> data[byteArrayPreferencesKey(key)] = value
                 else -> {}
             }
-        }
-    }
-
-    fun <T> putDataAsync(key: String, value: T, block: () -> Unit) {
-        ThreadTool.runOnMulti {
-            putData(key, value)
-            block.invoke()
         }
     }
 

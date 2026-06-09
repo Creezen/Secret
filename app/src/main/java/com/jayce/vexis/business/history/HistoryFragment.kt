@@ -86,7 +86,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
 //            Log.d("LJW", "scrollY: $scrollY  oldScrollY: $oldScrollY")
         }
 
-        ThreadTool.runOnMulti {
+        ThreadTool.runOnMain {
             val pair = manager.getTime()
             axis.updateTimePeriod(pair.first, pair.second)
         }

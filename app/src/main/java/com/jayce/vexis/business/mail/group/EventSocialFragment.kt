@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.tool.TLog
 import com.jayce.vexis.business.mail.OnEventDeliveryListener
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentEventSocialBinding
@@ -15,7 +14,5 @@ class EventSocialFragment : BaseFragment<FragmentEventSocialBinding>(), OnEventD
         return binding.root
     }
 
-    override fun onDelivery() {
-        TLog.d("onDelivery")
-    }
+    override fun onDelivery() { /**/ }
 }

@@ -42,7 +42,7 @@ object TLog {
         val executor = ThreadTool.multi.executor as? ThreadPoolExecutor ?: return ""
         executor.apply {
             return """
-            运行中：$activeCount  等待中：${queue.size}  当前总数：$poolSize 历史最多：$largestPoolSize 已完成：$completedTaskCount 总提交：$taskCount
+            运行中：$activeCount 等待中：${queue.size} 已完成：$completedTaskCount 总提交：$taskCount 当前总数：$poolSize 历史最多：$largestPoolSize
         """.trimIndent()
         }
     }

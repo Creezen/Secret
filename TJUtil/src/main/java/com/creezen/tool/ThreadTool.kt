@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit
 
 object ThreadTool {
 
+    private lateinit var params: BaseTool.InitParam
+
     private val single by lazy {
         Executors.newSingleThreadExecutor { Thread(it, "TJ-S") }.asCoroutineDispatcher()
     }
@@ -46,15 +48,31 @@ object ThreadTool {
 
     private val scopeMap = HashMap<String, CoroutineScope>()
 
-    fun init() { /**/ }
+    private val stackClassBlackList = listOf(
+        "com.creezen.tool.AndroidTool",
+        "com.creezen.tool.BaseTool",
+        "com.creezen.tool.DataTool",
+        "com.creezen.tool.FileTool",
+        "com.creezen.tool.NetTool",
+        "com.creezen.tool.SoundTool",
+        "com.creezen.tool.ThreadTool",
+        "com.creezen.tool.WindowTool",
+        "com.jayce.vexis.foundation.Util"
+        )
+
+    fun init(initParam: BaseTool.InitParam) {
+        params = initParam
+    }
 
     suspend fun ui(block: suspend () -> Unit) {
+        getCallInfo("ui")
         withContext(Dispatchers.Main) {
             block.invoke()
         }
     }
 
     suspend fun io(block: suspend () -> Unit) {
+        getCallInfo("io")
         withContext(Dispatchers.IO) {
             block.invoke()
         }
@@ -69,6 +87,7 @@ object ThreadTool {
     }
 
     fun runOnSingle(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        getCallInfo("runOnSingle")
         val wrapper = ThreadWrapperImpl()
         singleScope.launch {
             runWithCatch(wrapper) {
@@ -79,6 +98,7 @@ object ThreadTool {
     }
 
     fun runOnMulti(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        getCallInfo("runOnMulti")
         val wrapper = ThreadWrapperImpl()
         multiScope.launch {
             runWithCatch(wrapper) {
@@ -89,6 +109,7 @@ object ThreadTool {
     }
 
     fun runOnMain(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        getCallInfo("runOnMain")
         val wrapper = ThreadWrapperImpl()
         mainScope.launch {
             runWithCatch(wrapper) {
@@ -99,6 +120,7 @@ object ThreadTool {
     }
 
     fun runOnIO(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
+        getCallInfo("runOnIO")
         val wrapper = ThreadWrapperImpl()
         ioScope.launch {
             runWithCatch(wrapper) {
@@ -113,6 +135,7 @@ object ThreadTool {
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
         func: suspend (ThreadWrapperImpl) -> Unit
     ): ThreadWrapper {
+        getCallInfo("runOnSpecific")
         val wrapper = ThreadWrapperImpl()
         val scope = getScope(name)
         if(scope == null) {
@@ -133,6 +156,7 @@ object ThreadTool {
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
         func: suspend (ThreadWrapperImpl) -> Unit
     ): ThreadWrapper {
+        getCallInfo("runOnCurrent")
         val wrapper = ThreadWrapperImpl()
         scope.launch(dispatcher) {
             runWithCatch(wrapper) {
@@ -205,5 +229,15 @@ object ThreadTool {
     fun unregisterScope(name: String) {
         scopeMap[name]?.cancel()
         scopeMap.remove(name)
+    }
+
+    private fun getCallInfo(from: String) {
+        if (!params.debugThread) return
+        val stackTrace = Thread.currentThread().stackTrace
+        val indexOfTargetStack = stackTrace.indexOfFirst {
+            it.className.contains("com.jayce.vexis")
+        }
+        val element = stackTrace[indexOfTargetStack]
+        TLog.w("($from - ${element.fileName}:${element.lineNumber}) [${element.className}] ${element.methodName}")
     }
 }

@@ -6,25 +6,28 @@ import android.view.ViewGroup
 import com.creezen.commontool.Config.AVATAR_SAVE_TIME
 import com.creezen.commontool.bean.FeedbackBean
 import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool
+import com.creezen.tool.AndroidTool.getData
+import com.creezen.tool.AndroidTool.putData
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.TLog
 import com.creezen.tool.ThreadTool
+import com.creezen.tool.ThreadTool.runOnIO
+import com.creezen.tool.ThreadTool.ui
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.domain.route.FeedbackService
-import com.jayce.vexis.foundation.Util
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.CardAdapter
+import java.util.concurrent.ConcurrentHashMap
 
-class FeedBackAdapter(
-    private val context: Context,
-    private var feedbackEntryList: List<FeedbackBean>
-) : CardAdapter<FeedbackBean, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackEntryList) {
+class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
+    CardAdapter<FeedbackBean, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
+
+    private val avatarMap: ConcurrentHashMap<Int, Long> = ConcurrentHashMap()
 
     class ViewHolder(
         containerBinding: CardItemLayoutBinding,
@@ -41,16 +44,16 @@ class FeedBackAdapter(
         val against = binding.against
     }
 
-    override fun getItemCount() = feedbackEntryList.size
+    override fun getItemCount() = feedbackList.size
 
-    override fun getAttachedList() = feedbackEntryList
+    override fun getAttachedList() = feedbackList
 
     override fun updateAttachedList(newList: List<FeedbackBean>) {
-        feedbackEntryList = newList
+        feedbackList = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
-        val item = feedbackEntryList[position]
+        val item = feedbackList[position]
         holder.nickname.text = item.userName
         holder.time.text = item.createTime.toTime()
         holder.title.text = item.title
@@ -67,10 +70,14 @@ class FeedBackAdapter(
             }
         }
 
-        AndroidTool.getDataAsync(AVATAR_SAVE_TIME, 0L) {
-            ThreadTool.ui {
-                val url = "${liveUser.userId}.png"
-                holder.head.load(url, placeHolder = null, it.toString(), true)
+        runOnIO {
+            val oldTime = avatarMap[position]
+            val nowTime = getData(AVATAR_SAVE_TIME, 0L)
+            if (oldTime == nowTime) return@runOnIO
+            avatarMap[position] = nowTime
+            ui {
+                val url = "${item.userID}.png"
+                holder.head.load(url, placeHolder = null, nowTime.toString(), true)
             }
         }
     }

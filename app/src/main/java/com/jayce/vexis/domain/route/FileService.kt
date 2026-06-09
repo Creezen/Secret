@@ -24,7 +24,7 @@ interface FileService : BaseService {
     fun fetchFile(): Call<List<FileBean>>
 
     @Streaming
-    @GET("FileSystem/{fileName}")
+    @GET("file/{fileName}")
     fun downloadFile(
         @Path("fileName") fileName: String,
     ): Call<ResponseBody>

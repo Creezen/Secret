@@ -12,15 +12,11 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import com.jayce.vexis.domain.route.FeedbackService
 import com.jayce.vexis.foundation.Util.request
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
     private val feedbackEntryList = arrayListOf<FeedbackBean>()
-    private val feedbackAdapter by lazy {
-        FeedBackAdapter(requireActivity(), feedbackEntryList)
-    }
+    private val feedbackAdapter by lazy { FeedBackAdapter(feedbackEntryList) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()

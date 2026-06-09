@@ -3,8 +3,9 @@ package com.jayce.vexis.business.setting
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.creezen.tool.AndroidTool.putDataAsync
+import com.creezen.tool.AndroidTool.putData
 import com.creezen.tool.BaseTool.restartApp
+import com.creezen.tool.ThreadTool.runOnMain
 import com.jayce.vexis.R
 
 class SettingFragment : PreferenceFragmentCompat() {
@@ -16,7 +17,8 @@ class SettingFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         when (preference.key) {
             "changeFont" -> {
-                putDataAsync("font", "方正粗圆") {
+                runOnMain {
+                    putData("font", "方正粗圆")
                     restartApp()
                 }
             }
