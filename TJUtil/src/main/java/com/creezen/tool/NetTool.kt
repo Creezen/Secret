@@ -23,6 +23,8 @@ import com.creezen.commontool.toJson
 import com.creezen.tool.AndroidTool.toast
 import com.creezen.tool.BaseTool.envContext
 import com.creezen.tool.ability.net.AvatarSignature
+import com.creezen.tool.ability.net.ImageListener
+import com.creezen.tool.ability.net.ImageTarget
 import com.creezen.tool.ability.net.NetworkEventListener
 import com.creezen.tool.ability.net.NetworkEventListenerFactory
 import com.creezen.tool.ability.net.NetworkInterceptor
@@ -92,7 +94,7 @@ object NetTool {
 
     private val okHttp by lazy {
         val interceptor = NetworkInterceptor(param.debugNetwork)
-        val eventListenerFactory = NetworkEventListenerFactory()
+        val eventListenerFactory = NetworkEventListenerFactory(param.debugNetwork)
         OkHttpClient.Builder()
             .eventListenerFactory(eventListenerFactory)
             .addNetworkInterceptor(interceptor)
@@ -157,17 +159,19 @@ object NetTool {
         isCircle: Boolean = false
     ) {
         val fileUrl = "${baseUrl}/FileSystem/head/$url"
-        val load = Glide.with(context).load(fileUrl)
+        val target = ImageTarget(image, param.debugImage)
+        val listener = ImageListener(param.debugImage)
+        val load = Glide.with(context).load(fileUrl).addListener(listener)
         var holderBuilder = load
         if (placeHolder != null) {
             holderBuilder = load.placeholder(placeHolder)
         }
         if (key == null) {
-            holderBuilder.into(image)
+            holderBuilder.into(target)
             return
         }
         val signature = AvatarSignature("key:$key")
-        holderBuilder.apply(getRequestOptions(signature, isCircle)).into(image)
+        holderBuilder.apply(getRequestOptions(signature, isCircle)).into(target)
     }
 
     private fun getRequestOptions(key: Key, isCircle: Boolean = false): RequestOptions {

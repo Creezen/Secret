@@ -12,7 +12,7 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.Proxy
 
-class NetworkEventListener : EventListener() {
+class NetworkEventListener(private val debug: Boolean) : EventListener() {
 
     private var callStart: Long = 0L
     private var dnsStart: Long = 0L
@@ -125,6 +125,7 @@ class NetworkEventListener : EventListener() {
     override fun callEnd(call: Call) {
         super.callEnd(call)
         callDuration = now() - callStart
+        if (!debug) return
         TLog.d( "\ncallDuration:  $callDuration  \n"+
                 "DNS:$dnsDuration   " +
                 "TCP:$tcpConnectionDuration(TLS:$tlsConnectionDuration)  \n" +

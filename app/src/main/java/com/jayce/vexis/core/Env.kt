@@ -13,7 +13,6 @@ import com.creezen.tool.AndroidTool.getData
 import com.creezen.tool.BaseTool
 import com.creezen.tool.BaseTool.setFont
 import com.creezen.tool.ThreadTool.runOnIO
-import com.creezen.tool.ThreadTool.runOnMulti
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
 import org.koin.core.context.startKoin
@@ -43,7 +42,7 @@ class Env : Application() {
             BuildConfig.socketPort,
             BuildConfig.socketUrl,
             BuildConfig.baseUrl,
-            debugNetwork = true,
+            debugNetwork = false,
             debugThread = false,
             debugImage = false
         )
