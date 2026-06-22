@@ -39,7 +39,7 @@ import com.jayce.vexis.client.DataTool.dpToPx
 import com.jayce.vexis.client.ability.click.GestureHandle
 import com.jayce.vexis.client.ability.click.GestureCallback
 import com.jayce.vexis.client.bean.FragmentAnimRes
-import com.example.testlib.R
+import com.jayce.vexis.util.client.R
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.File

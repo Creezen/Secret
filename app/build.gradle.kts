@@ -263,7 +263,7 @@ dependencies {
     implementation(libs.media.player)
     implementation(libs.media.ui)
     implementation(libs.media.sesison)
-    implementation("com.jayce.vexis.util:common:1.0.0-SNAPSHOT")
+    implementation(libs.common.tool)
 
     lintChecks(project(":CreezenAnnotation"))
 }

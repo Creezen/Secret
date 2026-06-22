@@ -11,10 +11,29 @@ buildscript {
         maven { url = uri("https://maven.aliyun.com/repository/apache-snapshots")}
         maven { url = uri("https://maven.aliyun.com/repository/grails-core")}
         maven { url = uri("https://jitpack.io") }
-        maven { url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/") }
+
     }
     dependencies {
         classpath("org.jsoup:jsoup:1.16.1")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        gradlePluginPortal()
+        maven { url = uri("https://maven.aliyun.com/repository/releases")}
+        maven { url = uri("https://maven.aliyun.com/repository/public")}
+        maven { url = uri("https://maven.aliyun.com/repository/google")}
+        maven { url = uri("https://maven.aliyun.com/repository/central")}
+        maven { url = uri("https://maven.aliyun.com/repository/jcenter")}
+        maven { url = uri("https://maven.aliyun.com/repository/gradle-plugin")}
+        maven { url = uri("https://maven.aliyun.com/repository/apache-snapshots")}
+        maven { url = uri("https://maven.aliyun.com/repository/grails-core")}
+        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/") }
     }
 }
 

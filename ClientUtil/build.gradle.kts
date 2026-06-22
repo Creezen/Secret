@@ -6,9 +6,9 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
     google()
     mavenCentral()
+    mavenLocal()
     gradlePluginPortal()
     maven {
         url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/")
@@ -16,7 +16,7 @@ repositories {
 }
 
 android {
-    namespace = "com.example.testlib"
+    namespace = "com.jayce.vexis.util.client"
     compileSdk = 35
 
     defaultConfig {
@@ -24,6 +24,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
 
     buildTypes {
@@ -35,6 +40,14 @@ android {
             )
         }
     }
+
+    externalNativeBuild {
+        cmake {
+            path("src/main/cpp/CMakeLists.txt")
+            version = "4.1.2"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -80,5 +93,5 @@ dependencies {
     implementation(libs.datastore)
     implementation(libs.pytorch.android)
     implementation(libs.pytorch.android.torchvision)
-    implementation("com.jayce.vexis.util:common:1.0.0-SNAPSHOT")
+    implementation(libs.common.tool)
 }

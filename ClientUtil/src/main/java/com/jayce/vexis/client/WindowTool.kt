@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.TextView
-import com.example.testlib.R
+import com.jayce.vexis.util.client.R
 import kotlinx.coroutines.delay
 
 object WindowTool {

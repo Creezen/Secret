@@ -13,6 +13,7 @@ zxing-android-embedded = "4.3.0"
 preference-ktx = "1.2.0"
 koin-android = "4.1.0"
 tools = "1.0.0"
+common-tool = "1.0.0-SNAPSHOT"
 gson = "2.10.1"
 lifecycle-common-jvm = "2.8.4"
 kotlin = "2.1.0"
@@ -57,6 +58,7 @@ zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embe
 preference-ktx = { group = "androidx.preference", name = "preference-ktx", version.ref = "preference-ktx" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-android" }
 tools = { group = "com.jayce.vexis.util", name = "client", version.ref = "tools" }
+common-tool = { group = "com.jayce.vexis.util", name = "common", version.ref = "common-tool" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
