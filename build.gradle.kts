@@ -11,6 +11,7 @@ buildscript {
         maven { url = uri("https://maven.aliyun.com/repository/apache-snapshots")}
         maven { url = uri("https://maven.aliyun.com/repository/grails-core")}
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/") }
     }
     dependencies {
         classpath("org.jsoup:jsoup:1.16.1")
@@ -25,4 +26,10 @@ plugins {
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.detekt) apply false
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+    }
 }
