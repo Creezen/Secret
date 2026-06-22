@@ -6,8 +6,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.commontool.bean.ActiveBean
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.util.bean.ActiveBean
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.databinding.ActionWindowBinding
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding

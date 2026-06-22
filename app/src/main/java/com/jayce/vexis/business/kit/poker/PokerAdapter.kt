@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.DataTool.dpToPx
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.DataTool.dpToPx
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.PokerItemBinding

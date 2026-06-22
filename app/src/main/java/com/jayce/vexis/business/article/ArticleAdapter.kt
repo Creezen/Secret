@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.creezen.commontool.bean.ArticleBean
+import com.jayce.vexis.util.bean.ArticleBean
 import com.jayce.vexis.business.article.section.SectionActivity
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.ParagraphItemBinding

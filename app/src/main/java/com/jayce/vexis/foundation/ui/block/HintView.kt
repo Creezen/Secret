@@ -9,9 +9,9 @@ import android.view.MotionEvent
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.WindowInsetsCompat
-import com.creezen.commontool.Config.NIL
-import com.creezen.tool.AndroidTool.measureSize
-import com.creezen.tool.WindowTool.requestFloatWindow
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.client.AndroidTool.measureSize
+import com.jayce.vexis.client.WindowTool.requestFloatWindow
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.HintTextFloatWindowBinding
 

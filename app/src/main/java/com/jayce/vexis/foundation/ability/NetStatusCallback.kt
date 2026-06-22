@@ -3,7 +3,7 @@ package com.jayce.vexis.foundation.ability
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import com.creezen.tool.TLog
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.StatusManager
 import com.jayce.vexis.StatusManager.NETWORK_TYPE_CELLULAR
 import com.jayce.vexis.StatusManager.NETWORK_TYPE_INVALIDATED

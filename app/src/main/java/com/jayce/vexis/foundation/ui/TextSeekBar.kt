@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import com.creezen.tool.AndroidTool.intMsg
+import com.jayce.vexis.client.AndroidTool.intMsg
 import com.jayce.vexis.databinding.TaxtSeekbarLayoutBinding
 
 class TextSeekBar(context: Context, attr: AttributeSet) :

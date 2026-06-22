@@ -3,9 +3,9 @@ package com.jayce.vexis.business.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.AndroidTool.onVisible
-import com.creezen.tool.BaseTool.envContext
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.AndroidTool.onVisible
+import com.jayce.vexis.client.BaseTool.envContext
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
 import com.jayce.vexis.domain.bean.ChatEntry

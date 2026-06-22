@@ -2,8 +2,8 @@ package com.jayce.vexis.business.article.section
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.bean.SectionRemarkBean
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.util.bean.SectionRemarkBean
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
 import com.jayce.vexis.domain.route.ArticleService

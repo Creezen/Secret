@@ -5,9 +5,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.bean.FileBean
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.FileTool.isFileDownload
+import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.FileTool.isFileDownload
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ResItemBinding

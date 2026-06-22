@@ -2,7 +2,7 @@ package com.jayce.vexis.dynamic
 
 import android.os.Bundle
 import android.view.View
-import com.creezen.tool.ability.api.IActivity
+import com.jayce.vexis.client.ability.api.IActivity
 import com.jayce.vexis.dynamic.databinding.ActivityLayoutBinding
 
 class JumpActivity : IActivity() {

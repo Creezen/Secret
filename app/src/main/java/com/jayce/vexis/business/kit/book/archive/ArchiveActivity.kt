@@ -2,7 +2,7 @@ package com.jayce.vexis.business.kit.book.archive
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityBookArchiveBinding
 import com.jayce.vexis.domain.bean.BookArchiveEntry

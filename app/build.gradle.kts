@@ -27,6 +27,9 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven { url = uri("https://jitpack.io") }
+    maven {
+        url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/")
+    }
 }
 
 detekt {
@@ -250,7 +253,6 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(libs.preference.ktx)
     implementation(libs.koin.android)
-    implementation(libs.common.tools)
     implementation(libs.amap)
     implementation(libs.websocket)
     implementation(libs.swipe.refresh)
@@ -261,6 +263,7 @@ dependencies {
     implementation(libs.media.player)
     implementation(libs.media.ui)
     implementation(libs.media.sesison)
+    implementation("com.jayce.vexis.util:common:1.0.0-SNAPSHOT")
 
     lintChecks(project(":CreezenAnnotation"))
 }

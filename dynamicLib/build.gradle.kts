@@ -60,10 +60,8 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.tools)
-    implementation(libs.common.tools)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
 }

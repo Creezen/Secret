@@ -8,7 +8,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.core.view.setPadding
-import com.creezen.commontool.Config.NIL
+import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.TextCheckBoxBinding
 import kotlin.math.ceil

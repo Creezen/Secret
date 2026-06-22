@@ -10,6 +10,9 @@ repositories {
     google()
     mavenCentral()
     gradlePluginPortal()
+    maven {
+        url = uri("https://zrzklsaaov5s.xiaomiqiu.com/repository/")
+    }
 }
 
 android {
@@ -47,8 +50,8 @@ android {
 publishing {
     publications {
         create<MavenPublication>("mavenA"){
-            groupId = "com.creezen.tool"
-            artifactId = "tools"
+            groupId = "com.jayce.vexis.util"
+            artifactId = "client"
             version = "1.0.0"
 
             afterEvaluate {
@@ -74,8 +77,8 @@ dependencies {
     implementation(libs.mmkv)
     implementation(libs.snakeyaml)
     implementation(libs.glide.okhttp3.integration)
-    implementation(libs.common.tools)
     implementation(libs.datastore)
     implementation(libs.pytorch.android)
     implementation(libs.pytorch.android.torchvision)
+    implementation("com.jayce.vexis.util:common:1.0.0-SNAPSHOT")
 }

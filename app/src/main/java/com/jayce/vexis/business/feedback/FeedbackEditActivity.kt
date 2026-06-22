@@ -1,12 +1,12 @@
 package com.jayce.vexis.business.feedback
 
 import android.os.Bundle
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.NetTool.sendFeedbackMessage
-import com.creezen.tool.ThreadTool
-import com.creezen.tool.ThreadTool.getScope
-import com.creezen.tool.ability.thread.BlockOption
-import com.creezen.tool.ability.thread.ThreadType
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.NetTool.sendFeedbackMessage
+import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.ThreadTool.getScope
+import com.jayce.vexis.client.ability.thread.BlockOption
+import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFeedbackEditBinding

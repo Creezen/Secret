@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.commontool.bean.HistoryBean
-import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.util.bean.HistoryBean
+import com.jayce.vexis.util.toTime
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.business.history.api.OnOptionClickListener
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding

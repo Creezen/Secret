@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.LanViewBinding
 import com.jayce.vexis.foundation.ability.socket.InnerLanStatusListener

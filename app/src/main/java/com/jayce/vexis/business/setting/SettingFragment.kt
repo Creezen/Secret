@@ -3,9 +3,9 @@ package com.jayce.vexis.business.setting
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.creezen.tool.AndroidTool.putData
-import com.creezen.tool.BaseTool.restartApp
-import com.creezen.tool.ThreadTool.runOnMain
+import com.jayce.vexis.client.AndroidTool.putData
+import com.jayce.vexis.client.BaseTool.restartApp
+import com.jayce.vexis.client.ThreadTool.runOnMain
 import com.jayce.vexis.R
 
 class SettingFragment : PreferenceFragmentCompat() {

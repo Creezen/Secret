@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.viewmodel
 
-import com.creezen.tool.FileTool.downloadFileByNet
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.FileTool.downloadFileByNet
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.DownloadTask
 import com.jayce.vexis.domain.route.FileService

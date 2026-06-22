@@ -1,10 +1,10 @@
 package com.jayce.vexis.foundation.ability.socket
 
 import android.content.Context
-import com.creezen.tool.NetTool
-import com.creezen.tool.NetTool.isValidIP
-import com.creezen.tool.TLog
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.NetTool
+import com.jayce.vexis.client.NetTool.isValidIP
+import com.jayce.vexis.client.TLog
+import com.jayce.vexis.client.ThreadTool
 import java.net.URI
 import java.util.concurrent.TimeUnit
 

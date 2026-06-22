@@ -1,6 +1,6 @@
 package com.jayce.vexis.domain.bean
 
-import com.creezen.commontool.Config.NIL
+import com.jayce.vexis.util.Config.NIL
 
 data class BookArchiveEntry(
     val title: String = NIL,

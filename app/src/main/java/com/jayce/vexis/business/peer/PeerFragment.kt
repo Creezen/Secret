@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.bean.PeerAdviceBean
-import com.creezen.tool.DataTool
-import com.creezen.tool.ThreadTool
-import com.creezen.tool.ThreadTool.ui
+import com.jayce.vexis.util.bean.PeerAdviceBean
+import com.jayce.vexis.client.DataTool
+import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.domain.bean.SubjectTableEntry

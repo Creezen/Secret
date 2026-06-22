@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.AssetManager
 import android.content.res.Resources
-import com.creezen.tool.FileTool
-import com.creezen.tool.ability.api.IActivity
-import com.creezen.tool.ability.api.IFragment
+import com.jayce.vexis.client.FileTool
+import com.jayce.vexis.client.ability.api.IActivity
+import com.jayce.vexis.client.ability.api.IFragment
 import dalvik.system.DexClassLoader
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap

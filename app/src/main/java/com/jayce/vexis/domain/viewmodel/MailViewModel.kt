@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.viewmodel
 
-import com.creezen.commontool.Config.EVENT_TYPE_FEEDBACK
-import com.creezen.commontool.Config.EVENT_TYPE_ROLE
+import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
+import com.jayce.vexis.util.Config.EVENT_TYPE_ROLE
 import com.jayce.vexis.business.mail.OnEventDeliveryListener
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.EventEntry

@@ -6,9 +6,9 @@ import android.graphics.Matrix
 import android.graphics.RectF
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
-import com.creezen.tool.AndroidTool.registerGestureEvent
-import com.creezen.tool.ability.click.GestureCallback
-import com.creezen.tool.ability.click.Point
+import com.jayce.vexis.client.AndroidTool.registerGestureEvent
+import com.jayce.vexis.client.ability.click.GestureCallback
+import com.jayce.vexis.client.ability.click.Point
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.math.min
 

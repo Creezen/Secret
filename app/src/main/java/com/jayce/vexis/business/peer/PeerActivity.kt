@@ -1,9 +1,9 @@
 package com.jayce.vexis.business.peer
 
 import android.os.Bundle
-import com.creezen.commontool.Config.NIL
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityPeerBinding
 import com.jayce.vexis.domain.route.PeerService

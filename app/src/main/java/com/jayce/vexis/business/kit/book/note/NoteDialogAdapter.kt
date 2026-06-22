@@ -3,8 +3,8 @@ package com.jayce.vexis.business.kit.book.note
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.AndroidTool.intMsg
-import com.creezen.tool.TLog
+import com.jayce.vexis.client.AndroidTool.intMsg
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookDialogLineNoteBinding
 

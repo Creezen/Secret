@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookArchiveBinding

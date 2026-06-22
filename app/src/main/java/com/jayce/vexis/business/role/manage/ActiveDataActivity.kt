@@ -1,14 +1,14 @@
 package com.jayce.vexis.business.role.manage
 
 import android.os.Bundle
-import com.creezen.commontool.Config.AVATAR_SAVE_TIME
-import com.creezen.commontool.bean.ActiveBean
-import com.creezen.tool.AndroidTool.getData
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.NetTool.sendManagerMessage
-import com.creezen.tool.ThreadTool
-import com.creezen.tool.ThreadTool.getScope
-import com.creezen.tool.ThreadTool.runOnMain
+import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
+import com.jayce.vexis.util.bean.ActiveBean
+import com.jayce.vexis.client.AndroidTool.getData
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.NetTool.sendManagerMessage
+import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.ThreadTool.getScope
+import com.jayce.vexis.client.ThreadTool.runOnMain
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding

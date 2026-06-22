@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.viewmodel
 
-import com.creezen.tool.TLog
-import com.creezen.tool.ThreadTool.runOnMulti
+import com.jayce.vexis.client.TLog
+import com.jayce.vexis.client.ThreadTool.runOnMulti
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.ChessEntry
 import com.jayce.vexis.foundation.ability.socket.LanConnectionListener

@@ -3,7 +3,7 @@ package com.jayce.vexis.business.mail
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.creezen.commontool.Config.EVENT_TYPE_FEEDBACK
+import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.MailFeedbackItemBinding
 import com.jayce.vexis.domain.bean.EventEntry

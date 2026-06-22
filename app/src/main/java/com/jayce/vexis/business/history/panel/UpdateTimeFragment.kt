@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.ThreadTool
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.business.history.TimeManager
 import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.core.base.BaseFragment

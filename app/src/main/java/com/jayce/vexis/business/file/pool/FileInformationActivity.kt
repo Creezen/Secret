@@ -1,8 +1,8 @@
 package com.jayce.vexis.business.file.pool
 
 import android.os.Bundle
-import com.creezen.commontool.Config.NIL
-import com.creezen.commontool.bean.FileBean
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.bean.FileBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
 import com.jayce.vexis.domain.bean.FileEntry

@@ -2,7 +2,7 @@ package com.jayce.vexis.foundation.dynamic
 
 import android.app.Activity
 import android.os.Bundle
-import com.creezen.tool.ability.api.IActivity
+import com.jayce.vexis.client.ability.api.IActivity
 
 class DynamicActivity : Activity() {
 

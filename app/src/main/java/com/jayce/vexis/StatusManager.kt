@@ -1,7 +1,7 @@
 package com.jayce.vexis
 
-import com.creezen.commontool.bean.UserBean
-import com.creezen.tool.NetTool
+import com.jayce.vexis.util.bean.UserBean
+import com.jayce.vexis.client.NetTool
 import java.util.concurrent.atomic.AtomicReference
 
 object StatusManager {

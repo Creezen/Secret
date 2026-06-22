@@ -1,6 +1,6 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import com.creezen.tool.TLog
+import com.jayce.vexis.client.TLog
 
 class WilsonGenerator : IMazeGenerator() {
 

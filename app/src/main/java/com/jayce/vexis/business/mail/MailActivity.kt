@@ -3,8 +3,8 @@ package com.jayce.vexis.business.mail
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.creezen.commontool.Config.NIL
-import com.creezen.tool.ThreadTool.ui
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.client.ThreadTool.ui
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.business.mail.group.EventFeedbackFragment
 import com.jayce.vexis.business.mail.group.EventRoleFragment

@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.viewmodel
 
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.TLog
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.foundation.ability.socket.LanConnectionListener
 import org.java_websocket.WebSocket

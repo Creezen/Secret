@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.bean.PeerAdviceBean
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.util.bean.PeerAdviceBean
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.SeniorAdviceBinding

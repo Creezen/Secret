@@ -5,9 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import com.creezen.commontool.Config.BASE_FACTOR_TWELVE
-import com.creezen.commontool.Config.DAY
-import com.creezen.tool.AndroidTool.adjustTextSize
+import com.jayce.vexis.util.Config.BASE_FACTOR_TWELVE
+import com.jayce.vexis.util.Config.DAY
+import com.jayce.vexis.client.AndroidTool.adjustTextSize
 import com.jayce.vexis.R
 import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.enums.TimeLevel

@@ -1,6 +1,6 @@
 package com.jayce.vexis.domain.bean
 
-import com.creezen.commontool.getMaxDayOfMonth
+import com.jayce.vexis.util.getMaxDayOfMonth
 import com.jayce.vexis.domain.enums.TimeLevel
 import java.time.Duration
 import java.time.LocalDateTime

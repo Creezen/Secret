@@ -13,7 +13,6 @@ pluginManagement {
 rootProject.name = "Secret"
 include(":app")
 include(":TJUtil")
-include(":CommonTool")
 include(":nativetool")
 include(":dynamicLib")
 include(":CreezenAnnotation")

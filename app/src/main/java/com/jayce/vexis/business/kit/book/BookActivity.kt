@@ -2,8 +2,8 @@ package com.jayce.vexis.business.kit.book
 
 import android.content.Intent
 import android.os.Bundle
-import com.creezen.commontool.Config.NIL
-import com.creezen.tool.AndroidTool.msg
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.business.kit.book.archive.ArchiveActivity
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity
 import com.jayce.vexis.core.base.BaseActivity

@@ -2,12 +2,12 @@ package com.jayce.vexis.domain.viewmodel
 
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
-import com.creezen.commontool.Config.NIL
-import com.creezen.commontool.bean.TransferStatusBean
-import com.creezen.commontool.bean.UserBean
-import com.creezen.commontool.getRandomString
-import com.creezen.commontool.toTime
-import com.creezen.tool.AndroidTool.getString
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.bean.TransferStatusBean
+import com.jayce.vexis.util.bean.UserBean
+import com.jayce.vexis.util.getRandomString
+import com.jayce.vexis.util.toTime
+import com.jayce.vexis.client.AndroidTool.getString
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.TimeUnitEntry

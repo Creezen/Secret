@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.bean.FeedbackBean
+import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding

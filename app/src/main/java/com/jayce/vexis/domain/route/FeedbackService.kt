@@ -1,6 +1,6 @@
 package com.jayce.vexis.domain.route
 
-import com.creezen.commontool.bean.FeedbackBean
+import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.core.base.BaseService
 import retrofit2.Call
 import retrofit2.http.Field

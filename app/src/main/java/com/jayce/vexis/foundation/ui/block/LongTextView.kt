@@ -8,7 +8,7 @@ import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
-import com.creezen.commontool.Config.NIL
+import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.R
 
 class LongTextView(context: Context, attr: AttributeSet) : View(context, attr) {

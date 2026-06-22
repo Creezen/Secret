@@ -3,7 +3,7 @@ package com.jayce.vexis.business.kit.book.note
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.AndroidTool.addSimpleView
+import com.jayce.vexis.client.AndroidTool.addSimpleView
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.HEIGHT
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.WIDTH
 import com.jayce.vexis.core.base.BaseAdapter

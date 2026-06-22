@@ -3,7 +3,7 @@ package com.jayce.vexis.domain.bean
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.creezen.commontool.Config.NIL
+import com.jayce.vexis.util.Config.NIL
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

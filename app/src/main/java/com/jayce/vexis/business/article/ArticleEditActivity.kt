@@ -9,8 +9,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
-import com.creezen.commontool.Config.MEDIA_TYPE_IMAGE
-import com.creezen.tool.AndroidTool.msg
+import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
+import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding

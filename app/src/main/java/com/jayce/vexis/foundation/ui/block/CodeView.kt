@@ -8,7 +8,7 @@ import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.widget.FrameLayout
-import com.creezen.tool.TLog
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.databinding.CodeLayoutBinding
 
 @SuppressLint("SetJavaScriptEnabled")

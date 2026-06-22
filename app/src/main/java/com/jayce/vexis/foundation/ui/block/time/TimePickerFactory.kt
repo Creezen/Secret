@@ -1,6 +1,6 @@
 package com.jayce.vexis.foundation.ui.block.time
 
-import com.creezen.tool.DataTool.getNumberList
+import com.jayce.vexis.client.DataTool.getNumberList
 import com.jayce.vexis.domain.enums.TimePickerType
 
 class TimePickerFactory {

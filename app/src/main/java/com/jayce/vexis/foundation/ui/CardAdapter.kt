@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.creezen.tool.DataTool.dpToPx
+import com.jayce.vexis.client.DataTool.dpToPx
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 

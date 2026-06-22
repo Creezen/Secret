@@ -6,7 +6,7 @@ import android.view.Choreographer.FrameCallback
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.creezen.tool.NetTool.formatElapsed
+import com.jayce.vexis.client.NetTool.formatElapsed
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.LanViewSecordLayoutBinding
 import com.jayce.vexis.foundation.ability.socket.LanManager

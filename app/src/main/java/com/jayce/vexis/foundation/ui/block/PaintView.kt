@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.creezen.tool.DataTool.calculateMultiPointDistance
+import com.jayce.vexis.client.DataTool.calculateMultiPointDistance
 import kotlin.math.abs
 import kotlin.math.absoluteValue
 

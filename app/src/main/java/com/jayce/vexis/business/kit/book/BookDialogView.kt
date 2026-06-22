@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
-import com.creezen.tool.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.business.kit.book.BookActivity.Companion.INIT_USER_COUNT
 import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 

@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.Config.NIL
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.NetTool.sendChatMessage
-import com.creezen.tool.ThreadTool.getScope
-import com.creezen.tool.ThreadTool.ui
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.NetTool.sendChatMessage
+import com.jayce.vexis.client.ThreadTool.getScope
+import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
 import com.jayce.vexis.domain.bean.ChatEntry

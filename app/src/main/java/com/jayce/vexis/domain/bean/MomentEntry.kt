@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.bean
 
-import com.creezen.commontool.Config.NIL
-import com.creezen.commontool.toTime
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.toTime
 
 data class MomentEntry(
     val timeStamp: Long,

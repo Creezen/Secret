@@ -5,7 +5,7 @@ import android.graphics.Shader
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.DynamicModuleItemLayoutBinding
 import com.jayce.vexis.domain.bean.DynamicModuleEntry

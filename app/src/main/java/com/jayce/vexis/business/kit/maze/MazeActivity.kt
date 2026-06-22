@@ -1,7 +1,7 @@
 package com.jayce.vexis.business.kit.maze
 
-import com.creezen.tool.AndroidTool.toast
-import com.creezen.tool.SoundTool.playShortSound
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.SoundTool.playShortSound
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityMazeBinding

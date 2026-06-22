@@ -3,7 +3,7 @@ package com.jayce.vexis.business.kit.poker
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.tool.DataTool.dpToPx
+import com.jayce.vexis.client.DataTool.dpToPx
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.business.kit.poker.dialog.CheatFragment
 import com.jayce.vexis.business.kit.poker.dialog.LandloadFragment

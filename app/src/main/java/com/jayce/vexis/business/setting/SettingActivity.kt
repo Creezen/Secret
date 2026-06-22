@@ -1,7 +1,7 @@
 package com.jayce.vexis.business.setting
 
 import android.os.Bundle
-import com.creezen.tool.AndroidTool
+import com.jayce.vexis.client.AndroidTool
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySettingBinding

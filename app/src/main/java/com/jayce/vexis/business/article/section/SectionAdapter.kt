@@ -12,10 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.creezen.commontool.bean.SectionRemarkBean
-import com.creezen.tool.AndroidTool.getThemeColor
-import com.creezen.tool.AndroidTool.msg
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.util.bean.SectionRemarkBean
+import com.jayce.vexis.client.AndroidTool.getThemeColor
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseAdapter

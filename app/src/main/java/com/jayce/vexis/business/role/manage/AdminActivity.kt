@@ -2,7 +2,7 @@ package com.jayce.vexis.business.role.manage
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.creezen.commontool.bean.ActiveBean
+import com.jayce.vexis.util.bean.ActiveBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.domain.route.UserService

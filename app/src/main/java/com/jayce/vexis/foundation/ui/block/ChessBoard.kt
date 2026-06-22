@@ -9,7 +9,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.creezen.tool.AndroidTool.toast
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.foundation.ability.socket.LanManager.Companion.TYPE_SERVER
 
 class ChessBoard(context: Context, attr: AttributeSet) : View(context, attr) {

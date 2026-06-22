@@ -8,8 +8,8 @@ import android.view.ViewGroup.LayoutParams
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.viewbinding.ViewBinding
-import com.creezen.tool.DataTool.dpToPx
-import com.creezen.tool.WindowTool
+import com.jayce.vexis.client.DataTool.dpToPx
+import com.jayce.vexis.client.WindowTool
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.DialogBinding
 
