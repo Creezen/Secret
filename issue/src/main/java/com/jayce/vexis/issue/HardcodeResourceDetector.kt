@@ -37,7 +37,7 @@ class HardcodeResourceDetector : ResourceXmlDetector() {
                 ISSUE,
                 attribute,
                 context.getLocation(attribute),
-                "Use resource instead."
+                "Please Use resource instead."
             )
         }
     }

@@ -17,7 +17,7 @@ plugins {
     id("kotlin-parcelize")
     id("maven-publish")
     id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
-//    id("com.jayce.vexis.annotation")
+    id("com.jayce.vexis.annotation")
 }
 
 apply("${rootProject.projectDir}/config.gradle")
@@ -265,5 +265,5 @@ dependencies {
     implementation(libs.media.sesison)
     implementation(libs.common.tool)
 
-    lintChecks(project(":CreezenAnnotation"))
+    lintChecks(project(":issue"))
 }

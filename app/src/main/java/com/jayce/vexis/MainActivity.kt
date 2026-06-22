@@ -24,29 +24,6 @@ import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED
 import androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_UNLOCKED
 import androidx.fragment.app.Fragment
-import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
-import com.jayce.vexis.util.Config.FRAGMENT_ARTICLE
-import com.jayce.vexis.util.Config.FRAGMENT_FEEDBACK
-import com.jayce.vexis.util.Config.FRAGMENT_FILE
-import com.jayce.vexis.util.Config.FRAGMENT_HISTORY
-import com.jayce.vexis.util.Config.FRAGMENT_KIT
-import com.jayce.vexis.util.Config.FRAGMENT_MAP
-import com.jayce.vexis.util.Config.FRAGMENT_SENIOR
-import com.jayce.vexis.util.Config.URL_PREFIX
-import com.jayce.vexis.util.bean.UserBean
-import com.jayce.vexis.util.toBean
-import com.jayce.vexis.client.AndroidTool.getData
-import com.jayce.vexis.client.AndroidTool.replaceFragment
-import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.BaseTool.envContext
-import com.jayce.vexis.client.NetTool.destroySocket
-import com.jayce.vexis.client.TLog
-import com.jayce.vexis.client.ThreadTool
-import com.jayce.vexis.client.ThreadTool.runOnIO
-import com.jayce.vexis.client.ThreadTool.runOnMain
-import com.jayce.vexis.client.ThreadTool.runOnMulti
-import com.jayce.vexis.client.ThreadTool.ui
-import com.jayce.vexis.client.bean.FragmentAnimRes
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.jayce.vexis.StatusManager.isLogin
 import com.jayce.vexis.StatusManager.liveUser
@@ -63,18 +40,38 @@ import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.role.dashboard.DashboardActivity
 import com.jayce.vexis.business.setting.SettingActivity
-import com.jayce.vexis.client.NativeLib
+import com.jayce.vexis.client.AndroidTool.getData
+import com.jayce.vexis.client.AndroidTool.replaceFragment
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.BaseTool.envContext
+import com.jayce.vexis.client.NetTool.destroySocket
+import com.jayce.vexis.client.TLog
+import com.jayce.vexis.client.ThreadTool.runOnIO
+import com.jayce.vexis.client.ThreadTool.runOnMain
+import com.jayce.vexis.client.ThreadTool.ui
+import com.jayce.vexis.client.bean.FragmentAnimRes
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
-import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.ability.EventRepository
+import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
+import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
+import com.jayce.vexis.util.Config.FRAGMENT_ARTICLE
+import com.jayce.vexis.util.Config.FRAGMENT_FEEDBACK
+import com.jayce.vexis.util.Config.FRAGMENT_FILE
+import com.jayce.vexis.util.Config.FRAGMENT_HISTORY
+import com.jayce.vexis.util.Config.FRAGMENT_KIT
+import com.jayce.vexis.util.Config.FRAGMENT_MAP
+import com.jayce.vexis.util.Config.FRAGMENT_SENIOR
+import com.jayce.vexis.util.Config.URL_PREFIX
+import com.jayce.vexis.util.bean.UserBean
+import com.jayce.vexis.util.toBean
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import org.koin.android.ext.android.inject
@@ -126,6 +123,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         }
     }
 
+    @Logger(a = "Hello")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPage()
