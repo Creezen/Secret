@@ -89,27 +89,27 @@ class FlexibleDialog<T : ViewBinding>(
         return this
     }
 
-    fun positive(resId: Int, autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun positive(resId: Int, autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return positive(text, autoDismiss, onclick)
     }
 
-    fun negative(resId: Int, autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun negative(resId: Int, autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return negative(text, autoDismiss, onclick)
     }
 
-    fun neutral(resId: Int, autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun neutral(resId: Int, autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         val text = mContext.getString(resId)
         return neutral(text, autoDismiss, onclick)
     }
 
-    fun positive(label: String = "确定", autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun positive(label: String = "确定", autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         rootBinding.positiveBtn.apply {
             visibility = View.VISIBLE
             text = label
             setOnClickListener {
-                onclick?.invoke(binding)
+                onclick?.invoke(binding, this@FlexibleDialog)
                 if (autoDismiss) dismiss()
             }
         }
@@ -117,24 +117,24 @@ class FlexibleDialog<T : ViewBinding>(
         return this
     }
 
-    fun negative(label: String = "取消", autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun negative(label: String = "取消", autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         rootBinding.negativeBtn.apply {
             visibility = View.VISIBLE
             text = label
             setOnClickListener {
-                onclick?.invoke(binding)
+                onclick?.invoke(binding, this@FlexibleDialog)
                 if (autoDismiss) dismiss()
             }
         }
         return this
     }
 
-    fun neutral(label: String = "取消", autoDismiss: Boolean = true, onclick: (T.() -> Unit)? = null): FlexibleDialog<T> {
+    fun neutral(label: String = "取消", autoDismiss: Boolean = true, onclick: (T.(FlexibleDialog<T>) -> Unit)? = null): FlexibleDialog<T> {
         rootBinding.neuralBtn.apply {
             visibility = View.VISIBLE
             text = label
             setOnClickListener {
-                onclick?.invoke(binding)
+                onclick?.invoke(binding, this@FlexibleDialog)
                 if (autoDismiss) dismiss()
             }
         }

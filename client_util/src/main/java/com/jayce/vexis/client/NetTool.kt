@@ -8,8 +8,10 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.Key
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.jayce.vexis.util.Config.COOKIE_USER_ID
 import com.jayce.vexis.util.Config.COOKIE_UUID
 import com.jayce.vexis.util.Config.EVENT_TYPE_CHAT
@@ -22,7 +24,6 @@ import com.jayce.vexis.util.bean.UserBean
 import com.jayce.vexis.util.toJson
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.BaseTool.envContext
-import com.jayce.vexis.client.ability.net.AvatarSignature
 import com.jayce.vexis.client.ability.net.ImageListener
 import com.jayce.vexis.client.ability.net.ImageTarget
 import com.jayce.vexis.client.ability.net.NetworkEventListenerFactory
@@ -135,6 +136,7 @@ object NetTool {
         context: Context,
         image: ImageView,
         url: String,
+        useThumbnail: Boolean = false,
         placeHolderId: Int? = null,
         key: String? = null,
         isCircle: Boolean = false
@@ -143,13 +145,14 @@ object NetTool {
         if (placeHolderId != null) {
             placeHolderDrawable = ContextCompat.getDrawable(context, placeHolderId)
         }
-        setImage(context, image, url, placeHolderDrawable, key, isCircle)
+        setImage(context, image, url, useThumbnail, placeHolderDrawable, key, isCircle)
     }
 
     fun setImage(
         context: Context,
         image: ImageView,
         url: String,
+        useThumbnail: Boolean = false,
         placeHolder: Drawable? = null,
         key: String? = null,
         isCircle: Boolean = false
@@ -162,19 +165,26 @@ object NetTool {
         if (placeHolder != null) {
             holderBuilder = load.placeholder(placeHolder)
         }
-        if (key == null) {
-            holderBuilder.into(target)
-            return
+        val option = requestOptions(key, isCircle)
+        if (useThumbnail) {
+            val thumbnail = Glide.with(context).load(fileUrl).apply(option)
+            holderBuilder = holderBuilder.thumbnail(thumbnail)
         }
-        val signature = AvatarSignature("key:$key")
-        holderBuilder.apply(getRequestOptions(signature, isCircle)).into(target)
+        holderBuilder = holderBuilder.apply(option)
+        listener.start()
+        holderBuilder.into(target)
     }
 
-    private fun getRequestOptions(key: Key, isCircle: Boolean = false): RequestOptions {
+    private fun requestOptions(key: String?, isCircle: Boolean = false): RequestOptions {
+        var baseOption = RequestOptions()
+        if (key != null) {
+            val signature = ObjectKey("key:$key")
+            baseOption = baseOption.signature(signature)
+        }
         return if (isCircle) {
-            RequestOptions().signature(key).circleCrop()
+            baseOption.circleCrop()
         } else {
-            RequestOptions().signature(key)
+            baseOption
         }
     }
 

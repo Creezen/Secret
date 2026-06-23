@@ -80,6 +80,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
                 downY = event.y
             }
             MotionEvent.ACTION_UP -> {
+                if (manager.isGameFinish) return true
                 val horizon = event.x - downX
                 val vertical = event.y - downY
                 val absX = horizon.absoluteValue
@@ -97,16 +98,25 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
                 statusCallback?.onError()
                 return
             }
-            manager.updateVertical((horizon / absX).toInt())
+            val updateStatus = manager.updateVertical((horizon / absX).toInt())
+            if (!updateStatus) {
+                statusCallback?.onError()
+                return
+            }
         } else {
             if (manager.hitBottomWall(vertical) || manager.hitTopWall(vertical)) {
                 statusCallback?.onError()
                 return
             }
-            manager.updateHorizon((vertical / absY).toInt())
+            val updateStatus = manager.updateHorizon((vertical / absY).toInt())
+            if (!updateStatus) {
+                statusCallback?.onError()
+                return
+            }
         }
         if (manager.isAtDestination()) {
             statusCallback?.onFinish()
+            manager.isGameFinish = true
         } else {
             statusCallback?.onMove()
         }

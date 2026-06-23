@@ -21,6 +21,7 @@ import com.jayce.vexis.business.kit.poker.PokerActivity
 import com.jayce.vexis.business.kit.video.VideoPlayerActivity
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import java.util.Locale
 
 class KitFragment : BaseFragment<WidgetsBinding>() {
@@ -32,32 +33,20 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
     }
 
     private fun initView() = binding.apply {
-        ledger.setOnClickListener {
-            startActivity(Intent(context, BookActivity::class.java))
-        }
-        maze.setOnClickListener {
-            startActivity(Intent(context, MazeActivity::class.java))
-        }
-        gomoku.setOnClickListener {
-            startActivity(Intent(context, GomokuActivity::class.java))
-        }
-        poker.setOnClickListener {
-            startActivity(Intent(context, PokerActivity::class.java))
-        }
-        pinyin.setOnClickListener {
-            startActivity(Intent(context, PinyinActivity::class.java))
-        }
+        ledger.setOnClickListener { jumpTo(BookActivity::class.java) }
+        maze.setOnClickListener { jumpTo(MazeActivity::class.java) }
+        gomoku.setOnClickListener { jumpTo(GomokuActivity::class.java) }
+        poker.setOnClickListener { jumpTo(PokerActivity::class.java) }
+        pinyin.setOnClickListener { jumpTo(PinyinActivity::class.java) }
+        videoPlayer.setOnClickListener { jumpTo(VideoPlayerActivity::class.java) }
+        mountDigger.setOnClickListener { jumpTo(DiggerActivity::class.java) }
         quickStart.setOnClickListener {
-            val component = ComponentName("com.DefaultCompany.Myproject", "com.unity3d.player.UnityPlayerActivity")
-            val intent = Intent()
-            intent.component = component
-            startActivity(intent)
-        }
-        videoPlayer.setOnClickListener {
-            startActivity(Intent(context, VideoPlayerActivity::class.java))
-        }
-        mountDigger.setOnClickListener {
-            startActivity(Intent(context, DiggerActivity::class.java))
+            jumpTo {
+                val targetPackage = "com.DefaultCompany.Myproject"
+                val targetClass = "com.unity3d.player.UnityPlayerActivity"
+                val targetComponent = ComponentName(targetPackage, targetClass)
+                component = targetComponent
+            }
         }
     }
 

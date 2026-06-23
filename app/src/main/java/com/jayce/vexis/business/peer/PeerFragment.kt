@@ -14,6 +14,7 @@ import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.SageFragmentBinding
 import com.jayce.vexis.domain.bean.SubjectTableEntry
 import com.jayce.vexis.domain.route.PeerService
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.Dispatchers
 
@@ -81,11 +82,11 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
             isFirst = false
         }
         advice.setOnClickListener {
-            val intent = Intent(context, PeerActivity::class.java)
-            intent.putExtra("primary", primaryList[primaryNum])
-            intent.putExtra("secord", secondaryList[primaryNum][secondNum])
-            intent.putExtra("tertiary", tertiaryList[primaryNum][secondNum][tertiaryNum])
-            startActivity(intent)
+            jumpTo(PeerActivity::class.java) {
+                putExtra("primary", primaryList[primaryNum])
+                putExtra("secord", secondaryList[primaryNum][secondNum])
+                putExtra("tertiary", tertiaryList[primaryNum][secondNum][tertiaryNum])
+            }
         }
         adviceRv.layoutManager = LinearLayoutManager(this@PeerFragment.context)
         adviceRv.adapter = adapter

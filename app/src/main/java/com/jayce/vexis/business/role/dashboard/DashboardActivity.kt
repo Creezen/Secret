@@ -25,7 +25,6 @@ import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.request
-import kotlinx.coroutines.delay
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
 
@@ -42,11 +41,14 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             val id = liveUser.userId
             val part = buildFileMultipart(filePath, "file")
             request<UserService, Boolean>({ uploadAvatar(id, part) }) { result ->
-                if (result) {
-                    val cursorTime = System.currentTimeMillis()
-                    putData(AVATAR_SAVE_TIME, cursorTime)
-                    loadAvatarFromNet(0, cursorTime)
-                }
+                if (!result) return@request
+                val cursorTime = System.currentTimeMillis()
+                putData(AVATAR_SAVE_TIME, cursorTime)
+
+                val url = "${liveUser.userId}.png"
+                val placeHolder = binding.image.drawable
+                val key = cursorTime.toString()
+                binding.image.load(url, placeHolder, key, true)
             }
         }
     }
@@ -82,20 +84,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         }.attach()
         image.setOnClickListener { imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE)) }
         runOnIO {
-            val time = getData(AVATAR_SAVE_TIME, 0L)
+            val time = getData(AVATAR_SAVE_TIME, 0L).toString()
             val url = "${liveUser.userId}.png"
-            ui {
-                image.load(url, placeHolder = null, it.toString(), true)
-                loadAvatarFromNet(300, time)
-            }
+            ui { image.load(url, placeHolder = null, time, true, true) }
         }
-    }
-
-    private suspend fun loadAvatarFromNet(delayTime: Long = 0, cursorTime: Long? = null) {
-        delay(delayTime)
-        val old = binding.image.drawable
-        val url = "${liveUser.userId}.png"
-        val key = cursorTime.toString()
-        binding.image.load(url, old, key, true)
     }
 }

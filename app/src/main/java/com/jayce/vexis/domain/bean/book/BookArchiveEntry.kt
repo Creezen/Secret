@@ -1,4 +1,4 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bean.book
 
 import com.jayce.vexis.util.Config.NIL
 

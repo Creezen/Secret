@@ -1,7 +1,10 @@
 package com.jayce.vexis.foundation
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.util.bean.ActiveBean
 import com.jayce.vexis.util.bean.FileBean
@@ -100,12 +103,14 @@ object Util {
             url: String,
             placeHolderId: Int? = null,
             key: String? = null,
-            isCircle: Boolean = false
+            isCircle: Boolean = false,
+            useThumbnail: Boolean = false
         ) {
             NetTool.setImage(
                 context,
                 this,
                 url= url,
+                useThumbnail = useThumbnail,
                 placeHolderId = placeHolderId,
                 key = key,
                 isCircle = isCircle
@@ -116,16 +121,54 @@ object Util {
             url: String,
             placeHolder: Drawable? = null,
             key: String? = null,
-            isCircle: Boolean = false
+            isCircle: Boolean = false,
+            useThumbnail: Boolean = false
         ) {
             NetTool.setImage(
                 context,
                 this,
                 url= url,
+                useThumbnail = useThumbnail,
                 placeHolder = placeHolder,
                 key = key,
                 isCircle = isCircle
             )
+        }
+
+        fun Activity.jumpTo(onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent()
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Activity.jumpTo(cls: Class<*>, onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent(this, cls)
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Activity.jumpTo(action: String, onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent(action)
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Fragment.jumpTo(onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent()
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Fragment.jumpTo(cls: Class<*>, onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent(context, cls)
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Fragment.jumpTo(action: String, onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent(action)
+            onJump?.invoke(intent)
+            startActivity(intent)
         }
     }
 }

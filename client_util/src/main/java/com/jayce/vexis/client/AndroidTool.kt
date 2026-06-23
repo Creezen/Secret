@@ -86,31 +86,14 @@ object AndroidTool {
         }
     }
 
-    fun LinearLayout.addSimpleView(
-        text: String,
-        borderLength: Int = WRAP_CONTENT,
-        otherBorder: Int = MATCH_PARENT,
-        textSize: Int? = null,
-        beInCenter: Boolean = true
-    ) {
-        val orientation = this.orientation
+    fun LinearLayout.addSimpleView(text: String, width: Int, height: Int, textSize: Int? = null) {
         val textView = TextView(envContext).also {
             it.text = text
-            if (orientation == LinearLayout.HORIZONTAL) {
-                it.layoutParams = ViewGroup.LayoutParams(
-                    borderLength, otherBorder
-                )
-            } else {
-                it.layoutParams = ViewGroup.LayoutParams(
-                    otherBorder, borderLength
-                )
-            }
+            it.gravity = Gravity.CENTER
+            it.layoutParams = ViewGroup.LayoutParams(width, height)
         }
         if (textSize != null) {
             textView.textSize = textSize.toFloat()
-        }
-        if (beInCenter) {
-            textView.gravity = Gravity.CENTER
         }
         addView(textView)
     }

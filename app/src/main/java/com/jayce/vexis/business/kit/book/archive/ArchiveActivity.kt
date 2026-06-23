@@ -5,16 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityBookArchiveBinding
-import com.jayce.vexis.domain.bean.BookArchiveEntry
-import com.jayce.vexis.domain.database.ledger.BookDatabase
+import com.jayce.vexis.domain.bean.book.BookArchiveEntry
+import com.jayce.vexis.domain.database.book.BookDatabase
 
 class ArchiveActivity : BaseActivity<ActivityBookArchiveBinding>() {
 
     private val scoreDao by lazy { BookDatabase.getDatabase(this).recordDao() }
     private val list = arrayListOf<BookArchiveEntry>()
-    private val adapter by lazy {
-        ArchiveAdapter(this, list, this)
-    }
+    private val adapter by lazy { ArchiveAdapter(this, list) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -25,20 +25,27 @@ class MazeManager {
         get() = generator?.mazeMatrix ?: arrayOf()
 
     private var generator: IMazeGenerator? = null
+    var isGameFinish: Boolean = false
 
     fun init(rowSize: Int, lineSize: Int, type: MazeType) {
         this.generator = MazeFactory.getGenerator(type)
         generator?.init(rowSize, lineSize)
     }
 
-    fun updateHorizon(x: Int) {
+    fun updateHorizon(x: Int): Boolean {
+        val newHorizon = positionX + x
+        if (newHorizon < 0 || newHorizon >= row) return false
         savePositionStatus()
-        positionX += x
+        positionX = newHorizon
+        return true
     }
 
-    fun updateVertical(y: Int) {
+    fun updateVertical(y: Int): Boolean {
+        val newVertical = positionY + y
+        if (newVertical < 0 || newVertical >= line) return false
         savePositionStatus()
-        positionY += y
+        positionY = newVertical
+        return true
     }
 
     private fun savePositionStatus() {

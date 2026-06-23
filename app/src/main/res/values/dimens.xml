@@ -14,4 +14,10 @@
     <dimen name="flex_dialog_padding">16dp</dimen>
     <dimen name="corner_8">8dp</dimen>
     <dimen name="none">0dp</dimen>
+    <dimen name="button_margin_default">6dp</dimen>
+    <dimen name="dialogButtonMarginLarge">10dp</dimen>
+    <dimen name="dialogButtonMarginSmall">5dp</dimen>
+    <dimen name="dialogButtonHeight">32dp</dimen>
+    <dimen name="dialogButtonTextSize">14sp</dimen>
+    <dimen name="dialogMargin">15dp</dimen>
 </resources>

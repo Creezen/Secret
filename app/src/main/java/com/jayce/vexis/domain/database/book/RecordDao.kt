@@ -1,10 +1,10 @@
-package com.jayce.vexis.domain.database.ledger
+package com.jayce.vexis.domain.database.book
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.jayce.vexis.domain.bean.BookLineEntry
-import com.jayce.vexis.domain.bean.BookEntry
+import com.jayce.vexis.domain.bean.book.BookLineEntry
+import com.jayce.vexis.domain.bean.book.BookEntry
 
 @Dao
 interface RecordDao {

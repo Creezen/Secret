@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.client.AndroidTool.intMsg
-import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookDialogLineNoteBinding
 
@@ -12,7 +11,6 @@ class NoteDialogAdapter(private var list: List<String>) : BaseAdapter<String, No
 
     private val scoreList = arrayListOf<Int>().apply {
         repeat(list.size) { add(0) }
-        TLog.e("scoreList.size:  ${this.size}")
     }
 
     override fun getAttachedList() = list

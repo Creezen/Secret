@@ -4,19 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookArchiveBinding
-import com.jayce.vexis.domain.bean.BookArchiveEntry
-import com.jayce.vexis.domain.database.ledger.BookDatabase
+import com.jayce.vexis.domain.bean.book.BookArchiveEntry
+import com.jayce.vexis.domain.database.book.BookDatabase
 
 class ArchiveAdapter(
     private val context: Context,
     private var list: List<BookArchiveEntry>,
-    private val owner: LifecycleOwner,
 ) : BaseAdapter<BookArchiveEntry, ArchiveAdapter.ViewHolder>() {
 
     private val scoreDao by lazy {

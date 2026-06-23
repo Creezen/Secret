@@ -54,6 +54,7 @@ import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
 import com.jayce.vexis.databinding.ActivityMainBinding
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
@@ -214,9 +215,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         avatarView = headView.findViewById(R.id.avataView)
         emailView = headView.findViewById(R.id.myEmail)
         chatMsgView = headView.findViewById(R.id.myChatMsg)
-        avatarView.setOnClickListener {
-            startActivity(Intent(this@MainActivity, DashboardActivity::class.java))
-        }
+        avatarView.setOnClickListener { jumpTo(DashboardActivity::class.java) }
         emailBadge = QBadgeView(this@MainActivity).bindTarget(emailView)
         emailBadge.apply {
             setBadgeTextSize(7f, true)
@@ -227,12 +226,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
             setBadgeTextSize(7f, true)
             badgeGravity = Gravity.END or Gravity.TOP
         }
-        chatMsgView.setOnClickListener {
-            startActivity(Intent(this@MainActivity, ChatActivity::class.java))
-        }
-        emailView.setOnClickListener {
-            startActivity(Intent(this@MainActivity, MailActivity::class.java))
-        }
+        chatMsgView.setOnClickListener { jumpTo(ChatActivity::class.java) }
+        emailView.setOnClickListener { jumpTo(MailActivity::class.java) }
 
         //  navigation.menu.iterator().forEachRemaining {
         //      if (it.title == "建言献策") {
@@ -257,9 +252,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
                 }
                 scanLauncher.launch(options)
             }
-            R.id.setting -> {
-                startActivity(Intent(this, SettingActivity::class.java))
-            }
+            R.id.setting -> { jumpTo(SettingActivity::class.java) }
             android.R.id.home -> {
                 isLogin.onTrue {
                     binding.drawerLayout.openDrawer(GravityCompat.START)

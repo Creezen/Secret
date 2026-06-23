@@ -8,9 +8,9 @@ import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.HEIGHT
 import com.jayce.vexis.business.kit.book.note.LineNoteActivity.Companion.WIDTH
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookLineBinding
-import com.jayce.vexis.domain.bean.RecordEntry
+import com.jayce.vexis.domain.bean.LineEntry
 
-class LineAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<RecordEntry, LineAdapter.ViewHolder>() {
+class LineAdapter(private var recordList: List<LineEntry>) : BaseAdapter<LineEntry, LineAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: BookLineBinding) : RecyclerView.ViewHolder(binding.root) {
         val view = binding.itemLayout
@@ -18,7 +18,7 @@ class LineAdapter(private var recordList: List<RecordEntry>) : BaseAdapter<Recor
 
     override fun getAttachedList() = recordList
 
-    override fun updateAttachedList(newList: List<RecordEntry>) {
+    override fun updateAttachedList(newList: List<LineEntry>) {
         recordList = newList
     }
 

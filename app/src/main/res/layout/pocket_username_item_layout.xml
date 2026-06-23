@@ -3,7 +3,7 @@
 
     <data>
         <variable
-            name="baseRoot"
+            name="root"
             type="com.jayce.vexis.business.kit.book.BookDialogView" />
     </data>
 
@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:layout_marginBottom="2dp">
         <EditText
-            android:id="@+id/nameEdt"
+            android:id="@+id/playerName"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -21,13 +21,18 @@
             android:inputType="text"
             android:importantForAutofill="no"
             android:hint="@string/input_user_name"
-            android:afterTextChanged="@{() -> baseRoot.afterChange(nameEdt)}"/>
+            android:padding="4dp"
+            android:textSize="16sp"
+            android:afterTextChanged="@{() -> root.afterChange(playerName)}"/>
         <ImageButton
-            android:id="@+id/delBtn"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/delete"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="0dp"
             android:contentDescription="@string/todo"
-            android:background="#F5F5F5"/>
+            android:background="@color/white"
+            android:visibility="gone"/>
     </LinearLayout>
 </layout>

@@ -7,25 +7,19 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.jayce.vexis.client.AndroidTool.msg
-import com.jayce.vexis.business.kit.book.BookActivity.Companion.INIT_USER_COUNT
 import com.jayce.vexis.databinding.PocketUsernameItemLayoutBinding
 
 class BookDialogView(context: Context, attr: AttributeSet?) : LinearLayout(context, attr) {
 
-    var binding = PocketUsernameItemLayoutBinding.inflate(
-        LayoutInflater.from(context),
-        this,
-        true,
-    )
+    private val inflater = LayoutInflater.from(context)
+    private val binding = PocketUsernameItemLayoutBinding.inflate(inflater, this, true)
     private var position: Int = 0
     private var func: ((Int, String) -> Unit)? = null
 
-    init {
-        binding.baseRoot = this
-    }
+    init { binding.root = this }
 
-    fun setOnButtonClick(function: (View, Int) -> Unit) {
-        binding.delBtn.setOnClickListener {
+    fun setOnItemDelete(function: (View, Int) -> Unit) {
+        binding.delete.setOnClickListener {
             function(it, position)
         }
     }
@@ -38,10 +32,17 @@ class BookDialogView(context: Context, attr: AttributeSet?) : LinearLayout(conte
         func?.invoke(position, editText.msg())
     }
 
-    fun setPositon(position: Int) {
-        this.position = position
-        if (position < INIT_USER_COUNT) {
-            binding.delBtn.visibility = View.INVISIBLE
+    fun refresh(hints: String, name: String = "", position: Int = -1) {
+        binding.playerName.apply {
+            hint = hints
+            if (name.isNotEmpty()) { setText(name) }
+            if (position >= 0) this@BookDialogView.position = position
         }
     }
+
+    fun enableDelete(shouldDelete: Boolean) {
+        binding.delete.visibility = if (shouldDelete) View.VISIBLE else GONE
+    }
+
+    fun content() = binding.playerName.msg()
 }

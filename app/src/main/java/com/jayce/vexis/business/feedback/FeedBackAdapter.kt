@@ -60,7 +60,6 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
         holder.support.setOnClickListener {
-            TLog.d("click item: ${item.feedbackID}")
             request<FeedbackService, _>({ supportFeedback(item.feedbackID) }) {
                 it.onTrue {
                     "点赞成功".toast()

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.ArrayList
 
 @Parcelize
-data class RecordEntry(
+data class LineEntry(
     val time: String,
     val scores: ArrayList<Int>,
 ) : Parcelable

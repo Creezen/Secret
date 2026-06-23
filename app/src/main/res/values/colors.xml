@@ -24,6 +24,10 @@
     <color name="transparent">#00000000</color>
     <!--玻璃绿-->
     <color name="glassyGreen">#55F274</color>
+    <!--浅杏色-->
+    <color name="LightApricot">#F5EBDC</color>
+    <!--深栗棕-->
+    <color name="ChestnutBrown">#503C2D</color>
 
     <!--用户等级颜色-->
     <color name="level_0">#787878</color>

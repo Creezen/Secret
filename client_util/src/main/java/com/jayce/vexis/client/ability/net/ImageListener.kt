@@ -9,6 +9,13 @@ import com.jayce.vexis.client.TLog
 
 class ImageListener(private val debug: Boolean) : RequestListener<Drawable> {
 
+    private var startTime: Long = 0L
+
+    fun start() {
+        if (!debug) return
+        startTime = System.nanoTime()
+    }
+
     override fun onLoadFailed(
         e: GlideException?,
         model: Any?,
@@ -27,6 +34,7 @@ class ImageListener(private val debug: Boolean) : RequestListener<Drawable> {
         isFirstResource: Boolean
     ): Boolean {
         if (!debug) return false
+        val duration = (System.nanoTime() - startTime) / 1000000
         val source = when (dataSource) {
             DataSource.MEMORY_CACHE -> "内存缓存"
             DataSource.RESOURCE_DISK_CACHE -> "磁盘缓存"
@@ -35,7 +43,7 @@ class ImageListener(private val debug: Boolean) : RequestListener<Drawable> {
             DataSource.LOCAL -> "本地资源"
             else -> "未知"
         }
-        TLog.d("Glide图片资源来源： $source($dataSource)")
+        TLog.d("[${duration}ms]Glide图片资源来源： $source($dataSource)")
         return false
     }
 }

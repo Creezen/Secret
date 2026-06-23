@@ -17,36 +17,43 @@
             android:id="@+id/maze"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/maze"/>
         <Button
             android:id="@+id/gomoku"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/gomoku"/>
         <Button
             android:id="@+id/poker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/poker"/>
         <Button
             android:id="@+id/pinyin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/pinyin_search"/>
         <Button
             android:id="@+id/quickStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/jump_3d_game"/>
         <Button
             android:id="@+id/videoPlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/play_video"/>
         <Button
             android:id="@+id/mountDigger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_margin_default"
             android:text="@string/mount_digger"/>
     </LinearLayout>
     <TextView
