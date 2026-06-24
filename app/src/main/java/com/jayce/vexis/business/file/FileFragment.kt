@@ -13,18 +13,18 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.jayce.vexis.client.ThreadTool
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
 import com.jayce.vexis.business.file.pool.FileContentsFragment
 import com.jayce.vexis.business.file.submodule.DynamicModuleFragment
+import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
 
@@ -34,7 +34,7 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
     private lateinit var fileContentsFragment: FileContentsFragment
     private lateinit var dynamicModuleFragment: DynamicModuleFragment
 
-    private val viewModel by inject<FileViewModel>()
+    private val viewModel by viewModel<FileViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedState: Bundle?): View {
         initData()
@@ -48,7 +48,7 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
         dynamicModuleFragment = DynamicModuleFragment(viewModel)
         list.add(fileContentsFragment)
         list.add(dynamicModuleFragment)
-        viewModel.fetchAndHandleTask()
+        viewModel.startListen()
     }
 
     override fun onGetData(firstInit: Boolean) {
@@ -109,30 +109,35 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
     }
 
     private fun processDownload() {
-        ThreadTool.runOnMulti {
-            lifecycleScope.launch {
-                viewModel.taskStateFlow.collect {
-                    binding.progress.max = it.size.toInt()
-                    binding.taskName.text = getSpannerString(it.fileName, it.taskLastCount)
-                    if (it.size < 0) {
-                        binding.fileSize.visibility = View.GONE
-                    } else {
-                        binding.fileSize.visibility = View.VISIBLE
-                        binding.fileSize.text = viewModel.handleSizeDisplay(it.size)
-                    }
+        lifecycleScope.launch {
+            viewModel.taskStateFlow.collect {
+                binding.progress.max = it.size.toInt()
+                binding.taskName.text = getSpannerString(it.fileName, viewModel.handleSizeDisplay(it.size))
+                if (it.size < 0) {
+                    binding.taskCount.visibility = View.GONE
+                    binding.taskName.text = it.fileName
+                } else {
+                    binding.taskCount.visibility = View.VISIBLE
+                    binding.taskCount.text = "余: ${it.taskLastCount}"
                 }
             }
+        }
 
-            lifecycleScope.launch {
-                viewModel.progressFlow.collect {
-                    binding.progress.progress = it
-                }
+        lifecycleScope.launch {
+            viewModel.progressFlow.collect {
+                binding.progress.progress = it
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.taskCountFlow.collect {
+                binding.taskCount.text = "余: $it"
             }
         }
     }
 
-    private fun getSpannerString(content: String, count: Int): SpannableString {
-        val showString = "$content  ($count)"
+    private fun getSpannerString(content: String, sizeString: String): SpannableString {
+        val showString = "$content  ( $sizeString )"
         val span = ForegroundColorSpan(Color.GRAY)
         val spanString = SpannableString(showString)
         val originLength = content.length

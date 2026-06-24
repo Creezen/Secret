@@ -6,4 +6,5 @@ data class DownloadTask(
     val size: Long,
     val time: Long,
     val taskLastCount: Int,
+    val onFinish: (() -> Unit)? = null
 )

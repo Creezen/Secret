@@ -31,9 +31,7 @@ class FileEntryAdapter(
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<FileBean>) {
-        list = newList
-    }
+    override fun updateAttachedList(newList: List<FileBean>) { list = newList }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ResItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -46,12 +44,12 @@ class FileEntryAdapter(
         holder.name.text = item.fileName
         holder.size.text = handleSizeDisplay(item.fileSize)
         holder.time.text = item.uploadTime
-        val isDownload = isFileDownload(item.fileName, item.fileSize)
+        val isDownload = isFileDownload("${item.fileID}${item.fileSuffix}", item.fileSize)
         if (isDownload) {
             holder.download.setImageResource(R.drawable.open)
         }
         holder.download.setOnClickListener {
-            if (isDownload) {
+            if (isFileDownload("${item.fileID}${item.fileSuffix}", item.fileSize)) {
                 context.getString(R.string.file_exist_open).toast()
                 return@setOnClickListener
             }
@@ -61,8 +59,8 @@ class FileEntryAdapter(
                 item.fileSize,
                 System.currentTimeMillis(),
                 1
-            )
-            viewModel.pushDownloadTask(task)
+            ) { holder.download.setImageResource(R.drawable.open) }
+            viewModel.dispatchDownloadTask(task)
         }
         holder.view.setOnClickListener {
             context.startActivity(

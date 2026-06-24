@@ -38,15 +38,13 @@
                 android:layout_width="@dimen/none"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:text="@string/in_download"
                 android:gravity="start|center_vertical"
                 android:paddingStart="8dp"
                 android:paddingEnd="@dimen/none"/>
             <TextView
-                android:id="@+id/fileSize"
+                android:id="@+id/taskCount"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/size_file"
                 android:gravity="center"
                 android:layout_marginStart="2dp"
                 android:layout_marginEnd="8dp"/>
