@@ -19,7 +19,7 @@ import com.jayce.vexis.client.ability.thread.BlockOption
 import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_FILE_PATH
-import com.jayce.vexis.business.role.register.RegisterActivity
+import com.jayce.vexis.business.profile.register.RegisterActivity
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.domain.route.PackageService

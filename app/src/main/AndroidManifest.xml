@@ -131,10 +131,10 @@
             android:name=".business.article.ArticleEditActivity"
             android:exported="false" />
         <activity
-            android:name=".business.role.manage.ActiveDataActivity"
+            android:name=".business.profile.manage.UserManagerActivity"
             android:exported="false" />
         <activity
-            android:name=".business.role.manage.AdminActivity"
+            android:name=".business.profile.manage.AdminActivity"
             android:exported="false" />
         <activity
             android:name=".business.chat.ChatActivity"
@@ -152,7 +152,7 @@
             android:name=".business.kit.book.note.LineNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".business.role.dashboard.DashboardActivity"
+            android:name=".business.profile.dashboard.DashboardActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.book.BookActivity"
@@ -167,7 +167,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".business.role.register.RegisterActivity"
+            android:name=".business.profile.register.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".business.login.LoginActivity"

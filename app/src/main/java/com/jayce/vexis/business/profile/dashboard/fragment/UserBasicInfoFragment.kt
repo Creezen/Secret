@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.role.dashboard
+package com.jayce.vexis.business.profile.dashboard.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

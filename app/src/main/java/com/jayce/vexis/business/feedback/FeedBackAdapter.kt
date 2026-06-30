@@ -1,19 +1,12 @@
 package com.jayce.vexis.business.feedback
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
-import com.jayce.vexis.util.bean.FeedbackBean
-import com.jayce.vexis.util.toTime
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.client.AndroidTool.getData
-import com.jayce.vexis.client.AndroidTool.putData
 import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.TLog
-import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.ui
-import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.domain.route.FeedbackService
@@ -22,6 +15,9 @@ import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.CardAdapter
+import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
+import com.jayce.vexis.util.bean.FeedbackBean
+import com.jayce.vexis.util.toTime
 import java.util.concurrent.ConcurrentHashMap
 
 class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
@@ -60,11 +56,11 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
         holder.support.setOnClickListener {
-            request<FeedbackService, _>({ supportFeedback(item.feedbackID) }) {
+            request<FeedbackService, _>({ supportFeedback(liveUser.userId, item.feedbackID) }) {
                 it.onTrue {
                     "点赞成功".toast()
                 }.onFalse {
-                    "点赞失败".toast()
+                    "点赞已取消".toast()
                 }
             }
         }

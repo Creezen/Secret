@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.role.manage
+package com.jayce.vexis.business.profile.manage
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,9 +11,7 @@ import com.jayce.vexis.foundation.Util.request
 class AdminActivity : BaseActivity<ActivityAdminBinding>() {
 
     private val userList = arrayListOf<ActiveBean>()
-    private val adapter by lazy {
-        UserActiveAdapter(this, userList)
-    }
+    private val adapter by lazy { UserManagerAdapter(this, userList) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,16 +20,17 @@ class AdminActivity : BaseActivity<ActivityAdminBinding>() {
 
     override fun onResume() {
         super.onResume()
-        initData()
+        updateData()
     }
 
     private fun initPage() = binding.apply {
         adapter.cardPadding = 6
         listRV.layoutManager = LinearLayoutManager(this@AdminActivity)
         listRV.adapter = adapter
+        adapter.setOnManagerCallback { updateData() }
     }
 
-    private fun initData() {
+    private fun updateData() {
         request<UserService, _>({ getAllUser() }) {
             adapter.notifyDataChange(it)
         }

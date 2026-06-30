@@ -1,10 +1,9 @@
-package com.jayce.vexis.business.role.register
+package com.jayce.vexis.business.profile.register
 
 import android.os.Bundle
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.BirthdaySelectorBinding
 import com.jayce.vexis.databinding.CreateRoleLayoutBinding
-import com.jayce.vexis.databinding.DialogBinding
 import com.jayce.vexis.domain.viewmodel.RegisterViewModel
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import org.koin.android.ext.android.inject

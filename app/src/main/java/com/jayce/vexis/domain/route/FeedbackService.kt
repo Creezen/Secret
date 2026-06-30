@@ -13,9 +13,11 @@ interface FeedbackService : BaseService {
     @POST("/sendFeedback")
     @FormUrlEncoded
     fun sendFeedback(
+        @Field("feedbackID") feedbackId: String,
         @Field("userID") userID: String,
         @Field("title") title: String,
         @Field("content") content: String,
+        @Field("type") type: String
     ): Call<Boolean>
 
     @GET("/getFeedback")
@@ -23,5 +25,8 @@ interface FeedbackService : BaseService {
 
     @POST("/supportFeedback")
     @FormUrlEncoded
-    fun supportFeedback(@Field("feedbackId") feedbackId: String): Call<Boolean>
+    fun supportFeedback(
+        @Field("userId") userId: String,
+        @Field("feedbackId") feedbackId: String
+    ): Call<Boolean>
 }

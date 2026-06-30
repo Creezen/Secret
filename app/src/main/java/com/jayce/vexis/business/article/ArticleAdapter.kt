@@ -32,6 +32,7 @@ class ArticleAdapter(
         holder.paragraph.text = item.title
         val intent = Intent(context, SectionActivity::class.java).apply {
             putExtra("articleId", item.articleId)
+            putExtra("articleTitle", item.title)
         }
         holder.paragraph.setOnClickListener {
             context.startActivity(intent)

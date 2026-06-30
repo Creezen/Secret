@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.role.dashboard
+package com.jayce.vexis.business.profile.dashboard
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,11 +19,17 @@ import com.jayce.vexis.client.ThreadTool.ui
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
-import com.jayce.vexis.business.role.manage.AdminActivity
+import com.jayce.vexis.business.profile.dashboard.fragment.UserBasicInfoFragment
+import com.jayce.vexis.business.profile.dashboard.fragment.UserLiveFragment
+import com.jayce.vexis.business.profile.manage.AdminActivity
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.domain.route.UserService
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.Extension.load
+import com.jayce.vexis.foundation.Util.Extension.onFalse
+import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
@@ -67,9 +73,19 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     private fun initPage() = binding.apply {
         nickname.userName = liveUser.nickname
         id.text = liveUser.userId
-        if (liveUser.isAdministrator()) administrator.visibility = View.VISIBLE
-        administrator.setOnClickListener {
-            startActivity(Intent(this@DashboardActivity, AdminActivity::class.java))
+        if (liveUser.isAdministrator()) manager.visibility = View.VISIBLE
+        manager.setOnClickListener { jumpTo(AdminActivity::class.java) }
+        follow.setOnClickListener {
+            request<UserService, Int>({ followUser(liveUser.userId, liveUser.userId) }) {
+                when (it) {
+                    -1 -> { "你已经关注了该用户".toast() }
+                    0 -> { "关注失败".toast() }
+                    1 -> {
+                        follow.visibility = View.GONE
+                        "关注成功".toast()
+                    }
+                }
+            }
         }
         page.adapter = adapter
         TabLayoutMediator(tab, page) { tab, pos ->

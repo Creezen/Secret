@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.role.manage
+package com.jayce.vexis.business.profile.manage
 
 import android.os.Bundle
 import com.jayce.vexis.R
@@ -20,7 +20,7 @@ import com.jayce.vexis.foundation.ability.EventRepository.Companion.SCOPE_EVENT
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
 import com.jayce.vexis.util.bean.ActiveBean
 
-class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
+class UserManagerActivity : BaseActivity<ActivityActiveDataBinding>() {
 
     private var activeBean: ActiveBean? = null
 
@@ -57,7 +57,6 @@ class ActiveDataActivity : BaseActivity<ActivityActiveDataBinding>() {
                 }.onFalse {
                     return@onFalse
                 }
-
             }
         }
         delete.setOnClickListener {

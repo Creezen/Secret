@@ -42,4 +42,11 @@ interface UserService : BaseService {
     @POST("/deleteUser")
     @FormUrlEncoded
     fun deleteUser(@Field("userId") userId: String): Call<Boolean>
+
+    @POST("/followUser")
+    @FormUrlEncoded
+    fun followUser(
+        @Field("fansId") fansId: String,
+        @Field("userId") userId: String
+    ): Call<Int>
 }

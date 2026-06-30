@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.role.dashboard
+package com.jayce.vexis.business.profile.dashboard
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

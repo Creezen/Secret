@@ -38,7 +38,7 @@ import com.jayce.vexis.business.login.LoginActivity
 import com.jayce.vexis.business.mail.MailActivity
 import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.peer.PeerFragment
-import com.jayce.vexis.business.role.dashboard.DashboardActivity
+import com.jayce.vexis.business.profile.dashboard.DashboardActivity
 import com.jayce.vexis.business.setting.SettingActivity
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.replaceFragment
