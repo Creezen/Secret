@@ -7,6 +7,7 @@ import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.ui
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.domain.route.FeedbackService
@@ -72,7 +73,8 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
             avatarMap[position] = nowTime
             ui {
                 val url = "${item.userID}.png"
-                holder.head.load(url, placeHolder = null, nowTime.toString(), true)
+                val option = ImageOption(true, nowTime.toString(), "/head")
+                holder.head.load(url, option)
             }
         }
     }

@@ -28,7 +28,7 @@ import com.google.android.material.navigation.NavigationView.OnNavigationItemSel
 import com.jayce.vexis.StatusManager.isLogin
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.StatusManager.registerUser
-import com.jayce.vexis.business.article.ArticleFragment
+import com.jayce.vexis.business.article.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
 import com.jayce.vexis.business.file.FileFragment
@@ -50,6 +50,7 @@ import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.runOnMain
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.client.bean.FragmentAnimRes
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.CoreService
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.core.base.BaseActivity.ActivityCollector.finishAll
@@ -129,6 +130,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         super.onCreate(savedInstanceState)
         initPage()
         adjustWindowMargin()
+        apiTest()
     }
 
     /**
@@ -155,7 +157,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
             val time = getData(AVATAR_SAVE_TIME, 0L)
             val imageUrl = "${liveUser.userId}.png"
             val key = time.toString()
-            avatarView.load(imageUrl, placeHolder = null, key, true)
+            val option = ImageOption(true, key, "/head")
+            avatarView.load(imageUrl, option)
         }
     }
 
@@ -347,4 +350,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
             else -> kitFragment to FRAGMENT_KIT
         }
     }
+
+    private fun apiTest() { /**/ }
 }

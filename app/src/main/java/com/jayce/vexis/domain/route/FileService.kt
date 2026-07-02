@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.route
 
-import com.jayce.vexis.util.bean.FileBean
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.util.bean.FileBean
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call

@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.route
 
-import com.jayce.vexis.util.bean.ApkSimpleInfo
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.util.bean.ApkSimpleInfo
 import retrofit2.Call
 import retrofit2.http.POST
 

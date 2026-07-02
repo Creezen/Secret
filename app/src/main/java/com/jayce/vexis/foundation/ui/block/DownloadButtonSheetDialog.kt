@@ -15,8 +15,7 @@ class DownloadButtonSheetDialog(
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        val view = layoutInflater.inflate(R.layout.download_bottom_sheet, null)
-        dialog.setContentView(view)
+        dialog.setContentView(R.layout.download_bottom_sheet)
         callback.invoke(dialog)
         return dialog
     }

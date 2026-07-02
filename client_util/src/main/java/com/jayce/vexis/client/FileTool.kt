@@ -38,26 +38,23 @@ object FileTool {
                 val contentUri = getMediaUri(splitInfo[0])
                 contentUri?.let {
                     return getDataColumn(it, splitInfo[1])
-                }?:run{
-                }
+                } ?: run{}
             }
-            else -> {
-                return null
-            }
+            else -> return null
         }
         return null
     }
 
     private fun getDocumentType(authority: String): DocumentType {
-        when (authority) {
-            "com.android.externalstorage.documents" -> return DocumentType.EXTERNAL
-            "com.android.providers.downloads.documents" -> return DocumentType.DOWNLOAD
-            "com.android.providers.media.documents" -> return DocumentType.MEDIA
-            else -> return DocumentType.UNKNOWN
+        return when (authority) {
+            "com.android.externalstorage.documents" -> DocumentType.EXTERNAL
+            "com.android.providers.downloads.documents" -> DocumentType.DOWNLOAD
+            "com.android.providers.media.documents" -> DocumentType.MEDIA
+            else -> DocumentType.UNKNOWN
         }
     }
 
-    private fun getMediaUri(type: String): Uri?{
+    private fun getMediaUri(type: String): Uri? {
         return when(type) {
             "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             "video" -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
@@ -81,6 +78,7 @@ object FileTool {
                 }
             }
         }.onFailure {
+            TLog.d("getDataColumn fail: ${it.message}")
             return null
         }
         return null
@@ -122,6 +120,25 @@ object FileTool {
             return false
         }
         return file.length() == totalSize
+    }
+
+    fun getFileNameByUri(uri: Uri): String {
+        return when (uri.scheme) {
+            "file" -> File(uri.path ?: "").name
+            "content" -> {
+                var name = ""
+                val projection = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
+                val query = envContext.contentResolver.query(uri, projection, null, null, null)
+                query?.use {
+                    if (it.moveToFirst()) {
+                        val index = it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                        name = it.getString(index)
+                    }
+                }
+                name
+            }
+            else -> ""
+        }
     }
 
     enum class DocumentType{

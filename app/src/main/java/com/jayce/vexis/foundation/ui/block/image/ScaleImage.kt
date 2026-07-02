@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.RectF
+import android.net.Uri
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import com.jayce.vexis.client.AndroidTool.registerGestureEvent
@@ -16,6 +17,7 @@ class ScaleImage(mContext: Context, private var isDrag: Boolean = false, attr: A
 
     constructor(mContext: Context, attr: AttributeSet? = null) : this(mContext, false, attr)
 
+    var imageUri: Uri? = null
     private var matrix = Matrix()
     private lateinit var fullFlag: AtomicBoolean
     private var previewFlag: Boolean = false
@@ -58,6 +60,11 @@ class ScaleImage(mContext: Context, private var isDrag: Boolean = false, attr: A
         imageMatrix = matrix
 
         fullFlag.set(false)
+    }
+
+    override fun setImageURI(uri: Uri?) {
+        super.setImageURI(uri)
+        imageUri = uri
     }
 
     private fun getRealWidth(): RectF {

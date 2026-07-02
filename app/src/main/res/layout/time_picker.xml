@@ -29,16 +29,16 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="0dp"/>
+        android:layout_marginEnd="@dimen/time_picker_margin"
+        android:layout_marginStart="@dimen/none"/>
     <NumberPicker
         android:id="@+id/hour"
         android:layout_width="@dimen/none"
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:descendantFocusability="blocksDescendants"
-        android:layout_marginStart="4dp"
-        android:layout_marginEnd="0dp"/>
+        android:layout_marginStart="@dimen/time_picker_margin"
+        android:layout_marginEnd="@dimen/none"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

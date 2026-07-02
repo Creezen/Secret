@@ -6,14 +6,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/register_time"/>
         <TextView
             android:id="@+id/createTime"
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:id="@+id/isEdit"
             android:layout_width="@dimen/none"
@@ -35,62 +35,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/sex"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:id="@+id/sex"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/age"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:id="@+id/age"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/money"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
         <TextView
             android:id="@+id/count"
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/birthday"/>
         <TextView
             android:id="@+id/birthday"
@@ -98,19 +98,19 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/phone_number"/>
         <TextView
             android:id="@+id/phone"
@@ -118,19 +118,19 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/email"/>
         <TextView
             android:id="@+id/email"
@@ -138,19 +138,19 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/address"/>
         <TextView
             android:id="@+id/address"
@@ -158,19 +158,19 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingTop="@dimen/user_info_padding"
+        android:paddingBottom="@dimen/user_info_padding">
         <TextView
             android:layout_width="@dimen/none"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="start"
-            android:textSize="20sp"
+            android:textSize="@dimen/user_info_textsize"
             android:text="@string/self_intro"/>
         <TextView
             android:id="@+id/selfIntroduction"
@@ -178,6 +178,6 @@
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:gravity="start"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/user_info_textsize"/>
     </LinearLayout>
 </LinearLayout>

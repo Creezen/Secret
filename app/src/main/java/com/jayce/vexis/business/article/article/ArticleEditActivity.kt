@@ -1,27 +1,52 @@
-package com.jayce.vexis.business.article
+package com.jayce.vexis.business.article.article
 
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
-import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
-import com.jayce.vexis.client.AndroidTool.msg
+import androidx.core.view.children
 import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.business.article.OnContentChangeListener
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.FileTool
+import com.jayce.vexis.client.NetTool
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.image.ScaleImage
+import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
+import com.jayce.vexis.util.bean.ArticleContentBean
+import com.jayce.vexis.util.toJson
+import okhttp3.MultipartBody
 
 class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
 
+    companion object {
+        private const val TYPE_TEXT = 0
+        private const val TYPE_IMAGE = 1
+        private const val TYPE_CODE = 2
+    }
+
     private var lastClickChild: Int = -1
     private var launcher: ActivityResultLauncher<Array<String>>? = null
+
+    private val listener = object : OnContentChangeListener{
+        override fun onRemove(index: Int) {
+            binding.container.removeViewAt(index)
+        }
+
+        override fun onAdd(type: Int, index: Int, view: View) {
+            binding.container.addView(view, index)
+        }
+    }
 
     override fun registerLauncher() {
         launcher = getLauncher(openFile()) {
@@ -30,9 +55,9 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
             image.setPreview(true)
             image.setImageURI(it)
             if (binding.container.childCount == 0) {
-                binding.container.addView(image)
+                listener.onAdd(TYPE_IMAGE, 0, image)
             } else {
-                binding.container.addView(image, lastClickChild + 1)
+                listener.onAdd(TYPE_IMAGE, lastClickChild + 1, image)
             }
         }
     }
@@ -45,10 +70,19 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
     private fun initPage() = binding.apply {
         submit.setOnClickListener {
             val title = binding.title.msg(true)
-            val paragraphs = getParagraphList(binding.content)
-            request<ArticleService, Boolean>({
-                postSynergy(title, paragraphs, liveUser.userId)
-            }) { if (it) finish() }
+            if (title.length < 3) {
+                "标题最少三个字符".toast()
+                return@setOnClickListener
+            }
+            "上传中".toast()
+            val paragraphs = getContentList()
+            val pair = buildRequestList(paragraphs)
+            request<ArticleService, Boolean>(
+                { postArticle(title, liveUser.userId,  pair.first.toJson(), pair.second) }
+            ) {
+                TLog.d("upload result: $it")
+                if (it) finish()
+            }
         }
         photo.setOnClickListener {
             launcher?.launch(arrayOf(MEDIA_TYPE_IMAGE))
@@ -65,12 +99,12 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
                 if (child is EditText && child.text.isNotEmpty()) {
                     return super.dispatchKeyEvent(event)
                 }
-                binding.container.removeViewAt(lastClickChild)
+                listener.onRemove(lastClickChild)
             }
             KeyEvent.KEYCODE_ENTER -> {
                 if (child is EditText) return super.dispatchKeyEvent(event)
                 val editText = EditText(this)
-                binding.container.addView(editText, lastClickChild + 1)
+                listener.onAdd(TYPE_TEXT, lastClickChild + 1, editText)
             }
         }
         return super.dispatchKeyEvent(event)
@@ -91,7 +125,6 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
         container.getLocationOnScreen(containerLocation)
         val relativeX = event.rawX - containerLocation[0]
         val relativeY = event.rawY - containerLocation[1]
-
         for (i in container.childCount - 1 downTo 0) {
             val child = container.getChildAt(i)
             if (child.visibility != View.VISIBLE) continue
@@ -108,11 +141,42 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
         return super.dispatchTouchEvent(event)
     }
 
-    private fun getParagraphList(textView: TextView): ArrayList<String> {
-        val msg = textView.msg(true)
-        val paragraphSequence = msg.split("\n").asSequence().filterNot { it.isEmpty() }
-        val list = arrayListOf<String>()
-        list.addAll(paragraphSequence.toList())
-        return list
+    private fun getContentList(): List<ArticleContentBean> {
+        val contentList = arrayListOf<ArticleContentBean>()
+        binding.container.children.forEach { view ->
+            when (view) {
+                is EditText -> {
+                    val msgList = view.msg().split("\n")
+                    val sequence = msgList.asSequence().filterNot { it.isEmpty() }
+                    sequence.forEach {
+                        contentList.add(ArticleContentBean(TYPE_TEXT, it))
+                    }
+                }
+                is ScaleImage -> {
+                    val uri = view.imageUri ?: return@forEach
+                    contentList.add(ArticleContentBean(TYPE_IMAGE, uri.toString()))
+                }
+            }
+        }
+        return contentList
+    }
+
+    private fun buildRequestList(
+        list: List<ArticleContentBean>
+    ): Pair<List<ArticleContentBean>, List<MultipartBody.Part>> {
+        TLog.d("buildRequestList: ${list.size}")
+        val textList = arrayListOf<ArticleContentBean>()
+        val partList = arrayListOf<MultipartBody.Part>()
+        list.forEach {
+            when (it.type) {
+                TYPE_TEXT -> textList.add(it)
+                TYPE_IMAGE -> {
+                    val uri = Uri.parse(it.content)
+                    textList.add(ArticleContentBean(it.type, FileTool.getFileNameByUri(uri)))
+                    partList.add(NetTool.buildUriMultipart(it.content, "articleFile"))
+                }
+            }
+        }
+        return textList to partList
     }
 }

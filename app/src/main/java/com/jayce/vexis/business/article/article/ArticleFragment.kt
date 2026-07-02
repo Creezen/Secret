@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article
+package com.jayce.vexis.business.article.article
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,6 +31,7 @@ class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
         }
         adapter.cornerRadius = 12f
         paragraphRv.adapter = adapter
+        adapter.setOnDelete { fetchData() }
         post.setOnClickListener {
             startActivity(Intent(activity, ArticleEditActivity::class.java))
             activity?.overridePendingTransition(

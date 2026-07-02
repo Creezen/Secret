@@ -17,23 +17,17 @@ class MultiLineSingleCheckbox(private val context: Context, attr: AttributeSet) 
     private var itemOneLine: Int = 1
     private var childItemCount = 0
     private val strList = arrayListOf<String>()
-    private var previewSelected = -1
     private val childList = arrayListOf<CheckBox>()
     private var isInit = false
+    var selected = -1
+    val selectedContent
+        get() = if (selected < 0) NIL else strList[selected]
 
     init {
         val styleAttribute = context.obtainStyledAttributes(attr, R.styleable.MultiLineSingleCheckbox)
         itemOneLine = styleAttribute.getInt(R.styleable.MultiLineSingleCheckbox_itemOneLine, 1)
         styleAttribute.recycle()
         setPadding(2)
-    }
-
-    fun selectedItem(): String {
-        return if (previewSelected < 0) {
-            NIL
-        } else {
-            strList[previewSelected]
-        }
     }
 
     fun setChildLayout(
@@ -70,7 +64,7 @@ class MultiLineSingleCheckbox(private val context: Context, attr: AttributeSet) 
             child.layoutParams = LayoutParams(0, MATCH_PARENT, 1f)
             child.setOnClickListener {
                 setClickAction(i)
-                val str = if (previewSelected < 0) {
+                val str = if (selected < 0) {
                     "请输入你的建议..."
                 } else {
                     "请描述你认为${strList[i]}的理由..."
@@ -84,18 +78,18 @@ class MultiLineSingleCheckbox(private val context: Context, attr: AttributeSet) 
     }
 
     private fun setClickAction(i: Int) {
-        if (previewSelected < 0) {
+        if (selected < 0) {
             childList[i].isChecked = true
-            previewSelected = i
+            selected = i
             return
         }
-        if (i == previewSelected) {
+        if (i == selected) {
             childList[i].isChecked = false
-            previewSelected = -1
+            selected = -1
         } else {
-            childList[previewSelected].isChecked = false
+            childList[selected].isChecked = false
             childList[i].isChecked = true
-            previewSelected = i
+            selected = i
         }
     }
 }

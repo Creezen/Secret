@@ -3,6 +3,7 @@ package com.jayce.vexis.client
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -29,6 +30,9 @@ import com.jayce.vexis.client.ability.net.ImageTarget
 import com.jayce.vexis.client.ability.net.NetworkEventListenerFactory
 import com.jayce.vexis.client.ability.net.NetworkInterceptor
 import com.google.gson.GsonBuilder
+import com.jayce.vexis.client.FileTool.getFileNameByUri
+import com.jayce.vexis.client.bean.ImageOption
+import com.jayce.vexis.util.Config.NIL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -132,45 +136,26 @@ object NetTool {
         )
     }
 
-    fun setImage(
-        context: Context,
-        image: ImageView,
-        url: String,
-        useThumbnail: Boolean = false,
-        placeHolderId: Int? = null,
-        key: String? = null,
-        isCircle: Boolean = false
-    ) {
-        var placeHolderDrawable: Drawable? = null
-        if (placeHolderId != null) {
-            placeHolderDrawable = ContextCompat.getDrawable(context, placeHolderId)
-        }
-        setImage(context, image, url, useThumbnail, placeHolderDrawable, key, isCircle)
-    }
-
-    fun setImage(
-        context: Context,
-        image: ImageView,
-        url: String,
-        useThumbnail: Boolean = false,
-        placeHolder: Drawable? = null,
-        key: String? = null,
-        isCircle: Boolean = false
-    ) {
-        val fileUrl = "$baseUrl/FileSystem/head/$url"
+    fun setImage(context: Context, image: ImageView, url: String, option: ImageOption) {
+        val fileUrl = "$baseUrl/FileSystem${option.basePath}/$url"
         val target = ImageTarget(image, param.debugImage)
         val listener = ImageListener(param.debugImage)
+        val placeHolder = if (option.placeHolderId != null) {
+            ContextCompat.getDrawable(context, option.placeHolderId)
+        } else {
+            option.placeHolder
+        }
         val load = Glide.with(context).load(fileUrl).addListener(listener)
         var holderBuilder = load
         if (placeHolder != null) {
             holderBuilder = load.placeholder(placeHolder)
         }
-        val option = requestOptions(key, isCircle)
-        if (useThumbnail) {
-            val thumbnail = Glide.with(context).load(fileUrl).apply(option)
+        val applyOption = requestOptions(option.key, option.isCircle)
+        if (option.useThumbnail) {
+            val thumbnail = Glide.with(context).load(fileUrl).apply(applyOption)
             holderBuilder = holderBuilder.thumbnail(thumbnail)
         }
-        holderBuilder = holderBuilder.apply(option)
+        holderBuilder = holderBuilder.apply(applyOption)
         listener.start()
         holderBuilder.into(target)
     }
@@ -193,15 +178,11 @@ object NetTool {
             enqueue(object : Callback<T> {
                 override fun onResponse(p0: Call<T>, p1: Response<T>) {
                     val body = p1.body()
-                    if(body != null) {
-                        continuation.resume(body)
-                    } else {
-                        "服务器返回错误!".toast()
-                    }
+                    if(body != null) continuation.resume(body)
                 }
 
                 override fun onFailure(p0: Call<T>, p1: Throwable) {
-                    TLog.d("net error: ${p1.message}")
+                    TLog.e("net error: ${p1.message}")
                 }
             })
         }
@@ -214,6 +195,20 @@ object NetTool {
     ) : MultipartBody.Part {
         val fileBody = RequestBody.create(MediaType.parse(mediaTypeString), File(filePath))
         return MultipartBody.Part.createFormData(paramName, filePath, fileBody)
+    }
+
+    fun buildUriMultipart(
+        uri: String,
+        paramName: String
+    ) : MultipartBody.Part {
+        val fileUri = Uri.parse(uri)
+        val fileName = getFileNameByUri(fileUri)
+        val type = envContext.contentResolver.getType(fileUri) ?: ""
+        envContext.contentResolver.openInputStream(fileUri)?.use {
+            val fileBody = RequestBody.create(MediaType.parse(type), it.readBytes())
+            return MultipartBody.Part.createFormData(paramName, fileName, fileBody)
+        }
+        return MultipartBody.Part.createFormData(NIL, null, RequestBody.create(MediaType.parse(NIL), byteArrayOf()))
     }
 
     fun sendMessage(scope: CoroutineScope, msg: TelecomBean) {

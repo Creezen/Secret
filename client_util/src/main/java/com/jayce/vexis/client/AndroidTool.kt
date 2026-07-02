@@ -12,8 +12,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.TextView
@@ -33,25 +31,26 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.client.BaseTool.envContext
 import com.jayce.vexis.client.DataTool.dpToPx
-import com.jayce.vexis.client.ability.click.GestureHandle
 import com.jayce.vexis.client.ability.click.GestureCallback
+import com.jayce.vexis.client.ability.click.GestureHandle
 import com.jayce.vexis.client.bean.FragmentAnimRes
+import com.jayce.vexis.client.bean.MenuBean
+import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.util.client.R
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import org.xmlpull.v1.XmlPullParser
 import java.io.File
 import kotlin.math.ceil
 
 object AndroidTool {
 
-    fun init() {}
+    private const val androidNS = "http://schemas.android.com/apk/res/android"
+    private const val appNS = "http://schemas.android.com/apk/res-auto"
 
-    private val prefs by lazy {
-        envContext.getSharedPreferences("TianJiData", Context.MODE_PRIVATE)
-    }
+    fun init() {}
 
     private val Context.datastore: DataStore<Preferences> by preferencesDataStore("creezen")
 
@@ -272,5 +271,32 @@ object AndroidTool {
         val measureWidth = measureText(text)
         val realWidth = initSize * (drawWidth / measureWidth)
         textSize = realWidth
+    }
+
+    fun parseMenu(context: Context, id: Int): List<MenuBean> {
+        val menuList = arrayListOf<MenuBean>()
+        val parser = context.resources.getXml(id)
+        var type = parser.eventType
+        while (type != XmlPullParser.END_DOCUMENT) {
+            val resourceId = parser.getAttributeResourceValue(androidNS, "id", 0)
+            if (resourceId == 0) {
+                type = parser.next()
+                continue
+            }
+            val titleId = parser.getAttributeResourceValue(androidNS, "title", 0)
+            val title = if (titleId == 0) {
+                parser.getAttributeValue(androidNS, "title") ?: ""
+            } else {
+                context.getString(titleId)
+            }
+            if (title.isEmpty()) {
+                type = parser.next()
+                continue
+            }
+            val menuBean = MenuBean(resourceId, title)
+            menuList.add(menuBean)
+            type = parser.next()
+        }
+        return menuList
     }
 }

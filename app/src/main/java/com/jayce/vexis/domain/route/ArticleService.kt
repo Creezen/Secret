@@ -3,21 +3,26 @@ package com.jayce.vexis.domain.route
 import com.jayce.vexis.util.bean.ArticleBean
 import com.jayce.vexis.util.bean.SectionRemarkBean
 import com.jayce.vexis.core.base.BaseService
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ArticleService : BaseService {
-    @POST("/postSynergy")
-    @FormUrlEncoded
-    fun postSynergy(
-        @Field("articleTitle") title: String,
-        @Field("paragraphs") paragraphs: List<String>,
-        @Field("userID") userID: String,
+
+    @POST("/postArticle")
+    @Multipart
+    fun postArticle(
+        @Part("articleTitle") title: String,
+        @Part("userID") userID: String,
+        @Part("contents") contents: String,
+        @Part articleFile: List<MultipartBody.Part>,
     ): Call<Boolean>
 
-    @POST("/getSynergy")
+    @POST("/getArticle")
     fun getArticle(): Call<ArrayList<ArticleBean>>
 
     @POST("/getSection")
@@ -26,12 +31,16 @@ interface ArticleService : BaseService {
         @Field("articleId") articleId: Long,
     ): Call<ArrayList<SectionRemarkBean>>
 
-    @POST("/postCommen")
+    @POST("/postRemark")
     @FormUrlEncoded
-    fun postCommen(
-        @Field("articleId") articleId: Long,
-        @Field("paragraphId") paragraphId: Long,
+    fun postRemark(
+        @Field("sectionId") sectionId: Long,
         @Field("userId") userId: String,
-        @Field("comment") comment: String,
+        @Field("content") content: String,
+        @Field("type") type: Int
     ): Call<Boolean>
+
+    @POST("/deleteArticle")
+    @FormUrlEncoded
+    fun deleteArticle(@Field("articleId") articleId: Long): Call<Boolean>
 }

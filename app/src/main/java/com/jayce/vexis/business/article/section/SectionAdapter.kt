@@ -12,19 +12,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.jayce.vexis.util.bean.SectionRemarkBean
-import com.jayce.vexis.client.AndroidTool.getThemeColor
-import com.jayce.vexis.client.AndroidTool.msg
-import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.client.AndroidTool.getData
+import com.jayce.vexis.client.AndroidTool.getThemeColor
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.putData
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.ThreadTool.runOnMain
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
 import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
 import com.jayce.vexis.domain.route.ArticleService
+import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
+import com.jayce.vexis.util.bean.SectionRemarkBean
 
 class SectionAdapter(
     val context: Context,
@@ -47,7 +51,7 @@ class SectionAdapter(
     }
 
     class ImageViewHolder(val binding: ArticleImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        val image = binding.img
+        val image = binding.image
     }
 
     override fun getAttachedList() = itemList
@@ -57,7 +61,7 @@ class SectionAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder = if (viewType == 1) {
+        val viewHolder = if (viewType == 0) {
             val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             ViewHolder(binding)
         } else {
@@ -70,7 +74,7 @@ class SectionAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val type = holder.itemViewType
         val item = itemList[position]
-        if (type == 1) {
+        if (type == 0) {
             val currentHolder = holder as ViewHolder
             currentHolder.paragraph.setOnLongClickListener {
                 it.setBackgroundColor(destColor)
@@ -83,8 +87,14 @@ class SectionAdapter(
             }
             displayComment(position, holder.paragraph)
         } else {
-            val currentHolder = holder as ImageViewHolder
-//            NetTool.setImage(context, currentHolder.image, "${SessionManager.BASE_FILE_PATH}bZuTJX1743912177610.jpg")
+            val image = (holder as ImageViewHolder).image
+            runOnMain {
+                val key = getData("articleImage", "")
+                image.load(item.content)
+                if (key.isEmpty()) {
+                    putData("articleImage", "${item.articleId}-${item.sectionId}")
+                }
+            }
         }
     }
 
@@ -97,7 +107,7 @@ class SectionAdapter(
         val clickSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 val contentList = itemList[position].list
-                contentList[0].cotent.toast()
+                contentList[0].content.toast()
             }
         }
         val spanString = SpannableString("$content ")
@@ -120,14 +130,15 @@ class SectionAdapter(
                 val color = (view.background as? ColorDrawable)?.color ?: destColor
                 view.setBackgroundColor(color.xor(xorColor))
                 val userId = liveUser.userId
-                val paragraphId = itemList[position].sectionId
+                val sectionId = itemList[position].sectionId
                 val content = commentContent.msg()
                 if (content.isEmpty()) {
                     "评论内容不可以为空".toast()
                     return@positive
                 }
+                val type = this.singleSelect.selected
                 request<ArticleService, Boolean>({
-                    postCommen(articleId, paragraphId, userId, content)
+                    postRemark(sectionId, userId, content, type)
                 }) { it.toast() }
                 itemList[position].sectionId.toast()
             }
@@ -142,5 +153,5 @@ class SectionAdapter(
         this.articleId = articleId
     }
 
-    override fun getItemViewType(position: Int) = if (position % 2 == 0) 1 else 2
+    override fun getItemViewType(position: Int) = itemList[position].type
 }

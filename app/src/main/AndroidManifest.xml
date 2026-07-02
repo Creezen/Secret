@@ -128,7 +128,7 @@
             android:name=".business.article.section.SectionActivity"
             android:exported="false" />
         <activity
-            android:name=".business.article.ArticleEditActivity"
+            android:name=".business.article.article.ArticleEditActivity"
             android:exported="false" />
         <activity
             android:name=".business.profile.manage.UserManagerActivity"

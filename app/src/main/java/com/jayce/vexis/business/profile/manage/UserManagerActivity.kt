@@ -7,6 +7,7 @@ import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.NetTool.sendManagerMessage
 import com.jayce.vexis.client.ThreadTool.getScope
 import com.jayce.vexis.client.ThreadTool.runOnMain
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
 import com.jayce.vexis.domain.bean.ActiveEntry
@@ -75,7 +76,8 @@ class UserManagerActivity : BaseActivity<ActivityActiveDataBinding>() {
             val time = getData(AVATAR_SAVE_TIME, 0L)
             val url = "${bean.userID}.png"
             val placeHolder = R.drawable.default_head
-            avata.load(url, placeHolder, time.toString(), true)
+            val option = ImageOption(true, time.toString(), "/head", placeHolderId = placeHolder)
+            avata.load(url, option)
         }
     }
 

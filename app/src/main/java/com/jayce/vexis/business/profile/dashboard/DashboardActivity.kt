@@ -23,6 +23,7 @@ import com.jayce.vexis.business.profile.dashboard.fragment.UserBasicInfoFragment
 import com.jayce.vexis.business.profile.dashboard.fragment.UserLiveFragment
 import com.jayce.vexis.business.profile.manage.AdminActivity
 import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.DashboardBinding
 import com.jayce.vexis.domain.route.UserService
@@ -54,7 +55,8 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
                 val url = "${liveUser.userId}.png"
                 val placeHolder = binding.image.drawable
                 val key = cursorTime.toString()
-                binding.image.load(url, placeHolder, key, true)
+                val option = ImageOption(true, key, "/head",false, null, placeHolder)
+                binding.image.load(url, option)
             }
         }
     }
@@ -102,7 +104,8 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         runOnIO {
             val time = getData(AVATAR_SAVE_TIME, 0L).toString()
             val url = "${liveUser.userId}.png"
-            ui { image.load(url, placeHolder = null, time, true, true) }
+            val option = ImageOption(true, time,  "/head",true)
+            ui { image.load(url, option) }
         }
     }
 }

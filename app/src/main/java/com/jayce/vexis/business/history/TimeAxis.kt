@@ -5,12 +5,12 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import com.jayce.vexis.util.Config.BASE_FACTOR_TWELVE
-import com.jayce.vexis.util.Config.DAY
-import com.jayce.vexis.client.AndroidTool.adjustTextSize
 import com.jayce.vexis.R
+import com.jayce.vexis.client.AndroidTool.adjustTextSize
 import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.enums.TimeLevel
+import com.jayce.vexis.util.Config.BASE_FACTOR_TWELVE
+import com.jayce.vexis.util.Config.DAY
 import kotlin.math.abs
 import kotlin.math.min
 
@@ -111,12 +111,12 @@ class TimeAxis(context: Context, attributeSet: AttributeSet) : View(context, att
             level == TimeLevel.LEVEL_YEAR -> if (periodMillis % DAY > 0) 1 else 0
             level > TimeLevel.LEVEL_YEAR -> {
                 val sum = periodDate.year % level.duration +
-                        periodDate.month +
-                        periodDate.day +
-                        periodDate.hour +
-                        periodDate.second +
-                        periodDate.milliSecond +
-                        periodDate.microSecond
+                    periodDate.month +
+                    periodDate.day +
+                    periodDate.hour +
+                    periodDate.second +
+                    periodDate.milliSecond +
+                    periodDate.microSecond
                 if (sum != 0L) 1 else 0
             }
             else -> 0

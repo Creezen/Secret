@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.jayce.vexis.foundation.ui.block.image.ScaleImage xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/img"
-    android:importantForAccessibility="no">
-
-</ImageView>
+    android:id="@+id/image"
+    android:importantForAccessibility="no"
+    android:layout_marginTop="@dimen/article_image_margin"
+    android:layout_marginBottom="@dimen/article_image_margin">
+</com.jayce.vexis.foundation.ui.block.image.ScaleImage>

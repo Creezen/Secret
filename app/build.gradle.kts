@@ -97,6 +97,7 @@ android {
     lint {
         baseline = file("lint-baseline.xml")
         abortOnError = false
+        showAll = true
         htmlOutput = file("${buildDir()}/reports/combined/lint-report.html")
     }
 
