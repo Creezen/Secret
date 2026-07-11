@@ -1,6 +1,7 @@
 package com.jayce.vexis.domain.viewmodel
 
 import com.jayce.vexis.client.FileTool.downloadFileByNet
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.core.base.BaseViewModel
@@ -42,7 +43,7 @@ class FileViewModel : BaseViewModel() {
                 val totalSize = task.size
                 val showTaskInfo = task.copy(taskLastCount = taskQueue.size)
                 _taskStateFlow.emit(showTaskInfo)
-                request<FileService, ResponseBody>({ downloadFile(task.fileName) }) {
+                request<FileService, ResponseBody>({ downloadFile(task.resourceName) }) {
                     val stream = it.byteStream()
                     downloadFileByNet(stream, task.fileName) {
                         _progressFlow.emit(it)
@@ -54,7 +55,7 @@ class FileViewModel : BaseViewModel() {
                 }
                 semaphore.acquire()
                 if (taskQueue.size < 1) {
-                    _taskStateFlow.emit(DownloadTask("", "所有任务下载完成", -1, -1, 0))
+                    _taskStateFlow.emit(DownloadTask("",  "","所有任务下载完成", -1, -1, 0))
                 }
             }
         }

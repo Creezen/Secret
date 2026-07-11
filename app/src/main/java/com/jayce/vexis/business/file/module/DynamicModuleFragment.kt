@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.file.submodule
+package com.jayce.vexis.business.file.module
 
 import android.os.Bundle
 import android.view.LayoutInflater

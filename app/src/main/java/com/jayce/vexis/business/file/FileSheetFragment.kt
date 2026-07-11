@@ -16,9 +16,8 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
-import com.jayce.vexis.business.file.pool.FileContentsFragment
-import com.jayce.vexis.business.file.submodule.DynamicModuleFragment
-import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.business.file.module.DynamicModuleFragment
+import com.jayce.vexis.business.file.resource.FileRepoFragment
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
 import com.jayce.vexis.domain.viewmodel.FileViewModel
@@ -26,12 +25,12 @@ import com.jayce.vexis.foundation.ui.block.DownloadButtonSheetDialog
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
+class FileSheetFragment : BaseFragment<FileFragmentLayoutBinding>() {
 
     private var selectedPosition: Int = 0
     private val list = arrayListOf<Fragment>()
-    private var fileAdapter: FileAdapter? = null
-    private lateinit var fileContentsFragment: FileContentsFragment
+    private var fileSheetAdapter: FileSheetAdapter? = null
+    private lateinit var fileRepoFragment: FileRepoFragment
     private lateinit var dynamicModuleFragment: DynamicModuleFragment
 
     private val viewModel by viewModel<FileViewModel>()
@@ -44,9 +43,9 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
     }
 
     private fun initData() {
-        fileContentsFragment = FileContentsFragment(viewModel)
+        fileRepoFragment = FileRepoFragment(viewModel)
         dynamicModuleFragment = DynamicModuleFragment(viewModel)
-        list.add(fileContentsFragment)
+        list.add(fileRepoFragment)
         list.add(dynamicModuleFragment)
         viewModel.startListen()
     }
@@ -55,22 +54,22 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
         super.onGetData(firstInit)
         if (firstInit) return
         when (selectedPosition) {
-            0 -> fileContentsFragment.updateData()
+            0 -> fileRepoFragment.updateData()
             1 -> dynamicModuleFragment.updateData()
         }
     }
 
     private fun initView() {
-        if (fileAdapter == null) {
+        if (fileSheetAdapter == null) {
             val manager = if (isAdded) parentFragmentManager else null
             if (manager == null) return
-            fileAdapter = FileAdapter(manager, lifecycle, list)
+            fileSheetAdapter = FileSheetAdapter(manager, lifecycle, list)
         }
 
         binding.apply {
-            page.adapter = fileAdapter
+            page.adapter = fileSheetAdapter
             TabLayoutMediator(tab, page) { tab, pos ->
-                val textView = TextView(this@FileFragment.context)
+                val textView = TextView(this@FileSheetFragment.context)
                 textView.gravity = Gravity.CENTER
                 textView.text = when (pos) {
                     0 -> "资源共享"
@@ -84,7 +83,7 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     when (position) {
-                        0 -> fileContentsFragment.updateData()
+                        0 -> fileRepoFragment.updateData()
                         1 -> dynamicModuleFragment.updateData()
                     }
                 }
@@ -112,10 +111,10 @@ class FileFragment : BaseFragment<FileFragmentLayoutBinding>() {
         lifecycleScope.launch {
             viewModel.taskStateFlow.collect {
                 binding.progress.max = it.size.toInt()
-                binding.taskName.text = getSpannerString(it.fileName, viewModel.handleSizeDisplay(it.size))
+                binding.taskName.text = getSpannerString(it.resourceName, viewModel.handleSizeDisplay(it.size))
                 if (it.size < 0) {
                     binding.taskCount.visibility = View.GONE
-                    binding.taskName.text = it.fileName
+                    binding.taskName.text = it.resourceName
                 } else {
                     binding.taskCount.visibility = View.VISIBLE
                     binding.taskCount.text = "余: ${it.taskLastCount}"

@@ -31,7 +31,7 @@ import com.jayce.vexis.StatusManager.registerUser
 import com.jayce.vexis.business.article.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
-import com.jayce.vexis.business.file.FileFragment
+import com.jayce.vexis.business.file.FileSheetFragment
 import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.login.LoginActivity
@@ -332,7 +332,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         val historyFragment: HistoryFragment = HistoryFragment()
         val articleFragment: ArticleFragment = ArticleFragment()
         val senior: PeerFragment = PeerFragment()
-        val fileFragment: FileFragment = FileFragment()
+        val fileSheetFragment: FileSheetFragment = FileSheetFragment()
         val mapFragment: MapFragment = MapFragment()
 
         fun getFragment(id: Int): Pair<Fragment, String> = when (id) {
@@ -341,7 +341,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
             R.id.MainMenuTimeline -> historyFragment to FRAGMENT_HISTORY
             R.id.MainMenuSynergy -> articleFragment to FRAGMENT_ARTICLE
             R.id.MainMenuSenior -> senior to FRAGMENT_SENIOR
-            R.id.MainMenuResource -> fileFragment to FRAGMENT_FILE
+            R.id.MainMenuResource -> fileSheetFragment to FRAGMENT_FILE
             R.id.MainMenuMap -> {
                 val moduleName = "com.jayce.vexis.dynamic.ToolFragment"
                 val fragment = ModuleHelper.getFragment(moduleName) ?: mapFragment

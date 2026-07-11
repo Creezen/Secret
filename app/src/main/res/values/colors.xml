@@ -6,6 +6,8 @@
     <color name="black">#FF000000</color>
     <!--红色-->
     <color name="red">#FF0000</color>
+    <!--灰色-->
+    <color name="gray">#F5F5F5</color>
     <!--朱砂红-->
     <color name="vermilion">#A63636</color>
     <!--黛蓝色-->

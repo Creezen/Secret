@@ -143,10 +143,10 @@
             android:name=".business.feedback.FeedbackEditActivity"
             android:exported="false" />
         <activity
-            android:name=".business.file.pool.FileInformationActivity"
+            android:name=".business.file.resource.FileMetaActivity"
             android:exported="false" />
         <activity
-            android:name=".business.file.pool.FileUploadActivity"
+            android:name=".business.file.resource.FileUploadActivity"
             android:exported="false" />
         <activity
             android:name=".business.kit.book.note.LineNoteActivity"

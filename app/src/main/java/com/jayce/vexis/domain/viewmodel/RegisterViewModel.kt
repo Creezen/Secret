@@ -136,7 +136,7 @@ class RegisterViewModel : BaseViewModel() {
 
     fun registerRole(callback: (Boolean) -> Unit) {
         val currentTime = System.currentTimeMillis()
-        val userId = "${currentTime}${getRandomString(7)}"
+        val userId = getRandomString(10)
         val createTime = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
         val nicknameValue = nickname.value ?: NIL
         val roleIdValue = roleId.value ?: NIL

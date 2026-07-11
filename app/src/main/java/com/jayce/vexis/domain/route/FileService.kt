@@ -25,7 +25,5 @@ interface FileService : BaseService {
 
     @Streaming
     @GET("file/{fileName}")
-    fun downloadFile(
-        @Path("fileName") fileName: String,
-    ): Call<ResponseBody>
+    fun downloadFile(@Path("fileName") fileName: String): Call<ResponseBody>
 }

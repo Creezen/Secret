@@ -1,26 +1,26 @@
-package com.jayce.vexis.business.file.pool
+package com.jayce.vexis.business.file.resource
 
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.MutableLiveData
-import com.jayce.vexis.util.Config.MEDIA_TYPE_ALL
-import com.jayce.vexis.util.Config.NIL
-import com.jayce.vexis.util.bean.FileBean
-import com.jayce.vexis.util.getRandomString
-import com.jayce.vexis.util.toTime
+import com.jayce.vexis.R
+import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.FileTool.getFilePathByUri
 import com.jayce.vexis.client.NetTool.buildFileMultipart
 import com.jayce.vexis.client.ThreadTool
-import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.client.ability.thread.BlockOption
 import com.jayce.vexis.client.ability.thread.ThreadType
-import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.FileUploadBinding
 import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.Config.MEDIA_TYPE_ALL
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.util.getRandomString
+import com.jayce.vexis.util.toTime
 import kotlinx.coroutines.Dispatchers
 import java.io.File
 
@@ -74,6 +74,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
             ThreadTool.runWithBlocking(option) {
                 val filePart = buildFileMultipart(filePath, "file")
                 val fileBean = FileBean(
+                    liveUser.userId,
                     fileName,
                     fileID,
                     fileSuffix,
@@ -86,6 +87,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 request<FileService, Int>({ uploadFile(fileBean, filePart) }) {
                     when (it) {
                         1 -> finish()
+                        -1 -> "文件已存在".toast()
                         else -> getString(R.string.service_error).toast()
                     }
                 }
@@ -99,8 +101,8 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
                 val filePath = getFilePathByUri(uri)
                 if (filePath.isNullOrEmpty()) return@let
                 selectedFilePath = filePath
-                val splitIdex = filePath.lastIndexOf(SPLIT)
-                val displayFileName = filePath.substring(splitIdex + 1)
+                val splitIndex = filePath.lastIndexOf(SPLIT)
+                val displayFileName = filePath.substring(splitIndex + 1)
                 binding.selectedFile.setText(displayFileName)
             }
         }

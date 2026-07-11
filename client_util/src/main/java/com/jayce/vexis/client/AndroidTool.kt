@@ -225,14 +225,27 @@ object AndroidTool {
         return typeValue.data
     }
 
-    fun installApp(context: Context) {
-        val path = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE, context)
-        val file = File("$path/game.apk")
+    fun fileExplore(context: Context, type: String, fileName: String) {
+        val path = FileTool.getDir(FileTool.Dir.EXT_PUBLIC_DOWNLOAD, context)
+        val file = File("$path/$fileName")
+        TLog.d("type: $type  filename: $fileName   path: ${file.path}")
+        val fileUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
         val intent = Intent(Intent.ACTION_VIEW)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        val fileUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
-        intent.setDataAndType(fileUri, "application/vnd.android.package-archive")
+        val mimeType = when(type) {
+            ".apk" -> "application/vnd.android.package-archive"
+            ".png", ".jpg" -> "image/*"
+            ".pdf" -> "application/pdf"
+            ".mp3" -> "audio/*"
+            ".avi" -> "video/*"
+            ".html", ".htm" -> "text/html"
+            else -> {
+                "$fileName 不支持查看".toast()
+                return
+            }
+        }
+        intent.setDataAndType(fileUri, mimeType)
         context.startActivity(intent)
     }
 

@@ -1,14 +1,15 @@
-package com.jayce.vexis.business.file.pool
+package com.jayce.vexis.business.file.resource
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import com.jayce.vexis.R
 import com.jayce.vexis.databinding.ChildNodeLayoutBinding
 import com.jayce.vexis.databinding.ParentNodeLayoutBinding
 
-class FileInformationAdapter(
+class FileMetaAdapter(
     private val context: Context,
     private val parentList: List<String>,
     private val childList: List<List<String>>,
@@ -45,6 +46,8 @@ class FileInformationAdapter(
             view = binding.root
             view.tag = binding
         }
+        val colorId = if (isExpanded) R.color.transparent else R.color.LightApricot
+        binding.parentNodeName.setBackgroundResource(colorId)
         binding.parentNodeName.text = parentList[groupPosition]
         return view
     }
@@ -65,7 +68,12 @@ class FileInformationAdapter(
             view = binding.root
             view.tag = binding
         }
-        binding.childNodeName.text = childList[groupPosition][childPosition]
+        val text = if (childList[groupPosition][childPosition].isEmpty()) {
+            "无"
+        } else {
+            childList[groupPosition][childPosition]
+        }
+        binding.childNodeName.text = text
         return view
     }
 }

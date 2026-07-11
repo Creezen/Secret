@@ -43,11 +43,11 @@ object Util {
     object Extension {
         fun FileBean.parcelable(): FileEntry {
             val hash = fileHash ?: NIL
-            return FileEntry(fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, hash)
+            return FileEntry(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, hash)
         }
 
         fun FileEntry.unParcelable() =
-            FileBean(fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, fileHash)
+            FileBean(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, fileHash)
 
         fun UserBean.parcelable(): UserEntry {
             return UserEntry(

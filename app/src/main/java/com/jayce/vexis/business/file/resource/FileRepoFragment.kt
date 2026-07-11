@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.file.pool
+package com.jayce.vexis.business.file.resource
 
 import android.content.Intent
 import android.net.Uri
@@ -17,14 +17,14 @@ import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 import com.jayce.vexis.foundation.Util.request
 
-class FileContentsFragment(
+class FileRepoFragment(
     private val viewModel: FileViewModel
 ) : BaseFragment<FileShareBinding>() {
 
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
     private val fileItemList = ArrayList<FileBean>()
-    private val adapter: FileEntryAdapter by lazy {
-        FileEntryAdapter(requireActivity(), fileItemList, viewModel)
+    private val adapter: FileRepoAdapter by lazy {
+        FileRepoAdapter(requireActivity(), fileItemList, viewModel)
     }
     private var tag: Any? = null
 
@@ -46,9 +46,7 @@ class FileContentsFragment(
         }
     }
 
-    fun updateData() {
-        initData()
-    }
+    fun updateData() { initData() }
 
     private fun initData() {
         request<FileService, List<FileBean>>({ fetchFile() }) {
@@ -59,18 +57,14 @@ class FileContentsFragment(
     private fun initPage() = binding.apply {
         uploadFile.setOnClickListener {
             if (Environment.isExternalStorageManager()) {
-                startActivity(Intent(this@FileContentsFragment.activity, FileUploadActivity::class.java))
+                startActivity(Intent(this@FileRepoFragment.activity, FileUploadActivity::class.java))
             } else {
-                readExternalLaunch?.launch(
-                    Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                        it.data = Uri.parse("package:" + activity?.packageName)
-                    },
-                )
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = Uri.parse("package:" + activity?.packageName)
+                readExternalLaunch?.launch(intent)
             }
         }
-        refresh.setOnClickListener {
-            initData()
-        }
+        refresh.setOnClickListener { initData() }
         recycle.layoutManager = LinearLayoutManager(context)
         recycle.adapter = adapter
     }
