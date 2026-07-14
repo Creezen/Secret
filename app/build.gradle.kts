@@ -109,6 +109,12 @@ android {
         noCompress.add("js")
         noCompress.add("wasm")
     }
+
+    packaging {
+        jniLibs {
+            pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
+        }
+    }
 }
 
 androidComponents {
@@ -254,7 +260,8 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(libs.preference.ktx)
     implementation(libs.koin.android)
-    implementation(libs.amap)
+//    implementation(libs.amap)
+    implementation(libs.amap.navigation)
     implementation(libs.websocket)
     implementation(libs.swipe.refresh)
     implementation(libs.lottie)

@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import com.amap.api.maps.MapsInitializer
 import com.amap.api.services.core.ServiceSettings
 import com.jayce.vexis.util.Config.ACTION_BROADCAST_LOGOUT
 import com.jayce.vexis.util.Config.ACTION_BROADCAST_NOTIFY
@@ -49,6 +50,7 @@ class Env : Application() {
         BaseTool.init(applicationContext, param)
         ServiceSettings.updatePrivacyAgree(this, true)
         ServiceSettings.updatePrivacyShow(this, true, true)
+//        MapsInitializer.setTerrainEnable(true)
         runOnIO { setFont(getData("font", "细体宋体")) }
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

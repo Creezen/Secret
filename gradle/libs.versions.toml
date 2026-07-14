@@ -65,6 +65,7 @@ kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref 
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
 amap = { group = "com.amap.api", name = "3dmap-location-search", version.ref = "amap" }
+amap-navigation = { group = "com.amap.api", name = "navi-3dmap-location-search", version.ref = "amap" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }

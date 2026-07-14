@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2020 The Android Open Source Project
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="PrivateResource"
     tools:override="true">
 
-  <!-- 0dp dimensions are used to prevent this view from influencing the size of
-       the parent view if it uses "wrap_content". It is expanded to occupy the
-       entirety of the parent in code, after the parent's size has been
-       determined. See: https://github.com/google/ExoPlayer/issues/8726.
-  -->
   <View android:id="@id/exo_controls_background"
       android:layout_width="@dimen/none"
       android:layout_height="@dimen/none"
@@ -148,21 +129,18 @@
       android:layoutDirection="ltr">
 
     <ImageButton android:id="@id/exo_prev"
-        android:background="#000000"
         style="@style/ExoStyledControls.Button.Center.Previous"
         android:importantForAccessibility="no"/>
 
     <include layout="@layout/exo_player_control_rewind_button" />
 
     <ImageButton android:id="@id/exo_play_pause"
-        android:background="#00ff00"
         style="@style/ExoStyledControls.Button.Center.PlayPause"
         android:importantForAccessibility="no"/>
 
     <include layout="@layout/exo_player_control_ffwd_button" />
 
     <ImageButton android:id="@id/exo_next"
-        android:background="#ff00ff"
         style="@style/ExoStyledControls.Button.Center.Next"
         android:importantForAccessibility="no"/>
 

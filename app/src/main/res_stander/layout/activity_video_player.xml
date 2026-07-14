@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         app:resize_mode="fit"
         app:show_buffering="always"
-        app:use_controller="true" />
+        app:use_controller="true"
+        app:controller_layout_id="@layout/video_player_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
