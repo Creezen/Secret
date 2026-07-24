@@ -8,7 +8,7 @@ object StatusManager {
 
     val LOCAL_SOCKET_PORT = BuildConfig.socketPort
     val BASE_SOCKET_PATH = BuildConfig.socketUrl
-    const val BASE_FILE_PATH = "${BuildConfig.baseUrl}/FileSystem/"
+    const val BASE_FILE_PATH = "${BuildConfig.baseUrl}/file/"
     const val NETWORK_TYPE_UNKNOWN = 0
     const val NETWORK_TYPE_WIFI = 0
     const val NETWORK_TYPE_CELLULAR = 1

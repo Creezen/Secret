@@ -1,6 +1,6 @@
 ext {
     localUrl = "\"https://zrzklsaaov5s.xiaomiqiu.com\""
-    cloudUrl = "\"https://117.72.197.40\""
+    cloudUrl = "\"http://117.72.197.40:80\""
 
     localSocketPath = "\"vipvip.xiaomiqiu.com\""
     cloudSocketPath = "\"117.72.197.40\""

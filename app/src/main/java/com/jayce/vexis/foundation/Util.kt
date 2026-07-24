@@ -51,14 +51,14 @@ object Util {
 
         fun UserBean.parcelable(): UserEntry {
             return UserEntry(
-                userId, nickname, name, age, sex, password, createTime, count, level, adminLevel,
+                userId, nickname, age, sex, password, createTime, count, level, adminLevel,
                 isEdit, email, selfIntroduction, phone, address, birthday, headType
             )
         }
 
         fun UserEntry.unParcelable(): UserBean {
             return UserBean(
-                userId, nickname, name, age, sex, password, createTime, count, level, adminLevel,
+                userId, nickname, age, sex, password, createTime, count, level, adminLevel,
                 isEdit, email, selfIntroduction, phone, address, birthday, headType
             )
         }

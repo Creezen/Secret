@@ -19,11 +19,6 @@ class RegisterViewModel : BaseViewModel() {
     private var isPasswordValid: Boolean = false
     private var isConfirmPasswordValid: Boolean = false
 
-    val roleId = MutableLiveData<String>()
-    val showRoleIdIcon = MutableLiveData(false)
-    val roleIdHint = MutableLiveData(NIL)
-    val isRoleIdValid = MutableLiveData(false)
-
     val nickname = MutableLiveData<String>()
     val showNicknameIcon = MutableLiveData(false)
     val nickNameHint = MutableLiveData(NIL)
@@ -56,30 +51,7 @@ class RegisterViewModel : BaseViewModel() {
     val emailSuffix: ArrayList<String> = arrayListOf()
 
     fun initStatus(resources: Resources, initRoleId: String?) {
-        if (!initRoleId.isNullOrEmpty()) {
-            roleId.value = initRoleId ?: NIL
-        }
         emailSuffix.addAll(resources.getStringArray(R.array.EmailProfix).toList())
-    }
-
-    fun handleRoleId(string: String) {
-        val isValid = string.length in 6..18
-        if (!isValid) {
-            showRoleIdIcon.value = true
-            roleIdHint.value = getString(R.string.from_6_to_18)
-            isRoleIdValid.value = false
-            checkRegisterButtonStatus()
-        } else {
-            showRoleIdIcon.value = false
-            request<UserService, Boolean>({ checkInfo(string) }) { status ->
-                showRoleIdIcon.value = status.not()
-                isRoleIdValid.value = status
-                if (!status) {
-                    roleIdHint.value = getString(R.string.role_id_exist)
-                }
-                checkRegisterButtonStatus()
-            }
-        }
     }
 
     fun handleNickName(nickname: String) {
@@ -139,7 +111,6 @@ class RegisterViewModel : BaseViewModel() {
         val userId = getRandomString(10)
         val createTime = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
         val nicknameValue = nickname.value ?: NIL
-        val roleIdValue = roleId.value ?: NIL
         val sexValue = sexList[sexSelectPosition.value ?: 0]
         val passwordValue = password.value ?: NIL
         val emailSuffixValue = emailSuffix[emailPostfixSelectPosition.value ?: 0]
@@ -155,7 +126,7 @@ class RegisterViewModel : BaseViewModel() {
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)
         val birthday = "${birthdayYear.value}-${birthdayMonth.value}-${birthdayDay.value}"
         val bean = UserBean(
-            userId, nicknameValue, roleIdValue, age, sexValue, passwordValue, createTime,
+            userId, nicknameValue, age, sexValue, passwordValue, createTime,
             0, 0, 0, isEdit, emailValue, bioValue, phoneNum, addressValue, birthday, NIL
         )
         request<UserService, TransferStatusBean>({ register(bean) }) {
@@ -177,7 +148,6 @@ class RegisterViewModel : BaseViewModel() {
 
     private fun checkRegisterButtonStatus() {
         isRegisterButtonClickable.value =
-            isRoleIdValid.value ?: false &&
             isNicknameValid.value ?: false &&
             isPasswordValid &&
             isConfirmPasswordValid

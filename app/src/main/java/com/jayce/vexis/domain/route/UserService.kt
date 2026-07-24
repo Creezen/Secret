@@ -20,10 +20,6 @@ interface UserService : BaseService {
     @Headers("Content-Type: application/json")
     fun register(@Body requestUser: UserBean): Call<TransferStatusBean>
 
-    @POST("checkInfo")
-    @FormUrlEncoded
-    fun checkInfo(@Field("userName") userName: String): Call<Boolean>
-
     @POST("/login")
     @FormUrlEncoded
     fun loginSystem(@Field("unique") unique: String, @Field("password") password: String): Call<TransferStatusBean>

@@ -11,7 +11,6 @@ import kotlinx.parcelize.Parcelize
 data class UserEntry(
     val userId: String = "-1",
     val nickname: String = "NickUser",
-    val name: String = "匿名用户",
     val age: Int = -1,
     val sex: String = "Unknow",
     val password: String = NIL,

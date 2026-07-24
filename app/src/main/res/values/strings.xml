@@ -97,7 +97,6 @@
     <string name="against_gain">收到的踩</string>
     <string name="number_user_report">举报人次</string>
     <string name="reported_num">被举报次数</string>
-    <string name="this_message_login_id">请牢记此登录凭证…</string>
     <string name="role_id_exist">用户名已存在，请重试</string>
     <string name="nickname">昵称</string>
     <string name="nickname_no_blank">昵称不可包含空格！</string>

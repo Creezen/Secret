@@ -66,7 +66,7 @@ class EventRepository {
                 return@connect true
             }
         }.onFailure {
-            TLog.d("runOnSpecific error: ${it.message}")
+            TLog.i("runOnSpecific error: ${it.message}")
         }
     }
 

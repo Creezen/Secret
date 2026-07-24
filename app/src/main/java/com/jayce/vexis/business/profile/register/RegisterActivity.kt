@@ -22,7 +22,6 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
         val owner = this
         registerViewModel.apply {
             initStatus(resources, intent.getStringExtra("intentAccount"))
-            roleId.observe(owner) { handleRoleId(it) }
             nickname.observe(owner) { handleNickName(it) }
             password.observe(owner) { handlePassword(it) }
             confirmPassword.observe(owner) { handleConfirmPassword(it) }

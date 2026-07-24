@@ -137,7 +137,7 @@ object NetTool {
     }
 
     fun setImage(context: Context, image: ImageView, url: String, option: ImageOption) {
-        val fileUrl = "$baseUrl/FileSystem${option.basePath}/$url"
+        val fileUrl = "$baseUrl/file${option.basePath}/$url"
         val target = ImageTarget(image, param.debugImage)
         val listener = ImageListener(param.debugImage)
         val placeHolder = if (option.placeHolderId != null) {
