@@ -63,6 +63,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.net.ssl.HostnameVerifier
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 object NetTool {
 
@@ -179,10 +180,11 @@ object NetTool {
                 override fun onResponse(p0: Call<T>, p1: Response<T>) {
                     val body = p1.body()
                     if(body != null) continuation.resume(body)
+                    else continuation.resumeWithException(IllegalStateException("Null Body"))
                 }
 
                 override fun onFailure(p0: Call<T>, p1: Throwable) {
-                    TLog.e("net error: ${p1.message}")
+                    continuation.resumeWithException(IllegalStateException(p1.message))
                 }
             })
         }

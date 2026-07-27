@@ -20,6 +20,7 @@ import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_FILE_PATH
 import com.jayce.vexis.business.profile.register.RegisterActivity
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.domain.route.PackageService
@@ -28,6 +29,7 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.ability.ImageTransformer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
@@ -74,27 +76,25 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         login.setOnClickListener {
             login.isClickable = false
             playShortSound(R.raw.click)
-
             val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
-            ThreadTool.runWithBlocking(option) {
-                request<UserService, TransferStatusBean>({ loginSystem(name.msg(), password.msg()) }) { response ->
-                    when (response.statusCode) {
-                        -1 -> {
-                            val logIntent = intent.also {
-                                it.putExtra("launchResult", true)
-                                it.putExtra("launchValue", response.data)
-                            }
-                            setResult(RESULT_OK, logIntent)
-                            finish()
+            request<UserService, TransferStatusBean>({loginSystem(name.msg(), password.msg())}, option) { response ->
+                when (response.statusCode) {
+                    -1 -> {
+                        val logIntent = intent.also {
+                            it.putExtra("launchResult", true)
+                            it.putExtra("launchValue", response.data)
                         }
-                        0 -> getString(R.string.no_account_and_create).toast()
-                        -3 -> getString(R.string.account_login_other_device).toast()
-                        else -> getString(R.string.password_error).toast()
+                        setResult(RESULT_OK, logIntent)
+                        finish()
                     }
+                    0 -> getString(R.string.no_account_and_create).toast()
+                    -3 -> getString(R.string.account_login_other_device).toast()
+                    else -> getString(R.string.password_error).toast()
                 }
-            }.onTimedOut {
                 login.isClickable = true
-            }.onComplete {
+            }.onFailure {
+                login.isClickable = true
+            }.onTimedOut {
                 login.isClickable = true
             }
         }

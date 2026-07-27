@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cloud</string>
+    <string name="app_name">Local</string>
     <string name="login_name">1DdCLv6AKq</string>
     <string name="login_password">123456</string>
 </resources>

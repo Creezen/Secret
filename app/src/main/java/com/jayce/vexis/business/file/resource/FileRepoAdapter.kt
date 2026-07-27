@@ -19,6 +19,7 @@ import com.jayce.vexis.domain.bean.DownloadTask
 import com.jayce.vexis.domain.bean.FileEntry
 import com.jayce.vexis.domain.database.file.FileDatabase
 import com.jayce.vexis.domain.viewmodel.FileViewModel
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.Extension.parcelable
 import com.jayce.vexis.util.bean.FileBean
 
@@ -56,7 +57,6 @@ class FileRepoAdapter(
         var cacheItem: FileEntry? = null
         runOnIO {
             cacheItem = fileDao.queryItemByHash(item.fileHash)
-            TLog.d("cache item: $cacheItem")
             if (cacheItem != null) {
                 ui { updateImage(cacheItem, holder.download) }
             }
@@ -85,11 +85,9 @@ class FileRepoAdapter(
             }
         }
         holder.view.setOnClickListener {
-            context.startActivity(
-                Intent(context, FileMetaActivity::class.java).apply {
-                    putExtra("fileInfo", item.parcelable())
-                },
-            )
+            context.jumpTo(FileMetaActivity::class.java) {
+                putExtra("fileInfo", item.parcelable())
+            }
         }
     }
 

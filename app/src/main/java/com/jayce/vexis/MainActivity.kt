@@ -4,6 +4,10 @@ import android.app.Notification
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.IBinder
 import android.view.Gravity
@@ -79,8 +83,12 @@ import com.journeyapps.barcodescanner.ScanOptions
 import org.koin.android.ext.android.inject
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
+import kotlin.math.abs
 
-class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavigationItemSelectedListener {
+class MainActivity :
+    BaseActivity<ActivityMainBinding>(),
+    DrawerListener,
+    OnNavigationItemSelectedListener {
 
     private lateinit var scanLauncher: ActivityResultLauncher<ScanOptions>
     private lateinit var loginLauncher: ActivityResultLauncher<Intent>
@@ -130,7 +138,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         super.onCreate(savedInstanceState)
         initPage()
         adjustWindowMargin()
-        apiTest()
+        test()
     }
 
     /**
@@ -351,5 +359,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), DrawerListener, OnNavi
         }
     }
 
-    private fun apiTest() { /**/ }
+    private fun test() { /**/ }
 }

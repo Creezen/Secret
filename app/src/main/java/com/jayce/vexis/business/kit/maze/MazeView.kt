@@ -9,11 +9,12 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.domain.bean.GridUnit
 import com.jayce.vexis.domain.enums.MazeType
 import kotlin.math.absoluteValue
 
-class MazeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
+class MazeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet), MazeMoveListener {
 
     private val paint = Paint()
     private val playerPaint = Paint()
@@ -21,18 +22,27 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private val bitmapCanvas: Canvas = Canvas()
     private var initStatus = 0
 
+    private var mode = 0
+
     private var gridWidth = -1f
     private var downX = -1f
     private var downY = -1f
     private var statusCallback: MazeStatusCallback? = null
 
-    private val manager = MazeManager()
+    private val manager = MazeManager(context)
 
     init {
         paint.style = Paint.Style.STROKE
         paint.color = Color.RED
         paint.strokeWidth = 1f
         playerPaint.strokeWidth = 3f
+    }
+
+    fun setMode(mode: Int) {
+        this.mode = mode
+        if (mode == 1) {
+            manager.startSensorController(this)
+        }
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
@@ -52,9 +62,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
             val mRect = manager.getPlayerReign(gridWidth, paint.strokeWidth, playerPaint.strokeWidth)
             bitmapCanvas.drawRect(mRect.left, mRect.top, mRect.right, mRect.bottom, playerPaint)
         }
-        bitmap?.apply {
-            canvas.drawBitmap(this, 0f, 0f, paint)
-        }
+        bitmap?.apply { canvas.drawBitmap(this, 0f, 0f, paint) }
     }
 
     private fun drawMazeMap() {
@@ -72,6 +80,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (mode != 0) return true
         if (event == null) return true
         initStatus = 2
         when (event.actionMasked) {
@@ -83,16 +92,20 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
                 if (manager.isGameFinish) return true
                 val horizon = event.x - downX
                 val vertical = event.y - downY
-                val absX = horizon.absoluteValue
-                val absY = vertical.absoluteValue
-                handleClickEvent(absX, absY, horizon, vertical)
+                move(horizon, vertical)
                 invalidate()
             }
         }
         return true
     }
 
-    private fun handleClickEvent(absX: Float, absY: Float, horizon: Float, vertical: Float) {
+    private fun move(horizon: Float, vertical: Float) {
+        val absX = horizon.absoluteValue
+        val absY = vertical.absoluteValue
+        move(absX, absY, horizon, vertical)
+    }
+
+    private fun move(absX: Float, absY: Float, horizon: Float, vertical: Float) {
         if (absX > absY) {
             if (manager.hitRightWall(horizon) || manager.hitLeftWall(horizon)) {
                 statusCallback?.onError()
@@ -154,5 +167,29 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     fun registerCallback(callback: MazeStatusCallback) {
         this.statusCallback = callback
+    }
+
+    override fun onLeft() {
+        initStatus = 2
+        move(-1f, 0f)
+        invalidate()
+    }
+
+    override fun onRight() {
+        initStatus = 2
+        move(1f, 0f)
+        invalidate()
+    }
+
+    override fun onUp() {
+        initStatus = 2
+        move(0f, -1f)
+        invalidate()
+    }
+
+    override fun onDown() {
+        initStatus = 2
+        move(0f, 1f)
+        invalidate()
     }
 }

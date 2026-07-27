@@ -166,7 +166,7 @@ object ThreadTool {
         return wrapper
     }
 
-    fun runWithBlocking(option: BlockOption, onDispatch: () -> Unit): ThreadWrapper {
+    fun runWithBlocking(option: BlockOption, onDispatch: suspend () -> Unit): ThreadWrapper {
         val defaultWrapper = ThreadWrapperImpl()
         if (option.delayMillis <= 0) {
             TLog.w("delay time is ${option.delayMillis}, no need to block!")
@@ -204,7 +204,7 @@ object ThreadTool {
         }
     }
 
-    private suspend fun blockCallback(wrapper: ThreadStatus, delayMillis: Long, onDispatch: () -> Unit) {
+    private suspend fun blockCallback(wrapper: ThreadStatus, delayMillis: Long, onDispatch: suspend () -> Unit) {
         val result = withTimeoutOrNull(delayMillis) {
             onDispatch.invoke()
             wrapper.finished()

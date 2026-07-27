@@ -1,14 +1,20 @@
 package com.jayce.vexis.foundation
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.NetTool
 import com.jayce.vexis.client.NetTool.await
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
+import com.jayce.vexis.client.ThreadTool.runWithBlocking
 import com.jayce.vexis.client.ThreadTool.ui
+import com.jayce.vexis.client.ability.thread.BlockOption
+import com.jayce.vexis.client.ability.thread.ThreadWrapper
+import com.jayce.vexis.client.ability.thread.ThreadWrapperImpl
 import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.domain.bean.ActiveEntry
@@ -28,16 +34,22 @@ object Util {
 
     inline fun <reified K : BaseService, T> request(
         crossinline func: suspend K.() -> Call<T>,
+        option: BlockOption? = null,
         crossinline callback: suspend (T) -> Unit
-    ) {
-        runOnIO {
-            kotlin.runCatching {
-                val result = func.invoke(NetTool.create()).await()
-                ui { callback(result) }
-            }.onFailure {
-                it.printStackTrace()
-            }
+    ): ThreadWrapper {
+        val wrapper = ThreadWrapperImpl()
+        val action: suspend () -> Unit = {
+            val result = func.invoke(NetTool.create()).await()
+            ui { callback(result) }
         }
+        val innerWrapper = if (option != null) {
+            runWithBlocking(option, action)
+        } else {
+            runOnIO { action.invoke() }
+        }
+        innerWrapper.onFailure { wrapper.fail(it) }
+            .onTimedOut { wrapper.timeOut() }
+        return wrapper
     }
 
     object Extension {
@@ -135,6 +147,12 @@ object Util {
 
         fun Fragment.jumpTo(action: String, onJump: (Intent.() -> Unit)? = null) {
             val intent = Intent(action)
+            onJump?.invoke(intent)
+            startActivity(intent)
+        }
+
+        fun Context.jumpTo(cls: Class<*>, onJump: (Intent.() -> Unit)? = null) {
+            val intent = Intent(this, cls)
             onJump?.invoke(intent)
             startActivity(intent)
         }

@@ -14,6 +14,7 @@ class MazeActivity : BaseActivity<ActivityMazeBinding>(), MazeStatusCallback {
         super.onWindowFocusChanged(hasFocus)
         if (!hasFocus) return
         binding.maze.setRowAndLine(100f)
+        binding.maze.setMode(1)
         binding.maze.invalidate()
         startTime = System.currentTimeMillis()
         binding.maze.registerCallback(this)

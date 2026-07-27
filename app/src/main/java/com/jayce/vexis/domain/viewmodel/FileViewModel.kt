@@ -52,6 +52,9 @@ class FileViewModel : BaseViewModel() {
                             semaphore.release()
                         }
                     }
+                }.onFailure {
+                    TLog.w("fail: ${it.message}")
+                    semaphore.release()
                 }
                 semaphore.acquire()
                 if (taskQueue.size < 1) {

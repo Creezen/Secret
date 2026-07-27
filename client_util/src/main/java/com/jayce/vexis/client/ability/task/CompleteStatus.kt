@@ -6,6 +6,7 @@ class  CompleteStatus <T> {
 
     private val isWait = AtomicBoolean(false)
     private val isComplete = AtomicBoolean(false)
+    @Volatile
     private var task: T? = null
 
     @Synchronized

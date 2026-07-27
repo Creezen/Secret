@@ -19,12 +19,9 @@ import com.jayce.vexis.foundation.ui.CardAdapter
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
 import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.util.toTime
-import java.util.concurrent.ConcurrentHashMap
 
 class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
     CardAdapter<FeedbackBean, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
-
-    private val avatarMap: ConcurrentHashMap<Int, Long> = ConcurrentHashMap()
 
     class ViewHolder(
         containerBinding: CardItemLayoutBinding,
@@ -67,10 +64,7 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
         }
 
         runOnIO {
-            val oldTime = avatarMap[position]
             val nowTime = getData(AVATAR_SAVE_TIME, 0L)
-            if (oldTime == nowTime) return@runOnIO
-            avatarMap[position] = nowTime
             ui {
                 val url = "${item.userID}.png"
                 val option = ImageOption(true, nowTime.toString(), "/head")

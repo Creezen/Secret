@@ -32,6 +32,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS"/>
 
     <application
         android:name=".core.Env"
@@ -61,7 +62,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.jayce.vexis.provider"
+            android:authorities="${applicationId}.provider"
             android:enabled="true"
             android:exported="false"
             android:grantUriPermissions="true">
