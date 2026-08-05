@@ -1,6 +1,5 @@
 package com.jayce.vexis.domain.viewmodel
 
-import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.util.bean.TransferStatusBean
@@ -9,15 +8,24 @@ import com.jayce.vexis.util.getRandomString
 import com.jayce.vexis.util.toTime
 import com.jayce.vexis.client.AndroidTool.getString
 import com.jayce.vexis.R
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bean.TimeUnitEntry
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class RegisterViewModel : BaseViewModel() {
 
     private var isPasswordValid: Boolean = false
     private var isConfirmPasswordValid: Boolean = false
+
+    private val _emailFlow: MutableSharedFlow<Pair<String, String>> =
+        MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    val emailFlow = _emailFlow.asSharedFlow()
 
     val nickname = MutableLiveData<String>()
     val showNicknameIcon = MutableLiveData(false)
@@ -37,7 +45,8 @@ class RegisterViewModel : BaseViewModel() {
 
     val sexSelectPosition = MutableLiveData(2)
     val emailContent = MutableLiveData(NIL)
-    val emailPostfixSelectPosition = MutableLiveData(0)
+    val emailType = MutableLiveData(NIL)
+    val isEmailValid = MutableLiveData(false)
     val phoneNumber = MutableLiveData<String>()
     val address = MutableLiveData<String>()
 
@@ -48,11 +57,6 @@ class RegisterViewModel : BaseViewModel() {
     val isRegisterButtonClickable = MutableLiveData(false)
 
     val sexList = arrayOf("男", "女", "保密").toList() as ArrayList<String>
-    val emailSuffix: ArrayList<String> = arrayListOf()
-
-    fun initStatus(resources: Resources, initRoleId: String?) {
-        emailSuffix.addAll(resources.getStringArray(R.array.EmailProfix).toList())
-    }
 
     fun handleNickName(nickname: String) {
         if (nickname.contains(" ")) {
@@ -91,6 +95,11 @@ class RegisterViewModel : BaseViewModel() {
         checkRegisterButtonStatus()
     }
 
+    fun handleEmailContent(email: String) {
+        isEmailValid.value = email.length >= 5
+        checkRegisterButtonStatus()
+    }
+
     fun handleBirthday(timeUnitEntry: TimeUnitEntry) {
         birthdayYear.value = timeUnitEntry.year.toString()
         birthdayMonth.value = timeUnitEntry.month.toString()
@@ -106,42 +115,44 @@ class RegisterViewModel : BaseViewModel() {
         }
     }
 
-    fun registerRole(callback: (Boolean) -> Unit) {
-        val currentTime = System.currentTimeMillis()
+    fun sendEmail() {
         val userId = getRandomString(10)
+        val emailTypeValue = emailType.value
+        val email = "${emailContent.value}$emailTypeValue"
+        request<UserService, TransferStatusBean>({ sendEmailCode(userId, email) }) {
+            if (it.statusCode != 0) it.data.toast()
+            else _emailFlow.emit(userId to email)
+        }
+    }
+
+    fun registerRole(userId: String, email: String, code: String, onResult: () -> Unit) {
+        val currentTime = System.currentTimeMillis()
         val createTime = currentTime.toTime("yyyy-MM-dd HH:mm:ss")
         val nicknameValue = nickname.value ?: NIL
         val sexValue = sexList[sexSelectPosition.value ?: 0]
         val passwordValue = password.value ?: NIL
-        val emailSuffixValue = emailSuffix[emailPostfixSelectPosition.value ?: 0]
-        val emailValue = if (emailContent.value.isNullOrEmpty()) {
-            NIL
-        } else {
-            "${emailContent.value}$emailSuffixValue"
-        }
         val phoneNum = phoneNumber.value ?: NIL
         val addressValue = address.value ?: NIL
         val bioValue = bio.value ?: NIL
-        val isEdit = if (isUserProfileEdit(emailValue, phoneNum, addressValue, bioValue)) 1 else 0
+        val isEdit = if (isUserProfileEdit(phoneNum, addressValue, bioValue)) 1 else 0
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)
         val birthday = "${birthdayYear.value}-${birthdayMonth.value}-${birthdayDay.value}"
         val bean = UserBean(
             userId, nicknameValue, age, sexValue, passwordValue, createTime,
-            0, 0, 0, isEdit, emailValue, bioValue, phoneNum, addressValue, birthday, NIL
+            0, 0, 0, isEdit, email, bioValue, phoneNum, addressValue, birthday, NIL
         )
-        request<UserService, TransferStatusBean>({ register(bean) }) {
-            callback.invoke(it.statusCode == 2)
+        request<UserService, TransferStatusBean>({ register(bean, code) }) {
+            if (it.statusCode != 0) it.data.toast()
+            else onResult.invoke()
         }
     }
 
     private fun isUserProfileEdit(
-        emailValue: String,
         phoneNum: String,
         addressValue: String,
         bioValue: String
     ): Boolean {
-        return emailValue.isNotEmpty() &&
-            phoneNum.isNotEmpty() &&
+        return phoneNum.isNotEmpty() &&
             addressValue.isNotEmpty() &&
             bioValue.isNotEmpty()
     }
@@ -149,6 +160,7 @@ class RegisterViewModel : BaseViewModel() {
     private fun checkRegisterButtonStatus() {
         isRegisterButtonClickable.value =
             isNicknameValid.value ?: false &&
+            isEmailValid.value ?: false &&
             isPasswordValid &&
             isConfirmPasswordValid
     }

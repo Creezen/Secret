@@ -13,12 +13,16 @@ import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface UserService : BaseService {
 
     @POST("register")
     @Headers("Content-Type: application/json")
-    fun register(@Body requestUser: UserBean): Call<TransferStatusBean>
+    fun register(
+        @Body requestUser: UserBean,
+        @Query("code") code: String
+    ): Call<TransferStatusBean>
 
     @POST("/login")
     @FormUrlEncoded
@@ -45,4 +49,11 @@ interface UserService : BaseService {
         @Field("fansId") fansId: String,
         @Field("userId") userId: String
     ): Call<Int>
+
+    @POST("/sendEmailCode")
+    @FormUrlEncoded
+    fun sendEmailCode(
+        @Field("id") userId: String,
+        @Field("email") email: String
+    ): Call<TransferStatusBean>
 }
