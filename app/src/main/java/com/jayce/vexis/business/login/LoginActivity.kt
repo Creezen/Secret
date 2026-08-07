@@ -14,27 +14,26 @@ import com.jayce.vexis.util.toTime
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.SoundTool.playShortSound
-import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ability.thread.BlockOption
 import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_FILE_PATH
 import com.jayce.vexis.business.profile.register.RegisterActivity
-import com.jayce.vexis.client.TLog
+import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
+import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.domain.route.PackageService
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.ability.ImageTransformer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
-    private val urlList = arrayListOf<String>()
-    private val picAdapter by lazy { HomePagePicAdapter(this, urlList) }
+    private val sliderList = arrayListOf<String>()
+    private val picAdapter by lazy { HomePagePicAdapter(this, sliderList) }
     val liveData = MutableLiveData<String>()
 
     @Logger(a = "hello")
@@ -107,7 +106,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         liveData.value = getString(R.string.login_name)
         password.setText(R.string.login_password)
 
-        initPicture()
+        initSliderImage()
 
         onBackPressedDispatcher.addCallback {
             val logIntent = intent.also {
@@ -118,34 +117,39 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
         }
     }
 
-    private fun initPicture() {
-        binding.iv1.apply {
-            this.adapter = picAdapter
-            offscreenPageLimit = 2
-            orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            val childAt = getChildAt(0)
-            childAt.setPadding(0, 0, 0, 0)
-            clipToPadding = false
-            urlList.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
-            urlList.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
-            urlList.add("${BASE_FILE_PATH}hXklnq1757767353397.jpg")
-            urlList.add("${BASE_FILE_PATH}GsMmcS1748872115532.jpg")
-            urlList.add("${BASE_FILE_PATH}LsFUqj1743922684602.jpg")
-            urlList.add("${BASE_FILE_PATH}bZuTJX1743912177610.jpg")
-            picAdapter.notifyItemRangeInserted(0, urlList.size)
-            setCurrentItem(1, false)
-            setPageTransformer(ImageTransformer())
-            registerOnPageChangeCallback(object : OnPageChangeCallback() {
-                override fun onPageScrollStateChanged(state: Int) {
-                    if (state != ViewPager2.SCROLL_STATE_IDLE) return
-                    if (currentItem == urlList.size - 1) {
-                        post { setCurrentItem(1, false) }
-                    }
-                    if (currentItem == 0) {
-                        post { setCurrentItem(urlList.size - 2, false) }
-                    }
-                }
-            })
+    private fun initSliderImage() {
+        request<FileService, _>({ loadSlider() }) { slideNames ->
+            slideNames.forEach {
+                sliderList.add("${BASE_FILE_PATH}/slider/$it")
+            }
+            val first = sliderList.last()
+            val end = sliderList.first()
+            sliderList.add(0, first)
+            sliderList.add(end)
+            ui { initPicture() }
         }
+    }
+
+    private fun initPicture() = binding.iv1.apply {
+        this.adapter = picAdapter
+        offscreenPageLimit = 2
+        orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        val childAt = getChildAt(0)
+        childAt.setPadding(0, 0, 0, 0)
+        clipToPadding = false
+        picAdapter.notifyItemRangeInserted(0, sliderList.size)
+        setCurrentItem(1, false)
+        setPageTransformer(ImageTransformer())
+        registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                if (state != ViewPager2.SCROLL_STATE_IDLE) return
+                if (currentItem == sliderList.size - 1) {
+                    post { setCurrentItem(1, false) }
+                }
+                if (currentItem == 0) {
+                    post { setCurrentItem(sliderList.size - 2, false) }
+                }
+            }
+        })
     }
 }

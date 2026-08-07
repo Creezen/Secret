@@ -26,4 +26,7 @@ interface FileService : BaseService {
     @Streaming
     @GET("file/{fileName}")
     fun downloadFile(@Path("fileName") fileName: String): Call<ResponseBody>
+
+    @GET("loadSlider")
+    fun loadSlider(): Call<List<String>>
 }

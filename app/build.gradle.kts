@@ -113,6 +113,7 @@ android {
     packaging {
         jniLibs {
             pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
+            pickFirsts.add("lib/armeabi-v7a/libc++_shared.so")
         }
     }
 }

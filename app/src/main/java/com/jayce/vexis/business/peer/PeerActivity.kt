@@ -7,13 +7,16 @@ import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityPeerBinding
 import com.jayce.vexis.domain.route.PeerService
+import com.jayce.vexis.foundation.Util.Extension.onFalse
+import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.bean.PeerAdviceBean
 
 class PeerActivity : BaseActivity<ActivityPeerBinding>() {
 
-    private var primaryKey: String = NIL
-    private var secondKey: String = NIL
-    private var tertiaryKey: String = NIL
+    private var discipline: String = NIL
+    private var major: String = NIL
+    private var track: String = NIL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +25,13 @@ class PeerActivity : BaseActivity<ActivityPeerBinding>() {
     }
 
     private fun initData() {
-        primaryKey = intent.getStringExtra("primary") ?: NIL
-        secondKey = intent.getStringExtra("secord") ?: NIL
-        tertiaryKey = intent.getStringExtra("tertiary") ?: NIL
+        discipline = intent.getStringExtra("discipline") ?: NIL
+        major = intent.getStringExtra("major") ?: NIL
+        track = intent.getStringExtra("track") ?: NIL
     }
 
     private fun initPage() = binding.apply {
-        category.text = "TO [$primaryKey $secondKey ${tertiaryKey}] 专业的同学"
+        category.text = "TO $discipline $major ${track}"
         content.hint = "请留言"
         submit.setOnClickListener {
             val text = content.msg(true)
@@ -36,14 +39,9 @@ class PeerActivity : BaseActivity<ActivityPeerBinding>() {
                 "内容不可以为空哦！".toast()
                 return@setOnClickListener
             }
-            request<PeerService, Boolean>({
-                sendSeniorAdvice(primaryKey, secondKey, tertiaryKey, text)
-            }) {
-                if (it) {
-                    finish()
-                    return@request
-                }
-                "服务器错误，请重试!!".toast()
+            val bean = PeerAdviceBean(discipline, major, track, text)
+            request<PeerService, _>({ sendSeniorAdvice(bean) }) {
+                it.onTrue { finish() }.onFalse { "服务器错误，请重试!!".toast() }
             }
         }
     }

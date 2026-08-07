@@ -31,6 +31,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.BaseTool.envContext
 import com.jayce.vexis.client.DataTool.dpToPx
 import com.jayce.vexis.client.ability.click.GestureCallback
@@ -44,6 +45,7 @@ import kotlinx.coroutines.flow.map
 import org.xmlpull.v1.XmlPullParser
 import java.io.File
 import kotlin.math.ceil
+import kotlin.math.floor
 
 object AndroidTool {
 
@@ -204,9 +206,11 @@ object AndroidTool {
     }
 
     fun NumberPicker.init(array: Array<String>, select: Int = 0) {
-        displayedValues = array
+        displayedValues = null
         minValue = 0
         maxValue = array.size - 1
+        value = 0
+        displayedValues = array
         value = select
     }
 
@@ -284,6 +288,21 @@ object AndroidTool {
         val measureWidth = measureText(text)
         val realWidth = initSize * (drawWidth / measureWidth)
         textSize = realWidth
+    }
+
+    fun TextView.adjustText(origin: Float) = post {
+        val textPaint = paint
+        textPaint.textSize = origin
+        val originSize = textPaint.measureText(msg())
+        val realWidth = width - paddingStart - paddingEnd
+        if (originSize < realWidth) {
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, origin)
+            invalidate()
+            return@post
+        }
+        val scale = realWidth / originSize
+        val realSize = textSize * scale * 0.98f
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, floor(realSize))
     }
 
     fun parseMenu(context: Context, id: Int): List<MenuBean> {

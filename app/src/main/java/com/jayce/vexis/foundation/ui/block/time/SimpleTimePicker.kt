@@ -24,7 +24,7 @@ class SimpleTimePicker : ITimePicker<TimePickerYearMonthDayBinding> {
     private var monthValue: Int = 1
         get() = binding.month.value + 1
         set(value) {
-            binding.month.value = value
+            binding.month.value = value - 1
             field = value - 1
         }
 

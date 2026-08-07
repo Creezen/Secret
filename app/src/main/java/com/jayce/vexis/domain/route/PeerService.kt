@@ -3,20 +3,17 @@ package com.jayce.vexis.domain.route
 import com.jayce.vexis.util.bean.PeerAdviceBean
 import com.jayce.vexis.core.base.BaseService
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface PeerService : BaseService {
 
-    @FormUrlEncoded
     @POST("/postAdvice")
-    fun sendSeniorAdvice(
-        @Field("primary") primary: String,
-        @Field("second") second: String,
-        @Field("tertiary") tertiary: String,
-        @Field("content") content: String,
-    ): Call<Boolean>
+    @Headers("Content-Type: application/json")
+    fun sendSeniorAdvice(@Body peerAdviceBean: PeerAdviceBean): Call<Boolean>
 
     @FormUrlEncoded
     @POST("/getAdvice")
