@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.jayce.vexis.util.getMaxDayOfMonth
 import com.jayce.vexis.client.AndroidTool.init
 import com.jayce.vexis.databinding.TimePickerBinding
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.foundation.ui.block.time.TimePickerFactory.Companion.dayList
 import com.jayce.vexis.foundation.ui.block.time.TimePickerFactory.Companion.hourList
 import com.jayce.vexis.foundation.ui.block.time.TimePickerFactory.Companion.millsList
@@ -70,7 +70,7 @@ class FullTimePicker : ITimePicker<TimePickerBinding> {
             field = value
         }
 
-    private  var onFullTimeChange: (TimeUnitEntry.() -> Unit)? = null
+    private  var onFullTimeChange: (TimeBO.() -> Unit)? = null
 
     override fun initLayout(context: Context, parent: ViewGroup) {
         binding = TimePickerBinding.inflate(LayoutInflater.from(context), parent)
@@ -112,12 +112,12 @@ class FullTimePicker : ITimePicker<TimePickerBinding> {
         }
     }
 
-    override fun getTime() = TimeUnitEntry(yearValue, monthValue , dayValue, hourValue, minuteValue, secondValue, millisValue, 0)
+    override fun getTime() = TimeBO(yearValue, monthValue , dayValue, hourValue, minuteValue, secondValue, millisValue, 0)
 
     override fun setTime(time: String) {
         if (time.isEmpty()) return
         val format = DateTimeFormatter.ofPattern("y-M-d  H:m:s.SSS")
-        TimeUnitEntry.fromLocalDateTime(LocalDateTime.parse(time, format)).apply {
+        TimeBO.fromLocalDateTime(LocalDateTime.parse(time, format)).apply {
             yearValue = year
             monthValue = month
             dayValue = day
@@ -128,7 +128,7 @@ class FullTimePicker : ITimePicker<TimePickerBinding> {
         }
     }
 
-    override fun setOnTimePickerChange(onTimeChange: TimeUnitEntry.() -> Unit) {
+    override fun setOnTimePickerChange(onTimeChange: TimeBO.() -> Unit) {
         onFullTimeChange = onTimeChange
     }
 }

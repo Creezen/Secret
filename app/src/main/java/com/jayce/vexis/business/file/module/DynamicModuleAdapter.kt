@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.DynamicModuleItemLayoutBinding
-import com.jayce.vexis.domain.bean.DynamicModuleEntry
+import com.jayce.vexis.domain.bo.DynamicModuleBO
 
 class DynamicModuleAdapter(
-    var list: List<DynamicModuleEntry>
-) : BaseAdapter<DynamicModuleEntry, DynamicModuleAdapter.ViewHolder>() {
+    var list: List<DynamicModuleBO>
+) : BaseAdapter<DynamicModuleBO, DynamicModuleAdapter.ViewHolder>() {
 
     private val effect = RenderEffect.createBlurEffect(15f, 15f, Shader.TileMode.MIRROR)
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<DynamicModuleEntry>) {
+    override fun updateAttachedList(newList: List<DynamicModuleBO>) {
         list = newList
     }
 

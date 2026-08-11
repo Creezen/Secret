@@ -10,7 +10,7 @@ import com.jayce.vexis.business.history.TimeManager
 import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.HistoryPanelUpdateTimeBinding
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import org.koin.android.ext.android.inject
 
 class UpdateTimeFragment : BaseFragment<HistoryPanelUpdateTimeBinding>() {
@@ -18,8 +18,8 @@ class UpdateTimeFragment : BaseFragment<HistoryPanelUpdateTimeBinding>() {
     private var onViewReady: OnViewReady? = null
     private val manager by inject<TimeManager>()
 
-    var updatedStartTime: TimeUnitEntry = TimeUnitEntry.zero()
-    var updatedEndTime: TimeUnitEntry = TimeUnitEntry.now()
+    var updatedStartTime: TimeBO = TimeBO.zero()
+    var updatedEndTime: TimeBO = TimeBO.now()
 
     init {
         ThreadTool.runOnIO {

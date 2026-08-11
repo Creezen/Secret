@@ -1,6 +1,6 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
-data class ChatEntry(
+data class ChatBO(
     val nickname: String,
     val time: String,
     val msg: String,

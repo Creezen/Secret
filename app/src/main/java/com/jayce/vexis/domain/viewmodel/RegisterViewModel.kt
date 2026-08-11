@@ -1,19 +1,20 @@
 package com.jayce.vexis.domain.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.jayce.vexis.util.Config.NIL
-import com.jayce.vexis.util.bean.TransferStatusBean
-import com.jayce.vexis.util.bean.UserBean
-import com.jayce.vexis.util.getRandomString
-import com.jayce.vexis.util.toTime
-import com.jayce.vexis.client.AndroidTool.getString
 import com.jayce.vexis.R
+import com.jayce.vexis.client.AndroidTool.getString
 import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.dto.AuthDTO
+import com.jayce.vexis.util.dto.PrivilegeDTO
+import com.jayce.vexis.util.dto.ProfileDTO
+import com.jayce.vexis.util.dto.UserDTO
+import com.jayce.vexis.util.getRandomString
+import com.jayce.vexis.util.toTime
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -100,10 +101,10 @@ class RegisterViewModel : BaseViewModel() {
         checkRegisterButtonStatus()
     }
 
-    fun handleBirthday(timeUnitEntry: TimeUnitEntry) {
-        birthdayYear.value = timeUnitEntry.year.toString()
-        birthdayMonth.value = timeUnitEntry.month.toString()
-        birthdayDay.value = timeUnitEntry.day.toString()
+    fun handleBirthday(timeBO: TimeBO) {
+        birthdayYear.value = timeBO.year.toString()
+        birthdayMonth.value = timeBO.month.toString()
+        birthdayDay.value = timeBO.day.toString()
     }
 
     fun handleBio(string: String) {
@@ -119,7 +120,7 @@ class RegisterViewModel : BaseViewModel() {
         val userId = getRandomString(10)
         val emailTypeValue = emailType.value
         val email = "${emailContent.value}$emailTypeValue"
-        request<UserService, TransferStatusBean>({ sendEmailCode(userId, email) }) {
+        request<UserService, _>({ sendEmailCode(userId, email) }) {
             if (it.statusCode != 0) it.data.toast()
             else _emailFlow.emit(userId to email)
         }
@@ -137,11 +138,11 @@ class RegisterViewModel : BaseViewModel() {
         val isEdit = if (isUserProfileEdit(phoneNum, addressValue, bioValue)) 1 else 0
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)
         val birthday = "${birthdayYear.value}-${birthdayMonth.value}-${birthdayDay.value}"
-        val bean = UserBean(
-            userId, nicknameValue, age, sexValue, passwordValue, createTime,
-            0, 0, 0, isEdit, email, bioValue, phoneNum, addressValue, birthday, NIL
-        )
-        request<UserService, TransferStatusBean>({ register(bean, code) }) {
+        val auth = AuthDTO(passwordValue, "")
+        val profile = ProfileDTO(nicknameValue, age, sexValue, email, bioValue, phoneNum, addressValue, birthday, NIL, -1)
+        val privilege = PrivilegeDTO(0, 0, 0)
+        val bean = UserDTO(userId, createTime, auth, profile, privilege)
+        request<UserService, _>({ register(bean, code) }) {
             if (it.statusCode != 0) it.data.toast()
             else onResult.invoke()
         }

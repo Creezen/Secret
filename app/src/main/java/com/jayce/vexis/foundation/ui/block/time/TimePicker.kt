@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import androidx.viewbinding.ViewBinding
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.domain.enums.TimePickerType
 
 class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
@@ -26,7 +26,7 @@ class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, a
         ThreadTool.runOnMain { timePicker.initUI() }
     }
 
-    fun time(): TimeUnitEntry {
+    fun time(): TimeBO {
         return timePicker.getTime()
     }
 
@@ -39,7 +39,7 @@ class TimePicker(context: Context, attr: AttributeSet) : LinearLayout(context, a
         }
     }
 
-    fun setOnTimePickerChange(onTimeChange: TimeUnitEntry.() -> Unit) {
+    fun setOnTimePickerChange(onTimeChange: TimeBO.() -> Unit) {
         timePicker.setOnTimePickerChange(onTimeChange)
     }
 

@@ -1,7 +1,7 @@
 package com.jayce.vexis.domain.route
 
-import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.util.vo.FeedbackVO
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -21,7 +21,7 @@ interface FeedbackService : BaseService {
     ): Call<Boolean>
 
     @GET("/getFeedback")
-    fun getFeedback(): Call<ArrayList<FeedbackBean>>
+    fun getFeedback(): Call<ArrayList<FeedbackVO>>
 
     @POST("/supportFeedback")
     @FormUrlEncoded

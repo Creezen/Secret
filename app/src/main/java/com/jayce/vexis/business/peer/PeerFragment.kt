@@ -13,7 +13,8 @@ import com.jayce.vexis.domain.route.PeerService
 import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
-import com.jayce.vexis.util.bean.PeerAdviceBean
+import com.jayce.vexis.util.dto.PeerDTO
+import com.jayce.vexis.util.vo.PeerVO
 
 class PeerFragment : BaseFragment<SageFragmentBinding>() {
 
@@ -22,7 +23,7 @@ class PeerFragment : BaseFragment<SageFragmentBinding>() {
     private var track = "哲学"
     private var originSize: Float = 0f
 
-    private val list = arrayListOf<PeerAdviceBean>()
+    private val list = arrayListOf<PeerVO>()
     private val adapter by lazy { PeerAdapter(requireActivity(), list) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

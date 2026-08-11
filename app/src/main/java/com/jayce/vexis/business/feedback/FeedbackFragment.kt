@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.ActivityFeedbackBinding
 import com.jayce.vexis.domain.route.FeedbackService
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.vo.FeedbackVO
 
 class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
-    private val feedbackEntryList = arrayListOf<FeedbackBean>()
+    private val feedbackEntryList = arrayListOf<FeedbackVO>()
     private val feedbackAdapter by lazy { FeedBackAdapter(feedbackEntryList) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -44,7 +44,7 @@ class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
     }
 
     private fun updateData() {
-        request<FeedbackService, ArrayList<FeedbackBean>>({ getFeedback() }) {
+        request<FeedbackService, _>({ getFeedback() }) {
             feedbackAdapter.notifyDataChange(it)
             binding.refreshLayout.isRefreshing = false
         }

@@ -23,8 +23,9 @@ import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.image.ScaleImage
 import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
-import com.jayce.vexis.util.bean.ArticleContentBean
 import com.jayce.vexis.util.toJson
+import com.jayce.vexis.util.vo.ArticleVO
+import com.jayce.vexis.util.vo.SectionBodyVO
 import okhttp3.MultipartBody
 
 class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
@@ -141,20 +142,20 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
         return super.dispatchTouchEvent(event)
     }
 
-    private fun getContentList(): List<ArticleContentBean> {
-        val contentList = arrayListOf<ArticleContentBean>()
+    private fun getContentList(): List<SectionBodyVO> {
+        val contentList = arrayListOf<SectionBodyVO>()
         binding.container.children.forEach { view ->
             when (view) {
                 is EditText -> {
                     val msgList = view.msg().split("\n")
                     val sequence = msgList.asSequence().filterNot { it.isEmpty() }
                     sequence.forEach {
-                        contentList.add(ArticleContentBean(TYPE_TEXT, it))
+                        contentList.add(SectionBodyVO(TYPE_TEXT, it))
                     }
                 }
                 is ScaleImage -> {
                     val uri = view.imageUri ?: return@forEach
-                    contentList.add(ArticleContentBean(TYPE_IMAGE, uri.toString()))
+                    contentList.add(SectionBodyVO(TYPE_IMAGE, uri.toString()))
                 }
             }
         }
@@ -162,17 +163,17 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
     }
 
     private fun buildRequestList(
-        list: List<ArticleContentBean>
-    ): Pair<List<ArticleContentBean>, List<MultipartBody.Part>> {
+        list: List<SectionBodyVO>
+    ): Pair<List<SectionBodyVO>, List<MultipartBody.Part>> {
         TLog.d("buildRequestList: ${list.size}")
-        val textList = arrayListOf<ArticleContentBean>()
+        val textList = arrayListOf<SectionBodyVO>()
         val partList = arrayListOf<MultipartBody.Part>()
         list.forEach {
             when (it.type) {
                 TYPE_TEXT -> textList.add(it)
                 TYPE_IMAGE -> {
                     val uri = Uri.parse(it.content)
-                    textList.add(ArticleContentBean(it.type, FileTool.getFileNameByUri(uri)))
+                    textList.add(SectionBodyVO(it.type, FileTool.getFileNameByUri(uri)))
                     partList.add(NetTool.buildUriMultipart(it.content, "articleFile"))
                 }
             }

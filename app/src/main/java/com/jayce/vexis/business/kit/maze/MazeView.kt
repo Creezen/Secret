@@ -9,8 +9,7 @@ import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.jayce.vexis.client.TLog
-import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.bo.GridBO
 import com.jayce.vexis.domain.enums.MazeType
 import kotlin.math.absoluteValue
 
@@ -147,7 +146,7 @@ class MazeView(context: Context, attributeSet: AttributeSet) : View(context, att
         bitmapCanvas.drawRect(mRect.left, mRect.top, mRect.right, mRect.bottom, playerPaint)
     }
 
-    private fun drawLine(canvas: Canvas, item: GridUnit) {
+    private fun drawLine(canvas: Canvas, item: GridBO) {
         item.apply {
             val x0 = x * gridWidth
             val x1 = (x + 1) * gridWidth

@@ -1,4 +1,4 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.database.user
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class UserEntry(
+data class UserEntity(
     val userId: String = "-1",
     val nickname: String = "NickUser",
     val age: Int = -1,

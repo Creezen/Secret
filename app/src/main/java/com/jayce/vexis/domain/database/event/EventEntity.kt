@@ -1,11 +1,11 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.database.event
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.jayce.vexis.util.Config.NIL
 
 @Entity(tableName = "eventEntry")
-data class EventEntry(
+data class EventEntity(
     val type: Int,
     val userId: String,
     val nickName: String,

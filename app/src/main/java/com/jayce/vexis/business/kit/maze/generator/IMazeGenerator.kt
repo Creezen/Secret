@@ -1,12 +1,12 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.bo.GridBO
 
 abstract class IMazeGenerator {
 
     var row: Int = -1
     var line: Int = -1
-    lateinit var mazeMatrix: Array<Array<GridUnit>>
+    lateinit var mazeMatrix: Array<Array<GridBO>>
 
     fun init(rowSize: Int, lineSize: Int) {
         this.row = rowSize
@@ -15,8 +15,8 @@ abstract class IMazeGenerator {
         generateMaze(0, 0)
     }
 
-    private fun initMatrix(): Array<Array<GridUnit>> {
-        mazeMatrix = Array(row) { Array(line) { GridUnit() } }
+    private fun initMatrix(): Array<Array<GridBO>> {
+        mazeMatrix = Array(row) { Array(line) { GridBO() } }
         for (i in 0 until row) {
             for (j in 0 until line) {
                 mazeMatrix[i][j].x = i

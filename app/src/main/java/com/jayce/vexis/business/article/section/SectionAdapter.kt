@@ -28,13 +28,13 @@ import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
-import com.jayce.vexis.util.bean.SectionRemarkBean
+import com.jayce.vexis.util.vo.SectionRemarkVO
 
 class SectionAdapter(
     val context: Context,
     val activity: Activity,
-    private var itemList: List<SectionRemarkBean>
-) : BaseAdapter<SectionRemarkBean, RecyclerView.ViewHolder>() {
+    private var itemList: List<SectionRemarkVO>
+) : BaseAdapter<SectionRemarkVO, RecyclerView.ViewHolder>() {
 
     private val list: ArrayList<String> =
         activity.resources.getStringArray(R.array.articleFeedback).toCollection(ArrayList())
@@ -56,7 +56,7 @@ class SectionAdapter(
 
     override fun getAttachedList() = itemList
 
-    override fun updateAttachedList(newList: List<SectionRemarkBean>) {
+    override fun updateAttachedList(newList: List<SectionRemarkVO>) {
         itemList = newList
     }
 

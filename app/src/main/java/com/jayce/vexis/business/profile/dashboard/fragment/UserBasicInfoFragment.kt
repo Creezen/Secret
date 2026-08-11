@@ -22,14 +22,14 @@ class UserBasicInfoFragment : BaseFragment<UserBasicInfoBinding>() {
     private fun initView() = binding.apply {
         liveUser.let {
             createTime.text = it.createTime
-            sex.text = it.sex
-            age.text = "${it.age}"
-            count.text = "${it.count}"
-            birthday.text = it.birthday
-            phone.text = it.phone
-            email.text = it.email
-            address.text = it.address
-            selfIntroduction.text = it.selfIntroduction
+            sex.text = it.profile.sex
+            age.text = "${it.profile.age}"
+            count.text = "${it.privilege.count}"
+            birthday.text = it.profile.birthday
+            phone.text = it.profile.phone
+            email.text = it.profile.email
+            address.text = it.profile.address
+            selfIntroduction.text = it.profile.selfIntroduction
             isEdit.visibility = View.GONE
         }
     }

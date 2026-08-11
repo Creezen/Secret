@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.client.AndroidTool.onVisible
 import com.jayce.vexis.client.BaseTool.envContext
 import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.ThreadTool.runOnMulti
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ChatItemLayoutBinding
-import com.jayce.vexis.domain.bean.ChatEntry
+import com.jayce.vexis.domain.bo.ChatBO
 import com.jayce.vexis.domain.database.event.EventDatabase
-import kotlinx.coroutines.Dispatchers
+import com.jayce.vexis.domain.database.event.EventEntity
 
-class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatEntry, ChatAdapter.ViewHolder>() {
+class ChatAdapter(private var msgList: ArrayList<ChatBO>) : BaseAdapter<ChatBO, ChatAdapter.ViewHolder>() {
 
     private val eventDao = EventDatabase.getDatabase(envContext).eventDao()
 
@@ -25,7 +26,7 @@ class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatE
 
     override fun getAttachedList() = msgList
 
-    override fun updateAttachedList(newList: List<ChatEntry>) {
+    override fun updateAttachedList(newList: List<ChatBO>) {
         msgList = ArrayList(newList)
     }
 
@@ -47,9 +48,7 @@ class ChatAdapter(private var msgList: ArrayList<ChatEntry>) : BaseAdapter<ChatE
         if (item.isRead) return
         holder.view.onVisible {
             item.isRead = true
-            ThreadTool.runOnMulti {
-                eventDao.markEventAsRead(item.id)
-            }
+            runOnMulti { eventDao.markEventAsRead(item.id) }
         }
     }
 

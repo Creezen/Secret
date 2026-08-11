@@ -1,8 +1,8 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
 import com.jayce.vexis.domain.enums.PokerSuit
 
-data class PokerEntry(val suit: PokerSuit, val rank: Int) {
+data class PokerBO(val suit: PokerSuit, val rank: Int) {
 
     var isSelect: Boolean = false
 

@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentDynamicMduleBinding
-import com.jayce.vexis.domain.bean.DynamicModuleEntry
+import com.jayce.vexis.domain.bo.DynamicModuleBO
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 
 class DynamicModuleFragment(
     private val viewModel: FileViewModel
 ) : BaseFragment<FragmentDynamicMduleBinding>() {
 
-    private val list = arrayListOf<DynamicModuleEntry>()
+    private val list = arrayListOf<DynamicModuleBO>()
     private val adapter = DynamicModuleAdapter(list)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedState: Bundle?): View {
@@ -27,7 +27,7 @@ class DynamicModuleFragment(
 
     private fun initData() {
         (0..4).forEach {
-            list.add(DynamicModuleEntry("下载模块$it", "$it"))
+            list.add(DynamicModuleBO("下载模块$it", "$it"))
         }
     }
 

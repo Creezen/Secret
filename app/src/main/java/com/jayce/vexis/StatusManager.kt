@@ -1,7 +1,7 @@
 package com.jayce.vexis
 
-import com.jayce.vexis.util.bean.UserBean
 import com.jayce.vexis.client.NetTool
+import com.jayce.vexis.util.vo.UserVO
 import java.util.concurrent.atomic.AtomicReference
 
 object StatusManager {
@@ -19,12 +19,12 @@ object StatusManager {
 
     var isLogin: Boolean = false
 
-    private var onlineUserEntry = AtomicReference(UserBean())
+    private var onlineUserEntry = AtomicReference(UserVO())
 
-    val liveUser: UserBean
+    val liveUser: UserVO
         get() = onlineUserEntry.get()
 
-    fun registerUser(userBean: UserBean) {
+    fun registerUser(userBean: UserVO) {
         onlineUserEntry.set(userBean)
         NetTool.setUser(userBean)
     }

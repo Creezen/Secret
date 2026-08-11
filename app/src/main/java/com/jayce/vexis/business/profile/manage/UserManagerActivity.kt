@@ -10,25 +10,25 @@ import com.jayce.vexis.client.ThreadTool.runOnMain
 import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityActiveDataBinding
-import com.jayce.vexis.domain.bean.ActiveEntry
+import com.jayce.vexis.domain.bo.ActiveBO
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
-import com.jayce.vexis.foundation.Util.Extension.unParcelable
+import com.jayce.vexis.foundation.Util.Extension.vo
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.EventRepository.Companion.SCOPE_EVENT
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
-import com.jayce.vexis.util.bean.ActiveBean
+import com.jayce.vexis.util.vo.ActiveVO
 
 class UserManagerActivity : BaseActivity<ActivityActiveDataBinding>() {
 
-    private var activeBean: ActiveBean? = null
+    private var activeBean: ActiveVO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val activeEntry = intent.getParcelableExtra("activeItem", ActiveEntry::class.java)
-        activeBean = activeEntry?.unParcelable() ?: return
+        val activeBO = intent.getParcelableExtra("activeItem", ActiveBO::class.java)
+        activeBean = activeBO?.vo() ?: return
     }
 
     override fun onResume() {
@@ -37,7 +37,7 @@ class UserManagerActivity : BaseActivity<ActivityActiveDataBinding>() {
         initPage(bean)
     }
 
-    private fun initPage(bean: ActiveBean) = binding.apply {
+    private fun initPage(bean: ActiveVO) = binding.apply {
         nickname.text = bean.nickname
         userID.text = bean.userID
         createTime.text = bean.createTime

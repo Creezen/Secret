@@ -1,6 +1,6 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
-data class GridUnit(
+data class GridBO(
     var x: Int = 0,
     var y: Int = 0,
     var visit: Boolean = false,

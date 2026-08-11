@@ -5,23 +5,23 @@ import android.util.TypedValue
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityFileDetailBinding
-import com.jayce.vexis.domain.bean.FileEntry
-import com.jayce.vexis.foundation.Util.Extension.unParcelable
+import com.jayce.vexis.domain.database.file.FileEntity
+import com.jayce.vexis.foundation.Util.Extension.vo
 import com.jayce.vexis.util.Config.NIL
-import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.util.vo.FileVO
 import kotlin.math.floor
 
 class FileMetaActivity : BaseActivity<ActivityFileDetailBinding>() {
 
-    private lateinit var fileItem: FileBean
+    private lateinit var fileItem: FileVO
     private val parentNode = arrayListOf("资源描述", "资源说明")
     private val childNode = arrayListOf<ArrayList<String>>(arrayListOf(), arrayListOf())
     private val fileMetaAdapter = FileMetaAdapter(this, parentNode, childNode)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val item = intent.getParcelableExtra("fileInfo", FileEntry::class.java) ?: FileEntry(NIL, NIL, NIL, NIL, NIL, NIL,0, NIL)
-        fileItem = item.unParcelable()
+        val item = intent.getParcelableExtra("fileInfo", FileEntity::class.java) ?: FileEntity(NIL, NIL, NIL, NIL, NIL, NIL,0, NIL)
+        fileItem = item.vo()
         initView()
         initData()
     }

@@ -6,8 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.jayce.vexis.business.kit.maze.generator.IMazeGenerator
-import com.jayce.vexis.client.TLog
-import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.bo.GridBO
 import com.jayce.vexis.domain.enums.MazeType
 import kotlin.math.abs
 
@@ -36,7 +35,7 @@ class MazeManager(context: Context) : SensorEventListener {
         get() = generator?.row ?: -1
     val line: Int
         get() = generator?.line ?: -1
-    val matrix: Array<Array<GridUnit>>
+    val matrix: Array<Array<GridBO>>
         get() = generator?.mazeMatrix ?: arrayOf()
 
     private var generator: IMazeGenerator? = null

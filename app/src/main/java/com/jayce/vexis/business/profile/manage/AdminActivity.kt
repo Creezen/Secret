@@ -2,15 +2,15 @@ package com.jayce.vexis.business.profile.manage
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayce.vexis.util.bean.ActiveBean
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityAdminBinding
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.vo.ActiveVO
 
 class AdminActivity : BaseActivity<ActivityAdminBinding>() {
 
-    private val userList = arrayListOf<ActiveBean>()
+    private val userList = arrayListOf<ActiveVO>()
     private val adapter by lazy { UserManagerAdapter(this, userList) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,9 +1,9 @@
 package com.jayce.vexis.domain.route
 
-import com.jayce.vexis.util.bean.ActiveBean
-import com.jayce.vexis.util.bean.TransferStatusBean
-import com.jayce.vexis.util.bean.UserBean
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.util.dto.UserDTO
+import com.jayce.vexis.util.vo.ActiveVO
+import com.jayce.vexis.util.vo.StatusVO
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,20 +20,20 @@ interface UserService : BaseService {
     @POST("register")
     @Headers("Content-Type: application/json")
     fun register(
-        @Body requestUser: UserBean,
+        @Body requestUser: UserDTO,
         @Query("code") code: String
-    ): Call<TransferStatusBean>
+    ): Call<StatusVO>
 
     @POST("/login")
     @FormUrlEncoded
-    fun loginSystem(@Field("unique") unique: String, @Field("password") password: String): Call<TransferStatusBean>
+    fun loginSystem(@Field("unique") unique: String, @Field("password") password: String): Call<StatusVO>
 
     @POST("/postAvatar")
     @Multipart
     fun uploadAvatar(@Part("userID") userId: String, @Part filePart: MultipartBody.Part): Call<Boolean>
 
     @POST("/getAllUser")
-    fun getAllUser(): Call<List<ActiveBean>>
+    fun getAllUser(): Call<List<ActiveVO>>
 
     @POST("/setUserAsAdmin")
     @FormUrlEncoded
@@ -55,5 +55,5 @@ interface UserService : BaseService {
     fun sendEmailCode(
         @Field("id") userId: String,
         @Field("email") email: String
-    ): Call<TransferStatusBean>
+    ): Call<StatusVO>
 }

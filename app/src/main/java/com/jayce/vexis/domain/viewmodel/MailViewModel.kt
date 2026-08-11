@@ -4,7 +4,7 @@ import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
 import com.jayce.vexis.util.Config.EVENT_TYPE_ROLE
 import com.jayce.vexis.business.mail.OnEventDeliveryListener
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.foundation.ability.EventRepository
 import kotlinx.coroutines.flow.first
 import java.util.LinkedList
@@ -12,19 +12,19 @@ import java.util.LinkedList
 class MailViewModel(private val repository: EventRepository) : BaseViewModel() {
 
     val mailFlow = repository.mailEventFlow
-    private val totalEventList = LinkedList<EventEntry>()
-    private val feedbackEventList = LinkedList<EventEntry>()
-    private val managerEventList = LinkedList<EventEntry>()
+    private val totalEventList = LinkedList<EventEntity>()
+    private val feedbackEventList = LinkedList<EventEntity>()
+    private val managerEventList = LinkedList<EventEntity>()
     private val listenerList = arrayListOf<OnEventDeliveryListener>()
 
-    suspend fun getMailEvent(): Pair<List<EventEntry>, Long> {
+    suspend fun getMailEvent(): Pair<List<EventEntity>, Long> {
         val mailList = repository.getMailEvent().first()
-        if (mailList.isEmpty()) return listOf<EventEntry>() to -1
+        if (mailList.isEmpty()) return listOf<EventEntity>() to -1
         val lastReadId = mailList.last().id
         return mailList to lastReadId
     }
 
-    fun deliveryEvent(entry: EventEntry) {
+    fun deliveryEvent(entry: EventEntity) {
         totalEventList.add(0, entry)
         when (entry.type) {
             EVENT_TYPE_FEEDBACK -> feedbackEventList.add(0, entry)

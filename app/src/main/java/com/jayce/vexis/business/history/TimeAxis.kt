@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.jayce.vexis.R
 import com.jayce.vexis.client.AndroidTool.adjustTextSize
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.domain.enums.TimeLevel
 import com.jayce.vexis.util.Config.BASE_FACTOR_TWELVE
 import com.jayce.vexis.util.Config.DAY
@@ -21,9 +21,9 @@ class TimeAxis(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private var maxUnitCount: Int = 0
-    private var startTime: TimeUnitEntry = TimeUnitEntry.zero()
-    private var endTime: TimeUnitEntry = TimeUnitEntry.now()
-    private var period: Pair<TimeUnitEntry, Long> = TimeUnitEntry.zero() to 0L
+    private var startTime: TimeBO = TimeBO.zero()
+    private var endTime: TimeBO = TimeBO.now()
+    private var period: Pair<TimeBO, Long> = TimeBO.zero() to 0L
     private var timeLevel: TimeLevel = TimeLevel.LEVEL_TEN_MICRO_SECOND
     private var whiteSpace: Long = 0
 
@@ -39,7 +39,7 @@ class TimeAxis(context: Context, attributeSet: AttributeSet) : View(context, att
         style = Paint.Style.FILL
     }
 
-    fun updateTimePeriod(start: TimeUnitEntry, end: TimeUnitEntry) {
+    fun updateTimePeriod(start: TimeBO, end: TimeBO) {
         startTime = start
         endTime = end
         invalidate()

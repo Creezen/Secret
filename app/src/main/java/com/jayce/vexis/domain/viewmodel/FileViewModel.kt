@@ -5,7 +5,7 @@ import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.domain.bean.DownloadTask
+import com.jayce.vexis.domain.bo.DownloadTaskBO
 import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.foundation.Util.request
 import kotlinx.coroutines.channels.BufferOverflow
@@ -21,7 +21,7 @@ class FileViewModel : BaseViewModel() {
         MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val progressFlow = _progressFlow.asSharedFlow()
 
-    private val _taskStateFlow: MutableSharedFlow<DownloadTask> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    private val _taskStateFlow: MutableSharedFlow<DownloadTaskBO> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val taskStateFlow = _taskStateFlow.asSharedFlow()
 
     private val _taskCountFlow: MutableSharedFlow<Int> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
@@ -29,9 +29,9 @@ class FileViewModel : BaseViewModel() {
 
     private val semaphore = Semaphore(1, 1)
 
-    private val taskQueue = LinkedBlockingQueue<DownloadTask>()
+    private val taskQueue = LinkedBlockingQueue<DownloadTaskBO>()
 
-    fun dispatchDownloadTask(value: DownloadTask) {
+    fun dispatchDownloadTask(value: DownloadTaskBO) {
         taskQueue.put(value)
         runOnIO { _taskCountFlow.emit(taskQueue.size) }
     }
@@ -58,7 +58,7 @@ class FileViewModel : BaseViewModel() {
                 }
                 semaphore.acquire()
                 if (taskQueue.size < 1) {
-                    _taskStateFlow.emit(DownloadTask("",  "","所有任务下载完成", -1, -1, 0))
+                    _taskStateFlow.emit(DownloadTaskBO("",  "","所有任务下载完成", -1, -1, 0))
                 }
             }
         }

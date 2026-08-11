@@ -3,24 +3,22 @@ package com.jayce.vexis.domain.database.event
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import androidx.room.Update
-import com.jayce.vexis.domain.bean.EventEntry
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EventDao {
 
     @Insert
-    fun insert(eventEntry: EventEntry): Long
+    fun insert(eventEntity: EventEntity): Long
 
     @Query("select * from eventEntry")
-    fun getAllEvent(): Flow<List<EventEntry>>
+    fun getAllEvent(): Flow<List<EventEntity>>
 
     @Query("select * from eventEntry where id = :eventId")
-    fun getEventById(eventId: Long): EventEntry
+    fun getEventById(eventId: Long): EventEntity
 
     @Query("select * from eventEntry where type IN (:type)")
-    fun getEventListByType(type: List<Int>): Flow<List<EventEntry>>
+    fun getEventListByType(type: List<Int>): Flow<List<EventEntity>>
 
     @Query("select count(*) from eventEntry where type IN (:type) and isRead = false")
     fun getEventCountByType(type: List<Int>): Int

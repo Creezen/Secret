@@ -10,17 +10,17 @@ import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.UserActiveItemBinding
 import com.jayce.vexis.domain.route.UserService
-import com.jayce.vexis.foundation.Util.Extension.parcelable
+import com.jayce.vexis.foundation.Util.Extension.bo
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.menu.MenuManager.registerOnMenuClick
 import com.jayce.vexis.foundation.ability.menu.OnMenuClick
 import com.jayce.vexis.foundation.ui.CardAdapter
-import com.jayce.vexis.util.bean.ActiveBean
+import com.jayce.vexis.util.vo.ActiveVO
 
 class UserManagerAdapter(
     private val context: Context,
-    private var userList: List<ActiveBean>,
-) : CardAdapter<ActiveBean, UserActiveItemBinding, UserManagerAdapter.ViewHolder>(userList), OnMenuClick {
+    private var userList: List<ActiveVO>,
+) : CardAdapter<ActiveVO, UserActiveItemBinding, UserManagerAdapter.ViewHolder>(userList), OnMenuClick {
 
     private var onManagerSuccess: ((Int) -> Unit)? = null
 
@@ -39,20 +39,20 @@ class UserManagerAdapter(
 
     override fun getAttachedList() = userList
 
-    override fun updateAttachedList(newList: List<ActiveBean>) {
+    override fun updateAttachedList(newList: List<ActiveVO>) {
         userList = newList
     }
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = userList[position]
         holder.nickname.userName = item.nickname ?: "未知用户"
-        holder.nickname.isAdmin = item.isAdministrator()
-        holder.admin.visibility = if (item.isAdministrator()) View.VISIBLE else View.GONE
+        holder.nickname.isAdmin = item.isAdmin()
+        holder.admin.visibility = if (item.isAdmin()) View.VISIBLE else View.GONE
         holder.id.text = item.userID
         holder.time.text = item.createTime
         holder.view.setOnClickListener {
             val intent = Intent(context, UserManagerActivity::class.java)
-            intent.putExtra("activeItem", item.parcelable())
+            intent.putExtra("activeItem", item.bo())
             context.startActivity(intent)
         }
         val bundle = Bundle().apply { putString("id", item.userID) }

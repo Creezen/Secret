@@ -18,7 +18,7 @@ import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.util.Config.MEDIA_TYPE_ALL
 import com.jayce.vexis.util.Config.NIL
-import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.util.dto.FileDTO
 import com.jayce.vexis.util.getRandomString
 import com.jayce.vexis.util.toTime
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +73,7 @@ class FileUploadActivity : BaseActivity<FileUploadBinding>() {
             val option = BlockOption(ThreadType.MULTI, 5000, Dispatchers.IO)
             ThreadTool.runWithBlocking(option) {
                 val filePart = buildFileMultipart(filePath, "file")
-                val fileBean = FileBean(
+                val fileBean = FileDTO(
                     liveUser.userId,
                     fileName,
                     fileID,

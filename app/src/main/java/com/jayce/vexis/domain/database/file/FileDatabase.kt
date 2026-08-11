@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jayce.vexis.domain.bean.FileEntry
 
-@Database(version = 1, entities = [FileEntry::class], exportSchema = false)
+@Database(version = 1, entities = [FileEntity::class], exportSchema = false)
 abstract class FileDatabase : RoomDatabase(){
 
     abstract fun fileDao(): FileDao

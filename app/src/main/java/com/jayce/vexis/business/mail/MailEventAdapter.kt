@@ -6,12 +6,12 @@ import androidx.viewbinding.ViewBinding
 import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.MailFeedbackItemBinding
-import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.foundation.ui.CardAdapter
 
 class MailEventAdapter(
-    private var eventList: List<EventEntry>
-) : CardAdapter<EventEntry, ViewBinding, MailEventAdapter.ViewHolder>(eventList) {
+    private var eventList: List<EventEntity>
+) : CardAdapter<EventEntity, ViewBinding, MailEventAdapter.ViewHolder>(eventList) {
 
     class ViewHolder(
         cardBinding: CardItemLayoutBinding,
@@ -54,7 +54,7 @@ class MailEventAdapter(
 
     override fun getItemCount() = eventList.size
 
-    override fun updateAttachedList(newList: List<EventEntry>) { eventList = newList }
+    override fun updateAttachedList(newList: List<EventEntity>) { eventList = newList }
 
     override fun getItemViewType(position: Int) = eventList[position].type
 }

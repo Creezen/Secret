@@ -2,7 +2,7 @@ package com.jayce.vexis.business.history
 
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.putData
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import java.time.LocalDateTime
 import java.util.concurrent.locks.ReentrantLock
 
@@ -33,10 +33,10 @@ class TimeManager {
     private var hasValidEndTime: Boolean = false
     private var hasReadPersistTime: Boolean = false
     
-    private var startTime: TimeUnitEntry = TimeUnitEntry.zero()
-    private var endTime: TimeUnitEntry = TimeUnitEntry.zero()
+    private var startTime: TimeBO = TimeBO.zero()
+    private var endTime: TimeBO = TimeBO.zero()
     
-    suspend fun getTime(): Pair<TimeUnitEntry, TimeUnitEntry> {
+    suspend fun getTime(): Pair<TimeBO, TimeBO> {
         lock.lock()
         if (hasReadPersistTime || (hasValidStartTime && hasValidEndTime)) {
             lock.unlock()
@@ -58,10 +58,10 @@ class TimeManager {
         val endSecond = getData(END_SECOND, -1)
         val endMilliSecond = getData(END_MILLISECOND, -1)
         val endMicroSecond = getData(END_MICROSECOND, -1)
-        val tempStartTime = if (startYear < 0) TimeUnitEntry.zero()
-        else TimeUnitEntry(startYear, startMonth, startDay, startHour, startMinute, startSecond, startMilliSecond, startMicroSecond)
-        val tempEndTime = if (endYear < 0) TimeUnitEntry.fromLocalDateTime(LocalDateTime.now())
-        else TimeUnitEntry(endYear, endMonth, endDay, endHour, endMinute, endSecond, endMilliSecond, endMicroSecond)
+        val tempStartTime = if (startYear < 0) TimeBO.zero()
+        else TimeBO(startYear, startMonth, startDay, startHour, startMinute, startSecond, startMilliSecond, startMicroSecond)
+        val tempEndTime = if (endYear < 0) TimeBO.fromLocalDateTime(LocalDateTime.now())
+        else TimeBO(endYear, endMonth, endDay, endHour, endMinute, endSecond, endMilliSecond, endMicroSecond)
         startTime = tempStartTime
         endTime = tempEndTime
         hasReadPersistTime = tempStartTime.year >= 0 && tempEndTime.year >= 0
@@ -69,17 +69,17 @@ class TimeManager {
         return startTime to endTime
     }
 
-    suspend fun setTime(startTimeEntry: TimeUnitEntry, endTimeEntry: TimeUnitEntry) {
+    suspend fun setTime(startTimeEntry: TimeBO, endTimeEntry: TimeBO) {
         lock.lock()
         setStartTime(startTimeEntry)
         setEndTime(endTimeEntry)
         lock.unlock()
     }
 
-    private suspend fun setStartTime(timeUnitEntry: TimeUnitEntry) {
-        startTime = timeUnitEntry
+    private suspend fun setStartTime(timeBO: TimeBO) {
+        startTime = timeBO
         hasValidStartTime = true
-        timeUnitEntry.apply {
+        timeBO.apply {
             putData(START_YEAR, year)
             putData(START_MONTH, month)
             putData(START_DAY, day)
@@ -91,10 +91,10 @@ class TimeManager {
         }
     }
 
-    private suspend fun setEndTime(timeUnitEntry: TimeUnitEntry) {
-        endTime = timeUnitEntry
+    private suspend fun setEndTime(timeBO: TimeBO) {
+        endTime = timeBO
         hasValidEndTime = true
-        timeUnitEntry.apply {
+        timeBO.apply {
             putData(END_YEAR, year)
             putData(END_MONTH, month)
             putData(END_DAY, day)

@@ -11,7 +11,8 @@ import com.jayce.vexis.client.ThreadTool.getScope
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityChatBinding
-import com.jayce.vexis.domain.bean.ChatEntry
+import com.jayce.vexis.domain.bo.ChatBO
+import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.viewmodel.ChatViewModel
 import com.jayce.vexis.foundation.Util.Extension.chat
 import com.jayce.vexis.foundation.ability.EventRepository.Companion.SCOPE_EVENT
@@ -21,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChatActivity : BaseActivity<ActivityChatBinding>() {
 
-    private val itemList = arrayListOf<ChatEntry>()
+    private val itemList = arrayListOf<ChatBO>()
     private val adapter by lazy { ChatAdapter(itemList) }
     private val viewModel by viewModel<ChatViewModel>()
 

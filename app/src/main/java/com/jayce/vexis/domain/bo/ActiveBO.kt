@@ -1,10 +1,10 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ActiveEntry(
+data class ActiveBO(
     val userID: String,
     val nickname: String? = null,
     val createTime: String,

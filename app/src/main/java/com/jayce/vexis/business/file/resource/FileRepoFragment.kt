@@ -10,19 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayce.vexis.util.bean.FileBean
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileShareBinding
 import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.domain.viewmodel.FileViewModel
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.vo.FileVO
 
 class FileRepoFragment(
     private val viewModel: FileViewModel
 ) : BaseFragment<FileShareBinding>() {
 
     private var readExternalLaunch: ActivityResultLauncher<Intent>? = null
-    private val fileItemList = ArrayList<FileBean>()
+    private val fileItemList = ArrayList<FileVO>()
     private val adapter: FileRepoAdapter by lazy {
         FileRepoAdapter(requireActivity(), fileItemList, viewModel)
     }
@@ -49,7 +49,7 @@ class FileRepoFragment(
     fun updateData() { initData() }
 
     private fun initData() {
-        request<FileService, List<FileBean>>({ fetchFile() }) {
+        request<FileService, _>({ fetchFile() }) {
             adapter.notifyDataChange(it)
         }
     }

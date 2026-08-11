@@ -10,13 +10,13 @@ import com.jayce.vexis.client.DataTool.dpToPx
 import com.jayce.vexis.R
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.PokerItemBinding
-import com.jayce.vexis.domain.bean.PokerEntry
+import com.jayce.vexis.domain.bo.PokerBO
 import com.jayce.vexis.foundation.ui.CardAdapter
 
 class PokerAdapter(
     private val context: Context,
-    private var list: List<PokerEntry>
-) : CardAdapter<PokerEntry, PokerItemBinding, PokerAdapter.ViewHolder>(list) {
+    private var list: List<PokerBO>
+) : CardAdapter<PokerBO, PokerItemBinding, PokerAdapter.ViewHolder>(list) {
 
     class ViewHolder(
         containBnding: CardItemLayoutBinding,
@@ -32,7 +32,7 @@ class PokerAdapter(
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<PokerEntry>) {
+    override fun updateAttachedList(newList: List<PokerBO>) {
         list = newList
     }
 

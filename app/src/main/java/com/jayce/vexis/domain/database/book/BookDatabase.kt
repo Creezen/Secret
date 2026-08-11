@@ -4,10 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jayce.vexis.domain.bean.book.BookLineEntry
-import com.jayce.vexis.domain.bean.book.BookEntry
+import com.jayce.vexis.domain.bo.book.BookLineBO
 
-@Database(version = 1, entities = [BookLineEntry::class, BookEntry::class], exportSchema = false)
+@Database(version = 1, entities = [BookLineBO::class, BookEntity::class], exportSchema = false)
 abstract class BookDatabase : RoomDatabase() {
 
     abstract fun recordDao(): RecordDao

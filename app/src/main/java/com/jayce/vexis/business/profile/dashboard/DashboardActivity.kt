@@ -67,9 +67,9 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     }
 
     private fun initPage() = binding.apply {
-        nickname.userName = liveUser.nickname
+        nickname.userName = liveUser.profile.nickname
         nickname.isAdmin = liveUser.isAdministrator()
-        nickname.level = liveUser.level
+        nickname.level = liveUser.privilege.level
         id.text = liveUser.userId
         if (liveUser.isAdministrator()) manager.visibility = View.VISIBLE
         manager.setOnClickListener { jumpTo(AdminActivity::class.java) }

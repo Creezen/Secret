@@ -1,4 +1,4 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
 import com.jayce.vexis.domain.enums.TimeLevel
 import com.jayce.vexis.util.getMaxDayOfMonth
@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.time.Period
 import java.time.ZoneId
 
-data class TimeUnitEntry(
+data class TimeBO(
     var year: Int,
     var month: Int,
     var day: Int,
@@ -22,11 +22,11 @@ data class TimeUnitEntry(
 
         fun totalMilliSecond(timeStamp: Long) = timeStamp + TIME_OFFSET
 
-        fun zero() = TimeUnitEntry(0, 1, 1, 0, 0, 0, 0, 0)
+        fun zero() = TimeBO(0, 1, 1, 0, 0, 0, 0, 0)
 
-        fun now(): TimeUnitEntry = fromLocalDateTime(LocalDateTime.now())
+        fun now(): TimeBO = fromLocalDateTime(LocalDateTime.now())
 
-        fun fromLocalDateTime(localDateTime: LocalDateTime): TimeUnitEntry {
+        fun fromLocalDateTime(localDateTime: LocalDateTime): TimeBO {
             val year = localDateTime.year
             val month = localDateTime.monthValue
             val day = localDateTime.dayOfMonth
@@ -37,11 +37,11 @@ data class TimeUnitEntry(
             val micros = nano / 1000
             val microSecond = micros % 1000
             val milliSecond = micros / 1000
-            return TimeUnitEntry(year, month, day, hour, minute, second, milliSecond, microSecond)
+            return TimeBO(year, month, day, hour, minute, second, milliSecond, microSecond)
         }
     }
 
-    fun diff(other: TimeUnitEntry): Pair<TimeUnitEntry, Long> {
+    fun diff(other: TimeBO): Pair<TimeBO, Long> {
         val pair = isLater(other)
         val later = pair.first
         val older = pair.second
@@ -104,7 +104,7 @@ data class TimeUnitEntry(
         val duration = Duration.between(oldLocalDateTime, laterLocalDateTime)
         val gapTimestamp = duration.seconds * 1_000_000 + duration.nano / 1_000
 
-        return TimeUnitEntry(
+        return TimeBO(
             gapYear,
             gapMonth,
             gapDay,
@@ -116,7 +116,7 @@ data class TimeUnitEntry(
         ) to gapTimestamp
     }
 
-    private fun isLater(that: TimeUnitEntry): Pair<TimeUnitEntry, TimeUnitEntry> {
+    private fun isLater(that: TimeBO): Pair<TimeBO, TimeBO> {
         if (year != that.year) {
             return if (year > that.year) this to that else that to this
         }

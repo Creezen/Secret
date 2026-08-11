@@ -1,8 +1,8 @@
 package com.jayce.vexis.domain.route
 
-import com.jayce.vexis.util.bean.ArticleBean
-import com.jayce.vexis.util.bean.SectionRemarkBean
 import com.jayce.vexis.core.base.BaseService
+import com.jayce.vexis.util.vo.ArticleVO
+import com.jayce.vexis.util.vo.SectionRemarkVO
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Field
@@ -23,13 +23,11 @@ interface ArticleService : BaseService {
     ): Call<Boolean>
 
     @POST("/getArticle")
-    fun getArticle(): Call<ArrayList<ArticleBean>>
+    fun getArticle(): Call<ArrayList<ArticleVO>>
 
     @POST("/getSection")
     @FormUrlEncoded
-    fun getSection(
-        @Field("articleId") articleId: Long,
-    ): Call<ArrayList<SectionRemarkBean>>
+    fun getSection(@Field("articleId") articleId: Long): Call<ArrayList<SectionRemarkVO>>
 
     @POST("/postRemark")
     @FormUrlEncoded

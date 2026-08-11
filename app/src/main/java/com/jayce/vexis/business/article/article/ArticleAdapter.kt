@@ -15,12 +15,12 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ability.menu.MenuManager.registerOnMenuClick
 import com.jayce.vexis.foundation.ability.menu.OnMenuClick
 import com.jayce.vexis.foundation.ui.CardAdapter
-import com.jayce.vexis.util.bean.ArticleBean
+import com.jayce.vexis.util.vo.ArticleVO
 
 class ArticleAdapter(
     val context: Context,
-    private var itemList: List<ArticleBean>,
-) : CardAdapter<ArticleBean, ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList), OnMenuClick {
+    private var itemList: List<ArticleVO>,
+) : CardAdapter<ArticleVO, ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList), OnMenuClick {
 
     private var onDelete: (() -> Unit)? = null
 
@@ -37,7 +37,7 @@ class ArticleAdapter(
 
     override fun getAttachedList() = itemList
 
-    override fun updateAttachedList(newList: List<ArticleBean>) {
+    override fun updateAttachedList(newList: List<ArticleVO>) {
         itemList = newList
     }
 

@@ -8,26 +8,25 @@ import androidx.activity.addCallback
 import androidx.lifecycle.MutableLiveData
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.jayce.vexis.util.bean.ApkSimpleInfo
-import com.jayce.vexis.util.bean.TransferStatusBean
-import com.jayce.vexis.util.toTime
-import com.jayce.vexis.client.AndroidTool.msg
-import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.SoundTool.playShortSound
-import com.jayce.vexis.client.ability.thread.BlockOption
-import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_FILE_PATH
 import com.jayce.vexis.business.profile.register.RegisterActivity
+import com.jayce.vexis.client.AndroidTool.msg
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.SoundTool.playShortSound
 import com.jayce.vexis.client.ThreadTool.ui
+import com.jayce.vexis.client.ability.thread.BlockOption
+import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityLoginBinding
 import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.domain.route.PackageService
 import com.jayce.vexis.domain.route.UserService
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.foundation.ability.Logger
 import com.jayce.vexis.foundation.ability.ImageTransformer
+import com.jayce.vexis.foundation.ability.Logger
+import com.jayce.vexis.util.toTime
+import com.jayce.vexis.util.vo.StatusVO
 import kotlinx.coroutines.Dispatchers
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -47,7 +46,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun getNewestVersion() {
-        request<PackageService, ApkSimpleInfo>({ getVersion() }) {
+        request<PackageService, _>({ getVersion() }) {
              "${it.modifyTime.toTime()}  ${it.versionName}".toast()
         }
     }
@@ -76,7 +75,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             login.isClickable = false
             playShortSound(R.raw.click)
             val option = BlockOption(ThreadType.SINGLE, 2000L, Dispatchers.Main)
-            request<UserService, TransferStatusBean>({loginSystem(name.msg(), password.msg())}, option) { response ->
+            request<UserService, StatusVO>({loginSystem(name.msg(), password.msg())}, option) { response ->
                 when (response.statusCode) {
                     -1 -> {
                         val logIntent = intent.also {

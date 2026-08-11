@@ -1,20 +1,20 @@
 package com.jayce.vexis.foundation.ui.animator
 
 import android.animation.TypeEvaluator
-import com.jayce.vexis.domain.bean.AnimatorBallEntry
+import com.jayce.vexis.domain.bo.BallBO
 
-class BallEvaluator : TypeEvaluator<AnimatorBallEntry> {
+class BallEvaluator : TypeEvaluator<BallBO> {
 
     override fun evaluate(
         fraction: Float,
-        start: AnimatorBallEntry?,
-        end: AnimatorBallEntry?
-    ): AnimatorBallEntry {
+        start: BallBO?,
+        end: BallBO?
+    ): BallBO {
         if (start == null || end == null) {
-            return AnimatorBallEntry(0f, 0f)
+            return BallBO(0f, 0f)
         }
         val x = start.x + fraction * (end.x - start.x)
         val y = start.y + fraction * (end.y - start.y)
-        return AnimatorBallEntry(x, y)
+        return BallBO(x, y)
     }
 }

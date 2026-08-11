@@ -18,7 +18,7 @@ import com.jayce.vexis.business.history.panel.FindTimeFragment
 import com.jayce.vexis.business.history.panel.ScaleTimeFragment
 import com.jayce.vexis.business.history.panel.UpdateTimeFragment
 import com.jayce.vexis.databinding.HistoryOptionPanelBinding
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.foundation.ui.block.TabLayoutTitle
 
 class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
@@ -84,7 +84,7 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
                     "设置时间".toast()
                 }
                 2 -> {
-                    listener?.onSearch(0, "", TimeUnitEntry.zero())
+                    listener?.onSearch(0, "", TimeBO.zero())
                 "搜索跳转".toast()
                 }
                 else -> "".toast()

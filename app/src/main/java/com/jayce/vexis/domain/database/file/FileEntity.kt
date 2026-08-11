@@ -1,4 +1,4 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.database.file
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity
-data class FileEntry(
+data class FileEntity(
     val userId: String,
     val fileName: String,
     val fileID: String,

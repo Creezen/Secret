@@ -7,11 +7,11 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityParagraphBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
-import com.jayce.vexis.util.bean.SectionRemarkBean
+import com.jayce.vexis.util.vo.SectionRemarkVO
 
 class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
 
-    private val paragraphList = arrayListOf<SectionRemarkBean>()
+    private val paragraphList = arrayListOf<SectionRemarkVO>()
     private var articleId: Long = -1
     private var articleTitle: String = ""
     private val adapter by lazy { SectionAdapter(this, this, paragraphList) }

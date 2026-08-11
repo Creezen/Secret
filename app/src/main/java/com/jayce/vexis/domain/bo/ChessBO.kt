@@ -1,6 +1,6 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
-data class ChessEntry(
+data class ChessBO(
     val shouldSendRemote: Boolean,
     val type: Int,
     val x: Int,

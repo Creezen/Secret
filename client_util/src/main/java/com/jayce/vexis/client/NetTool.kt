@@ -1,38 +1,35 @@
 package com.jayce.vexis.client
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
-import com.bumptech.glide.load.Key
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
+import com.google.gson.GsonBuilder
+import com.jayce.vexis.client.AndroidTool.toast
+import com.jayce.vexis.client.BaseTool.envContext
+import com.jayce.vexis.client.FileTool.getFileNameByUri
+import com.jayce.vexis.client.ability.net.ImageListener
+import com.jayce.vexis.client.ability.net.ImageTarget
+import com.jayce.vexis.client.ability.net.NetworkEventListenerFactory
+import com.jayce.vexis.client.ability.net.NetworkInterceptor
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.util.Config.COOKIE_USER_ID
 import com.jayce.vexis.util.Config.COOKIE_UUID
 import com.jayce.vexis.util.Config.EVENT_TYPE_CHAT
 import com.jayce.vexis.util.Config.EVENT_TYPE_DEFAULT
 import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
 import com.jayce.vexis.util.Config.EVENT_TYPE_ROLE
-import com.jayce.vexis.util.Config.SERVER_DOMAIN
-import com.jayce.vexis.util.bean.TelecomBean
-import com.jayce.vexis.util.bean.UserBean
-import com.jayce.vexis.util.toJson
-import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.BaseTool.envContext
-import com.jayce.vexis.client.ability.net.ImageListener
-import com.jayce.vexis.client.ability.net.ImageTarget
-import com.jayce.vexis.client.ability.net.NetworkEventListenerFactory
-import com.jayce.vexis.client.ability.net.NetworkInterceptor
-import com.google.gson.GsonBuilder
-import com.jayce.vexis.client.FileTool.getFileNameByUri
-import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.Config.SERVER_DOMAIN
+import com.jayce.vexis.util.toJson
+import com.jayce.vexis.util.vo.EventVO
+import com.jayce.vexis.util.vo.UserVO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -72,7 +69,7 @@ object NetTool {
     private var socketPort: Int = 0
     private lateinit var baseSocketPath: String
     private lateinit var onlineSocket : Socket
-    private var user: UserBean? = null
+    private var user: UserVO? = null
     private val socketFlag = AtomicBoolean(true)
     private val shouldReconnection = AtomicBoolean(true)
     private var socketReader: BufferedReader? = null
@@ -85,7 +82,7 @@ object NetTool {
             val cookieList = arrayListOf<Cookie>()
             user?.apply {
                 cookieList.add(buildCookie(COOKIE_USER_ID, userId))
-                cookieList.add(buildCookie(COOKIE_UUID, session))
+                cookieList.add(buildCookie(COOKIE_UUID, auth.session))
             }
             return cookieList
         }
@@ -121,7 +118,7 @@ object NetTool {
 
     inline fun <reified T> create(): T = retrofit.create(T::class.java)
 
-    fun setUser(currentUser: UserBean) {
+    fun setUser(currentUser: UserVO) {
         user = currentUser
     }
 
@@ -213,7 +210,7 @@ object NetTool {
         return MultipartBody.Part.createFormData(NIL, null, RequestBody.create(MediaType.parse(NIL), byteArrayOf()))
     }
 
-    fun sendMessage(scope: CoroutineScope, msg: TelecomBean) {
+    fun sendMessage(scope: CoroutineScope, msg: EventVO) {
         if(onlineSocket.isOutputShutdown || onlineSocket.isClosed || socketFlag.get().not()) {
             socketFlag.set(false)
             "与服务器连接失败，请检查网络".toast()
@@ -289,15 +286,15 @@ object NetTool {
         }
     }
 
-    private fun buildTelecomMessage(type: Int, msg: String, user: UserBean): TelecomBean {
+    private fun buildTelecomMessage(type: Int, msg: String, user: UserVO): EventVO {
         val timeStamp = System.currentTimeMillis()
-        return TelecomBean(
+        return EventVO(
             type,
             content = msg,
             userId = user.userId,
-            nickName = user.nickname,
+            nickName = user.profile.nickname,
             time = timeStamp,
-            session = user.session
+            session = user.auth.session
         )
     }
 
@@ -319,7 +316,7 @@ object NetTool {
         }
     }
 
-    private fun reconnectSocket(msg: TelecomBean? = null) {
+    private fun reconnectSocket(msg: EventVO? = null) {
         if (!shouldReconnection.get()) return
         val future = CompletableFuture<Unit>()
         ThreadTool.runOnMulti {

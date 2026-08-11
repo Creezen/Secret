@@ -5,10 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.NetTool
 import com.jayce.vexis.client.NetTool.await
-import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.runWithBlocking
 import com.jayce.vexis.client.ThreadTool.ui
@@ -17,17 +15,15 @@ import com.jayce.vexis.client.ability.thread.ThreadWrapper
 import com.jayce.vexis.client.ability.thread.ThreadWrapperImpl
 import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.domain.bean.ActiveEntry
-import com.jayce.vexis.domain.bean.ChatEntry
-import com.jayce.vexis.domain.bean.EventEntry
-import com.jayce.vexis.domain.bean.FileEntry
-import com.jayce.vexis.domain.bean.UserEntry
+import com.jayce.vexis.domain.bo.ActiveBO
+import com.jayce.vexis.domain.bo.ChatBO
+import com.jayce.vexis.domain.database.event.EventEntity
+import com.jayce.vexis.domain.database.file.FileEntity
 import com.jayce.vexis.util.Config.NIL
-import com.jayce.vexis.util.bean.ActiveBean
-import com.jayce.vexis.util.bean.FileBean
-import com.jayce.vexis.util.bean.TelecomBean
-import com.jayce.vexis.util.bean.UserBean
 import com.jayce.vexis.util.toTime
+import com.jayce.vexis.util.vo.ActiveVO
+import com.jayce.vexis.util.vo.EventVO
+import com.jayce.vexis.util.vo.FileVO
 import retrofit2.Call
 
 object Util {
@@ -53,52 +49,24 @@ object Util {
     }
 
     object Extension {
-        fun FileBean.parcelable(): FileEntry {
-            val hash = fileHash ?: NIL
-            return FileEntry(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, hash)
+        fun EventEntity.chat(): ChatBO {
+            return ChatBO(nickName, time.toTime(), content, msgId.toLong(), isRead)
         }
 
-        fun FileEntry.unParcelable() =
-            FileBean(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, fileHash)
-
-        fun UserBean.parcelable(): UserEntry {
-            return UserEntry(
-                userId, nickname, age, sex, password, createTime, count, level, adminLevel,
-                isEdit, email, selfIntroduction, phone, address, birthday, headType
-            )
+        fun FileEntity.vo(): FileVO {
+            return FileVO(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, fileHash)
         }
 
-        fun UserEntry.unParcelable(): UserBean {
-            return UserBean(
-                userId, nickname, age, sex, password, createTime, count, level, adminLevel,
-                isEdit, email, selfIntroduction, phone, address, birthday, headType
-            )
+        fun FileVO.entity(): FileEntity {
+            return FileEntity(userId, fileName, fileID, fileSuffix, description, illustrate, fileSize, uploadTime, fileHash)
         }
 
-        fun ActiveBean.parcelable(): ActiveEntry {
-            return ActiveEntry(
-                userID, nickname, createTime, level, adminLevel, support, against,
-                inform, reported, follow, fans, post
-            )
+        fun ActiveBO.vo(): ActiveVO {
+            return ActiveVO(userID, nickname, createTime, level, adminLevel, support, against, inform, reported, follow, fans, post)
         }
 
-        fun ActiveEntry.unParcelable(): ActiveBean {
-            return ActiveBean(
-                userID, nickname, createTime, level, adminLevel, support, against,
-                inform, reported, follow, fans, post
-            )
-        }
-
-        fun TelecomBean.room(): EventEntry {
-            return EventEntry(type, userId, nickName, session, time,false, msgId, content)
-        }
-
-        fun EventEntry.telecom(): TelecomBean {
-            return TelecomBean(type, userId, nickName, session, time, msgId, content)
-        }
-
-        fun EventEntry.chat(): ChatEntry {
-            return ChatEntry(nickName, time.toTime(), content, id, isRead)
+        fun ActiveVO.bo(): ActiveBO {
+            return ActiveBO(userID, nickname, createTime, level, adminLevel, support, against, inform, reported, follow, fans, post)
         }
 
         fun Boolean.onTrue(func: () -> Unit): Boolean {

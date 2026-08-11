@@ -9,13 +9,13 @@ import com.jayce.vexis.business.kit.book.note.LineNoteActivity
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.BookArchiveBinding
-import com.jayce.vexis.domain.bean.book.BookArchiveEntry
+import com.jayce.vexis.domain.bo.book.BookArchiveBO
 import com.jayce.vexis.domain.database.book.BookDatabase
 
 class ArchiveAdapter(
     private val context: Context,
-    private var list: List<BookArchiveEntry>,
-) : BaseAdapter<BookArchiveEntry, ArchiveAdapter.ViewHolder>() {
+    private var list: List<BookArchiveBO>,
+) : BaseAdapter<BookArchiveBO, ArchiveAdapter.ViewHolder>() {
 
     private val scoreDao by lazy {
         BookDatabase.getDatabase(context).recordDao()
@@ -23,7 +23,7 @@ class ArchiveAdapter(
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<BookArchiveEntry>) {
+    override fun updateAttachedList(newList: List<BookArchiveBO>) {
         list = newList
     }
 

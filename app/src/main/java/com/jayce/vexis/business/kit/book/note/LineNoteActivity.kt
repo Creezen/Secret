@@ -2,7 +2,6 @@ package com.jayce.vexis.business.kit.book.note
 
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayce.vexis.client.AndroidTool.addSimpleView
@@ -14,9 +13,9 @@ import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.BookLineNoteBinding
 import com.jayce.vexis.databinding.BookNoteDialogLineBinding
 import com.jayce.vexis.databinding.BookNoteDialogUserBinding
-import com.jayce.vexis.domain.bean.book.BookEntry
-import com.jayce.vexis.domain.bean.book.BookLineEntry
-import com.jayce.vexis.domain.bean.LineEntry
+import com.jayce.vexis.domain.database.book.BookEntity
+import com.jayce.vexis.domain.bo.book.BookLineBO
+import com.jayce.vexis.domain.bo.book.LineBO
 import com.jayce.vexis.domain.database.book.BookDatabase
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.util.toTime
@@ -31,7 +30,7 @@ class LineNoteActivity : BaseActivity<BookLineNoteBinding>() {
     private lateinit var title: String
     private lateinit var createTime: String
     private val playerList = ArrayList<String>()
-    private val lineList = ArrayList<LineEntry>()
+    private val lineList = ArrayList<LineBO>()
     private val sumList = ArrayList<Int>()
     private val lineAdapter by lazy { LineAdapter(lineList) }
     private val scoreDao by lazy { BookDatabase.getDatabase(this).recordDao() }
@@ -122,8 +121,8 @@ class LineNoteActivity : BaseActivity<BookLineNoteBinding>() {
     }
 
     private suspend fun saveRecord() {
-        val bookLineEntry = BookLineEntry(title, createTime)
-        val recordId = scoreDao.insertRecord(bookLineEntry)
+        val bookLineBO = BookLineBO(title, createTime)
+        val recordId = scoreDao.insertRecord(bookLineBO)
         val userStr = StringBuilder()
         val scoreStr = StringBuilder()
         val totalStr = StringBuilder()
@@ -151,13 +150,13 @@ class LineNoteActivity : BaseActivity<BookLineNoteBinding>() {
                 scoreStr.append("&")
             }
         }
-        val bookEntry = BookEntry(recordId, userStr.toString(), scoreStr.toString(), totalStr.toString())
-        scoreDao.insertScore(bookEntry)
+        val bookEntity = BookEntity(recordId, userStr.toString(), scoreStr.toString(), totalStr.toString())
+        scoreDao.insertScore(bookEntity)
         ui { "保存成功".toast() }
     }
 
     private fun addRecord(list: ArrayList<Int>) {
-        lineList.add(LineEntry("${System.currentTimeMillis()}", list))
+        lineList.add(LineBO("${System.currentTimeMillis()}", list))
         lineAdapter.notifyItemInserted(lineList.size)
         binding.stage.addSimpleView("${lineList.size}", MATCH_PARENT, HEIGHT)
     }

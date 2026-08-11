@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jayce.vexis.util.bean.ArticleBean
 import com.jayce.vexis.R
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentSynergyBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.animator.RecycleItemAnimator
+import com.jayce.vexis.util.vo.ArticleVO
 
 class ArticleFragment : BaseFragment<FragmentSynergyBinding>() {
 
-    private val list = arrayListOf<ArticleBean>()
+    private val list = arrayListOf<ArticleVO>()
     private val adapter by lazy { ArticleAdapter(requireActivity(), list) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

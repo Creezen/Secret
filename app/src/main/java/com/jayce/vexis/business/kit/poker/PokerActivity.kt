@@ -11,7 +11,7 @@ import com.jayce.vexis.business.kit.poker.dialog.RunFastFragment
 import com.jayce.vexis.core.base.BaseActivity
 import com.jayce.vexis.databinding.ActivityPokerBinding
 import com.jayce.vexis.databinding.PokerDialogBinding
-import com.jayce.vexis.domain.bean.PokerEntry
+import com.jayce.vexis.domain.bo.PokerBO
 import com.jayce.vexis.domain.enums.PokerSuit
 import com.jayce.vexis.domain.viewmodel.PokerViewModel
 import com.jayce.vexis.foundation.ui.StackDecorator
@@ -23,7 +23,7 @@ class PokerActivity : BaseActivity<ActivityPokerBinding>() {
 
     private val fragments = arrayListOf<Fragment>()
     private val pokerDialogAdapter = PokerDialogAdapter(supportFragmentManager, lifecycle, fragments)
-    private val pokerList: ArrayList<PokerEntry> = arrayListOf()
+    private val pokerList: ArrayList<PokerBO> = arrayListOf()
     private val adapter = PokerAdapter(this, pokerList)
     private val viewModel by viewModel<PokerViewModel>()
 
@@ -74,26 +74,26 @@ class PokerActivity : BaseActivity<ActivityPokerBinding>() {
     }
 
     private fun initData() {
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 1))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 2))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 3))
-        pokerList.add(PokerEntry(PokerSuit.DIAMOND, 4))
-        pokerList.add(PokerEntry(PokerSuit.HEART, 4))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 6))
-        pokerList.add(PokerEntry(PokerSuit.DIAMOND, 5))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 5))
-        pokerList.add(PokerEntry(PokerSuit.HEART, 5))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 6))
-        pokerList.add(PokerEntry(PokerSuit.CLUB, 6))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 6))
-        pokerList.add(PokerEntry(PokerSuit.DIAMOND, 7))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 7))
-        pokerList.add(PokerEntry(PokerSuit.HEART, 10))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 13))
-        pokerList.add(PokerEntry(PokerSuit.CLUB, 12))
-        pokerList.add(PokerEntry(PokerSuit.SPADE, 11))
-        pokerList.add(PokerEntry(PokerSuit.SMALL_JOKER, 9))
-        pokerList.add(PokerEntry(PokerSuit.BIG_JOKER, 9))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 1))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 2))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 3))
+        pokerList.add(PokerBO(PokerSuit.DIAMOND, 4))
+        pokerList.add(PokerBO(PokerSuit.HEART, 4))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 6))
+        pokerList.add(PokerBO(PokerSuit.DIAMOND, 5))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 5))
+        pokerList.add(PokerBO(PokerSuit.HEART, 5))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 6))
+        pokerList.add(PokerBO(PokerSuit.CLUB, 6))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 6))
+        pokerList.add(PokerBO(PokerSuit.DIAMOND, 7))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 7))
+        pokerList.add(PokerBO(PokerSuit.HEART, 10))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 13))
+        pokerList.add(PokerBO(PokerSuit.CLUB, 12))
+        pokerList.add(PokerBO(PokerSuit.SPADE, 11))
+        pokerList.add(PokerBO(PokerSuit.SMALL_JOKER, 9))
+        pokerList.add(PokerBO(PokerSuit.BIG_JOKER, 9))
         adapter.notifyItemInserted(0)
     }
 }

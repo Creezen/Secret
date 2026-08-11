@@ -9,7 +9,7 @@ import com.jayce.vexis.business.mail.MailEventAdapter
 import com.jayce.vexis.business.mail.OnEventDeliveryListener
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FragmentEventFeedbackBinding
-import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.viewmodel.MailViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -17,7 +17,7 @@ class EventFeedbackFragment : BaseFragment<FragmentEventFeedbackBinding>(), OnEv
 
     private val viewModel by activityViewModel<MailViewModel>()
 
-    private val list = listOf<EventEntry>()
+    private val list = listOf<EventEntity>()
     private val adapter = MailEventAdapter(list)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

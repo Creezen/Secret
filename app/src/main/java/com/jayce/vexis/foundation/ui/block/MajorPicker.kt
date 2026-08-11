@@ -11,7 +11,7 @@ import com.jayce.vexis.client.DataTool
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.databinding.MajorPickerLayoutBinding
-import com.jayce.vexis.domain.bean.SubjectTableEntry
+import com.jayce.vexis.domain.bo.SubjectBO
 
 class MajorPicker(context: Context, attr: AttributeSet) : LinearLayout(context, attr) {
 
@@ -28,10 +28,10 @@ class MajorPicker(context: Context, attr: AttributeSet) : LinearLayout(context, 
 
     fun init(discipline: String, major: String, track: String) {
         ThreadTool.runOnMulti {
-            val subjectTableEntry = DataTool.loadDataFromYAML<SubjectTableEntry>("SubjectTable") ?: return@runOnMulti
-            disciplineList = subjectTableEntry.discipline
-            majorList = subjectTableEntry.category
-            trackList = subjectTableEntry.major
+            val subjectBO = DataTool.loadDataFromYAML<SubjectBO>("SubjectTable") ?: return@runOnMulti
+            disciplineList = subjectBO.discipline
+            majorList = subjectBO.category
+            trackList = subjectBO.major
             var disciplineIndex = disciplineList.indexOf(discipline)
             disciplineIndex = if (disciplineIndex < 0) 0 else disciplineIndex
             var majorIndex = majorList[disciplineIndex].indexOf(major)

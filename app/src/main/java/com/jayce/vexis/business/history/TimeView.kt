@@ -8,12 +8,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import com.jayce.vexis.util.bean.HistoryBean
-import com.jayce.vexis.client.TLog
-import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.R
-import com.jayce.vexis.domain.bean.MomentEntry
-import com.jayce.vexis.domain.bean.TimeUnitEntry
+import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.domain.bo.MomentBO
+import com.jayce.vexis.domain.bo.TimeBO
+import com.jayce.vexis.util.vo.HistoryVO
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -21,10 +20,10 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
 
     private val manager by inject<TimeManager>()
 
-    private lateinit var olderTime : TimeUnitEntry
-    private lateinit var laterTime: TimeUnitEntry
-    private val momentList = arrayListOf<MomentEntry>()
-    private var onMomentClick: (MomentEntry) -> Unit = {}
+    private lateinit var olderTime : TimeBO
+    private lateinit var laterTime: TimeBO
+    private val momentList = arrayListOf<MomentBO>()
+    private var onMomentClick: (MomentBO) -> Unit = {}
 
     private val paint = Paint()
     private val bitmap by lazy { momentBitmap() }
@@ -40,7 +39,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         momentList.forEach { drawMoment(canvas, it) }
     }
 
-    private fun drawMoment(canvas: Canvas, item: MomentEntry) {
+    private fun drawMoment(canvas: Canvas, item: MomentBO) {
         val minX = width * 1.0f - bitmap.width
         val minY = height * item.percent
         val maxX = width.toFloat()
@@ -55,14 +54,14 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         laterTime = pair.second
     }
 
-    fun setOnMomentClick(onClick: (MomentEntry) -> Unit) {
+    fun setOnMomentClick(onClick: (MomentBO) -> Unit) {
         this.onMomentClick = onClick
     }
 
-    fun addMoment(entryList: List<HistoryBean>) {
+    fun addMoment(entryList: List<HistoryVO>) {
         momentList.clear()
         entryList.forEach { entry ->
-            val moment = MomentEntry(entry.millisTime(), entry.event)
+            val moment = MomentBO(entry.millisTime(), entry.event)
             momentList.add(moment)
         }
         invalidate()
@@ -72,7 +71,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         val olderTime = olderTime.totalMilliSecond()
         val laterTime = laterTime.totalMilliSecond()
         momentList.forEach {
-            val momentTime = TimeUnitEntry.totalMilliSecond(it.timeStamp)
+            val momentTime = TimeBO.totalMilliSecond(it.timeStamp)
             if (momentTime < olderTime || momentTime > laterTime) return@forEach
             val duration = laterTime - olderTime
             val percent = (momentTime.toFloat() - olderTime) / duration

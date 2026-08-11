@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jayce.vexis.domain.bean.UserEntry
 
-@Database(version = 1, entities = [UserEntry::class], exportSchema = false)
+@Database(version = 1, entities = [UserEntity::class], exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

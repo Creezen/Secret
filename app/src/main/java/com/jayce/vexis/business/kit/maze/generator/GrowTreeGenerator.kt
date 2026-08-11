@@ -1,12 +1,12 @@
 package com.jayce.vexis.business.kit.maze.generator
 
-import com.jayce.vexis.domain.bean.GridUnit
+import com.jayce.vexis.domain.bo.GridBO
 import com.jayce.vexis.domain.enums.MazeDirection
 import kotlin.random.Random
 
 class GrowTreeGenerator : IMazeGenerator() {
 
-    private val activeList: ArrayList<GridUnit> = arrayListOf()
+    private val activeList: ArrayList<GridBO> = arrayListOf()
 
     override fun generateMaze(x: Int, y: Int) {
         val randomX = Random.nextInt(0, row)
@@ -39,8 +39,8 @@ class GrowTreeGenerator : IMazeGenerator() {
         }
     }
 
-    private fun getNeighborUnit(unit: GridUnit): List<Pair<GridUnit, MazeDirection>> {
-        val neighborList = arrayListOf<Pair<GridUnit, MazeDirection>>()
+    private fun getNeighborUnit(unit: GridBO): List<Pair<GridBO, MazeDirection>> {
+        val neighborList = arrayListOf<Pair<GridBO, MazeDirection>>()
         val unitX = unit.x
         val unitY = unit.y
         if (isValidGrid(unitX - 1, unitY)) {
@@ -58,7 +58,7 @@ class GrowTreeGenerator : IMazeGenerator() {
         return neighborList
     }
 
-    private fun removeWall(selectUnit: GridUnit, neighborPair: Pair<GridUnit, MazeDirection>) {
+    private fun removeWall(selectUnit: GridBO, neighborPair: Pair<GridBO, MazeDirection>) {
         val neighborUnit = neighborPair.first
         when (neighborPair.second) {
             MazeDirection.LEFT -> {

@@ -1,33 +1,29 @@
 package com.jayce.vexis.business.file.resource
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.jayce.vexis.R
 import com.jayce.vexis.client.AndroidTool.fileExplore
-import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.FileTool.isFileDownload
-import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.ResItemBinding
-import com.jayce.vexis.domain.bean.DownloadTask
-import com.jayce.vexis.domain.bean.FileEntry
+import com.jayce.vexis.domain.bo.DownloadTaskBO
 import com.jayce.vexis.domain.database.file.FileDatabase
+import com.jayce.vexis.domain.database.file.FileEntity
 import com.jayce.vexis.domain.viewmodel.FileViewModel
+import com.jayce.vexis.foundation.Util.Extension.entity
 import com.jayce.vexis.foundation.Util.Extension.jumpTo
-import com.jayce.vexis.foundation.Util.Extension.parcelable
-import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.util.vo.FileVO
 
 class FileRepoAdapter(
     private val context: Context,
-    var list: List<FileBean>,
+    var list: List<FileVO>,
     private val viewModel: FileViewModel
-) : BaseAdapter<FileBean, FileRepoAdapter.ViewHolder>() {
+) : BaseAdapter<FileVO, FileRepoAdapter.ViewHolder>() {
 
     private val fileDao by lazy { FileDatabase.getDatabse(context).fileDao() }
 
@@ -41,7 +37,7 @@ class FileRepoAdapter(
 
     override fun getAttachedList() = list
 
-    override fun updateAttachedList(newList: List<FileBean>) { list = newList }
+    override fun updateAttachedList(newList: List<FileVO>) { list = newList }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ResItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -54,7 +50,7 @@ class FileRepoAdapter(
         holder.name.text = item.fileName
         holder.size.text = handleSizeDisplay(item.fileSize)
         holder.time.text = item.uploadTime
-        var cacheItem: FileEntry? = null
+        var cacheItem: FileEntity? = null
         runOnIO {
             cacheItem = fileDao.queryItemByHash(item.fileHash)
             if (cacheItem != null) {
@@ -69,7 +65,7 @@ class FileRepoAdapter(
                     ui{ explore(cacheItem) }
                     return@runOnIO
                 }
-                val task = DownloadTask(
+                val task = DownloadTaskBO(
                     item.fileID,
                     item.fileName,
                     "${item.fileID}${item.fileSuffix}",
@@ -77,7 +73,7 @@ class FileRepoAdapter(
                     System.currentTimeMillis(),
                     1
                 ) {
-                    val entry = item.parcelable()
+                    val entry = item.entity()
                     runOnIO { fileDao.insertFileRecord(entry) }
                     updateImage(entry, holder.download)
                 }
@@ -86,7 +82,7 @@ class FileRepoAdapter(
         }
         holder.view.setOnClickListener {
             context.jumpTo(FileMetaActivity::class.java) {
-                putExtra("fileInfo", item.parcelable())
+                putExtra("fileInfo", item.entity())
             }
         }
     }
@@ -107,9 +103,9 @@ class FileRepoAdapter(
         return "$finalNum M"
     }
 
-    private fun updateImage(fileEntry: FileEntry?, view: ImageView) {
-        if (fileEntry == null) return
-        val imageSource = when (fileEntry.fileSuffix) {
+    private fun updateImage(fileEntity: FileEntity?, view: ImageView) {
+        if (fileEntity == null) return
+        val imageSource = when (fileEntity.fileSuffix) {
             ".apk" -> R.drawable.apk
             ".png", ".jpg" -> R.drawable.image
             ".txt" -> R.drawable.document
@@ -120,8 +116,8 @@ class FileRepoAdapter(
         view.setImageResource(imageSource)
     }
 
-    private fun explore(fileEntry: FileEntry?) {
-        if (fileEntry == null) return
-        fileExplore(context, fileEntry.fileSuffix, fileEntry.fileName)
+    private fun explore(fileEntity: FileEntity?) {
+        if (fileEntity == null) return
+        fileExplore(context, fileEntity.fileSuffix, fileEntity.fileName)
     }
 }

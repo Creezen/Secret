@@ -17,11 +17,11 @@ import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.CardAdapter
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
-import com.jayce.vexis.util.bean.FeedbackBean
 import com.jayce.vexis.util.toTime
+import com.jayce.vexis.util.vo.FeedbackVO
 
-class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
-    CardAdapter<FeedbackBean, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
+class FeedBackAdapter(private var feedbackList: List<FeedbackVO>) :
+    CardAdapter<FeedbackVO, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
 
     class ViewHolder(
         containerBinding: CardItemLayoutBinding,
@@ -42,7 +42,7 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackBean>) :
 
     override fun getAttachedList() = feedbackList
 
-    override fun updateAttachedList(newList: List<FeedbackBean>) {
+    override fun updateAttachedList(newList: List<FeedbackVO>) {
         feedbackList = newList
     }
 

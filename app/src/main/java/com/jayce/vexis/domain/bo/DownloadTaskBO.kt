@@ -1,6 +1,6 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
-data class DownloadTask(
+data class DownloadTaskBO(
     val fileId: String,
     val fileName: String,
     val resourceName: String,

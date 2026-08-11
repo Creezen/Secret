@@ -1,7 +1,8 @@
 package com.jayce.vexis.domain.route
 
 import com.jayce.vexis.core.base.BaseService
-import com.jayce.vexis.util.bean.FileBean
+import com.jayce.vexis.util.dto.FileDTO
+import com.jayce.vexis.util.vo.FileVO
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -16,12 +17,12 @@ interface FileService : BaseService {
     @POST("/fileUpload")
     @Multipart
     fun uploadFile(
-        @Part("fileEntry") fileBean: FileBean,
+        @Part("fileEntry") fileBean: FileDTO,
         @Part file: MultipartBody.Part,
     ): Call<Int>
 
     @POST("/fileFetch")
-    fun fetchFile(): Call<List<FileBean>>
+    fun fetchFile(): Call<List<FileVO>>
 
     @Streaming
     @GET("file/{fileName}")

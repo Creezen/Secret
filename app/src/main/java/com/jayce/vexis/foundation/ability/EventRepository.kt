@@ -19,7 +19,7 @@ import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_SOCKET_PATH
 import com.jayce.vexis.StatusManager.LOCAL_SOCKET_PORT
 import com.jayce.vexis.StatusManager.liveUser
-import com.jayce.vexis.domain.bean.EventEntry
+import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.database.event.EventDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,11 +39,11 @@ class EventRepository {
 
     private val eventDao = EventDatabase.getDatabase(envContext).eventDao()
 
-    private val _chatEventFlow: MutableSharedFlow<EventEntry> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
-    val chatEventFlow: SharedFlow<EventEntry> = _chatEventFlow.asSharedFlow()
+    private val _chatEventFlow: MutableSharedFlow<EventEntity> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
+    val chatEventFlow: SharedFlow<EventEntity> = _chatEventFlow.asSharedFlow()
 
-    private val _mailEventFlow: MutableSharedFlow<EventEntry> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
-    val mailEventFlow: SharedFlow<EventEntry> = _mailEventFlow.asSharedFlow()
+    private val _mailEventFlow: MutableSharedFlow<EventEntity> = MutableSharedFlow(0, 256, BufferOverflow.SUSPEND)
+    val mailEventFlow: SharedFlow<EventEntity> = _mailEventFlow.asSharedFlow()
 
     private val notificationTitleMap = mapOf(
         EVENT_TYPE_FEEDBACK to "反馈通知",
@@ -61,7 +61,7 @@ class EventRepository {
             val socket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
             registerSocket(socket, true)
             NetTool.connect(mScope, liveUser.userId) {
-                val message = it.toBean<EventEntry>() ?: return@connect true
+                val message = it.toBean<EventEntity>() ?: return@connect true
                 insertEvent(message)
                 return@connect true
             }
@@ -74,16 +74,16 @@ class EventRepository {
         ThreadTool.unregisterScope(SCOPE_EVENT)
     }
 
-    private suspend fun insertEvent(eventEntry: EventEntry) {
-        val id = eventDao.insert(eventEntry)
+    private suspend fun insertEvent(eventEntity: EventEntity) {
+        val id = eventDao.insert(eventEntity)
         dispatchEvent(id)
     }
 
-    fun getAllEvent(): Flow<List<EventEntry>> {
+    fun getAllEvent(): Flow<List<EventEntity>> {
         return eventDao.getAllEvent()
     }
 
-    fun getChatEvent(): Flow<List<EventEntry>> {
+    fun getChatEvent(): Flow<List<EventEntity>> {
         return eventDao.getEventListByType(chatTypeList)
     }
 
@@ -91,7 +91,7 @@ class EventRepository {
         return eventDao.getEventCountByType(chatTypeList)
     }
 
-    fun getMailEvent(): Flow<List<EventEntry>> {
+    fun getMailEvent(): Flow<List<EventEntity>> {
         return eventDao.getEventListByType(mailTypeList)
     }
 

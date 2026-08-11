@@ -3,7 +3,7 @@ package com.jayce.vexis.domain.viewmodel
 import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnMulti
 import com.jayce.vexis.core.base.BaseViewModel
-import com.jayce.vexis.domain.bean.ChessEntry
+import com.jayce.vexis.domain.bo.ChessBO
 import com.jayce.vexis.foundation.ability.socket.LanConnectionListener
 import com.jayce.vexis.foundation.ability.socket.LanManager.Companion.TYPE_CLIENT
 import com.jayce.vexis.foundation.ability.socket.LanManager.Companion.TYPE_SERVER
@@ -20,7 +20,7 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     private val _dialogFlow: MutableSharedFlow<Boolean> = MutableSharedFlow()
     val dialogFlow = _dialogFlow.asSharedFlow()
 
-    private val _chessFlow: MutableSharedFlow<ChessEntry> = MutableSharedFlow(0, 5)
+    private val _chessFlow: MutableSharedFlow<ChessBO> = MutableSharedFlow(0, 5)
     val chessFlow = _chessFlow.asSharedFlow()
 
     private fun parsePosition(str: String): Triple<Int, Int, Boolean> {
@@ -32,7 +32,7 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
     fun sendChessLocation(x: Int, y: Int) {
         val type = if (isServer) TYPE_SERVER else TYPE_CLIENT
         runOnMulti {
-            val entry = ChessEntry(true, type, x, y)
+            val entry = ChessBO(true, type, x, y)
             _chessFlow.emit(entry)
         }
     }
@@ -60,13 +60,13 @@ class GomokuViewModel : BaseViewModel(), LanConnectionListener {
         runOnMulti {
            val triple = parsePosition(message)
            val sendType = if (triple.third) TYPE_SERVER else TYPE_CLIENT
-           val chessEntry = ChessEntry(
+           val chessBO = ChessBO(
                false,
                sendType,
                triple.first,
                triple.second
            )
-           _chessFlow.emit(chessEntry)
+           _chessFlow.emit(chessBO)
        }
         return message
     }

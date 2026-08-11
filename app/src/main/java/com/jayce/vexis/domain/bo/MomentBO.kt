@@ -1,9 +1,9 @@
-package com.jayce.vexis.domain.bean
+package com.jayce.vexis.domain.bo
 
 import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.util.toTime
 
-data class MomentEntry(
+data class MomentBO(
     val timeStamp: Long,
     val message: String = NIL
 ) {

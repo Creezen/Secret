@@ -76,8 +76,8 @@ import com.jayce.vexis.util.Config.FRAGMENT_KIT
 import com.jayce.vexis.util.Config.FRAGMENT_MAP
 import com.jayce.vexis.util.Config.FRAGMENT_SENIOR
 import com.jayce.vexis.util.Config.URL_PREFIX
-import com.jayce.vexis.util.bean.UserBean
 import com.jayce.vexis.util.toBean
+import com.jayce.vexis.util.vo.UserVO
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import org.koin.android.ext.android.inject
@@ -125,7 +125,7 @@ class MainActivity :
             val data = result.getBooleanExtra("launchResult", false)
             if (!data) return@getLauncher
             val launchValue = result.getStringExtra("launchValue") ?: return@getLauncher
-            val user = launchValue.toBean<UserBean>() ?: return@getLauncher
+            val user = launchValue.toBean<UserVO>() ?: return@getLauncher
             isLogin = true
             refreshStatusUI()
             registerUser(user)
@@ -316,7 +316,7 @@ class MainActivity :
         val notification = NotificationCompat.Builder(envContext, "login")
             .setSmallIcon(R.mipmap.tianji)
             .setContentTitle(getString(R.string.login_success_notify))
-            .setContentText(getString(R.string.welcome_user, liveUser.nickname))
+            .setContentText(getString(R.string.welcome_user, liveUser.profile.nickname))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(Notification.CATEGORY_SERVICE)
             .setOngoing(true)
