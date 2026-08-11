@@ -139,7 +139,7 @@ class RegisterViewModel : BaseViewModel() {
         val age = createTime.substring(0, 4).toInt() - (birthdayYear.value?.toInt() ?: 2025)
         val birthday = "${birthdayYear.value}-${birthdayMonth.value}-${birthdayDay.value}"
         val auth = AuthDTO(passwordValue, "")
-        val profile = ProfileDTO(nicknameValue, age, sexValue, email, bioValue, phoneNum, addressValue, birthday, NIL, -1)
+        val profile = ProfileDTO(nicknameValue, age, sexValue, email, bioValue, phoneNum, addressValue, birthday, NIL, isEdit)
         val privilege = PrivilegeDTO(0, 0, 0)
         val bean = UserDTO(userId, createTime, auth, profile, privilege)
         request<UserService, _>({ register(bean, code) }) {

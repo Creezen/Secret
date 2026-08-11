@@ -134,7 +134,13 @@ object NetTool {
         )
     }
 
-    fun setImage(context: Context, image: ImageView, url: String, option: ImageOption) {
+    fun setImage(
+        context: Context,
+        image: ImageView,
+        url: String = "",
+        resId: Int = -1,
+        option: ImageOption
+    ) {
         val fileUrl = "$baseUrl/file${option.basePath}/$url"
         val target = ImageTarget(image, param.debugImage)
         val listener = ImageListener(param.debugImage)
@@ -143,14 +149,22 @@ object NetTool {
         } else {
             option.placeHolder
         }
-        val load = Glide.with(context).load(fileUrl).addListener(listener)
+        val load = if (url.isEmpty()) {
+            Glide.with(context).load(resId).addListener(listener)
+        } else {
+            Glide.with(context).load(fileUrl).addListener(listener)
+        }
         var holderBuilder = load
         if (placeHolder != null) {
             holderBuilder = load.placeholder(placeHolder)
         }
         val applyOption = requestOptions(option.key, option.isCircle)
         if (option.useThumbnail) {
-            val thumbnail = Glide.with(context).load(fileUrl).apply(applyOption)
+            val thumbnail = if (url.isEmpty()) {
+                Glide.with(context).load(resId).apply(applyOption)
+            } else {
+                Glide.with(context).load(fileUrl).apply(applyOption)
+            }
             holderBuilder = holderBuilder.thumbnail(thumbnail)
         }
         holderBuilder = holderBuilder.apply(applyOption)

@@ -2,6 +2,7 @@ package com.jayce.vexis.business.feedback
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.toast
@@ -66,9 +67,12 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackVO>) :
         runOnIO {
             val nowTime = getData(AVATAR_SAVE_TIME, 0L)
             ui {
-                val url = "${item.userID}.png"
                 val option = ImageOption(true, nowTime.toString(), "/head")
-                holder.head.load(url, option)
+                if (item.userID.isEmpty()) {
+                    holder.head.load(R.drawable.out_user, option)
+                } else {
+                    holder.head.load("${item.userID}.png", option)
+                }
             }
         }
     }

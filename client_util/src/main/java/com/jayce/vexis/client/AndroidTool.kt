@@ -1,5 +1,7 @@
 package com.jayce.vexis.client
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -330,5 +332,12 @@ object AndroidTool {
             type = parser.next()
         }
         return menuList
+    }
+
+    fun clipData(context: Context, text: String, hint: String = "") {
+        val manager = context.getSystemService(ClipboardManager::class.java)
+        val data = ClipData.newPlainText("Data", text)
+        manager.setPrimaryClip(data)
+        if (hint.isNotEmpty()) hint.toast()
     }
 }

@@ -19,10 +19,8 @@ import com.jayce.vexis.domain.bo.ActiveBO
 import com.jayce.vexis.domain.bo.ChatBO
 import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.database.file.FileEntity
-import com.jayce.vexis.util.Config.NIL
 import com.jayce.vexis.util.toTime
 import com.jayce.vexis.util.vo.ActiveVO
-import com.jayce.vexis.util.vo.EventVO
 import com.jayce.vexis.util.vo.FileVO
 import retrofit2.Call
 
@@ -50,7 +48,7 @@ object Util {
 
     object Extension {
         fun EventEntity.chat(): ChatBO {
-            return ChatBO(nickName, time.toTime(), content, msgId.toLong(), isRead)
+            return ChatBO(nickName, time.toTime(), content, id, isRead)
         }
 
         fun FileEntity.vo(): FileVO {
@@ -80,7 +78,11 @@ object Util {
         }
 
         fun ImageView.load(url: String, option: ImageOption = ImageOption()) {
-            NetTool.setImage(context, this, url, option)
+            NetTool.setImage(context, this, url, -1, option)
+        }
+
+        fun ImageView.load(resId: Int, option: ImageOption = ImageOption()) {
+            NetTool.setImage(context, this, "", resId, option)
         }
 
         fun Activity.jumpTo(onJump: (Intent.() -> Unit)? = null) {

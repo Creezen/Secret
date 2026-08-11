@@ -3,6 +3,7 @@ package com.jayce.vexis.business.profile.register
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import com.jayce.vexis.R
+import com.jayce.vexis.client.AndroidTool.clipData
 import com.jayce.vexis.client.AndroidTool.init
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.toast
@@ -77,9 +78,10 @@ class RegisterActivity : BaseActivity<CreateRoleLayoutBinding>() {
             .negative("取消")
             .positive("立即注册", false) { dialog ->
                 model.registerRole(id, email, emailCode.msg()) {
+                    clipData(this@RegisterActivity, id)
                     dialog.dismiss()
                     finish()
-                    "注册成功".toast()
+                    "注册成功，账号已复制到剪切板".toast()
                 }
             }
             .show()

@@ -4,10 +4,6 @@ import android.app.Notification
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.IBinder
 import android.view.Gravity
@@ -83,7 +79,6 @@ import com.journeyapps.barcodescanner.ScanOptions
 import org.koin.android.ext.android.inject
 import q.rorbin.badgeview.Badge
 import q.rorbin.badgeview.QBadgeView
-import kotlin.math.abs
 
 class MainActivity :
     BaseActivity<ActivityMainBinding>(),
@@ -175,6 +170,7 @@ class MainActivity :
             val drawableId = if (isLogin) R.drawable.open_drawer else R.drawable.logon
             setHomeAsUpIndicator(drawableId)
         }
+        binding.drawerLayout.closeDrawers()
         val lockMode = if (isLogin) LOCK_MODE_UNLOCKED else LOCK_MODE_LOCKED_CLOSED
         binding.drawerLayout.setDrawerLockMode(lockMode)
     }
@@ -188,6 +184,10 @@ class MainActivity :
         refreshStatusUI()
         binding.drawerLayout.addDrawerListener(this@MainActivity)
         onBackPressedDispatcher.addCallback {
+            if (!isLogin) {
+                finishAll()
+                return@addCallback
+            }
             FlexibleDialog
                 .flexibleViewNormal(this@MainActivity) {
                     message.text = getString(R.string.confirm_exit)
@@ -196,9 +196,10 @@ class MainActivity :
                 .positive(R.string.exist, true) {
                     destroySocket()
                     unbindService(connection)
-                    finishAll()
+                    isLogin = false
+                    refreshStatusUI()
                 }
-                .negative(R.string.click_error, true) { }
+                .negative(R.string.click_error, true)
                 .show()
         }
     }

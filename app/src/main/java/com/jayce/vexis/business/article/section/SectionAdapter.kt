@@ -20,6 +20,7 @@ import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.putData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.ThreadTool.runOnMain
+import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
@@ -90,7 +91,8 @@ class SectionAdapter(
             val image = (holder as ImageViewHolder).image
             runOnMain {
                 val key = getData("articleImage", "")
-                image.load(item.content)
+                val option = ImageOption(placeHolderId = R.drawable.image_load_error)
+                image.load(item.content, option)
                 if (key.isEmpty()) {
                     putData("articleImage", "${item.articleId}-${item.sectionId}")
                 }
