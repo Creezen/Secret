@@ -11,6 +11,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.google.gson.GsonBuilder
+import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.BaseTool.envContext
 import com.jayce.vexis.client.FileTool.getFileNameByUri
@@ -55,6 +56,7 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.Inet4Address
 import java.net.Socket
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicBoolean
@@ -243,9 +245,15 @@ object NetTool {
         }
     }
 
-    fun sendDefaultMessage(scope: CoroutineScope, msg: String) {
+    fun sendDefaultMessage(scope: CoroutineScope, msg: String, useNewSession: Boolean = false) {
         user?.apply {
-            val message = buildTelecomMessage(EVENT_TYPE_DEFAULT, msg, this)
+            val teleUser = if (useNewSession) {
+                val teleAuth = this.auth.copy(session = UUID.randomUUID().toString())
+                this.copy(auth = teleAuth)
+            } else {
+                this
+            }
+            val message = buildTelecomMessage(EVENT_TYPE_DEFAULT, msg, teleUser)
             sendMessage(scope, message)
         }
     }
@@ -325,6 +333,8 @@ object NetTool {
 
     fun destroySocket() {
         shouldReconnection.set(false)
+        socketReader = null
+        socketWriter = null
         if(onlineSocket.isClosed.not()) {
             onlineSocket.close()
         }
@@ -343,7 +353,7 @@ object NetTool {
             TLog.d("connection OK!")
             val mUserid = user?.userId
             if (mUserid != null) {
-                sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), mUserid)
+                sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), getData("[eventTag]${mUserid}", "0"), true)
             }
             msg?.let {
                 socketWriter?.write("$msg\n")

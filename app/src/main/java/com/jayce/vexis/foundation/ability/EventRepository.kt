@@ -19,6 +19,8 @@ import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.BASE_SOCKET_PATH
 import com.jayce.vexis.StatusManager.LOCAL_SOCKET_PORT
 import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.client.AndroidTool
+import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.database.event.EventDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -48,7 +50,6 @@ class EventRepository {
     private val notificationTitleMap = mapOf(
         EVENT_TYPE_FEEDBACK to "反馈通知",
         EVENT_TYPE_ROLE to "用户管理通知"
-
     )
 
     private val chatTypeList = listOf(EVENT_TYPE_CHAT)
@@ -60,7 +61,8 @@ class EventRepository {
         runOnSpecific(SCOPE_EVENT) {
             val socket = Socket(BASE_SOCKET_PATH, LOCAL_SOCKET_PORT)
             registerSocket(socket, true)
-            NetTool.connect(mScope, liveUser.userId) {
+            val eventTag = getData("[eventTag]${liveUser.userId}", "0")
+            NetTool.connect(mScope, eventTag) {
                 val message = it.toBean<EventEntity>() ?: return@connect true
                 insertEvent(message)
                 return@connect true
@@ -76,6 +78,7 @@ class EventRepository {
 
     private suspend fun insertEvent(eventEntity: EventEntity) {
         val id = eventDao.insert(eventEntity)
+        AndroidTool.putData("[eventTag]${liveUser.userId}", eventEntity.msgId)
         dispatchEvent(id)
     }
 
