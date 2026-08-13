@@ -16,7 +16,7 @@ import com.jayce.vexis.util.vo.FeedbackVO
 class FeedbackFragment : BaseFragment<ActivityFeedbackBinding>() {
 
     private val feedbackEntryList = arrayListOf<FeedbackVO>()
-    private val feedbackAdapter by lazy { FeedBackAdapter(feedbackEntryList) }
+    private val feedbackAdapter by lazy { FeedBackAdapter(requireContext(), feedbackEntryList) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         initView()

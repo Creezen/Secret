@@ -12,10 +12,12 @@ import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.business.profile.dashboard.fragment.UserBasicInfoFragment
 import com.jayce.vexis.business.profile.dashboard.fragment.UserLiveFragment
 import com.jayce.vexis.business.profile.manage.AdminActivity
+import com.jayce.vexis.client.AndroidTool.clipData
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.putData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.NetTool.buildUriMultipart
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.client.bean.ImageOption
@@ -28,9 +30,11 @@ import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
 import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
 import com.jayce.vexis.util.Config.NIL
+import com.jayce.vexis.util.vo.UserVO
 
 class DashboardActivity : BaseActivity<DashboardBinding>() {
 
+    private lateinit var user: UserVO
     private val userBasicInfoFragment = UserBasicInfoFragment()
     private val userLiveFragment = UserLiveFragment()
     private val fragmentList = arrayListOf<Fragment>()
@@ -40,13 +44,13 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     override fun registerLauncher() {
         imageLauncher = getLauncher(openFile()) {
             if (it == null) return@getLauncher
-            val id = liveUser.userId
+            val id = user.userId
             val filePart = buildUriMultipart(it.toString(), "avatar")
             request<UserService, Boolean>({ uploadAvatar(id, filePart) }) { result ->
                 if (!result) return@request
                 val cursorTime = System.currentTimeMillis()
                 putData(AVATAR_SAVE_TIME, cursorTime)
-                val url = "${liveUser.userId}.png"
+                val url = "${user.userId}.png"
                 val placeHolder = binding.image.drawable
                 val key = cursorTime.toString()
                 val option = ImageOption(true, key, "/head",false, null, placeHolder)
@@ -58,7 +62,19 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prepareFragment()
-        initPage()
+        val userId = intent.getStringExtra("userId")
+        TLog.d("user id: $userId")
+        if (userId == null) {
+            user = liveUser
+            initPage()
+        } else if (userId.isEmpty()) {
+            "用户不存在".toast()
+        } else {
+            request<UserService, _>({ queryUserById(userId) }) {
+                user = it
+                ui { initPage() }
+            }
+        }
     }
 
     private fun prepareFragment() {
@@ -67,14 +83,23 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
     }
 
     private fun initPage() = binding.apply {
-        nickname.userName = liveUser.profile.nickname
-        nickname.isAdmin = liveUser.isAdministrator()
-        nickname.level = liveUser.privilege.level
-        id.text = liveUser.userId
-        if (liveUser.isAdministrator()) manager.visibility = View.VISIBLE
+        if (liveUser == user) {
+            follow.visibility = View.GONE
+            report.visibility = View.GONE
+            if (user.isAdministrator()) manager.visibility = View.VISIBLE
+        } else {
+            manager.visibility = View.GONE
+        }
+        nickname.userName = user.profile.nickname
+        nickname.isAdmin = user.isAdministrator()
+        nickname.level = user.privilege.level
+        id.text = user.userId
         manager.setOnClickListener { jumpTo(AdminActivity::class.java) }
+        userIdTv.setOnClickListener {
+            clipData(this@DashboardActivity, id.text.toString(), "已复制用户ID")
+        }
         follow.setOnClickListener {
-            request<UserService, Int>({ followUser(liveUser.userId, liveUser.userId) }) {
+            request<UserService, Int>({ followUser(user.userId, user.userId) }) {
                 when (it) {
                     -1 -> { "你已经关注了该用户".toast() }
                     0 -> { "关注失败".toast() }
@@ -99,7 +124,7 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
         image.setOnClickListener { imageLauncher?.launch(arrayOf(MEDIA_TYPE_IMAGE)) }
         runOnIO {
             val time = getData(AVATAR_SAVE_TIME, 0L).toString()
-            val url = "${liveUser.userId}.png"
+            val url = "${user.userId}.png"
             val option = ImageOption(true, time,  "/head",true)
             ui { image.load(url, option) }
         }

@@ -4,11 +4,13 @@ import com.jayce.vexis.core.base.BaseService
 import com.jayce.vexis.util.dto.UserDTO
 import com.jayce.vexis.util.vo.ActiveVO
 import com.jayce.vexis.util.vo.StatusVO
+import com.jayce.vexis.util.vo.UserVO
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -56,4 +58,8 @@ interface UserService : BaseService {
         @Field("id") userId: String,
         @Field("email") email: String
     ): Call<StatusVO>
+
+    @POST("/queryUserById")
+    @FormUrlEncoded
+    fun queryUserById(@Field("userId") userId: String): Call<UserVO>
 }

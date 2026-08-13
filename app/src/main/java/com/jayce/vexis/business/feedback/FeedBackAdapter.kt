@@ -1,9 +1,11 @@
 package com.jayce.vexis.business.feedback
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jayce.vexis.R
 import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.business.profile.dashboard.DashboardActivity
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.ThreadTool.runOnIO
@@ -12,6 +14,7 @@ import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.databinding.CardItemLayoutBinding
 import com.jayce.vexis.databinding.FeedbackItemBinding
 import com.jayce.vexis.domain.route.FeedbackService
+import com.jayce.vexis.foundation.Util.Extension.jumpTo
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
@@ -21,14 +24,17 @@ import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
 import com.jayce.vexis.util.toTime
 import com.jayce.vexis.util.vo.FeedbackVO
 
-class FeedBackAdapter(private var feedbackList: List<FeedbackVO>) :
-    CardAdapter<FeedbackVO, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
+class FeedBackAdapter(
+    private val context: Context,
+    private var feedbackList: List<FeedbackVO>
+): CardAdapter<FeedbackVO, FeedbackItemBinding, FeedBackAdapter.ViewHolder>(feedbackList) {
 
     class ViewHolder(
         containerBinding: CardItemLayoutBinding,
         binding: FeedbackItemBinding
     ) : CardAdapter.ViewHolder(containerBinding) {
         val view = binding.root
+        val feedbackUser = binding.feedbackUser
         val head = binding.head
         val nickname = binding.nickname
         val time = binding.time
@@ -54,6 +60,11 @@ class FeedBackAdapter(private var feedbackList: List<FeedbackVO>) :
         holder.title.text = item.title
         holder.content.text = item.content
         holder.supportCount.text = "${item.support}"
+        holder.feedbackUser.setOnClickListener {
+            context.jumpTo(DashboardActivity::class.java) {
+                putExtra("userId", item.userID)
+            }
+        }
         holder.support.setOnClickListener {
             request<FeedbackService, _>({ supportFeedback(liveUser.userId, item.feedbackID) }) {
                 it.onTrue {

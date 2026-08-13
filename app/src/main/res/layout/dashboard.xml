@@ -34,6 +34,7 @@
                 app:size="24"
                 app:userName="@string/unknow_user"/>
             <LinearLayout
+                android:id="@+id/userIdTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
