@@ -17,7 +17,6 @@ import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.putData
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.NetTool.buildUriMultipart
-import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.client.bean.ImageOption
@@ -35,8 +34,6 @@ import com.jayce.vexis.util.vo.UserVO
 class DashboardActivity : BaseActivity<DashboardBinding>() {
 
     private lateinit var user: UserVO
-    private val userBasicInfoFragment = UserBasicInfoFragment()
-    private val userLiveFragment = UserLiveFragment()
     private val fragmentList = arrayListOf<Fragment>()
     private val adapter = DashboardAdapter(supportFragmentManager, lifecycle, fragmentList)
     private var imageLauncher: ActivityResultLauncher<Array<String>>? = null
@@ -61,29 +58,43 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prepareFragment()
-        val userId = intent.getStringExtra("userId")
-        TLog.d("user id: $userId")
-        if (userId == null) {
+        init()
+    }
+
+    private fun init() {
+        val userIdExtra = intent.getStringExtra("userId")
+        val segment = intent?.data?.pathSegments
+        if (userIdExtra == null && segment == null) {
             user = liveUser
             initPage()
-        } else if (userId.isEmpty()) {
+            return
+        }
+        if (userIdExtra != null) {
+            if (userIdExtra.isEmpty()) {
+                "用户不存在".toast()
+            } else {
+                requestUser(userIdExtra)
+            }
+            return
+        }
+        val paths = segment ?: return
+        if (paths.isEmpty()) {
             "用户不存在".toast()
         } else {
-            request<UserService, _>({ queryUserById(userId) }) {
-                user = it
-                ui { initPage() }
-            }
+            requestUser(paths[0])
         }
     }
 
-    private fun prepareFragment() {
-        fragmentList.add(userBasicInfoFragment)
-        fragmentList.add(userLiveFragment)
+    private fun requestUser(userId: String) {
+        request<UserService, _>({ queryUserById(userId) }) {
+            user = it
+            ui { initPage() }
+        }
     }
 
     private fun initPage() = binding.apply {
-        if (liveUser == user) {
+        prepareFragment()
+        if (liveUser.userId == user.userId) {
             follow.visibility = View.GONE
             report.visibility = View.GONE
             if (user.isAdministrator()) manager.visibility = View.VISIBLE
@@ -128,5 +139,12 @@ class DashboardActivity : BaseActivity<DashboardBinding>() {
             val option = ImageOption(true, time,  "/head",true)
             ui { image.load(url, option) }
         }
+    }
+
+    private fun prepareFragment() {
+        val userBasicInfoFragment = UserBasicInfoFragment(user)
+        val userLiveFragment = UserLiveFragment()
+        fragmentList.add(userBasicInfoFragment)
+        fragmentList.add(userLiveFragment)
     }
 }

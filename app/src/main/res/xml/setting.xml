@@ -4,4 +4,8 @@
         android:key="changeFont"
         android:title="切换字体"
         android:summary="该操作将重启应用，请保存好数据!"/>
+    <ListPreference
+        android:key="font"
+        android:title="选择字体"
+        android:summary="请选择你的字体"/>
 </PreferenceScreen>

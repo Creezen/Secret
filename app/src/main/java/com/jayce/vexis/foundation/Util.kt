@@ -33,7 +33,9 @@ object Util {
     ): ThreadWrapper {
         val wrapper = ThreadWrapperImpl()
         val action: suspend () -> Unit = {
-            val result = func.invoke(NetTool.create()).await()
+            val result = func.invoke(NetTool.create()).await() {
+                wrapper.job = it
+            }
             ui { callback(result) }
         }
         val innerWrapper = if (option != null) {

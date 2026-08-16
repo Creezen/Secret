@@ -62,4 +62,8 @@ interface UserService : BaseService {
     @POST("/queryUserById")
     @FormUrlEncoded
     fun queryUserById(@Field("userId") userId: String): Call<UserVO>
+
+    @POST("/queryUserByContent")
+    @FormUrlEncoded
+    fun queryUserByContent(@Field("content") content: String): Call<List<UserVO>>
 }

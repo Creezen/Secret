@@ -1,24 +1,27 @@
 package com.jayce.vexis.foundation.dynamic
 
-import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
+import com.jayce.vexis.client.ModuleHelper
 import com.jayce.vexis.client.ability.api.IActivity
 
-class DynamicActivity : Activity() {
+class DynamicActivity : ComponentActivity(), ActivityResultCaller {
 
-    private var instance: IActivity? = null
+    private var instance: IActivity<*, *>? = null
+
+    override fun attachBaseContext(newBase: Context?) {
+        handleIntent()
+        super.attachBaseContext(instance?.getContext())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleIntent()
         instance?.attach(this)
+        instance?.registerLauncher(this)
         instance?.onCreate(savedInstanceState)
         setContentView(instance?.getView())
-    }
-
-    private fun handleIntent() {
-        val className = intent.getStringExtra("className") ?: ""
-        instance = ModuleHelper.getActivity(className)
     }
 
     override fun onStart() {
@@ -44,5 +47,10 @@ class DynamicActivity : Activity() {
     override fun onDestroy() {
         super.onDestroy()
         instance?.onDestroy()
+    }
+
+    private fun handleIntent() {
+        val className = intent.getStringExtra("className") ?: ""
+        instance = ModuleHelper.getActivity(className)
     }
 }

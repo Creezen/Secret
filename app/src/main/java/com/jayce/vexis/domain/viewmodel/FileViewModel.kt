@@ -8,6 +8,7 @@ import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bo.DownloadTaskBO
 import com.jayce.vexis.domain.route.FileService
 import com.jayce.vexis.foundation.Util.request
+import com.jayce.vexis.util.vo.DynamicVO
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -27,6 +28,9 @@ class FileViewModel : BaseViewModel() {
     private val _taskCountFlow: MutableSharedFlow<Int> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
     val taskCountFlow = _taskCountFlow.asSharedFlow()
 
+    private val _dynamicFlow: MutableSharedFlow<List<DynamicVO>> = MutableSharedFlow(0, 5, BufferOverflow.SUSPEND)
+    val dynamicFlow = _dynamicFlow.asSharedFlow()
+
     private val semaphore = Semaphore(1, 1)
 
     private val taskQueue = LinkedBlockingQueue<DownloadTaskBO>()
@@ -43,7 +47,7 @@ class FileViewModel : BaseViewModel() {
                 val totalSize = task.size
                 val showTaskInfo = task.copy(taskLastCount = taskQueue.size)
                 _taskStateFlow.emit(showTaskInfo)
-                request<FileService, ResponseBody>({ downloadFile(task.resourceName) }) {
+                request<FileService, ResponseBody>({ downloadFile(task.resourceName, "") }) {
                     val stream = it.byteStream()
                     downloadFileByNet(stream, task.fileName) {
                         _progressFlow.emit(it)
@@ -76,5 +80,11 @@ class FileViewModel : BaseViewModel() {
         val sizeNum = size / (1024.0 * 1024)
         val finalNum = "%.2f".format(sizeNum)
         return "$finalNum M"
+    }
+
+    fun getDynamicModule() {
+        request<FileService, _>({ getDynamicModule() }) {
+            _dynamicFlow.emit(it)
+        }
     }
 }

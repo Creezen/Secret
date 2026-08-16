@@ -216,11 +216,17 @@ object AndroidTool {
         value = select
     }
 
-    fun startActivity(activityClazz: Class<*>) {
+    fun startActivity(activityClazz: Class<*>) = startActivity(activityClazz.name)
+
+    fun startActivity(claName: String) {
+        if (ModuleHelper.getActivity(claName) == null) {
+            "模块不存在，请下载后重试".toast()
+            return
+        }
         val intent = Intent("com.jayce.vexis.dynamic.ShellActivity")
         intent.apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            putExtra("className", activityClazz.name)
+            putExtra("className", claName)
         }
         envContext.startActivity(intent)
     }

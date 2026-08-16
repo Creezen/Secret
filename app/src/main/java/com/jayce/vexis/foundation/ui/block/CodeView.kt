@@ -1,15 +1,26 @@
 package com.jayce.vexis.foundation.ui.block
 
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import com.jayce.vexis.client.BaseTool.envContext
+import com.jayce.vexis.client.FileTool
+import com.jayce.vexis.client.FileTool.getDir
 import com.jayce.vexis.client.TLog
 import com.jayce.vexis.databinding.CodeLayoutBinding
+import java.io.File
 
 @SuppressLint("SetJavaScriptEnabled")
 class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr) {
@@ -30,16 +41,11 @@ class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr
             settings.allowFileAccess = true
             settings.allowFileAccessFromFileURLs = true
             settings.allowUniversalAccessFromFileURLs = true
-
-            webChromeClient = object : WebChromeClient() {
-                override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
-                    TLog.e("${consoleMessage?.lineNumber()} --- ${consoleMessage?.message()}")
-                    return true
-                }
-            }
             addJavascriptInterface(JsInterface(), "Android")
 
-            loadUrl("file:///android_asset/shikiweb.html")
+            val baseFile = getDir(FileTool.Dir.LOC_PRIVATE_FILE, envContext)
+            val shikiFile = File(baseFile, "shiki/shikiweb.html")
+            loadUrl("file://${shikiFile.absolutePath}")
         }
     }
 
@@ -79,11 +85,7 @@ class CodeView(context: Context, attr: AttributeSet) : FrameLayout(context, attr
             window.renderCode("$escapedCode", "$lang", "$theme");
         """.trimIndent()
 
-        post {
-            bind.web.evaluateJavascript(script) {
-                TLog.e("load code result: $it")
-            }
-        }
+        post { bind.web.evaluateJavascript(script) { /**/ } }
         isRendered = true
     }
 }

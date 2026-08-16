@@ -13,8 +13,9 @@ import com.jayce.vexis.client.BaseTool
 import com.jayce.vexis.client.BaseTool.setFont
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.BuildConfig
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.foundation.ability.NetStatusCallback
-import com.jayce.vexis.foundation.dynamic.ModuleHelper
+import com.jayce.vexis.client.ModuleHelper
 import org.koin.core.context.startKoin
 
 class Env : Application() {
@@ -47,7 +48,7 @@ class Env : Application() {
             debugImage = false
         )
         BaseTool.init(applicationContext, param)
-        runOnIO { setFont(getData("font", "细体宋体")) }
+        runOnIO { setFont(getData("font", "油墨宋体")) }
         initDynamic()
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -69,14 +70,30 @@ class Env : Application() {
     }
 
     private fun initDynamic() {
-        val preLoadList = listOf(
-            "com.jayce.vexis.dynamic.ToolFragment",
-            "com.jayce.vexis.dynamic.JumpActivity",
-            "com.jayce.vexis.dynamic.DTool",
-            "com.jayce.vexis.dynamic.MapFragment"
+        val aiPreloadList = listOf(
+            "com.jayce.vexis.ai.ToolFragment",
+            "com.jayce.vexis.ai.JumpActivity"
+        )
+        val mapPreloadList = listOf(
+            "com.jayce.vexis.map.DTool",
+            "com.jayce.vexis.map.MapFragment"
+        )
+        val mediaPreloadList = listOf(
+            "com.jayce.vexis.media.VideoPlayerActivity"
+        )
+        val apkList = listOf(
+            "debug-ai.apk" to aiPreloadList,
+            "debug-map.apk" to mapPreloadList,
+            "media-debug.apk" to mediaPreloadList
         )
         runOnIO {
-            ModuleHelper.loadModule(this, "debug-1.apk", preLoadList)
+            apkList.forEach { entry ->
+                runCatching {
+                    ModuleHelper.loadModule(entry.first, entry.second)
+                }.onFailure {
+                    TLog.d("[${entry.first}] loadModule error: ${it.message}")
+                }
+            }
         }
     }
 }

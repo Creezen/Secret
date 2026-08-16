@@ -43,7 +43,7 @@ class ChatAdapter(private var msgList: ArrayList<ChatBO>) : BaseAdapter<ChatBO, 
     }
 
     fun markItemReadIfNeed(holder: ViewHolder) {
-        val position = holder.absoluteAdapterPosition
+        val position = holder.adapterPosition
         val item = msgList[position]
         if (item.isRead) return
         holder.view.onVisible {

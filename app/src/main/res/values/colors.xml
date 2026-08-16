@@ -8,6 +8,8 @@
     <color name="red">#FF0000</color>
     <!--灰色-->
     <color name="gray">#F5F5F5</color>
+    <!--浅灰-->
+    <color name="lightGray">#D3D3D3</color>
     <!--朱砂红-->
     <color name="vermilion">#A63636</color>
     <!--黛蓝色-->

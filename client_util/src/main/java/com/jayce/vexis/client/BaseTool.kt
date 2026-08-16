@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import com.jayce.vexis.util.Config.NIL
+import java.io.File
 
 @SuppressLint("StaticFieldLeak")
 object BaseTool {
@@ -22,7 +23,8 @@ object BaseTool {
     }
 
     fun setFont(file: String) {
-        val obj = Typeface.createFromAsset(envContext.assets, "fonts/$file.ttf")
+        val bathPath = FileTool.getDir(FileTool.Dir.LOC_PRIVATE_FILE)
+        val obj = Typeface.createFromFile(File(bathPath, "fonts/$file.ttf"))
         val field = Typeface::class.java.getDeclaredField("MONOSPACE")
         field.isAccessible = true
         field.set(null, obj)

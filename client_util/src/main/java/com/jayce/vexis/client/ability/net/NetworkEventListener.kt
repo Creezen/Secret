@@ -137,7 +137,7 @@ class NetworkEventListener(private val debug: Boolean) : EventListener() {
 
     override fun callFailed(call: Call, ioe: IOException) {
         super.callFailed(call, ioe)
-        TLog.d("callFailed: ${ioe.message}")
+        TLog.w("callFailed: ${ioe.message}")
     }
 
     private fun resetData() {

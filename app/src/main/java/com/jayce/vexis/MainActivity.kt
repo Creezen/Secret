@@ -43,6 +43,7 @@ import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.replaceFragment
 import com.jayce.vexis.client.AndroidTool.toast
 import com.jayce.vexis.client.BaseTool.envContext
+import com.jayce.vexis.client.ModuleHelper
 import com.jayce.vexis.client.NetTool.destroySocket
 import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool.runOnIO
@@ -60,7 +61,6 @@ import com.jayce.vexis.foundation.Util.Extension.onFalse
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.ability.EventRepository
 import com.jayce.vexis.foundation.ability.Logger
-import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.util.Config.AVATAR_SAVE_TIME
 import com.jayce.vexis.util.Config.FRAGMENT_ARTICLE
@@ -307,7 +307,6 @@ class MainActivity :
         binding.drawerLayout.closeDrawers()
         fragmentHolder?.apply {
             val pair = getFragment(item.itemId)
-            TLog.d("fragment pair: ${pair.first}  ${pair.second}")
             replaceFragment(pair.first, pair.second)
         }
         return true

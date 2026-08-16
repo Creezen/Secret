@@ -13,5 +13,7 @@ pluginManagement {
 rootProject.name = "Secret"
 include(":app")
 include(":client_util")
-include(":dynamic")
 include(":issue")
+include(":dynamic:map")
+include(":dynamic:ai")
+include(":dynamic:media")

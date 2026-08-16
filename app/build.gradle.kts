@@ -47,8 +47,6 @@ android {
         versionCode = 1000000
         versionName = "1.0.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
         ndk {
             abiFilters.add("arm64-v8a")
         }
@@ -260,9 +258,6 @@ dependencies {
     implementation(libs.mpAndroidChart)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation(libs.media.player)
-    implementation(libs.media.ui)
-    implementation(libs.media.sesison)
     implementation(libs.common.tool)
 
     lintChecks(project(":issue"))

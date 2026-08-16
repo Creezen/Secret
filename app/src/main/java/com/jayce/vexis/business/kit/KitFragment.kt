@@ -3,7 +3,6 @@ package com.jayce.vexis.business.kit
 import android.Manifest
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
@@ -12,13 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
+import com.jayce.vexis.business.kit.book.BookActivity
 import com.jayce.vexis.business.kit.digger.DiggerActivity
 import com.jayce.vexis.business.kit.gomoku.GomokuActivity
-import com.jayce.vexis.business.kit.book.BookActivity
 import com.jayce.vexis.business.kit.maze.MazeActivity
 import com.jayce.vexis.business.kit.pinyin.PinyinActivity
 import com.jayce.vexis.business.kit.poker.PokerActivity
-import com.jayce.vexis.business.kit.video.VideoPlayerActivity
+import com.jayce.vexis.client.AndroidTool
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.WidgetsBinding
 import com.jayce.vexis.foundation.Util.Extension.jumpTo
@@ -38,15 +37,14 @@ class KitFragment : BaseFragment<WidgetsBinding>() {
         gomoku.setOnClickListener { jumpTo(GomokuActivity::class.java) }
         poker.setOnClickListener { jumpTo(PokerActivity::class.java) }
         pinyin.setOnClickListener { jumpTo(PinyinActivity::class.java) }
-        videoPlayer.setOnClickListener { jumpTo(VideoPlayerActivity::class.java) }
+        videoPlayer.setOnClickListener {
+            AndroidTool.startActivity("com.jayce.vexis.media.VideoPlayerActivity")
+        }
         mountDigger.setOnClickListener { jumpTo(DiggerActivity::class.java) }
         quickStart.setOnClickListener {
-            jumpTo {
-                val targetPackage = "com.DefaultCompany.Myproject"
-                val targetClass = "com.unity3d.player.UnityPlayerActivity"
-                val targetComponent = ComponentName(targetPackage, targetClass)
-                component = targetComponent
-            }
+            val targetPackage = "com.DefaultCompany.Myproject"
+            val targetClass = "com.unity3d.player.UnityPlayerActivity"
+            jumpTo { component = ComponentName(targetPackage, targetClass) }
         }
     }
 

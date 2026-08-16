@@ -8,4 +8,5 @@ interface ThreadWrapper {
 
     fun onComplete(callback: () -> Unit): ThreadWrapper
 
+    fun cancel()
 }

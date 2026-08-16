@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--白色-->
+    <color name="white">#FFFFFFFF</color>
+    <!--黑色-->
+    <color name="black">#FF000000</color>
+    <!--红色-->
+    <color name="red">#FF0000</color>
+    <!--灰色-->
+    <color name="gray">#F5F5F5</color>
+    <!--浅灰-->
+    <color name="lightGray">#D3D3D3</color>
+    <!--朱砂红-->
+    <color name="vermilion">#A63636</color>
+    <!--黛蓝色-->
+    <color name="indigo">#2C3A45</color>
+    <!--墨黑色-->
+    <color name="inkyBlack">#333333</color>
+    <!--灰褐色-->
+    <color name="taupe">#888888</color>
+    <!--淡云灰-->
+    <color name="paleGray">#F9F7F2</color>
+    <!--浅香槟  边框-->
+    <color name="paleChampagne">#E5DED0</color>
+    <!--圣旨金-->
+    <color name="metallicGold">#D4AF37</color>
+    <!--透明-->
+    <color name="transparent">#00000000</color>
+    <!--玻璃绿-->
+    <color name="glassyGreen">#55F274</color>
+    <!--浅杏色-->
+    <color name="LightApricot">#F5EBDC</color>
+    <!--深栗棕-->
+    <color name="ChestnutBrown">#503C2D</color>
+</resources>

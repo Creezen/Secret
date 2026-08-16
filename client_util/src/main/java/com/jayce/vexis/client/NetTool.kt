@@ -31,6 +31,7 @@ import com.jayce.vexis.util.Config.SERVER_DOMAIN
 import com.jayce.vexis.util.toJson
 import com.jayce.vexis.util.vo.EventVO
 import com.jayce.vexis.util.vo.UserVO
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -187,8 +188,9 @@ object NetTool {
         }
     }
 
-    suspend fun <T> Call<T>.await():T {
+    suspend fun <T> Call<T>.await(func: ((CancellableContinuation<T>) -> Unit)? = null): T {
         return suspendCancellableCoroutine { continuation ->
+            func?.invoke(continuation)
             enqueue(object : Callback<T> {
                 override fun onResponse(p0: Call<T>, p1: Response<T>) {
                     val body = p1.body()
@@ -300,7 +302,7 @@ object NetTool {
                 }
             }
         }.onFailure {
-            TLog.d("receive error: ${it.message}")
+            TLog.w("receive error: ${it.message}")
             if (shouldReconnection.get()) {
                 reconnectSocket()
                 receive(scope, onReceiveMessage)
@@ -350,7 +352,7 @@ object NetTool {
             socketReader = BufferedReader(InputStreamReader(onlineSocket.getInputStream(), "UTF-8"))
             socketWriter =
                 BufferedWriter(OutputStreamWriter(onlineSocket.getOutputStream(), "UTF-8"))
-            TLog.d("connection OK!")
+            TLog.i("connection OK!")
             val mUserid = user?.userId
             if (mUserid != null) {
                 sendDefaultMessage(scope = CoroutineScope(Dispatchers.IO), getData("[eventTag]${mUserid}", "0"), true)

@@ -22,9 +22,9 @@ import com.jayce.vexis.databinding.ActivitySynergyEditBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.image.ScaleImage
+import com.jayce.vexis.foundation.ui.block.mention.MentionEditText
 import com.jayce.vexis.util.Config.MEDIA_TYPE_IMAGE
 import com.jayce.vexis.util.toJson
-import com.jayce.vexis.util.vo.ArticleVO
 import com.jayce.vexis.util.vo.SectionBodyVO
 import okhttp3.MultipartBody
 
@@ -97,15 +97,15 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
         if (index < 0) return super.dispatchKeyEvent(event)
         when (event.keyCode) {
             KeyEvent.KEYCODE_DEL -> {
-                if (child is EditText && child.text.isNotEmpty()) {
+                if (child is MentionEditText && child.content().isNotEmpty()) {
                     return super.dispatchKeyEvent(event)
                 }
                 listener.onRemove(lastClickChild)
             }
             KeyEvent.KEYCODE_ENTER -> {
-                if (child is EditText) return super.dispatchKeyEvent(event)
-                val editText = EditText(this)
-                listener.onAdd(TYPE_TEXT, lastClickChild + 1, editText)
+                if (child is MentionEditText) return super.dispatchKeyEvent(event)
+                val mentionEditText = MentionEditText(this, null)
+                listener.onAdd(TYPE_TEXT, lastClickChild + 1, mentionEditText)
             }
         }
         return super.dispatchKeyEvent(event)
@@ -146,8 +146,8 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
         val contentList = arrayListOf<SectionBodyVO>()
         binding.container.children.forEach { view ->
             when (view) {
-                is EditText -> {
-                    val msgList = view.msg().split("\n")
+                is MentionEditText -> {
+                    val msgList = view.content()
                     val sequence = msgList.asSequence().filterNot { it.isEmpty() }
                     sequence.forEach {
                         contentList.add(SectionBodyVO(TYPE_TEXT, it))
@@ -165,7 +165,6 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
     private fun buildRequestList(
         list: List<SectionBodyVO>
     ): Pair<List<SectionBodyVO>, List<MultipartBody.Part>> {
-        TLog.d("buildRequestList: ${list.size}")
         val textList = arrayListOf<SectionBodyVO>()
         val partList = arrayListOf<MultipartBody.Part>()
         list.forEach {

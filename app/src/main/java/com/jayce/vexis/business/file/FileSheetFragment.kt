@@ -16,7 +16,7 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jayce.vexis.R
-import com.jayce.vexis.business.file.module.DynamicModuleFragment
+import com.jayce.vexis.business.file.module.DynamicFragment
 import com.jayce.vexis.business.file.resource.FileRepoFragment
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.FileFragmentLayoutBinding
@@ -31,7 +31,7 @@ class FileSheetFragment : BaseFragment<FileFragmentLayoutBinding>() {
     private val list = arrayListOf<Fragment>()
     private var fileSheetAdapter: FileSheetAdapter? = null
     private lateinit var fileRepoFragment: FileRepoFragment
-    private lateinit var dynamicModuleFragment: DynamicModuleFragment
+    private lateinit var dynamicFragment: DynamicFragment
 
     private val viewModel by viewModel<FileViewModel>()
 
@@ -44,9 +44,9 @@ class FileSheetFragment : BaseFragment<FileFragmentLayoutBinding>() {
 
     private fun initData() {
         fileRepoFragment = FileRepoFragment(viewModel)
-        dynamicModuleFragment = DynamicModuleFragment(viewModel)
+        dynamicFragment = DynamicFragment(viewModel)
         list.add(fileRepoFragment)
-        list.add(dynamicModuleFragment)
+        list.add(dynamicFragment)
         viewModel.startListen()
     }
 
@@ -55,7 +55,7 @@ class FileSheetFragment : BaseFragment<FileFragmentLayoutBinding>() {
         if (firstInit) return
         when (selectedPosition) {
             0 -> fileRepoFragment.updateData()
-            1 -> dynamicModuleFragment.updateData()
+            1 -> dynamicFragment.updateData()
         }
     }
 
@@ -84,7 +84,7 @@ class FileSheetFragment : BaseFragment<FileFragmentLayoutBinding>() {
                     super.onPageSelected(position)
                     when (position) {
                         0 -> fileRepoFragment.updateData()
-                        1 -> dynamicModuleFragment.updateData()
+                        1 -> dynamicFragment.updateData()
                     }
                 }
             })

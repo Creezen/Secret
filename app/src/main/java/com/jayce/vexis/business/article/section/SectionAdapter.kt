@@ -3,6 +3,8 @@ package com.jayce.vexis.business.article.section
 import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
+import android.text.Html
+import android.text.Html.FROM_HTML_MODE_COMPACT
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -77,13 +79,15 @@ class SectionAdapter(
         val item = itemList[position]
         if (type == 0) {
             val currentHolder = holder as ViewHolder
+            currentHolder.paragraph.movementMethod = LinkMovementMethod()
             currentHolder.paragraph.setOnLongClickListener {
                 it.setBackgroundColor(destColor)
                 showCommentDialog(position, it)
                 true
             }
             if (item.list.isEmpty()) {
-                currentHolder.paragraph.text = item.content.trim()
+                val text = Html.fromHtml(item.content, FROM_HTML_MODE_COMPACT).trim()
+                currentHolder.paragraph.text = text
                 return
             }
             displayComment(position, holder.paragraph)
@@ -103,7 +107,7 @@ class SectionAdapter(
     override fun getItemCount() = itemList.size
 
     private fun displayComment(position: Int, textView: TextView) {
-        val content = itemList[position].content.trim()
+        val content = Html.fromHtml(itemList[position].content, FROM_HTML_MODE_COMPACT).trim()
         val contentLength = content.length
         val imageSpan = ImageSpan(context, R.drawable.comment)
         val clickSpan = object : ClickableSpan() {

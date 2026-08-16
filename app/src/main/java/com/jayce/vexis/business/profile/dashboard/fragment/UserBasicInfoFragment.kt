@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.UserBasicInfoBinding
+import com.jayce.vexis.util.vo.UserVO
 
-class UserBasicInfoFragment : BaseFragment<UserBasicInfoBinding>() {
+class UserBasicInfoFragment(private val user: UserVO) : BaseFragment<UserBasicInfoBinding>() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,7 +21,7 @@ class UserBasicInfoFragment : BaseFragment<UserBasicInfoBinding>() {
     }
 
     private fun initView() = binding.apply {
-        liveUser.let {
+        user.let {
             createTime.text = it.createTime
             sex.text = it.profile.sex
             age.text = "${it.profile.age}"

@@ -8,9 +8,7 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseActivity<K : ViewBinding> : AppCompatActivity(), Common<K> {
 
-    val binding: K by lazy {
-        getBind()
-    }
+    val binding: K by lazy { getBind() }
 
     final override fun getLayoutInflate(): LayoutInflater {
         return layoutInflater

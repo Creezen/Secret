@@ -46,9 +46,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun getNewestVersion() {
-        request<PackageService, _>({ getVersion() }) {
-             "${it.modifyTime.toTime()}  ${it.versionName}".toast()
-        }
+//        request<PackageService, _>({ getVersion() }) {
+//             "${it.modifyTime.toTime()}  ${it.versionName}".toast()
+//        }
     }
 
     private fun setAnimation() {

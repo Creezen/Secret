@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <FrameLayout
         android:id="@+id/itemRoot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
         <ImageView
             android:id="@+id/image"
@@ -15,20 +17,21 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:src="@mipmap/tianji"
+            android:layout_gravity="center"
             android:importantForAccessibility="no"/>
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/none"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:textSize="25sp"/>
-    </LinearLayout>
+        <com.jayce.vexis.foundation.ui.block.RingProgress
+            android:id="@+id/download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:text="@string/click_to_fetch_resource"/>
+    </FrameLayout>
     <TextView
-        android:id="@+id/download"
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/click_to_fetch_resource"/>
-</FrameLayout>
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:textSize="25sp"/>
+</LinearLayout>
