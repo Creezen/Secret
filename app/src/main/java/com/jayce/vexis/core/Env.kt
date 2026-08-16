@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import com.amap.api.maps.MapsInitializer
-import com.amap.api.services.core.ServiceSettings
 import com.jayce.vexis.util.Config.ACTION_BROADCAST_LOGOUT
 import com.jayce.vexis.util.Config.ACTION_BROADCAST_NOTIFY
 import com.jayce.vexis.client.AndroidTool.getData
@@ -16,6 +14,7 @@ import com.jayce.vexis.client.BaseTool.setFont
 import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.BuildConfig
 import com.jayce.vexis.foundation.ability.NetStatusCallback
+import com.jayce.vexis.foundation.dynamic.ModuleHelper
 import org.koin.core.context.startKoin
 
 class Env : Application() {
@@ -48,10 +47,8 @@ class Env : Application() {
             debugImage = false
         )
         BaseTool.init(applicationContext, param)
-        ServiceSettings.updatePrivacyAgree(this, true)
-        ServiceSettings.updatePrivacyShow(this, true, true)
-//        MapsInitializer.setTerrainEnable(true)
         runOnIO { setFont(getData("font", "细体宋体")) }
+        initDynamic()
         registerReceiver(coreReceiver, filter, RECEIVER_NOT_EXPORTED)
         val manager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         manager.registerDefaultNetworkCallback(NetStatusCallback())
@@ -68,6 +65,18 @@ class Env : Application() {
             val notifyChannel = NotificationChannel(it.first, it.second, importance)
             notifyChannel.enableVibration(true)
             manager.createNotificationChannel(notifyChannel)
+        }
+    }
+
+    private fun initDynamic() {
+        val preLoadList = listOf(
+            "com.jayce.vexis.dynamic.ToolFragment",
+            "com.jayce.vexis.dynamic.JumpActivity",
+            "com.jayce.vexis.dynamic.DTool",
+            "com.jayce.vexis.dynamic.MapFragment"
+        )
+        runOnIO {
+            ModuleHelper.loadModule(this, "debug-1.apk", preLoadList)
         }
     }
 }

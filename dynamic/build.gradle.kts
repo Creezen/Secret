@@ -21,6 +21,9 @@ android {
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        ndk {
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     buildTypes {
@@ -43,6 +46,17 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    aaptOptions {
+        additionalParameters.add("--package-id")
+        additionalParameters.add("0x7E")
+        additionalParameters.add("--allow-reserved-package-id")
+    }
+    packaging {
+        jniLibs {
+            pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
+            pickFirsts.add("lib/armeabi-v7a/libc++_shared.so")
+        }
+    }
 }
 
 androidComponents {
@@ -54,14 +68,12 @@ androidComponents {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
 
     implementation(libs.tools)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    implementation(libs.pytorch.android)
+    implementation(libs.pytorch.android.torchvision)
+    implementation(libs.amap.navigation)
 }

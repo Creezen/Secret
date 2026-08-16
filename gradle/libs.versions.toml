@@ -64,12 +64,8 @@ kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", versio
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
-amap = { group = "com.amap.api", name = "3dmap-location-search", version.ref = "amap" }
 amap-navigation = { group = "com.amap.api", name = "navi-3dmap-location-search", version.ref = "amap" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-version" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 pytorch-android = { group = "org.pytorch", name = "pytorch_android", version.ref = "pytorch" }
 pytorch-android-torchvision = { group = "org.pytorch", name = "pytorch_android_torchvision", version.ref = "pytorch" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }

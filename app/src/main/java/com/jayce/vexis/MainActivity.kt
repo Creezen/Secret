@@ -36,7 +36,6 @@ import com.jayce.vexis.business.history.HistoryFragment
 import com.jayce.vexis.business.kit.KitFragment
 import com.jayce.vexis.business.login.LoginActivity
 import com.jayce.vexis.business.mail.MailActivity
-import com.jayce.vexis.business.map.MapFragment
 import com.jayce.vexis.business.peer.PeerFragment
 import com.jayce.vexis.business.profile.dashboard.DashboardActivity
 import com.jayce.vexis.business.setting.SettingActivity
@@ -308,6 +307,7 @@ class MainActivity :
         binding.drawerLayout.closeDrawers()
         fragmentHolder?.apply {
             val pair = getFragment(item.itemId)
+            TLog.d("fragment pair: ${pair.first}  ${pair.second}")
             replaceFragment(pair.first, pair.second)
         }
         return true
@@ -342,7 +342,6 @@ class MainActivity :
         val articleFragment: ArticleFragment = ArticleFragment()
         val senior: PeerFragment = PeerFragment()
         val fileSheetFragment: FileSheetFragment = FileSheetFragment()
-        val mapFragment: MapFragment = MapFragment()
 
         fun getFragment(id: Int): Pair<Fragment, String> = when (id) {
             R.id.MainMenuFeedback -> feedbackFragment to FRAGMENT_FEEDBACK
@@ -352,8 +351,8 @@ class MainActivity :
             R.id.MainMenuSenior -> senior to FRAGMENT_SENIOR
             R.id.MainMenuResource -> fileSheetFragment to FRAGMENT_FILE
             R.id.MainMenuMap -> {
-                val moduleName = "com.jayce.vexis.dynamic.ToolFragment"
-                val fragment = ModuleHelper.getFragment(moduleName) ?: mapFragment
+                val moduleName = "com.jayce.vexis.dynamic.MapFragment"
+                val fragment = ModuleHelper.getFragment(moduleName) ?: Fragment()
                 fragment to FRAGMENT_MAP
             }
             else -> kitFragment to FRAGMENT_KIT

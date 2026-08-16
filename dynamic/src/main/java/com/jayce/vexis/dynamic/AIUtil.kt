@@ -1,4 +1,4 @@
-package com.jayce.vexis.client
+package com.jayce.vexis.dynamic
 
 import android.content.Context
 import com.jayce.vexis.client.AndroidTool.toast
@@ -8,9 +8,9 @@ import org.pytorch.Tensor
 import java.io.File
 import java.io.FileOutputStream
 
-object AITool {
+object AIUtil {
 
-    private fun aiModel(context: Context) {
+    fun aiModel(context: Context) {
         kotlin.runCatching {
             val model = Module.load(assetFilePath(context, "model/androidModel.pt"))
             val tensor = Tensor.fromBlob(floatArrayOf(2.5f, 1.5f), longArrayOf(1, 2))

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.jayce.vexis.client.AndroidTool
 import com.jayce.vexis.client.ability.api.IFragment
+import com.jayce.vexis.dynamic.AIUtil.aiModel
 import com.jayce.vexis.dynamic.databinding.ToolLayoutBinding
 
 class ToolFragment : IFragment() {
@@ -26,6 +27,9 @@ class ToolFragment : IFragment() {
         binding?.apply {
             text.setOnClickListener {
                 AndroidTool.startActivity(JumpActivity::class.java)
+            }
+            buttonDynamic.setOnClickListener {
+                context?.let { aiModel(it) }
             }
         }
     }

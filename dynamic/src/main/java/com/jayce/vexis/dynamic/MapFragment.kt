@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.map
+package com.jayce.vexis.dynamic
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,22 +15,36 @@ import com.amap.api.maps.model.CameraPosition
 import com.amap.api.maps.model.LatLng
 import com.amap.api.maps.model.MarkerOptions
 import com.amap.api.maps.model.MyLocationStyle
-import com.jayce.vexis.R
 import com.jayce.vexis.client.TLog
-import com.jayce.vexis.core.base.BaseFragment
-import com.jayce.vexis.databinding.ActivityMapBinding
+import com.jayce.vexis.client.ability.api.IFragment
 
-class MapFragment : BaseFragment<ActivityMapBinding>(), AMapLocationListener {
+class MapFragment : IFragment(), AMapLocationListener {
 
     private var aMap: AMap? = null
+    private lateinit var mapView: MapView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding.map.onCreate(savedInstanceState)
-        init(binding.map)
-        return binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mapView = MapView(contextWrapper)
+        mapView.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        mapView.onCreate(savedInstanceState)
+        init(mapView)
+        return mapView
     }
 
-    private fun init(map: MapView) {
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    private fun init(map: MapView?) {
+        if (map == null) return
         aMap = map.map
         initMap()
     }
@@ -47,7 +61,7 @@ class MapFragment : BaseFragment<ActivityMapBinding>(), AMapLocationListener {
             interval(500L)
             myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE_NO_CENTER)
             showMyLocation(true)
-            activity?.getColor(R.color.transparent)?.let { radiusFillColor(it) }
+            context?.getColor(R.color.transparent)?.let { radiusFillColor(it) }
         }
         aMap?.isMyLocationEnabled = true
         aMap?.myLocationStyle = style
@@ -65,7 +79,7 @@ class MapFragment : BaseFragment<ActivityMapBinding>(), AMapLocationListener {
     }
 
     private fun initLocation() {
-        val locationClient = AMapLocationClient(this.activity)
+        val locationClient = AMapLocationClient(context)
         val option = AMapLocationClientOption().apply {
             locationMode = AMapLocationClientOption.AMapLocationMode.Hight_Accuracy
             interval = 500

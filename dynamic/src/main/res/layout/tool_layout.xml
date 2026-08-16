@@ -10,4 +10,9 @@
         android:gravity="center"
         android:textSize="26sp"
         android:text="@string/hello"/>
+    <Button
+        android:id="@+id/buttonDynamic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="点我加载AI"/>
 </LinearLayout>
