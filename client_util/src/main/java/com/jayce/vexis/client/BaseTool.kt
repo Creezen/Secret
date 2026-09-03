@@ -20,6 +20,7 @@ object BaseTool {
         NetTool.init(initParam)
         SoundTool.init()
         ThreadTool.init(initParam)
+        TLog.init(initParam)
     }
 
     fun setFont(file: String) {
@@ -43,6 +44,7 @@ object BaseTool {
         val socketPort: Int = 0,
         val baseSocketPath: String = NIL,
         val baseUrl: String = NIL,
+        val debugLog: Boolean,
         val debugNetwork: Boolean,
         val debugThread: Boolean,
         val debugImage: Boolean

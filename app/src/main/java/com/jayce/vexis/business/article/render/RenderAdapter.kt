@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article.section
+package com.jayce.vexis.business.article.render
 
 import android.app.Activity
 import android.content.Context
@@ -26,14 +26,14 @@ import com.jayce.vexis.client.bean.ImageOption
 import com.jayce.vexis.core.base.BaseAdapter
 import com.jayce.vexis.databinding.AddCommentLayoutBinding
 import com.jayce.vexis.databinding.ArticleImageBinding
-import com.jayce.vexis.databinding.ParagraphItemLayoutBinding
+import com.jayce.vexis.databinding.SectionItemLayoutBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.Extension.load
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.util.vo.SectionRemarkVO
 
-class SectionAdapter(
+class RenderAdapter(
     val context: Context,
     val activity: Activity,
     private var itemList: List<SectionRemarkVO>
@@ -49,8 +49,8 @@ class SectionAdapter(
         drawable.color.xor(destColor)
     }
 
-    class ViewHolder(val binding: ParagraphItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-        val paragraph = binding.content
+    class ViewHolder(val binding: SectionItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+        val sectionContent = binding.content
     }
 
     class ImageViewHolder(val binding: ArticleImageBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -65,7 +65,7 @@ class SectionAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewHolder = if (viewType == 0) {
-            val binding = ParagraphItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding = SectionItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             ViewHolder(binding)
         } else {
             val binding = ArticleImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -79,18 +79,18 @@ class SectionAdapter(
         val item = itemList[position]
         if (type == 0) {
             val currentHolder = holder as ViewHolder
-            currentHolder.paragraph.movementMethod = LinkMovementMethod()
-            currentHolder.paragraph.setOnLongClickListener {
+            currentHolder.sectionContent.movementMethod = LinkMovementMethod()
+            currentHolder.sectionContent.setOnLongClickListener {
                 it.setBackgroundColor(destColor)
                 showCommentDialog(position, it)
                 true
             }
             if (item.list.isEmpty()) {
                 val text = Html.fromHtml(item.content, FROM_HTML_MODE_COMPACT).trim()
-                currentHolder.paragraph.text = text
+                currentHolder.sectionContent.text = text
                 return
             }
-            displayComment(position, holder.paragraph)
+            displayComment(position, holder.sectionContent)
         } else {
             val image = (holder as ImageViewHolder).image
             runOnMain {

@@ -37,7 +37,7 @@
                 android:importantForAccessibility="no"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/paragraphRv"
+            android:id="@+id/articleRV"
             android:layout_width="match_parent"
             android:layout_height="@dimen/none"
             android:layout_weight="1"/>

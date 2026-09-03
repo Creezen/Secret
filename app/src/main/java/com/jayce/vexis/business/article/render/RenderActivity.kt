@@ -1,20 +1,20 @@
-package com.jayce.vexis.business.article.section
+package com.jayce.vexis.business.article.render
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.core.base.BaseActivity
-import com.jayce.vexis.databinding.ActivityParagraphBinding
+import com.jayce.vexis.databinding.ActivitySectionBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.util.vo.SectionRemarkVO
 
-class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
+class RenderActivity : BaseActivity<ActivitySectionBinding>() {
 
-    private val paragraphList = arrayListOf<SectionRemarkVO>()
+    private val sectionList = arrayListOf<SectionRemarkVO>()
     private var articleId: Long = -1
     private var articleTitle: String = ""
-    private val adapter by lazy { SectionAdapter(this, this, paragraphList) }
+    private val adapter by lazy { RenderAdapter(this, this, sectionList) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +25,8 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
     }
 
     private fun initPage() = binding.apply {
-        paragraphRv.layoutManager = LinearLayoutManager(this@SectionActivity)
-        paragraphRv.adapter = adapter
+        sectionRv.layoutManager = LinearLayoutManager(this@RenderActivity)
+        sectionRv.adapter = adapter
         adapter.setArticleId(articleId)
         title.text = articleTitle
     }
@@ -34,7 +34,7 @@ class SectionActivity : BaseActivity<ActivityParagraphBinding>() {
     private fun initData() {
         ThreadTool.runOnMulti {
             request<ArticleService, _>({ getSection(articleId) }) {
-                paragraphList.addAll(it)
+                sectionList.addAll(it)
                 adapter.notifyDataSetChanged()
             }
         }

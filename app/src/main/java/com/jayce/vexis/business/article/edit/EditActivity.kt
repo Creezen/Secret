@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article.article
+package com.jayce.vexis.business.article.edit
 
 import android.graphics.Rect
 import android.net.Uri
@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.children
 import com.jayce.vexis.StatusManager.liveUser
@@ -18,7 +17,7 @@ import com.jayce.vexis.client.FileTool
 import com.jayce.vexis.client.NetTool
 import com.jayce.vexis.client.TLog
 import com.jayce.vexis.core.base.BaseActivity
-import com.jayce.vexis.databinding.ActivitySynergyEditBinding
+import com.jayce.vexis.databinding.ActivityArticleEditBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.image.ScaleImage
@@ -28,7 +27,7 @@ import com.jayce.vexis.util.toJson
 import com.jayce.vexis.util.vo.SectionBodyVO
 import okhttp3.MultipartBody
 
-class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
+class EditActivity : BaseActivity<ActivityArticleEditBinding>() {
 
     companion object {
         private const val TYPE_TEXT = 0
@@ -76,8 +75,8 @@ class ArticleEditActivity : BaseActivity<ActivitySynergyEditBinding>() {
                 return@setOnClickListener
             }
             "上传中".toast()
-            val paragraphs = getContentList()
-            val pair = buildRequestList(paragraphs)
+            val sections = getContentList()
+            val pair = buildRequestList(sections)
             request<ArticleService, Boolean>(
                 { postArticle(title, liveUser.userId,  pair.first.toJson(), pair.second) }
             ) {

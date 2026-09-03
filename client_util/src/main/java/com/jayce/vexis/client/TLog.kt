@@ -5,25 +5,31 @@ import java.util.concurrent.ThreadPoolExecutor
 
 object TLog {
 
-    fun d(msg: String, debugThread: Boolean = true) {
-        Log.d("LJW", getMessage(msg, debugThread))
+    private var debugger: Boolean = true
+
+    fun init(initParam: BaseTool.InitParam) {
+        debugger = initParam.debugLog
     }
 
-    fun w(msg: String, debugThread: Boolean = true) {
-        Log.w("LJW", getMessage(msg, debugThread))
+    fun d(msg: String) {
+        Log.d("LJW", getMessage(msg))
     }
 
-    fun i(msg: String, debugThread: Boolean = true) {
-        Log.i("LJW", getMessage(msg, debugThread))
+    fun w(msg: String) {
+        Log.w("LJW", getMessage(msg))
     }
 
-    fun e(msg: String, debugThread: Boolean = true) {
-        Log.e("LJW", getMessage(msg, debugThread))
+    fun i(msg: String) {
+        Log.i("LJW", getMessage(msg))
     }
 
-    private fun getMessage(msg: String, debugThread: Boolean): String {
+    fun e(msg: String) {
+        Log.e("LJW", getMessage(msg))
+    }
+
+    private fun getMessage(msg: String): String {
         val threadName = Thread.currentThread().name
-        return if (debugThread) {
+        return if (debugger) {
             "[$threadName] $msg [${getThreadInfo()}]"
         } else {
             "[$threadName] $msg"

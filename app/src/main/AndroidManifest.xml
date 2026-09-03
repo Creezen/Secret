@@ -121,10 +121,10 @@
             android:name=".business.kit.maze.MazeActivity"
             android:exported="false" />
         <activity
-            android:name=".business.article.section.SectionActivity"
+            android:name=".business.article.render.RenderActivity"
             android:exported="false" />
         <activity
-            android:name=".business.article.article.ArticleEditActivity"
+            android:name=".business.article.edit.EditActivity"
             android:exported="false" />
         <activity
             android:name=".business.profile.manage.UserManagerActivity"

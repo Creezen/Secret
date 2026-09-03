@@ -7,6 +7,8 @@ import com.jayce.vexis.client.BaseTool.envContext
 import org.yaml.snakeyaml.LoaderOptions
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.Constructor
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -69,5 +71,28 @@ object DataTool {
                 add((it + offset).toString())
             }
         }.toTypedArray()
+    }
+
+    fun editScore(start: String, dest: String): Float {
+        val distance = editDistance(start, dest)
+        val length = max(start.length, dest.length)
+        return 1 - distance.toFloat() / length.toFloat()
+    }
+
+    fun editDistance(start: String, dest: String): Int {
+        val m = start.length
+        val n = dest.length
+        val matrix = Array(m + 1) { IntArray(n + 1) }
+        for (i in 0 .. m) matrix[i][0] = i
+        for (i in 0 .. n) matrix[0][i] = i
+        for (i in 1 .. m) {
+            for (j in 1 .. n) {
+                val cm = start[i - 1]
+                val cn = dest[j - 1]
+                val modify = if (cm == cn) 0 else 1
+                matrix[i][j] = min(min(matrix[i - 1][j] + 1, matrix[i][j - 1] + 1), matrix[i - 1][j - 1] + modify)
+            }
+        }
+        return matrix[m][n]
     }
 }

@@ -12,7 +12,7 @@
         android:src="@drawable/scroll"
         android:importantForAccessibility="no"/>
     <TextView
-        android:id="@+id/paragraph"
+        android:id="@+id/section"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start|center_vertical"

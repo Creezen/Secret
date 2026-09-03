@@ -14,7 +14,6 @@ preference-ktx = "1.2.0"
 koin-android = "4.1.0"
 tools = "1.0.0"
 common-tool = "1.0.0-SNAPSHOT"
-gson = "2.10.1"
 lifecycle-common-jvm = "2.8.4"
 kotlin = "2.1.0"
 mmkv = "2.3.0"
@@ -30,12 +29,8 @@ datastore = "1.2.0"
 websocket = "1.6.0"
 swiper-refresh = "1.2.0"
 lottie = "6.7.1"
-mpAndroidChart = "v3.1.0"
 navigation = "2.9.8"
 media3 = "1.9.3"
-junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
 
 [libraries]
 room-compile = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
@@ -59,7 +54,6 @@ preference-ktx = { group = "androidx.preference", name = "preference-ktx", versi
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin-android" }
 tools = { group = "com.jayce.vexis.util", name = "client", version.ref = "tools" }
 common-tool = { group = "com.jayce.vexis.util", name = "common", version.ref = "common-tool" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 kotlin-bom = { group = "org.jetbrains.kotlin", name = "kotlin-bom", version.ref = "kotlin" }
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
@@ -72,15 +66,11 @@ datastore = { group = "androidx.datastore", name = "datastore-preferences", vers
 websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
 swipe-refresh = { group = "androidx.swiperefreshlayout", name="swiperefreshlayout", version.ref = "swiper-refresh" }
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
-mpAndroidChart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpAndroidChart" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 media-player = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
 media-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media3" }
 media-sesison = { group = "androidx.media3", name = "media3-session", version.ref = "media3" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android" }

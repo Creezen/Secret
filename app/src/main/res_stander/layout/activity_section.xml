@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".business.article.section.SectionActivity">
+    tools:context=".business.article.render.RenderActivity">
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:gravity="center"
         android:textColor="@color/ChestnutBrown"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/paragraphRv"
+        android:id="@+id/sectionRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

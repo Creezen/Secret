@@ -28,7 +28,7 @@ import com.google.android.material.navigation.NavigationView.OnNavigationItemSel
 import com.jayce.vexis.StatusManager.isLogin
 import com.jayce.vexis.StatusManager.liveUser
 import com.jayce.vexis.StatusManager.registerUser
-import com.jayce.vexis.business.article.article.ArticleFragment
+import com.jayce.vexis.business.article.ArticleFragment
 import com.jayce.vexis.business.chat.ChatActivity
 import com.jayce.vexis.business.feedback.FeedbackFragment
 import com.jayce.vexis.business.file.FileSheetFragment

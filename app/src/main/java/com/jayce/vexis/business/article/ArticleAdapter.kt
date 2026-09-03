@@ -1,4 +1,4 @@
-package com.jayce.vexis.business.article.article
+package com.jayce.vexis.business.article
 
 import android.content.Context
 import android.content.Intent
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jayce.vexis.R
-import com.jayce.vexis.business.article.section.SectionActivity
+import com.jayce.vexis.business.article.render.RenderActivity
 import com.jayce.vexis.databinding.CardItemLayoutBinding
-import com.jayce.vexis.databinding.ParagraphItemBinding
+import com.jayce.vexis.databinding.SectionItemBinding
 import com.jayce.vexis.domain.route.ArticleService
 import com.jayce.vexis.foundation.Util.Extension.onTrue
 import com.jayce.vexis.foundation.Util.request
@@ -20,7 +20,7 @@ import com.jayce.vexis.util.vo.ArticleVO
 class ArticleAdapter(
     val context: Context,
     private var itemList: List<ArticleVO>,
-) : CardAdapter<ArticleVO, ParagraphItemBinding, ArticleAdapter.ViewHolder>(itemList), OnMenuClick {
+) : CardAdapter<ArticleVO, SectionItemBinding, ArticleAdapter.ViewHolder>(itemList), OnMenuClick {
 
     private var onDelete: (() -> Unit)? = null
 
@@ -28,8 +28,8 @@ class ArticleAdapter(
         this.onDelete = callBack
     }
 
-    class ViewHolder(container: CardItemLayoutBinding, binding: ParagraphItemBinding) : CardAdapter.ViewHolder(container) {
-        val paragraph = binding.paragraph
+    class ViewHolder(container: CardItemLayoutBinding, binding: SectionItemBinding) : CardAdapter.ViewHolder(container) {
+        val section = binding.section
         val view = binding.article
     }
 
@@ -43,8 +43,8 @@ class ArticleAdapter(
 
     override fun bindCardViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-        holder.paragraph.text = item.title
-        val intent = Intent(context, SectionActivity::class.java).apply {
+        holder.section.text = item.title
+        val intent = Intent(context, RenderActivity::class.java).apply {
             putExtra("articleId", item.articleId)
             putExtra("articleTitle", item.title)
         }
@@ -60,8 +60,8 @@ class ArticleAdapter(
         layoutInflater: LayoutInflater,
         containerBinding: CardItemLayoutBinding,
         parent: ViewGroup
-    ): Pair<ParagraphItemBinding, ViewHolder> {
-        val child = ParagraphItemBinding.inflate(layoutInflater, parent, false)
+    ): Pair<SectionItemBinding, ViewHolder> {
+        val child = SectionItemBinding.inflate(layoutInflater, parent, false)
         val holder = ViewHolder(containerBinding, child)
         return child to holder
     }

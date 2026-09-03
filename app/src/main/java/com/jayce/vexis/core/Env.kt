@@ -43,6 +43,7 @@ class Env : Application() {
             BuildConfig.socketPort,
             BuildConfig.socketUrl,
             BuildConfig.baseUrl,
+            debugLog = false,
             debugNetwork = false,
             debugThread = false,
             debugImage = false
