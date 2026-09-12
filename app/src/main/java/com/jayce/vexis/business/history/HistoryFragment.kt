@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnLayout
 import com.jayce.vexis.business.history.api.OnOptionClickListener
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.toast
@@ -83,13 +84,22 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
         }
 
         scroll.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-//            Log.d("LJW", "scrollY: $scrollY  oldScrollY: $oldScrollY")
+            if (dragger.isDragged) return@setOnScrollChangeListener
+            val maxOffset = base.height - scroll.height
+            dragger.percent = if (scrollY <= 0) 0.0f
+            else if (scrollY >= maxOffset) 1.0f
+            else scrollY.toFloat() / maxOffset
         }
-
+        dragger.setOnDragStateChange {
+            scroll.parent.requestDisallowInterceptTouchEvent(it)
+            floatingBtn.visibility = if (it) View.GONE else View.VISIBLE
+        }
+        dragger.setOnDrag { scroll.scrollY += (it * (base.height - scroll.height)).toInt() }
         ThreadTool.runOnMain {
             val pair = manager.getTime()
             axis.updateTimePeriod(pair.first, pair.second)
         }
+        updateDrag()
     }
 
     private fun showMomentDialog(entry: MomentBO) {
@@ -104,11 +114,20 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
             .show()
     }
 
+    private fun updateDrag() = binding.apply {
+        scroll.doOnLayout {
+            val viewportHeight = scroll.height - scroll.paddingTop - scroll.paddingBottom
+            val isOver = viewportHeight < base.height
+            dragger.visibility = if (isOver) View.VISIBLE else View.GONE
+        }
+    }
+
     override fun onScaleChange(factor: Int) {
         val axis = binding.axis
         val param = axis.layoutParams
         param.height = rootWidth * factor
         axis.layoutParams = param
+        updateDrag()
     }
 
     override fun onTimeChange(start: TimeBO, end: TimeBO) {
