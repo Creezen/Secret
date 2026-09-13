@@ -4,23 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.jayce.vexis.R
 import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.HistoryPanelScaleTimeBinding
+import com.jayce.vexis.domain.viewmodel.HistoryViewModel
 import com.jayce.vexis.foundation.ui.TextSeekBar
 
 class ScaleTimeFragment : BaseFragment<HistoryPanelScaleTimeBinding>(), TextSeekBar.OnTextSeekbarChangeListener {
 
+    private val viewModel by viewModels<HistoryViewModel>(
+        ownerProducer = { requireParentFragment() }
+    )
     private var onViewReady: OnViewReady? = null
     private var hundredNum: Int = 0
     private var tenNum: Int = 0
     private var onesNum: Int = 0
-
-    val scale: Int
-        get() {
-            return hundredNum * 10000 + tenNum * 100 + onesNum
-        }
 
     fun setOnViewReadyListener(listener: OnViewReady) {
         this.onViewReady = listener
@@ -53,7 +53,8 @@ class ScaleTimeFragment : BaseFragment<HistoryPanelScaleTimeBinding>(), TextSeek
         ten.setEndText("x100")
         ones.setEndText("x1")
 
-        val text = "当前倍率 $scale"
+        viewModel.scale = hundredNum * 10000 + tenNum * 100 + onesNum
+        val text = "当前倍率 ${viewModel.scale}"
         binding.scaleTv.text = text
 
         hundred.setOnSeekBarChangeListener(this@ScaleTimeFragment)
@@ -67,7 +68,8 @@ class ScaleTimeFragment : BaseFragment<HistoryPanelScaleTimeBinding>(), TextSeek
             R.id.ten -> tenNum = progress
             R.id.ones -> onesNum = progress
         }
-        val text = "当前倍率 $scale"
+        viewModel.scale = hundredNum * 10000 + tenNum * 100 + onesNum
+        val text = "当前倍率 ${viewModel.scale}"
         binding.scaleTv.text = text
     }
 

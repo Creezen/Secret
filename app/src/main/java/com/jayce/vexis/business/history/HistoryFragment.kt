@@ -9,7 +9,11 @@ import androidx.core.view.doOnLayout
 import com.jayce.vexis.business.history.api.OnOptionClickListener
 import com.jayce.vexis.client.AndroidTool.msg
 import com.jayce.vexis.client.AndroidTool.toast
-import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.TLog
+import com.jayce.vexis.client.ThreadTool.runOnIO
+import com.jayce.vexis.client.ThreadTool.runOnMain
+import com.jayce.vexis.client.ThreadTool.runOnMulti
+import com.jayce.vexis.client.ThreadTool.ui
 import com.jayce.vexis.core.base.BaseFragment
 import com.jayce.vexis.databinding.DialogTimelineBinding
 import com.jayce.vexis.databinding.FragmentHistoryBinding
@@ -17,15 +21,16 @@ import com.jayce.vexis.databinding.HistoryMomentEntryBinding
 import com.jayce.vexis.domain.bo.MomentBO
 import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.domain.route.HistoryService
+import com.jayce.vexis.domain.viewmodel.HistoryViewModel
 import com.jayce.vexis.foundation.Util.request
 import com.jayce.vexis.foundation.ui.block.FlexibleDialog
 import com.jayce.vexis.util.toTime
 import com.jayce.vexis.util.vo.HistoryVO
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickListener {
 
-    private val manager by inject<TimeManager>()
+    private val viewModel by viewModel<HistoryViewModel>()
 
     private var rootWidth: Int = -1
     private var rootHeight: Int = -1
@@ -33,17 +38,19 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
     private val eventList: ArrayList<HistoryVO> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        initView()
+        init()
         updateSize()
         return binding.root
     }
 
-    override fun onGetData(firstInit: Boolean) {
-        super.onGetData(firstInit)
-        queryList()
+    private fun init() = runOnMulti {
+        viewModel.init()
+        ui { initView() }
     }
 
-    fun changeOptionPanel() {
+    override fun onGetData(firstInit: Boolean) { queryList() }
+
+    fun changeOptionPanelVisibility() {
         val panel = binding.optionPanel
         val visibility = panel.visibility
         panel.visibility = when (visibility) {
@@ -69,9 +76,9 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
 
     private fun initView() = binding.apply {
         optionPanel.addOnOptionClickListener(this@HistoryFragment)
-        left.setOnMomentClick {
-            showMomentDialog(it)
-        }
+        optionPanel.init(this@HistoryFragment, viewModel)
+        left.setOnMomentClick { showMomentDialog(it) }
+        left.init(viewModel.startTime, viewModel.endTime)
         floatingBtn.setOnClickListener {
             val ctx = activity ?: return@setOnClickListener
             FlexibleDialog.flexibleView<DialogTimelineBinding>(ctx)
@@ -95,10 +102,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
             floatingBtn.visibility = if (it) View.GONE else View.VISIBLE
         }
         dragger.setOnDrag { scroll.scrollY += (it * (base.height - scroll.height)).toInt() }
-        ThreadTool.runOnMain {
-            val pair = manager.getTime()
-            axis.updateTimePeriod(pair.first, pair.second)
-        }
+        runOnMain { axis.updateTimePeriod(viewModel.startTime, viewModel.endTime) }
         updateDrag()
     }
 
@@ -122,20 +126,22 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(), OnOptionClickLis
         }
     }
 
-    override fun onScaleChange(factor: Int) {
+    override fun onScaleChange() {
         val axis = binding.axis
         val param = axis.layoutParams
-        param.height = rootWidth * factor
+        param.height = rootWidth * viewModel.scale
         axis.layoutParams = param
         updateDrag()
     }
 
-    override fun onTimeChange(start: TimeBO, end: TimeBO) {
+    override fun onTimeChange() {
+        val start = viewModel.startTime
+        val end = viewModel.endTime
         binding.axis.updateTimePeriod(start, end)
-        ThreadTool.runOnIO {
-            manager.setTime(start, end)
-            binding.left.updateTime()
-            binding.left.invalidate()
+        runOnIO {
+            viewModel.setTime(start, end)
+            binding.left.updateTime(start, end)
+            binding.left.postInvalidate()
         }
     }
 

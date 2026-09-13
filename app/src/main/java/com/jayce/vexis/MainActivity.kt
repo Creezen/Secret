@@ -213,7 +213,7 @@ class MainActivity :
                 val clickId = navigation.checkedItem?.itemId
                 if (clickId != R.id.MainMenuTimeline) return@setOnClickListener
                 val fragment = fragmentHolder?.historyFragment ?: return@setOnClickListener
-                fragment.changeOptionPanel()
+                fragment.changeOptionPanelVisibility()
             }
         }
     }

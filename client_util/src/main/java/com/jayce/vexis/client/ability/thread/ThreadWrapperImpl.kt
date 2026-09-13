@@ -3,9 +3,11 @@ package com.jayce.vexis.client.ability.thread
 import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ability.task.CompleteStatus
 import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.Job
 
 class ThreadWrapperImpl : ThreadWrapper, ThreadStatus {
 
+    override var launchJob: Job? = null
     var job: CancellableContinuation<*>? = null
 
     private var failCallback: ((Throwable) -> Unit)? = null
@@ -62,5 +64,7 @@ class ThreadWrapperImpl : ThreadWrapper, ThreadStatus {
             job?.cancel()
             TLog.w("job is canceled")
         }
+        launchJob?.cancel()
+        launchJob = null
     }
 }

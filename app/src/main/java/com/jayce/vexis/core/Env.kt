@@ -92,7 +92,7 @@ class Env : Application() {
                 runCatching {
                     ModuleHelper.loadModule(entry.first, entry.second)
                 }.onFailure {
-                    TLog.d("[${entry.first}] loadModule error: ${it.message}")
+//                    TLog.d("[${entry.first}] loadModule error: ${it.message}")
                 }
             }
         }

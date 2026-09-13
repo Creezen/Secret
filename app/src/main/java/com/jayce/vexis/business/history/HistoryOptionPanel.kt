@@ -17,38 +17,47 @@ import com.jayce.vexis.business.history.api.OnViewReady
 import com.jayce.vexis.business.history.panel.FindTimeFragment
 import com.jayce.vexis.business.history.panel.ScaleTimeFragment
 import com.jayce.vexis.business.history.panel.UpdateTimeFragment
+import com.jayce.vexis.client.TLog
 import com.jayce.vexis.databinding.HistoryOptionPanelBinding
 import com.jayce.vexis.domain.bo.TimeBO
+import com.jayce.vexis.domain.viewmodel.HistoryViewModel
 import com.jayce.vexis.foundation.ui.block.TabLayoutTitle
 
 class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet), OnTabSelectedListener, OnViewReady {
 
+    private var isInit: Boolean = false
+
+    private var viewModel: HistoryViewModel? = null
+    private var parentFragment: Fragment? = null
     private val activity = context as FragmentActivity
     private val owner = context as LifecycleOwner
     private val fragments = arrayListOf<Fragment>()
-    private val historyPanelAdapter = HistoryPanelAdapter(activity.supportFragmentManager, owner.lifecycle, fragments)
-
-    private val findTimeFragment = FindTimeFragment()
-    private val updateTimeFragment = UpdateTimeFragment()
-    private val scaleTimeFragment = ScaleTimeFragment()
 
     private var listener: OnOptionClickListener? = null
     private var selectPosition: Int = 0
 
     private val binding = HistoryOptionPanelBinding.inflate(LayoutInflater.from(context), this)
 
-    init {
-        orientation = VERTICAL
-        initFragment()
-        initView()
-    }
+    init { orientation = VERTICAL }
 
     fun addOnOptionClickListener(onOptionClickListener: OnOptionClickListener) {
         listener = onOptionClickListener
     }
 
+    fun init(fragment: Fragment, vm: HistoryViewModel) {
+        if (isInit) return
+        isInit = true
+        parentFragment = fragment
+        viewModel = vm
+        initFragment()
+        initView()
+    }
+
     private fun initFragment() {
+        val findTimeFragment = FindTimeFragment()
+        val updateTimeFragment = UpdateTimeFragment()
+        val scaleTimeFragment = ScaleTimeFragment()
         scaleTimeFragment.setOnViewReadyListener(this)
         updateTimeFragment.setOnViewReadyListener(this)
         findTimeFragment.setOnViewReadyListener(this)
@@ -58,6 +67,11 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun initView() = binding.apply {
+        val historyPanelAdapter = HistoryPanelAdapter(
+            parentFragment?.childFragmentManager ?: activity.supportFragmentManager,
+            owner.lifecycle,
+            fragments
+        )
         page.adapter = historyPanelAdapter
         TabLayoutMediator(tab, page) { tab, pos ->
             val title = TabLayoutTitle(context)
@@ -74,18 +88,16 @@ class HistoryOptionPanel(context: Context, attributeSet: AttributeSet) :
         button.setOnClickListener {
             when (selectPosition) {
                 0 -> {
-                    listener?.onScaleChange(scaleTimeFragment.scale)
-                    "调整比例 ${scaleTimeFragment.scale}".toast()
+                    listener?.onScaleChange()
+                    "调整比例 ${viewModel?.scale ?: 1}".toast()
                 }
                 1 -> {
-                    val start = updateTimeFragment.updatedStartTime
-                    val end = updateTimeFragment.updatedEndTime
-                    listener?.onTimeChange(start, end)
+                    listener?.onTimeChange()
                     "设置时间".toast()
                 }
                 2 -> {
                     listener?.onSearch(0, "", TimeBO.zero())
-                "搜索跳转".toast()
+                    "搜索跳转".toast()
                 }
                 else -> "".toast()
             }

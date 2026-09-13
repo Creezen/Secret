@@ -9,16 +9,13 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import com.jayce.vexis.R
-import com.jayce.vexis.client.ThreadTool
+import com.jayce.vexis.client.ThreadTool.runOnIO
 import com.jayce.vexis.domain.bo.MomentBO
 import com.jayce.vexis.domain.bo.TimeBO
 import com.jayce.vexis.util.vo.HistoryVO
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class TimeView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet), KoinComponent {
-
-    private val manager by inject<TimeManager>()
 
     private lateinit var olderTime : TimeBO
     private lateinit var laterTime: TimeBO
@@ -28,9 +25,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     private val paint = Paint()
     private val bitmap by lazy { momentBitmap() }
 
-    init {
-        ThreadTool.runOnIO { updateTime() }
-    }
+    fun init(startTime: TimeBO, endTime: TimeBO) = runOnIO { updateTime(startTime, endTime) }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -40,6 +35,7 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
     }
 
     private fun drawMoment(canvas: Canvas, item: MomentBO) {
+        if (item.percent <= 0) return
         val minX = width * 1.0f - bitmap.width
         val minY = height * item.percent
         val maxX = width.toFloat()
@@ -48,15 +44,12 @@ class TimeView(context: Context, attributeSet: AttributeSet) : View(context, att
         canvas.drawBitmap(bitmap, minX, minY, paint)
     }
 
-    suspend fun updateTime() {
-        val pair = manager.getTime()
-        olderTime = pair.first
-        laterTime = pair.second
+    fun updateTime(startTime: TimeBO, endTime: TimeBO) {
+        olderTime = startTime
+        laterTime = endTime
     }
 
-    fun setOnMomentClick(onClick: (MomentBO) -> Unit) {
-        this.onMomentClick = onClick
-    }
+    fun setOnMomentClick(onClick: (MomentBO) -> Unit) { this.onMomentClick = onClick }
 
     fun addMoment(entryList: List<HistoryVO>) {
         momentList.clear()

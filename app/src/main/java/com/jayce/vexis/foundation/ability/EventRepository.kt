@@ -3,11 +3,12 @@ package com.jayce.vexis.foundation.ability
 import android.app.Notification
 import android.app.NotificationManager
 import androidx.core.app.NotificationCompat
-import com.jayce.vexis.util.Config.EVENT_TYPE_CHAT
-import com.jayce.vexis.util.Config.EVENT_TYPE_DEFAULT
-import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
-import com.jayce.vexis.util.Config.EVENT_TYPE_ROLE
-import com.jayce.vexis.util.toBean
+import com.jayce.vexis.R
+import com.jayce.vexis.StatusManager.BASE_SOCKET_PATH
+import com.jayce.vexis.StatusManager.LOCAL_SOCKET_PORT
+import com.jayce.vexis.StatusManager.liveUser
+import com.jayce.vexis.client.AndroidTool.getData
+import com.jayce.vexis.client.AndroidTool.putData
 import com.jayce.vexis.client.BaseTool.envContext
 import com.jayce.vexis.client.NetTool
 import com.jayce.vexis.client.NetTool.registerSocket
@@ -15,14 +16,13 @@ import com.jayce.vexis.client.TLog
 import com.jayce.vexis.client.ThreadTool
 import com.jayce.vexis.client.ThreadTool.registerScope
 import com.jayce.vexis.client.ThreadTool.runOnSpecific
-import com.jayce.vexis.R
-import com.jayce.vexis.StatusManager.BASE_SOCKET_PATH
-import com.jayce.vexis.StatusManager.LOCAL_SOCKET_PORT
-import com.jayce.vexis.StatusManager.liveUser
-import com.jayce.vexis.client.AndroidTool
-import com.jayce.vexis.client.AndroidTool.getData
-import com.jayce.vexis.domain.database.event.EventEntity
 import com.jayce.vexis.domain.database.event.EventDatabase
+import com.jayce.vexis.domain.database.event.EventEntity
+import com.jayce.vexis.util.Config.EVENT_TYPE_CHAT
+import com.jayce.vexis.util.Config.EVENT_TYPE_DEFAULT
+import com.jayce.vexis.util.Config.EVENT_TYPE_FEEDBACK
+import com.jayce.vexis.util.Config.EVENT_TYPE_ROLE
+import com.jayce.vexis.util.toBean
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -78,7 +78,7 @@ class EventRepository {
 
     private suspend fun insertEvent(eventEntity: EventEntity) {
         val id = eventDao.insert(eventEntity)
-        AndroidTool.putData("[eventTag]${liveUser.userId}", eventEntity.msgId)
+        putData("[eventTag]${liveUser.userId}", eventEntity.msgId)
         dispatchEvent(id)
     }
 

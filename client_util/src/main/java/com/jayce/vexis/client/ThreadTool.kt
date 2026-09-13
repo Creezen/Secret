@@ -5,14 +5,16 @@ import com.jayce.vexis.client.ability.thread.ThreadStatus
 import com.jayce.vexis.client.ability.thread.ThreadType
 import com.jayce.vexis.client.ability.thread.ThreadWrapper
 import com.jayce.vexis.client.ability.thread.ThreadWrapperImpl
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import java.util.concurrent.CancellationException
 import java.util.concurrent.Executors
 import java.util.concurrent.SynchronousQueue
 import java.util.concurrent.ThreadFactory
@@ -22,6 +24,12 @@ import java.util.concurrent.TimeUnit
 object ThreadTool {
 
     private lateinit var params: BaseTool.InitParam
+
+    private val multiJob = SupervisorJob()
+
+    private val exceptionHandle = CoroutineExceptionHandler { _, e ->
+        TLog.d("Multi Thread Exception: ${e.message}")
+    }
 
     private val single by lazy {
         Executors.newSingleThreadExecutor { Thread(it, "TJ-S") }.asCoroutineDispatcher()
@@ -40,7 +48,7 @@ object ThreadTool {
 
     private val singleScope = CoroutineScope(single)
 
-    private val multiScope = CoroutineScope(multi)
+    private val multiScope = CoroutineScope(multiJob + multi+ exceptionHandle)
 
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
@@ -100,7 +108,7 @@ object ThreadTool {
     fun runOnMulti(func: suspend (ThreadWrapperImpl) -> Unit): ThreadWrapper {
         getCallInfo("runOnMulti")
         val wrapper = ThreadWrapperImpl()
-        multiScope.launch {
+        wrapper.launchJob = multiScope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }
@@ -132,7 +140,6 @@ object ThreadTool {
 
     fun runOnSpecific(
         name: String,
-        dispatcher: CoroutineDispatcher = Dispatchers.Default,
         func: suspend (ThreadWrapperImpl) -> Unit
     ): ThreadWrapper {
         getCallInfo("runOnSpecific")
@@ -143,7 +150,7 @@ object ThreadTool {
             return wrapper
         }
 
-        scope.launch(dispatcher) {
+        scope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }
@@ -153,12 +160,11 @@ object ThreadTool {
 
     fun runOnCurrent(
         scope: CoroutineScope,
-        dispatcher: CoroutineDispatcher = Dispatchers.Default,
         func: suspend (ThreadWrapperImpl) -> Unit
     ): ThreadWrapper {
         getCallInfo("runOnCurrent")
         val wrapper = ThreadWrapperImpl()
-        scope.launch(dispatcher) {
+        scope.launch {
             runWithCatch(wrapper) {
                 func.invoke(wrapper)
             }
@@ -184,18 +190,14 @@ object ThreadTool {
                     TLog.w("name should not be null with type ${option.type}")
                     return defaultWrapper
                 }
-                runOnSpecific(option.name, option.dispatcher) {
-                    blockCallback(it, option.delayMillis, onDispatch)
-                }
+                runOnSpecific(option.name) { blockCallback(it, option.delayMillis, onDispatch) }
             }
             ThreadType.CURRENT -> {
                 if (option.scope == null) {
                     TLog.w("scope should not be null with type ${option.type}")
                     return defaultWrapper
                 }
-                runOnCurrent(option.scope, option.dispatcher) {
-                    blockCallback(it, option.delayMillis, onDispatch)
-                }
+                runOnCurrent(option.scope) { blockCallback(it, option.delayMillis, onDispatch) }
             }
             ThreadType.UNKNOW -> {
                 TLog.d("Unknow type, do nothing!")

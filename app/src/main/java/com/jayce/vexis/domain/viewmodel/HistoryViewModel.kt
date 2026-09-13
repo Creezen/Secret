@@ -1,47 +1,37 @@
-package com.jayce.vexis.business.history
+package com.jayce.vexis.domain.viewmodel
 
 import com.jayce.vexis.client.AndroidTool.getData
 import com.jayce.vexis.client.AndroidTool.putData
+import com.jayce.vexis.core.base.BaseViewModel
 import com.jayce.vexis.domain.bo.TimeBO
+import com.jayce.vexis.util.Config.END_DAY
+import com.jayce.vexis.util.Config.END_HOUR
+import com.jayce.vexis.util.Config.END_MICROSECOND
+import com.jayce.vexis.util.Config.END_MILLISECOND
+import com.jayce.vexis.util.Config.END_MINUTE
+import com.jayce.vexis.util.Config.END_MONTH
+import com.jayce.vexis.util.Config.END_SECOND
+import com.jayce.vexis.util.Config.END_YEAR
+import com.jayce.vexis.util.Config.START_DAY
+import com.jayce.vexis.util.Config.START_HOUR
+import com.jayce.vexis.util.Config.START_MICROSECOND
+import com.jayce.vexis.util.Config.START_MILLISECOND
+import com.jayce.vexis.util.Config.START_MINUTE
+import com.jayce.vexis.util.Config.START_MONTH
+import com.jayce.vexis.util.Config.START_SECOND
+import com.jayce.vexis.util.Config.START_YEAR
 import java.time.LocalDateTime
-import java.util.concurrent.locks.ReentrantLock
 
-class TimeManager {
+class HistoryViewModel : BaseViewModel() {
 
-    companion object {
-        const val START_YEAR = "startYear"
-        const val START_MONTH = "startMonth"
-        const val START_DAY = "startDay"
-        const val START_HOUR = "startHour"
-        const val START_MINUTE = "startMinute"
-        const val START_SECOND = "startSecond"
-        const val START_MILLISECOND = "startMilliSecond"
-        const val START_MICROSECOND = "startMicroSecond"
-
-        const val END_YEAR = "endYear"
-        const val END_MONTH = "endMonth"
-        const val END_DAY = "endDay"
-        const val END_HOUR = "endHour"
-        const val END_MINUTE = "endMinute"
-        const val END_SECOND = "endSecond"
-        const val END_MILLISECOND = "endMilliSecond"
-        const val END_MICROSECOND = "endMicroSecond"
-    }
-
-    private val lock = ReentrantLock()
     private var hasValidStartTime: Boolean = false
     private var hasValidEndTime: Boolean = false
-    private var hasReadPersistTime: Boolean = false
-    
-    private var startTime: TimeBO = TimeBO.zero()
-    private var endTime: TimeBO = TimeBO.zero()
-    
-    suspend fun getTime(): Pair<TimeBO, TimeBO> {
-        lock.lock()
-        if (hasReadPersistTime || (hasValidStartTime && hasValidEndTime)) {
-            lock.unlock()
-            return startTime to endTime
-        }
+
+    var scale: Int = 0
+    var startTime: TimeBO = TimeBO.zero()
+    var endTime: TimeBO = TimeBO.zero()
+
+    suspend fun init() {
         val startYear = getData(START_YEAR, -1)
         val startMonth = getData(START_MONTH, -1)
         val startDay = getData(START_DAY, -1)
@@ -64,19 +54,14 @@ class TimeManager {
         else TimeBO(endYear, endMonth, endDay, endHour, endMinute, endSecond, endMilliSecond, endMicroSecond)
         startTime = tempStartTime
         endTime = tempEndTime
-        hasReadPersistTime = tempStartTime.year >= 0 && tempEndTime.year >= 0
-        lock.unlock()
-        return startTime to endTime
     }
 
     suspend fun setTime(startTimeEntry: TimeBO, endTimeEntry: TimeBO) {
-        lock.lock()
         setStartTime(startTimeEntry)
         setEndTime(endTimeEntry)
-        lock.unlock()
     }
 
-    private suspend fun setStartTime(timeBO: TimeBO) {
+    suspend fun setStartTime(timeBO: TimeBO) {
         startTime = timeBO
         hasValidStartTime = true
         timeBO.apply {
@@ -91,7 +76,7 @@ class TimeManager {
         }
     }
 
-    private suspend fun setEndTime(timeBO: TimeBO) {
+    suspend fun setEndTime(timeBO: TimeBO) {
         endTime = timeBO
         hasValidEndTime = true
         timeBO.apply {

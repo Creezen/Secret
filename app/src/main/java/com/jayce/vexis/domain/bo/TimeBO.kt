@@ -22,7 +22,7 @@ data class TimeBO(
 
         fun totalMilliSecond(timeStamp: Long) = timeStamp + TIME_OFFSET
 
-        fun zero() = TimeBO(0, 1, 1, 0, 0, 0, 0, 0)
+        fun zero() = TimeBO(1, 1, 1, 0, 0, 0, 0, 0)
 
         fun now(): TimeBO = fromLocalDateTime(LocalDateTime.now())
 

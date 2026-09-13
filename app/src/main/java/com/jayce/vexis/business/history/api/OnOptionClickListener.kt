@@ -4,9 +4,9 @@ import com.jayce.vexis.domain.bo.TimeBO
 
 interface OnOptionClickListener {
 
-    fun onScaleChange(factor: Int)
+    fun onScaleChange()
 
-    fun onTimeChange(start: TimeBO, end: TimeBO)
+    fun onTimeChange()
 
     fun onSearch(type: Int, text: String, time: TimeBO)
 }
